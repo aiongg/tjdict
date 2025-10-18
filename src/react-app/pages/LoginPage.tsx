@@ -30,9 +30,17 @@ export function LoginPage() {
 			const data = await response.json();
 
 			if (response.ok) {
-				if (data.requiresTOTP) {
+				if (data.requiresPasswordChange) {
+					// Redirect to password change page
+					navigate('/change-password');
+				} else if (data.requiresTOTP) {
+					// Show TOTP input
 					setRequiresTOTP(true);
+				} else if (data.requiresTOTPSetup) {
+					// Redirect to 2FA setup
+					navigate('/setup-2fa');
 				} else {
+					// Full login successful
 					await login();
 					navigate('/dashboard');
 				}

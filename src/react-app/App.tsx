@@ -5,6 +5,8 @@ import { SetupPage } from "./pages/SetupPage";
 import { LoginPage } from "./pages/LoginPage";
 import { Setup2FAPage } from "./pages/Setup2FAPage";
 import { DashboardPage } from "./pages/DashboardPage";
+import { ChangePasswordPage } from "./pages/ChangePasswordPage";
+import { UsersPage } from "./pages/UsersPage";
 import { useState, useEffect } from "react";
 import "./App.css";
 
@@ -46,11 +48,20 @@ function App() {
 				element={user ? <Navigate to="/dashboard" replace /> : <LoginPage />} 
 			/>
 			<Route path="/setup-2fa" element={<Setup2FAPage />} />
+			<Route path="/change-password" element={<ChangePasswordPage />} />
 			<Route 
 				path="/dashboard" 
 				element={
 					<ProtectedRoute>
 						<DashboardPage />
+					</ProtectedRoute>
+				} 
+			/>
+			<Route 
+				path="/users" 
+				element={
+					<ProtectedRoute>
+						{user?.role === 'admin' ? <UsersPage /> : <Navigate to="/dashboard" replace />}
 					</ProtectedRoute>
 				} 
 			/>
