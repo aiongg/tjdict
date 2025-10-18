@@ -155,103 +155,105 @@ export function UsersPage() {
 
 	if (loading) {
 		return (
-			<div className="page-extra-wide">
+			<div className="users-page">
 				<Navigation />
-				<p>Loading...</p>
+				<div className="users-content">
+					<div className="loading">Loading users...</div>
+				</div>
 			</div>
 		);
 	}
 
 	return (
-		<div className="page-extra-wide">
+		<div className="users-page">
 			<Navigation />
 
-			<div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-				<h1 style={{ margin: 0 }}>User Management</h1>
-				<button onClick={() => setShowCreateModal(true)}>
-					Add User
-				</button>
-			</div>
-
-			{error && (
-				<div className="alert-error" style={{ marginBottom: '1rem' }}>
-					{error}
+			<div className="users-content">
+				<div className="page-header">
+					<h1>User Management</h1>
+					<button onClick={() => setShowCreateModal(true)} className="btn-primary">
+						+ Add User
+					</button>
 				</div>
-			)}
 
-			<div className="card" style={{ padding: 0, overflow: 'auto' }}>
-				<table className="table">
-					<thead>
-						<tr>
-							<th>Email</th>
-							<th>Role</th>
-							<th>Status</th>
-							<th>2FA</th>
-							<th>Password</th>
-							<th>Last Login</th>
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						{users.map(user => (
-							<tr key={user.id}>
-								<td>{user.email}</td>
-								<td>
-									<span className={`badge ${getRoleBadgeClass(user.role)}`}>
-										{user.role}
-									</span>
-								</td>
-								<td>
-									<span className={`badge ${user.isActive ? 'badge-active' : 'badge-inactive'}`}>
-										{user.isActive ? 'Active' : 'Inactive'}
-									</span>
-								</td>
-								<td>
-									{user.totpEnabled ? '✓ Enabled' : '✗ Not Set Up'}
-								</td>
-								<td>
-									{user.requiresPasswordChange ? (
-										<span style={{ color: '#fcd34d' }}>⚠ Temp Password</span>
-									) : (
-										'Normal'
-									)}
-								</td>
-								<td>{formatDate(user.lastLogin)}</td>
-								<td>
-									<div style={{ display: 'flex', gap: '0.5rem' }}>
-										<button
-											className="btn-secondary"
-											onClick={() => {
-												setSelectedUserId(user.id);
-												setShowResetModal(true);
-												setTempPassword('');
-											}}
-											style={{ padding: '0.3em 0.6em', fontSize: '0.9em' }}
-										>
-											Reset Password
-										</button>
-										<button
-											className="btn-secondary"
-											onClick={() => handleToggleActive(user.id, user.isActive)}
-											style={{ padding: '0.3em 0.6em', fontSize: '0.9em' }}
-										>
-											{user.isActive ? 'Deactivate' : 'Activate'}
-										</button>
-									</div>
-								</td>
+				{error && (
+					<div className="alert-error">
+						{error}
+					</div>
+				)}
+
+				<div className="card">
+					<table className="table">
+						<thead>
+							<tr>
+								<th>Email</th>
+								<th>Role</th>
+								<th>Status</th>
+								<th>2FA</th>
+								<th>Password</th>
+								<th>Last Login</th>
+								<th>Actions</th>
 							</tr>
-						))}
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							{users.map(user => (
+								<tr key={user.id}>
+									<td>{user.email}</td>
+									<td>
+										<span className={`badge ${getRoleBadgeClass(user.role)}`}>
+											{user.role}
+										</span>
+									</td>
+									<td>
+										<span className={`badge ${user.isActive ? 'badge-active' : 'badge-inactive'}`}>
+											{user.isActive ? 'Active' : 'Inactive'}
+										</span>
+									</td>
+									<td>
+										{user.totpEnabled ? '✓ Enabled' : '✗ Not Set Up'}
+									</td>
+									<td>
+										{user.requiresPasswordChange ? (
+											<span className="status-warning">⚠ Temp Password</span>
+										) : (
+											'Normal'
+										)}
+									</td>
+									<td>{formatDate(user.lastLogin)}</td>
+									<td>
+										<div className="table-actions">
+											<button
+												className="btn-secondary btn-sm"
+												onClick={() => {
+													setSelectedUserId(user.id);
+													setShowResetModal(true);
+													setTempPassword('');
+												}}
+											>
+												Reset Password
+											</button>
+											<button
+												className="btn-secondary btn-sm"
+												onClick={() => handleToggleActive(user.id, user.isActive)}
+											>
+												{user.isActive ? 'Deactivate' : 'Activate'}
+											</button>
+										</div>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
 			</div>
 
 			{/* Create User Modal */}
 			{showCreateModal && (
 				<div className="modal-overlay" onClick={() => setShowCreateModal(false)}>
 					<div className="modal-content card" onClick={(e) => e.stopPropagation()}>
-						<h2 style={{ marginTop: 0 }}>Create New User</h2>
+						<h2>Create New User</h2>
 						<form onSubmit={handleCreateUser}>
-							<div style={{ marginBottom: '1rem' }}>
+							<div className="form-group">
 								<label htmlFor="email">Email Address</label>
 								<input
 									id="email"
@@ -259,17 +261,15 @@ export function UsersPage() {
 									value={newEmail}
 									onChange={(e) => setNewEmail(e.target.value)}
 									required
-									style={{ width: '100%' }}
 								/>
 							</div>
 
-							<div style={{ marginBottom: '1rem' }}>
+							<div className="form-group">
 								<label htmlFor="role">Role</label>
 								<select
 									id="role"
 									value={newRole}
 									onChange={(e) => setNewRole(e.target.value as 'user' | 'editor' | 'admin')}
-									style={{ width: '100%' }}
 								>
 									<option value="user">User</option>
 									<option value="editor">Editor</option>
@@ -277,9 +277,9 @@ export function UsersPage() {
 								</select>
 							</div>
 
-							<div style={{ marginBottom: '1.5rem' }}>
+							<div className="form-group">
 								<label htmlFor="password">Temporary Password</label>
-								<div style={{ display: 'flex', gap: '0.5rem' }}>
+								<div className="form-row">
 									<input
 										id="password"
 										type="text"
@@ -287,7 +287,6 @@ export function UsersPage() {
 										onChange={(e) => setNewPassword(e.target.value)}
 										required
 										minLength={8}
-										style={{ flex: 1 }}
 									/>
 									<button
 										type="button"
@@ -299,15 +298,14 @@ export function UsersPage() {
 								</div>
 							</div>
 
-							<div style={{ display: 'flex', gap: '0.5rem' }}>
-								<button type="submit" style={{ flex: 1 }}>
+							<div className="modal-actions">
+								<button type="submit" className="btn-primary">
 									Create User
 								</button>
 								<button
 									type="button"
 									onClick={() => setShowCreateModal(false)}
 									className="btn-secondary"
-									style={{ flex: 1 }}
 								>
 									Cancel
 								</button>
@@ -321,22 +319,21 @@ export function UsersPage() {
 			{showResetModal && (
 				<div className="modal-overlay" onClick={() => setShowResetModal(false)}>
 					<div className="modal-content card" onClick={(e) => e.stopPropagation()}>
-						<h2 style={{ marginTop: 0 }}>Reset Password</h2>
+						<h2>Reset Password</h2>
 						
 						{!tempPassword ? (
 							<>
-								<div className="alert-warning" style={{ marginBottom: '1.5rem' }}>
+								<div className="alert-warning">
 									⚠️ This will clear the user's 2FA settings and require them to set up 2FA again.
 								</div>
 								<p>Are you sure you want to reset the password for this user?</p>
-								<div style={{ display: 'flex', gap: '0.5rem', marginTop: '1.5rem' }}>
-									<button onClick={handleResetPassword} style={{ flex: 1 }}>
+								<div className="modal-actions">
+									<button onClick={handleResetPassword} className="btn-danger">
 										Reset Password
 									</button>
 									<button
 										onClick={() => setShowResetModal(false)}
 										className="btn-secondary"
-										style={{ flex: 1 }}
 									>
 										Cancel
 									</button>
@@ -345,10 +342,10 @@ export function UsersPage() {
 						) : (
 							<>
 								<p>New temporary password has been generated:</p>
-								<div className="code-display" style={{ margin: '1.5rem 0' }}>
+								<div className="code-display">
 									{tempPassword}
 								</div>
-								<div className="alert-warning" style={{ marginBottom: '1.5rem' }}>
+								<div className="alert-warning">
 									⚠️ Make sure to copy this password and send it to the user securely!
 								</div>
 								<button
@@ -356,14 +353,13 @@ export function UsersPage() {
 										navigator.clipboard.writeText(tempPassword);
 										alert('Password copied to clipboard!');
 									}}
-									style={{ width: '100%', marginBottom: '0.5rem' }}
+									className="btn-primary"
 								>
 									Copy to Clipboard
 								</button>
 								<button
 									onClick={() => setShowResetModal(false)}
 									className="btn-secondary"
-									style={{ width: '100%' }}
 								>
 									Close
 								</button>
@@ -375,4 +371,3 @@ export function UsersPage() {
 		</div>
 	);
 }
-

@@ -202,14 +202,16 @@ entriesRouter.post("/", requireEditor, async (c) => {
 
 	const isComplete = body.is_complete !== undefined ? (body.is_complete ? 1 : 0) : 0;
 	const entryDataJson = JSON.stringify(body.entry_data);
+	const headNumber = body.entry_data.head_number || null;
 
 	const result = await c.env.prod_tjdict
 		.prepare(`
-			INSERT INTO entries (head, sort_key, entry_data, is_complete, created_by, updated_by)
-			VALUES (?, ?, ?, ?, ?, ?)
+			INSERT INTO entries (head, head_number, sort_key, entry_data, is_complete, created_by, updated_by)
+			VALUES (?, ?, ?, ?, ?, ?, ?)
 		`)
 		.bind(
 			body.entry_data.head,
+			headNumber,
 			sortKey,
 			entryDataJson,
 			isComplete,
@@ -255,16 +257,19 @@ entriesRouter.put("/:id", requireEditor, async (c) => {
 
 	const entryDataJson = JSON.stringify(body.entry_data);
 	const isComplete = body.is_complete !== undefined ? (body.is_complete ? 1 : 0) : undefined;
+	const headNumber = body.entry_data.head_number || null;
 
 	const updateFields: string[] = [
 		"head = ?",
+		"head_number = ?",
 		"sort_key = ?",
 		"entry_data = ?",
 		"updated_by = ?",
 		"updated_at = CURRENT_TIMESTAMP"
 	];
-	const updateParams: (string | number)[] = [
+	const updateParams: (string | number | null)[] = [
 		body.entry_data.head,
+		headNumber,
 		sortKey,
 		entryDataJson,
 		payload.userId

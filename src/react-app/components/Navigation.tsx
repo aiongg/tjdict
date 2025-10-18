@@ -1,9 +1,26 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 
 export function Navigation() {
 	const { user, logout } = useAuth();
 	const navigate = useNavigate();
+	const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+	useEffect(() => {
+		const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+		if (savedTheme) {
+			setTheme(savedTheme);
+			document.documentElement.setAttribute('data-theme', savedTheme);
+		}
+	}, []);
+
+	const toggleTheme = () => {
+		const newTheme = theme === 'light' ? 'dark' : 'light';
+		setTheme(newTheme);
+		localStorage.setItem('theme', newTheme);
+		document.documentElement.setAttribute('data-theme', newTheme);
+	};
 
 	const handleLogout = async () => {
 		await logout();
@@ -36,8 +53,11 @@ export function Navigation() {
 				</div>
 
 				<div className="nav-user">
+					<button onClick={toggleTheme} className="btn-theme" title="Toggle theme">
+						{theme === 'light' ? '🌙' : '☀️'}
+					</button>
 					<div className="nav-user-info">
-						<span>{user?.email}</span>
+						<span className="nav-email">{user?.email}</span>
 						{user && (
 							<span className={`badge ${getRoleBadgeClass(user.role)}`}>
 								{user.role}

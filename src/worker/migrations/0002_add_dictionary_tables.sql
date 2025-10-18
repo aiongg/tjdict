@@ -4,6 +4,7 @@
 CREATE TABLE IF NOT EXISTS entries (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     head TEXT NOT NULL,
+    head_number INTEGER,
     sort_key TEXT NOT NULL,
     entry_data TEXT NOT NULL,
     is_complete INTEGER DEFAULT 0,
@@ -15,6 +16,7 @@ CREATE TABLE IF NOT EXISTS entries (
 );
 
 CREATE INDEX IF NOT EXISTS idx_entries_head ON entries(head);
+CREATE INDEX IF NOT EXISTS idx_entries_head_number ON entries(head, head_number);
 CREATE INDEX IF NOT EXISTS idx_entries_sort_key ON entries(sort_key);
 CREATE INDEX IF NOT EXISTS idx_entries_is_complete ON entries(is_complete);
 CREATE INDEX IF NOT EXISTS idx_entries_updated_at ON entries(updated_at);

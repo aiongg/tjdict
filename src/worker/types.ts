@@ -105,6 +105,7 @@ export interface UserListResponse {
 // Even entries with a single definition are normalized to defs[0]
 export interface EntryData {
 	head: string;
+	head_number?: number;  // Disambiguation number for homonyms (e.g., 1, 2, 3)
 	etym?: string;
 	defs: DefinitionItem[];
 }
@@ -147,6 +148,7 @@ export interface IdiomItem {
 export interface Entry {
 	id: number;
 	head: string;
+	head_number: number | null;
 	sort_key: string;
 	entry_data: string;
 	is_complete: number;

@@ -8,6 +8,7 @@ import { DashboardPage } from "./pages/DashboardPage";
 import { ChangePasswordPage } from "./pages/ChangePasswordPage";
 import { UsersPage } from "./pages/UsersPage";
 import EntriesPage from "./pages/EntriesPage";
+import EntryEditorPage from "./pages/EntryEditorPage";
 import { useState, useEffect } from "react";
 import "./App.css";
 
@@ -18,7 +19,7 @@ function App() {
 
 	useEffect(() => {
 		// Check if setup is needed
-		fetch('/api/setup/status')
+		fetch('/api/auth/setup/status')
 			.then(res => res.json())
 			.then(data => {
 				setNeedsSetup(data.needsSetup);
@@ -71,6 +72,14 @@ function App() {
 				element={
 					<ProtectedRoute>
 						<EntriesPage />
+					</ProtectedRoute>
+				} 
+			/>
+			<Route 
+				path="/entries/:id" 
+				element={
+					<ProtectedRoute>
+						<EntryEditorPage />
 					</ProtectedRoute>
 				} 
 			/>
