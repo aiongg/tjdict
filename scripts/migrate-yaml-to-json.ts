@@ -2,7 +2,11 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 import * as yaml from 'yaml';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 interface RawYAMLEntry {
 	head?: string;
@@ -17,15 +21,48 @@ interface ProcessedEntry {
 	source_file: string;
 }
 
+// Map of superscript numbers to regular numbers
+const superscriptMap: { [key: string]: string } = {
+	'⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4',
+	'⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9'
+};
+
+// Extract headword and disambiguation number
+function parseHeadword(head: string): { cleanHead: string; headNumber?: number } {
+	// Pattern to match superscript numbers at the end
+	const superscriptPattern = /[⁰¹²³⁴⁵⁶⁷⁸⁹]+$/;
+	const match = head.match(superscriptPattern);
+	
+	if (match) {
+		const superscriptNum = match[0];
+		// Convert superscript to regular number
+		const regularNum = superscriptNum.split('').map(c => superscriptMap[c] || c).join('');
+		const number = parseInt(regularNum, 10);
+		const cleanHead = head.replace(superscriptPattern, '');
+		return { cleanHead, headNumber: number };
+	}
+	
+	// Pattern to match regular numbers (e.g., "chiah (1)")
+	const numberPattern = /\s*\((\d+)\)\s*$/;
+	const numberMatch = head.match(numberPattern);
+	
+	if (numberMatch) {
+		const number = parseInt(numberMatch[1], 10);
+		const cleanHead = head.replace(numberPattern, '');
+		return { cleanHead, headNumber: number };
+	}
+	
+	return { cleanHead: head };
+}
+
 // Normalize headword for alphabetical sorting
 function generateSortKey(head: string): string {
-	return head
+	const { cleanHead } = parseHeadword(head);
+	return cleanHead
 		.toLowerCase()
 		// Remove diacritics (tone markers)
 		.normalize('NFD')
 		.replace(/[\u0300-\u036f]/g, '')
-		// Remove superscript numbers
-		.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, '')
 		// Remove special characters but keep letters
 		.replace(/[^a-z0-9]/g, '');
 }
@@ -54,17 +91,21 @@ function isEntryComplete(data: unknown): boolean {
 }
 
 // Normalize entry structure to always have defs array
-function normalizeEntry(rawEntry: RawYAMLEntry): { head: string; etym?: string; defs: unknown[] } {
+function normalizeEntry(rawEntry: RawYAMLEntry): { head: string; head_number?: number; etym?: string; defs: unknown[] } {
 	const { head, etym, ...rest } = rawEntry;
 	
 	if (!head) {
 		throw new Error('Entry missing head field');
 	}
 	
+	// Parse headword to extract disambiguation number
+	const { cleanHead, headNumber } = parseHeadword(head);
+	
 	// Check if entry already has a defs array
 	if (Array.isArray(rest.defs) && rest.defs.length > 0) {
 		return {
-			head,
+			head: cleanHead,
+			head_number: headNumber,
 			etym: etym as string | undefined,
 			defs: rest.defs
 		};
@@ -80,7 +121,8 @@ function normalizeEntry(rawEntry: RawYAMLEntry): { head: string; etym?: string; 
 	
 	if (numberedDefs.length > 0) {
 		return {
-			head,
+			head: cleanHead,
+			head_number: headNumber,
 			etym: etym as string | undefined,
 			defs: numberedDefs
 		};
@@ -88,7 +130,8 @@ function normalizeEntry(rawEntry: RawYAMLEntry): { head: string; etym?: string; 
 	
 	// Otherwise, treat the entire entry (excluding head/etym) as a single definition
 	return {
-		head,
+		head: cleanHead,
+		head_number: headNumber,
 		etym: etym as string | undefined,
 		defs: [rest]
 	};
@@ -98,38 +141,44 @@ function normalizeEntry(rawEntry: RawYAMLEntry): { head: string; etym?: string; 
 function processYAMLFile(filePath: string, isComplete: boolean): ProcessedEntry[] {
 	console.log(`Processing ${filePath}...`);
 	
-	const content = fs.readFileSync(filePath, 'utf-8');
-	const data = yaml.parse(content);
-	
-	if (!Array.isArray(data)) {
-		console.error(`  ERROR: ${filePath} does not contain an array`);
+	try {
+		const content = fs.readFileSync(filePath, 'utf-8');
+		const data = yaml.parse(content);
+		
+		if (!Array.isArray(data)) {
+			console.error(`  ERROR: ${filePath} does not contain an array`);
+			return [];
+		}
+		
+		const entries: ProcessedEntry[] = [];
+		const fileName = path.basename(filePath);
+		
+		for (const rawEntry of data) {
+			if (!rawEntry || typeof rawEntry !== 'object') continue;
+			
+			try {
+				const normalized = normalizeEntry(rawEntry as RawYAMLEntry);
+				const complete = isComplete ? 1 : (isEntryComplete(normalized) ? 1 : 0);
+				
+				entries.push({
+					head: normalized.head,
+					sort_key: generateSortKey(normalized.head),
+					entry_data: JSON.stringify(normalized),
+					is_complete: complete,
+					source_file: fileName
+				});
+			} catch (error) {
+				console.error(`  ERROR processing entry in ${fileName}:`, error);
+			}
+		}
+		
+		console.log(`  Processed ${entries.length} entries`);
+		return entries;
+	} catch (error) {
+		console.error(`  ERROR parsing ${filePath}:`, error);
+		console.error(`  Skipping this file and continuing with others...`);
 		return [];
 	}
-	
-	const entries: ProcessedEntry[] = [];
-	const fileName = path.basename(filePath);
-	
-	for (const rawEntry of data) {
-		if (!rawEntry || typeof rawEntry !== 'object') continue;
-		
-		try {
-			const normalized = normalizeEntry(rawEntry as RawYAMLEntry);
-			const complete = isComplete ? 1 : (isEntryComplete(normalized) ? 1 : 0);
-			
-			entries.push({
-				head: normalized.head,
-				sort_key: generateSortKey(normalized.head),
-				entry_data: JSON.stringify(normalized),
-				is_complete: complete,
-				source_file: fileName
-			});
-		} catch (error) {
-			console.error(`  ERROR processing entry in ${fileName}:`, error);
-		}
-	}
-	
-	console.log(`  Processed ${entries.length} entries`);
-	return entries;
 }
 
 // Main migration function
@@ -168,31 +217,71 @@ async function migrate() {
 	console.log(`\nWriting JSON to ${outputFile}...`);
 	fs.writeFileSync(outputFile, JSON.stringify(allEntries, null, 2));
 	
-	// Generate SQL INSERT statements
-	console.log(`Generating SQL statements to ${sqlOutputFile}...`);
-	
-	const sqlStatements: string[] = [];
-	const batchSize = 500;
-	
-	for (let i = 0; i < allEntries.length; i += batchSize) {
-		const batch = allEntries.slice(i, i + batchSize);
-		const values = batch.map(entry => {
-			const escapedData = entry.entry_data.replace(/'/g, "''");
-			return `('${entry.head.replace(/'/g, "''")}', '${entry.sort_key}', '${escapedData}', ${entry.is_complete}, '${entry.source_file}')`;
-		});
-		
-		sqlStatements.push(
-			`INSERT INTO entries (head, sort_key, entry_data, is_complete, source_file) VALUES\n${values.join(',\n')};\n`
-		);
+	// Write SQL files in chunks (max 50KB per file to stay well under 100KB limit)
+	const sqlDir = path.join(dataDir, 'sql-chunks');
+	if (!fs.existsSync(sqlDir)) {
+		fs.mkdirSync(sqlDir, { recursive: true });
 	}
 	
-	fs.writeFileSync(sqlOutputFile, sqlStatements.join('\n'));
+	console.log(`Generating SQL statements in chunks to ${sqlDir}...`);
+	
+	// Clear existing chunks
+	if (fs.existsSync(sqlDir)) {
+		const existingChunks = fs.readdirSync(sqlDir).filter(f => f.startsWith('entries-'));
+		existingChunks.forEach(f => fs.unlinkSync(path.join(sqlDir, f)));
+	}
+	
+	const maxChunkSize = 40 * 1024; // 40KB per chunk (well under 100KB limit)
+	let chunkIndex = 1;
+	let currentChunk: string[] = [];
+	let currentSize = 0;
+	
+	const initChunk = () => {
+		const header = `-- Dictionary entries import (chunk ${chunkIndex})
+-- Generated: ${new Date().toISOString()}
+
+`;
+		currentChunk = [header];
+		currentSize = header.length;
+	};
+	
+	initChunk();
+	
+	// Generate INSERT statements one at a time
+	for (const entry of allEntries) {
+		const escapedData = entry.entry_data.replace(/'/g, "''");
+		const parsedData = JSON.parse(entry.entry_data) as { head_number?: number };
+		const headNumber = parsedData.head_number ? parsedData.head_number.toString() : 'NULL';
+		const statement = `INSERT INTO entries (head, head_number, sort_key, entry_data, is_complete, source_file) VALUES ('${entry.head.replace(/'/g, "''")}', ${headNumber}, '${entry.sort_key}', '${escapedData}', ${entry.is_complete}, '${entry.source_file}');\n`;
+		
+		// Check if adding this statement would exceed chunk size
+		if (currentSize + statement.length > maxChunkSize && currentChunk.length > 1) {
+			// Write current chunk
+			const chunkFile = path.join(sqlDir, `entries-${chunkIndex.toString().padStart(3, '0')}.sql`);
+			fs.writeFileSync(chunkFile, currentChunk.join(''));
+			
+			// Start new chunk
+			chunkIndex++;
+			initChunk();
+		}
+		
+		currentChunk.push(statement);
+		currentSize += statement.length;
+	}
+	
+	// Write final chunk
+	if (currentChunk.length > 1) {
+		const chunkFile = path.join(sqlDir, `entries-${chunkIndex.toString().padStart(3, '0')}.sql`);
+		fs.writeFileSync(chunkFile, currentChunk.join(''));
+	}
+	
+	console.log(`\nGenerated ${chunkIndex} SQL chunk files`);
 	
 	console.log('\nMigration complete!');
 	console.log(`- JSON output: ${outputFile}`);
-	console.log(`- SQL output: ${sqlOutputFile}`);
+	console.log(`- SQL chunks: ${sqlDir}/entries-*.sql`);
 	console.log(`\nTo import into D1, run:`);
-	console.log(`wrangler d1 execute prod_tjdict --file=data/entries.sql`);
+	console.log(`npm run import-data`);
 }
 
 // Run migration

@@ -46,7 +46,9 @@
 		"dev": "vite",
 		"lint": "eslint .",
 		"migrate": "tsx scripts/migrate-yaml-to-json.ts",
-		"preview": "npm run build && vite preview"
+		"import-data": "tsx scripts/import-data.ts",
+		"preview": "npm run build && vite preview",
+		"test:parse": "tsx scripts/test-parseHeadword.ts"
 	},
 	"type": "module"
 }
