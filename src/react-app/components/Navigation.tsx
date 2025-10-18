@@ -25,6 +25,9 @@ export function Navigation() {
 					<Link to="/dashboard" className="nav-brand">
 						<strong>TJDict</strong>
 					</Link>
+					<Link to="/entries" className="nav-link">
+						Dictionary
+					</Link>
 					{user?.role === 'admin' && (
 						<Link to="/users" className="nav-link">
 							Users

@@ -7,6 +7,7 @@ import { Setup2FAPage } from "./pages/Setup2FAPage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { ChangePasswordPage } from "./pages/ChangePasswordPage";
 import { UsersPage } from "./pages/UsersPage";
+import EntriesPage from "./pages/EntriesPage";
 import { useState, useEffect } from "react";
 import "./App.css";
 
@@ -62,6 +63,14 @@ function App() {
 				element={
 					<ProtectedRoute>
 						{user?.role === 'admin' ? <UsersPage /> : <Navigate to="/dashboard" replace />}
+					</ProtectedRoute>
+				} 
+			/>
+			<Route 
+				path="/entries" 
+				element={
+					<ProtectedRoute>
+						<EntriesPage />
 					</ProtectedRoute>
 				} 
 			/>
