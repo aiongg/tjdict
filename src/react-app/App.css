@@ -1,0 +1,142 @@
+#root {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem 1rem;
+}
+
+.page-container {
+	width: 100%;
+	max-width: 480px;
+	margin: 0 auto;
+}
+
+.card {
+	padding: 2rem;
+	border: 1px solid #333;
+	border-radius: 8px;
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+	text-align: center;
+	margin-bottom: 2rem;
+	font-size: 2rem;
+	font-weight: 600;
+}
+
+h2 {
+	font-size: 1.3rem;
+	font-weight: 600;
+}
+
+input {
+	box-sizing: border-box;
+	background-color: #1a1a1a;
+	border: 1px solid #444;
+	color: rgba(255, 255, 255, 0.87);
+	padding: 0.7em 1em;
+	font-size: 1em;
+	border-radius: 6px;
+	font-family: inherit;
+	transition: border-color 0.2s;
+}
+
+input:focus {
+	outline: none;
+	border-color: #646cff;
+}
+
+label {
+	display: block;
+	margin-bottom: 0.5rem;
+	font-size: 0.95em;
+	font-weight: 500;
+}
+
+button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.alert-error {
+	padding: 0.75rem 1rem;
+	margin-bottom: 1rem;
+	background-color: rgba(239, 68, 68, 0.1);
+	border: 1px solid rgba(239, 68, 68, 0.3);
+	border-radius: 6px;
+	color: #fca5a5;
+	font-size: 0.95em;
+}
+
+.alert-warning {
+	padding: 0.75rem 1rem;
+	margin-bottom: 1rem;
+	background-color: rgba(251, 191, 36, 0.1);
+	border: 1px solid rgba(251, 191, 36, 0.3);
+	border-radius: 6px;
+	color: #fcd34d;
+	font-size: 0.95em;
+}
+
+.code-display {
+	padding: 0.75rem 1rem;
+	background-color: rgba(255, 255, 255, 0.05);
+	border: 1px solid #444;
+	border-radius: 6px;
+	font-family: monospace;
+	text-align: center;
+	word-break: break-all;
+	color: rgba(255, 255, 255, 0.87);
+}
+
+.backup-codes {
+	padding: 1rem;
+	background-color: rgba(255, 255, 255, 0.05);
+	border: 1px solid #444;
+	border-radius: 6px;
+	font-family: monospace;
+	color: rgba(255, 255, 255, 0.87);
+}
+
+@media (prefers-color-scheme: light) {
+	.card {
+		background-color: rgba(255, 255, 255, 0.8);
+		border-color: #e5e7eb;
+	}
+
+	input {
+		background-color: #ffffff;
+		border-color: #d1d5db;
+		color: #213547;
+	}
+
+	input:focus {
+		border-color: #646cff;
+	}
+
+	.alert-error {
+		background-color: rgba(239, 68, 68, 0.1);
+		border-color: rgba(239, 68, 68, 0.3);
+		color: #dc2626;
+	}
+
+	.alert-warning {
+		background-color: rgba(251, 191, 36, 0.1);
+		border-color: rgba(251, 191, 36, 0.3);
+		color: #d97706;
+	}
+
+	.code-display {
+		background-color: #f3f4f6;
+		border-color: #d1d5db;
+		color: #1f2937;
+	}
+
+	.backup-codes {
+		background-color: #f3f4f6;
+		border-color: #d1d5db;
+		color: #1f2937;
+	}
+}
