@@ -3,6 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { Navigation } from '../components/Navigation';
 
+interface TranslationVariant {
+	en?: string;
+	mw?: string;
+	etym?: string;
+	alt?: string[];
+	[key: string]: unknown;
+}
+
 interface DefinitionItem {
 	pos?: string | string[];
 	cat?: string;
@@ -19,21 +27,29 @@ interface DefinitionItem {
 
 interface ExampleItem {
 	tw: string;
-	en?: string;
+	en?: string | TranslationVariant[];
+	mw?: string;
+	etym?: string;
+	alt?: string[];
 	[key: string]: unknown;
 }
 
 interface DerivativeItem {
 	tw: string;
-	en?: string;
+	en?: string | TranslationVariant[];
 	mw?: string;
+	etym?: string;
 	ex?: ExampleItem[];
+	alt?: string[];
 	[key: string]: unknown;
 }
 
 interface IdiomItem {
 	tw: string;
-	en?: string;
+	en?: string | TranslationVariant[];
+	mw?: string;
+	etym?: string;
+	alt?: string[];
 	[key: string]: unknown;
 }
 
@@ -110,13 +126,67 @@ interface EntryListResponse {
 const ExtraDisplay = ({ data, bullet }: { data: ExampleItem | DerivativeItem | IdiomItem; bullet: string }) => {
 	const hasEn = 'en' in data && data.en;
 	const hasMw = 'mw' in data && data.mw;
+	const hasEtym = 'etym' in data && data.etym;
+	const hasAlt = 'alt' in data && data.alt && Array.isArray(data.alt);
 	const hasEx = 'ex' in data && data.ex && Array.isArray(data.ex);
+	
+	// Format translation variants
+	const formatTranslations = (): string | null => {
+		if (!hasEn) return null;
+		
+		const enValue = data.en;
+		
+		// Check if en is an array of translation variants
+		if (Array.isArray(enValue)) {
+			const labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+			return enValue.map((variant, idx) => {
+				const label = labels[idx] || `${idx + 1}`;
+				const parts: string[] = [];
+				
+				// Add label
+				parts.push(`${label}.`);
+				
+				// Add measure word if present
+				if (typeof variant === 'object' && variant !== null && 'mw' in variant && variant.mw) {
+					parts.push(`(${variant.mw})`);
+				}
+				
+				// Add etymology if present
+				if (typeof variant === 'object' && variant !== null && 'etym' in variant && variant.etym) {
+					parts.push(`(${variant.etym})`);
+				}
+				
+				// Add translation
+				if (typeof variant === 'object' && variant !== null && 'en' in variant && variant.en) {
+					parts.push(variant.en as string);
+				}
+				
+				// Add alternatives if present
+				if (typeof variant === 'object' && variant !== null && 'alt' in variant && Array.isArray(variant.alt)) {
+					variant.alt.forEach((alt: string) => {
+						parts.push(`; ≃ ${alt}`);
+					});
+				}
+				
+				return parts.join(' ');
+			}).join('; ');
+		}
+		
+		// Simple string translation
+		return enValue as string;
+	};
+	
+	const translationText = formatTranslations();
 	
 	return (
 		<div className="ex">
 			<span className="ex-tw">{bullet} {data.tw}</span>
-			{hasMw ? <span className="mw">{(data as DerivativeItem).mw}:</span> : null}
-			{hasEn ? <span className="en"> {data.en}</span> : null}
+			{hasMw && !Array.isArray(data.en) ? <span className="mw"> ({(data as DerivativeItem).mw}):</span> : null}
+			{hasEtym && !Array.isArray(data.en) ? <span className="etym"> ({data.etym})</span> : null}
+			{translationText ? <span className="en"> {translationText}</span> : null}
+			{hasAlt && !Array.isArray(data.en) ? data.alt!.map((alt, i) => (
+				<span key={i} className="alt">; ≃ {alt}</span>
+			)) : null}
 			{hasEx ? (data.ex as ExampleItem[]).map((ex, i) => (
 				<ExtraDisplay key={i} data={ex} bullet="¶" />
 			)) : null}

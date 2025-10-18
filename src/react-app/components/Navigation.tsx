@@ -6,6 +6,8 @@ export function Navigation() {
 	const { user, logout } = useAuth();
 	const navigate = useNavigate();
 	const [theme, setTheme] = useState<'light' | 'dark'>('light');
+	const [menuOpen, setMenuOpen] = useState(false);
+	const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
 	useEffect(() => {
 		const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
@@ -13,6 +15,16 @@ export function Navigation() {
 			setTheme(savedTheme);
 			document.documentElement.setAttribute('data-theme', savedTheme);
 		}
+
+		const handleResize = () => {
+			setIsMobile(window.innerWidth < 768);
+			if (window.innerWidth >= 768) {
+				setMenuOpen(false);
+			}
+		};
+
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
 	}, []);
 
 	const toggleTheme = () => {
@@ -25,6 +37,11 @@ export function Navigation() {
 	const handleLogout = async () => {
 		await logout();
 		navigate('/login');
+		setMenuOpen(false);
+	};
+
+	const handleNavClick = () => {
+		setMenuOpen(false);
 	};
 
 	const getRoleBadgeClass = (role: string) => {
@@ -38,36 +55,83 @@ export function Navigation() {
 	return (
 		<nav className="nav-bar">
 			<div className="nav-content">
-				<div className="nav-links">
-					<Link to="/dashboard" className="nav-brand">
-						<strong>TJDict</strong>
-					</Link>
-					<Link to="/entries" className="nav-link">
-						Dictionary
-					</Link>
-					{user?.role === 'admin' && (
-						<Link to="/users" className="nav-link">
-							Users
-						</Link>
-					)}
-				</div>
-
-				<div className="nav-user">
-					<button onClick={toggleTheme} className="btn-theme" title="Toggle theme">
-						{theme === 'light' ? '🌙' : '☀️'}
-					</button>
-					<div className="nav-user-info">
-						<span className="nav-email">{user?.email}</span>
-						{user && (
-							<span className={`badge ${getRoleBadgeClass(user.role)}`}>
-								{user.role}
-							</span>
+				{isMobile ? (
+					<>
+						<div className="nav-mobile-header">
+							<h1 className="app-name-mobile">TJDict</h1>
+							<button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+								☰
+							</button>
+						</div>
+						{menuOpen && (
+							<div className="mobile-menu">
+								<div className="mobile-menu-content">
+									<Link to="/dashboard" className="nav-link" onClick={handleNavClick}>
+										Dashboard
+									</Link>
+									<Link to="/entries" className="nav-link" onClick={handleNavClick}>
+										Dictionary
+									</Link>
+									{user?.role === 'admin' && (
+										<Link to="/users" className="nav-link" onClick={handleNavClick}>
+											Users
+										</Link>
+									)}
+									<button onClick={toggleTheme} className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+										<span>{theme === 'light' ? '🌙' : '☀️'}</span>
+										<span>{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
+									</button>
+									<div style={{ padding: '0.75rem 1rem', borderTop: '1px solid var(--color-border)', marginTop: '0.5rem' }}>
+										<div style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>
+											{user?.email}
+										</div>
+										{user && (
+											<span className={`badge ${getRoleBadgeClass(user.role)}`} style={{ marginTop: '0.25rem', display: 'inline-block' }}>
+												{user.role}
+											</span>
+										)}
+									</div>
+									<button onClick={handleLogout} className="nav-link" style={{ color: 'var(--color-danger)' }}>
+										Logout
+									</button>
+								</div>
+							</div>
 						)}
-					</div>
-					<button onClick={handleLogout} className="btn-logout">
-						Logout
-					</button>
-				</div>
+					</>
+				) : (
+					<>
+						<div className="nav-links">
+							<Link to="/dashboard" className="nav-brand">
+								<strong>TJDict</strong>
+							</Link>
+							<Link to="/entries" className="nav-link">
+								Dictionary
+							</Link>
+							{user?.role === 'admin' && (
+								<Link to="/users" className="nav-link">
+									Users
+								</Link>
+							)}
+						</div>
+
+						<div className="nav-user">
+							<button onClick={toggleTheme} className="btn-theme" title="Toggle theme">
+								{theme === 'light' ? '🌙' : '☀️'}
+							</button>
+							<div className="nav-user-info">
+								<span className="nav-email">{user?.email}</span>
+								{user && (
+									<span className={`badge ${getRoleBadgeClass(user.role)}`}>
+										{user.role}
+									</span>
+								)}
+							</div>
+							<button onClick={handleLogout} className="btn-logout">
+								Logout
+							</button>
+						</div>
+					</>
+				)}
 			</div>
 		</nav>
 	);

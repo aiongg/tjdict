@@ -67,6 +67,52 @@ function generateSortKey(head: string): string {
 		.replace(/[^a-z0-9]/g, '');
 }
 
+// Collapse a/b/c keys into an array
+function collapseAlphaKeys(obj: unknown): unknown {
+	if (!obj || typeof obj !== 'object' || Array.isArray(obj)) {
+		return obj;
+	}
+	
+	const objRecord = obj as Record<string, unknown>;
+	
+	// Check if object has a, b, c, etc. keys
+	const alphaKeys = Object.keys(objRecord).filter(k => /^[a-z]$/.test(k)).sort();
+	
+	if (alphaKeys.length > 0) {
+		// We have alpha keys, collapse them into an array
+		const variants = alphaKeys.map(key => {
+			const value = objRecord[key];
+			// Recursively process the variant
+			return collapseAlphaKeys(value);
+		});
+		
+		// Create new object without alpha keys
+		const newObj: Record<string, unknown> = {};
+		for (const [key, value] of Object.entries(objRecord)) {
+			if (!/^[a-z]$/.test(key)) {
+				newObj[key] = collapseAlphaKeys(value);
+			}
+		}
+		
+		// Add the variants as en array
+		newObj.en = variants;
+		return newObj;
+	}
+	
+	// No alpha keys, just recursively process all values
+	const newObj: Record<string, unknown> = {};
+	for (const [key, value] of Object.entries(objRecord)) {
+		if (Array.isArray(value)) {
+			newObj[key] = value.map(item => collapseAlphaKeys(item));
+		} else if (typeof value === 'object' && value !== null) {
+			newObj[key] = collapseAlphaKeys(value);
+		} else {
+			newObj[key] = value;
+		}
+	}
+	return newObj;
+}
+
 // Check if an entry is complete (has all en fields filled)
 function isEntryComplete(data: unknown): boolean {
 	if (!data || typeof data !== 'object') return true;
@@ -74,8 +120,23 @@ function isEntryComplete(data: unknown): boolean {
 	const obj = data as Record<string, unknown>;
 	
 	for (const [key, value] of Object.entries(obj)) {
-		if (key === 'en' && (value === '' || value === null || value === undefined)) {
-			return false;
+		if (key === 'en') {
+			// Handle both string and array formats
+			if (Array.isArray(value)) {
+				// If it's an array, check each item
+				for (const item of value) {
+					if (typeof item === 'object' && item !== null) {
+						const itemObj = item as Record<string, unknown>;
+						if (!itemObj.en || itemObj.en === '' || itemObj.en === null) {
+							return false;
+						}
+					} else if (!item || item === '') {
+						return false;
+					}
+				}
+			} else if (value === '' || value === null || value === undefined) {
+				return false;
+			}
 		}
 		if (typeof value === 'object' && value !== null) {
 			if (!isEntryComplete(value)) return false;
@@ -101,39 +162,37 @@ function normalizeEntry(rawEntry: RawYAMLEntry): { head: string; head_number?: n
 	// Parse headword to extract disambiguation number
 	const { cleanHead, headNumber } = parseHeadword(head);
 	
+	let defs: unknown[];
+	
 	// Check if entry already has a defs array
 	if (Array.isArray(rest.defs) && rest.defs.length > 0) {
-		return {
-			head: cleanHead,
-			head_number: headNumber,
-			etym: etym as string | undefined,
-			defs: rest.defs
-		};
+		defs = rest.defs;
 	}
-	
 	// Check if entry has numbered definitions (1, 2, 3, ...)
-	const numberedDefs: unknown[] = [];
-	let i = 1;
-	while (rest[i.toString()]) {
-		numberedDefs.push(rest[i.toString()]);
-		i++;
+	else {
+		const numberedDefs: unknown[] = [];
+		let i = 1;
+		while (rest[i.toString()]) {
+			numberedDefs.push(rest[i.toString()]);
+			i++;
+		}
+		
+		if (numberedDefs.length > 0) {
+			defs = numberedDefs;
+		} else {
+			// Otherwise, treat the entire entry (excluding head/etym) as a single definition
+			defs = [rest];
+		}
 	}
 	
-	if (numberedDefs.length > 0) {
-		return {
-			head: cleanHead,
-			head_number: headNumber,
-			etym: etym as string | undefined,
-			defs: numberedDefs
-		};
-	}
+	// Process each definition to collapse a/b/c keys
+	defs = defs.map(def => collapseAlphaKeys(def));
 	
-	// Otherwise, treat the entire entry (excluding head/etym) as a single definition
 	return {
 		head: cleanHead,
 		head_number: headNumber,
 		etym: etym as string | undefined,
-		defs: [rest]
+		defs: defs
 	};
 }
 
@@ -185,7 +244,6 @@ function processYAMLFile(filePath: string, isComplete: boolean): ProcessedEntry[
 async function migrate() {
 	const dataDir = path.join(__dirname, '..', 'data');
 	const outputFile = path.join(dataDir, 'entries.json');
-	const sqlOutputFile = path.join(dataDir, 'entries.sql');
 	
 	console.log('Starting YAML to JSON migration...\n');
 	
