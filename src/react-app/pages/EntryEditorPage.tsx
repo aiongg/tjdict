@@ -29,7 +29,7 @@ export default function EntryEditorPage() {
 	const [entryData, setEntryData] = useState<EntryData>({
 		head: '',
 		defs: [{
-			pos: 'n',
+			pos: ['n'],
 			defs: [{ en: '' }]
 		}]
 	});
@@ -100,9 +100,12 @@ export default function EntryEditorPage() {
 			const saved = await response.json();
 
 			if (isNewEntry) {
+				// For new entries, navigate to the edit page for that entry
 				navigate(`/entries/${saved.id}`);
 			} else {
+				// For existing entries, go back to the list
 				setEntry(saved);
+				navigate(-1); // Use browser back to preserve state
 			}
 		} catch (err) {
 			setError(err instanceof Error ? err.message : 'Failed to save entry');
@@ -151,7 +154,7 @@ export default function EntryEditorPage() {
 	const addPosDefinition = () => {
 		setEntryData({
 			...entryData,
-			defs: [...entryData.defs, { pos: 'n', defs: [{ en: '' }] }]
+			defs: [...entryData.defs, { pos: ['n'], defs: [{ en: '' }] }]
 		});
 	};
 
@@ -223,9 +226,15 @@ export default function EntryEditorPage() {
 			// If field doesn't exist in data, add it with empty value
 			const obj = getByPath(entryData, path) as Record<string, unknown> | undefined;
 			if (obj && !(fieldName in obj)) {
-				const newData = setByPath(entryData, `${path}.${fieldName}`, 
-					fieldName === 'alt' || fieldName === 'cf' || fieldName === 'ex' || fieldName === 'drv' || fieldName === 'idm' ? [] : ''
-				);
+				let defaultValue: unknown;
+				if (fieldName === 'alt' || fieldName === 'cf' || fieldName === 'ex' || fieldName === 'drv' || fieldName === 'idm') {
+					defaultValue = [];
+				} else if (fieldName === 'bound' || fieldName === 'dup' || fieldName === 'takes_a2') {
+					defaultValue = false;
+				} else {
+					defaultValue = '';
+				}
+				const newData = setByPath(entryData, `${path}.${fieldName}`, defaultValue);
 				setEntryData(newData as EntryData);
 			}
 		}
@@ -243,13 +252,13 @@ export default function EntryEditorPage() {
 			return ['mw', 'etym'];
 		} else if (path.match(/^defs\[\d+\]\.defs\[\d+\]$/)) {
 			// SubDefinition level
-			return ['mw', 'cat', 'etym', 'det', 'alt', 'cf'];
+			return ['mw', 'cat', 'etym', 'det', 'bound', 'dup', 'takes_a2', 'alt', 'cf'];
 		} else if (path.match(/\.(ex|drv|idm)\[\d+\]$/)) {
 			// ExampleItem level
 			return ['mw', 'cat', 'etym', 'det', 'alt', 'cf'];
 		} else if (path.match(/\.en\[\d+\]$/)) {
 			// TranslationVariant level
-			return ['mw', 'cat', 'etym', 'alt'];
+			return ['mw', 'cat', 'etym', 'dup', 'alt'];
 		}
 		return [];
 	};
@@ -279,7 +288,7 @@ export default function EntryEditorPage() {
 				<div className="editor-header">
 					<h1>{isNewEntry ? 'New Entry' : 'Edit Entry'}</h1>
 					<div className="editor-actions">
-						<button onClick={() => navigate('/entries')} className="btn-secondary">
+						<button onClick={() => navigate(-1)} className="btn-secondary">
 							Cancel
 						</button>
 						{canEdit && (
@@ -311,8 +320,31 @@ export default function EntryEditorPage() {
 
 				{activeTab === 'edit' ? (
 					<div className="compact-form">
-						<div className="entry-level-header">
-							<h3>Entry Fields</h3>
+						{/* Compact Entry Header */}
+						<div className="entry-header-compact compact-header">
+							<div className="inline-material-field" style={{ flex: 1 }}>
+								<label htmlFor="field-head">head:</label>
+								<input
+									type="text"
+									value={entryData.head}
+									onChange={(e) => setEntryData({ ...entryData, head: e.target.value })}
+									disabled={!canEdit}
+									placeholder=" "
+									id="field-head"
+								/>
+							</div>
+							
+							{/* Compact Done checkbox */}
+							<button
+								className={`done-checkbox ${isComplete ? 'checked' : ''}`}
+								onClick={() => canEdit && setIsComplete(!isComplete)}
+								disabled={!canEdit}
+								title={isComplete ? 'Mark as incomplete' : 'Mark as complete'}
+								type="button"
+							>
+								{isComplete ? '✓' : '○'}
+							</button>
+							
 							<FieldVisibilityMenu
 								path="entry"
 								availableFields={getAvailableFields('entry')}
@@ -320,19 +352,6 @@ export default function EntryEditorPage() {
 								onToggleField={toggleFieldVisibility}
 								canEdit={canEdit}
 							/>
-						</div>
-
-						{/* Head */}
-						<div className="material-field">
-							<input
-								type="text"
-								value={entryData.head}
-								onChange={(e) => setEntryData({ ...entryData, head: e.target.value })}
-								disabled={!canEdit}
-								placeholder=" "
-								id="field-head"
-							/>
-							<label htmlFor="field-head">head:</label>
 						</div>
 
 						{/* Head Number, Page & Etymology */}
@@ -380,17 +399,6 @@ export default function EntryEditorPage() {
 							)}
 						</div>
 
-						{/* Completeness */}
-						<div className="checkbox-field" onClick={() => canEdit && setIsComplete(!isComplete)}>
-							<input
-								type="checkbox"
-								checked={isComplete}
-								onChange={(e) => setIsComplete(e.target.checked)}
-								disabled={!canEdit}
-								id="field-complete"
-							/>
-							<label htmlFor="field-complete">Mark as complete</label>
-						</div>
 
 						{/* POS Definitions */}
 						{entryData.defs.map((posDef, posIndex) => (

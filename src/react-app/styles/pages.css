@@ -269,6 +269,44 @@
 	margin-right: 0.25rem;
 }
 
+/* Multiple POS badges */
+.pos-badge {
+	display: inline-block;
+	background: var(--color-primary);
+	color: white;
+	padding: 0.125rem 0.5rem;
+	border-radius: 8px;
+	font-style: normal;
+	font-size: 0.75rem;
+	font-weight: 500;
+	margin-right: 0.375rem;
+	line-height: 1.4;
+}
+
+.pos-missing {
+	font-style: italic;
+	color: var(--color-text-secondary);
+	opacity: 0.6;
+}
+
+/* Boolean flag indicators */
+.flag-bound b,
+.flag-takes-a2 i,
+.flag-dup i {
+	font-style: italic;
+	color: var(--color-text-secondary);
+}
+
+.flag-bound b {
+	font-weight: bold;
+	font-style: normal;
+}
+
+.flag-takes-a2,
+.flag-dup {
+	font-size: 0.9em;
+}
+
 .cat {
 	color: var(--color-text-secondary);
 	font-size: 0.9rem;

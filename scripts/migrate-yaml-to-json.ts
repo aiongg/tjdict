@@ -299,6 +299,7 @@ function wrapSimpleEnInArray(obj: unknown, inExDrvIdm: boolean = false): unknown
 
 // Ensure SubDefinition has an 'en' field (add empty string if missing)
 // Also converts array 'en' values to strings at SubDefinition level
+// Preserves boolean flags (bound, dup, takes_a2) only if truthy
 function ensureEnField(obj: unknown): unknown {
 	if (!obj || typeof obj !== 'object' || Array.isArray(obj)) {
 		return obj;
@@ -324,6 +325,20 @@ function ensureEnField(obj: unknown): unknown {
 	// If this looks like a SubDefinition but has no 'en' field, add it
 	if (!('en' in result)) {
 		result.en = "";
+	}
+	
+	// Normalize boolean flags - only keep if truthy
+	const booleanFlags = ['bound', 'dup', 'takes_a2'];
+	for (const flag of booleanFlags) {
+		if (flag in result) {
+			const value = result[flag];
+			// Keep only if explicitly true or the string "true"
+			if (value === true || value === 'true') {
+				result[flag] = true;
+			} else {
+				delete result[flag];
+			}
+		}
 	}
 	
 	return result;
@@ -368,13 +383,25 @@ function restructureNestedDefs(defItem: unknown): unknown {
 		});
 		
 		// Extract pos and other top-level fields
+		// Convert pos to array format (optional field)
 		const posValue = def.pos;
-		const pos = typeof posValue === 'string' ? posValue : (Array.isArray(posValue) ? posValue[0] : '');
-		
 		const restructured: Record<string, unknown> = {
-			pos,
 			defs: nestedDefs
 		};
+		
+		if (posValue !== undefined && posValue !== null) {
+			let pos: string[];
+			if (Array.isArray(posValue)) {
+				pos = posValue.filter(v => typeof v === 'string' && v !== '');
+			} else if (typeof posValue === 'string' && posValue !== '') {
+				pos = [posValue];
+			} else {
+				pos = [];
+			}
+			if (pos.length > 0) {
+				restructured.pos = pos;
+			}
+		}
 		
 		// Copy any other fields (but not the numbered ones or pos)
 		for (const [key, value] of Object.entries(def)) {
@@ -386,8 +413,8 @@ function restructureNestedDefs(defItem: unknown): unknown {
 		return restructured;
 	} else {
 		// No numbered definitions - wrap in nested structure
+		// Convert pos to array format (optional field)
 		const posValue = def.pos;
-		const pos = typeof posValue === 'string' ? posValue : (Array.isArray(posValue) ? posValue[0] : '');
 		
 		// Create a copy of def without the pos field
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -398,10 +425,25 @@ function restructureNestedDefs(defItem: unknown): unknown {
 		normalizedSubDef = wrapSimpleEnInArray(normalizedSubDef);
 		normalizedSubDef = ensureEnField(normalizedSubDef);
 		
-		return {
-			pos,
+		const result: Record<string, unknown> = {
 			defs: [normalizedSubDef]
 		};
+		
+		if (posValue !== undefined && posValue !== null) {
+			let pos: string[];
+			if (Array.isArray(posValue)) {
+				pos = posValue.filter(v => typeof v === 'string' && v !== '');
+			} else if (typeof posValue === 'string' && posValue !== '') {
+				pos = [posValue];
+			} else {
+				pos = [];
+			}
+			if (pos.length > 0) {
+				result.pos = pos;
+			}
+		}
+		
+		return result;
 	}
 }
 

@@ -1,6 +1,7 @@
 import { SubDefinition, ExampleItem, EditorCallbacks } from './types';
 import { FieldVisibilityMenu, MenuItem } from './FieldVisibilityMenu';
 import { ExampleItemEditor } from './ExampleItemEditor';
+import { ChipInput } from './ChipInput';
 
 interface SubDefinitionEditorProps {
 	subDef: SubDefinition;
@@ -150,11 +151,12 @@ export function SubDefinitionEditor({
 				
 				{/* Inline English translation */}
 				<div className="inline-material-field" style={{ flex: 1 }}>
+					<label htmlFor={`field-${subDefPath}-en`}>en:</label>
 					<textarea
 						value={subDef.en || ''}
 						onChange={(e) => onUpdate({ en: e.target.value })}
 						disabled={!canEdit}
-						placeholder="en:"
+						placeholder=" "
 						rows={1}
 						id={`field-${subDefPath}-en`}
 						style={{ resize: 'none', overflow: 'hidden' }}
@@ -175,6 +177,43 @@ export function SubDefinitionEditor({
 					canEdit={canEdit}
 					menuItems={menuItems}
 				/>
+			</div>
+
+			{/* Boolean flags */}
+			<div className="compact-field-row">
+				{isFieldVisible(subDefPath, 'bound') && (
+					<label className="checkbox-field">
+						<input
+							type="checkbox"
+							checked={subDef.bound || false}
+							onChange={(e) => onUpdate({ bound: e.target.checked || undefined })}
+							disabled={!canEdit}
+						/>
+						<span>bound</span>
+					</label>
+				)}
+				{isFieldVisible(subDefPath, 'dup') && (
+					<label className="checkbox-field">
+						<input
+							type="checkbox"
+							checked={subDef.dup || false}
+							onChange={(e) => onUpdate({ dup: e.target.checked || undefined })}
+							disabled={!canEdit}
+						/>
+						<span>dup</span>
+					</label>
+				)}
+				{isFieldVisible(subDefPath, 'takes_a2') && (
+					<label className="checkbox-field">
+						<input
+							type="checkbox"
+							checked={subDef.takes_a2 || false}
+							onChange={(e) => onUpdate({ takes_a2: e.target.checked || undefined })}
+							disabled={!canEdit}
+						/>
+						<span>takes_a2</span>
+					</label>
+				)}
 			</div>
 
 			{/* Optional fields */}
@@ -236,83 +275,31 @@ export function SubDefinitionEditor({
 				)}
 			</div>
 
-			{/* Alt array */}
+			{/* Alt array with ChipInput */}
 			{isFieldVisible(subDefPath, 'alt') && (
-				<div className="array-field">
-					<label>alt:</label>
-					{(subDef.alt || []).map((alt, altIdx) => (
-						<div key={altIdx} className="array-item">
-							<input
-								type="text"
-								value={alt}
-								onChange={(e) => {
-									const newAlt = [...(subDef.alt || [])];
-									newAlt[altIdx] = e.target.value;
-									onUpdate({ alt: newAlt });
-								}}
-								disabled={!canEdit}
-							/>
-							{canEdit && (
-								<button
-									onClick={() => {
-										const newAlt = (subDef.alt || []).filter((_, i) => i !== altIdx);
-										onUpdate({ alt: newAlt });
-									}}
-									className="item-remove btn-icon btn-danger"
-								>
-									✕
-								</button>
-							)}
-						</div>
-					))}
-					{canEdit && (
-						<button
-							onClick={() => onUpdate({ alt: [...(subDef.alt || []), ''] })}
-							className="btn-secondary btn-sm"
-						>
-							+ Add alt
-						</button>
-					)}
+				<div className="inline-material-field" style={{ flex: 1 }}>
+					<label htmlFor={`field-${subDefPath}-alt`}>alt:</label>
+					<ChipInput
+						values={subDef.alt || []}
+						onChange={(values) => onUpdate({ alt: values.length > 0 ? values : undefined })}
+						disabled={!canEdit}
+						placeholder="Alternative forms"
+						id={`field-${subDefPath}-alt`}
+					/>
 				</div>
 			)}
 
-			{/* Cf array */}
+			{/* Cf array with ChipInput */}
 			{isFieldVisible(subDefPath, 'cf') && (
-				<div className="array-field">
-					<label>cf:</label>
-					{(subDef.cf || []).map((cf, cfIdx) => (
-						<div key={cfIdx} className="array-item">
-							<input
-								type="text"
-								value={cf}
-								onChange={(e) => {
-									const newCf = [...(subDef.cf || [])];
-									newCf[cfIdx] = e.target.value;
-									onUpdate({ cf: newCf });
-								}}
-								disabled={!canEdit}
-							/>
-							{canEdit && (
-								<button
-									onClick={() => {
-										const newCf = (subDef.cf || []).filter((_, i) => i !== cfIdx);
-										onUpdate({ cf: newCf });
-									}}
-									className="item-remove btn-icon btn-danger"
-								>
-									✕
-								</button>
-							)}
-						</div>
-					))}
-					{canEdit && (
-						<button
-							onClick={() => onUpdate({ cf: [...(subDef.cf || []), ''] })}
-							className="btn-secondary btn-sm"
-						>
-							+ Add cf
-						</button>
-					)}
+				<div className="inline-material-field" style={{ flex: 1 }}>
+					<label htmlFor={`field-${subDefPath}-cf`}>cf:</label>
+					<ChipInput
+						values={subDef.cf || []}
+						onChange={(values) => onUpdate({ cf: values.length > 0 ? values : undefined })}
+						disabled={!canEdit}
+						placeholder="Cross-references"
+						id={`field-${subDefPath}-cf`}
+					/>
 				</div>
 			)}
 

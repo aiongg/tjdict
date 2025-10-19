@@ -30,11 +30,16 @@
   "definitions": {
     "PosDefinition": {
       "type": "object",
-      "required": ["pos", "defs"],
+      "required": ["defs"],
       "additionalProperties": false,
       "properties": {
         "pos": {
-          "type": "string"
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": ["adj", "adv", "aux", "conj", "dem", "excl", "gp", "ideo", "inf", "mp", "mw", "n", "num", "onom", "pref", "prep", "pron", "suf", "v"]
+          }
         },
         "mw": {
           "type": "string"
@@ -66,6 +71,15 @@
         },
         "etym": {
           "type": "string"
+        },
+        "bound": {
+          "type": "boolean"
+        },
+        "dup": {
+          "type": "boolean"
+        },
+        "takes_a2": {
+          "type": "boolean"
         },
         "alt": {
           "type": "array",
@@ -108,6 +122,9 @@
       "properties": {
         "en": {
           "type": "string"
+        },
+        "dup": {
+          "type": "boolean"
         },
         "mw": {
           "type": "string"

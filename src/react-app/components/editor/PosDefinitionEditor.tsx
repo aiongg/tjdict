@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { PosDefinition, SubDefinition, EditorCallbacks } from './types';
 import { FieldVisibilityMenu, MenuItem } from './FieldVisibilityMenu';
 import { SubDefinitionEditor } from './SubDefinitionEditor';
+import { ChipInput } from './ChipInput';
 
 interface PosDefinitionEditorProps {
 	posDef: PosDefinition;
@@ -32,6 +33,9 @@ export function PosDefinitionEditor({
 	const posDefPath = `defs[${posIndex}]`;
 	const { isFieldVisible, onToggleField, getAvailableFields } = callbacks;
 
+	// Valid POS values
+	const validPosValues = ['adj', 'adv', 'aux', 'conj', 'dem', 'excl', 'gp', 'ideo', 'inf', 'mp', 'mw', 'n', 'num', 'onom', 'pref', 'prep', 'pron', 'suf', 'v'];
+
 	const menuItems: MenuItem[] = [
 		{
 			label: '+ Add definition',
@@ -59,15 +63,15 @@ export function PosDefinitionEditor({
 					{isCollapsed ? '▶' : '▼'}
 				</span>
 				
-				{/* Inline POS input styled like a badge */}
-				<div className="inline-material-field">
-					<input
-						type="text"
-						value={posDef.pos || ''}
-						onChange={(e) => onUpdate({ pos: e.target.value })}
+				{/* POS chip input */}
+				<div className="inline-material-field" style={{ flex: 1 }}>
+					<label htmlFor={`field-${posDefPath}-pos`}>pos:</label>
+					<ChipInput
+						values={posDef.pos || []}
+						onChange={(values) => onUpdate({ pos: values.length > 0 ? values : undefined })}
 						disabled={!canEdit}
-						placeholder="pos"
-						className="badge-input"
+						placeholder="e.g., n, v, adj"
+						allowedValues={validPosValues}
 						id={`field-${posDefPath}-pos`}
 					/>
 				</div>

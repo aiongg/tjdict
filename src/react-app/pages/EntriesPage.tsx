@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { Navigation } from '../components/Navigation';
 import { PaginationControls } from '../components/PaginationControls';
@@ -8,12 +8,13 @@ interface TranslationVariant {
 	en: string;
 	mw?: string;
 	etym?: string;
+	dup?: boolean;
 	alt?: string[];
 	[key: string]: unknown;
 }
 
 interface PosDefinition {
-	pos: string;  // Single string: "n", "v", etc.
+	pos?: string[];  // Array of strings: ["n"], ["v", "adj"], etc. - optional for incomplete entries
 	defs: SubDefinition[];
 }
 
@@ -21,6 +22,9 @@ interface SubDefinition {
 	en?: string;  // Simple string at definition level
 	mw?: string;
 	cat?: string;
+	bound?: boolean;  // Bound morpheme flag
+	dup?: boolean;  // Reduplication flag
+	takes_a2?: boolean;  // Takes á tone flag
 	alt?: string[];
 	cf?: string[];
 	det?: string;
@@ -191,10 +195,22 @@ const ExtraDisplay = ({ data, bullet }: { data: ExampleItem | DerivativeItem | I
 };
 
 // Display a single sub-definition variant
-const SubDefDisplay = ({ subDef, num }: { subDef: SubDefinition; num?: number }) => {
+const SubDefDisplay = ({ subDef, num, hasSingleDef }: { subDef: SubDefinition; num?: number; hasSingleDef?: boolean }) => {
+	// Render flag indicators
+	const renderFlags = () => {
+		const flags = [];
+		if (subDef.bound) flags.push(<span key="bound" className="flag-bound"> <b>B.</b></span>);
+		if (subDef.takes_a2) flags.push(<span key="takes_a2" className="flag-takes-a2"> <i>[á]</i></span>);
+		if (subDef.dup) flags.push(<span key="dup" className="flag-dup"> <i>[x]</i></span>);
+		return flags;
+	};
+
 	return (
 		<div className="subdef">
 			{num !== undefined && <span className="def-num">{getCircledNum(num)}</span>}
+			{/* For single definition, show flags after pos (handled in PosDefDisplay) */}
+			{/* For multiple definitions, show flags before English */}
+			{!hasSingleDef && renderFlags()}
 			{subDef.cat && <span className="cat"> {subDef.cat}</span>}
 			{subDef.mw && <span className="mw"> {subDef.mw}:</span>}
 			{subDef.en && <span className="en"> {subDef.en}</span>}
@@ -223,14 +239,36 @@ const SubDefDisplay = ({ subDef, num }: { subDef: SubDefinition; num?: number })
 const PosDefDisplay = ({ posDef }: { posDef: PosDefinition }) => {
 	const hasSingleDef = posDef.defs.length === 1;
 	
+	// Render POS badges (multiple badges for multiple pos values)
+	const renderPosBadges = () => {
+		if (!posDef.pos || posDef.pos.length === 0) {
+			return <span className="pos pos-missing">[no pos]</span>;
+		}
+		return posDef.pos.map((p, i) => (
+			<span key={i} className="pos pos-badge">{p}</span>
+		));
+	};
+
+	// Render flags for single definition (after pos)
+	const renderFlagsAfterPos = () => {
+		if (!hasSingleDef) return null;
+		const subDef = posDef.defs[0];
+		const flags = [];
+		if (subDef.bound) flags.push(<span key="bound" className="flag-bound"> <b>B.</b></span>);
+		if (subDef.takes_a2) flags.push(<span key="takes_a2" className="flag-takes-a2"> <i>[á]</i></span>);
+		if (subDef.dup) flags.push(<span key="dup" className="flag-dup"> <i>[x]</i></span>);
+		return flags;
+	};
+	
 	return (
 		<div className="pos-def">
-			<span className="pos">{posDef.pos}</span>
+			{renderPosBadges()}
+			{hasSingleDef && renderFlagsAfterPos()}
 			{hasSingleDef ? (
-				<SubDefDisplay subDef={posDef.defs[0]} />
+				<SubDefDisplay subDef={posDef.defs[0]} hasSingleDef={true} />
 			) : (
 				posDef.defs.map((subDef, i) => (
-					<SubDefDisplay key={i} subDef={subDef} num={i + 1} />
+					<SubDefDisplay key={i} subDef={subDef} num={i + 1} hasSingleDef={false} />
 				))
 			)}
 		</div>
@@ -256,29 +294,49 @@ const EntryDisplay = ({ entryData }: { entryData: EntryData }) => {
 export default function EntriesPage() {
 	const { user } = useAuth();
 	const navigate = useNavigate();
+	const [searchParams, setSearchParams] = useSearchParams();
+	
+	// Page size for filtered results
+	const FILTERED_PAGE_SIZE = 50;
+	
+	// Parse URL parameters for initial state
+	const getParam = (key: string, defaultValue: string = ''): string => {
+		return searchParams.get(key) || defaultValue;
+	};
+	
+	const getBoolParam = (key: string, defaultValue: boolean = false): boolean => {
+		const value = searchParams.get(key);
+		return value === 'true' ? true : value === 'false' ? false : defaultValue;
+	};
+	
+	const getNumberParam = (key: string, defaultValue: number): number => {
+		const value = searchParams.get(key);
+		return value ? parseInt(value, 10) || defaultValue : defaultValue;
+	};
+	
+	// Initialize state from URL
 	const [entries, setEntries] = useState<EntryWithReviews[]>([]);
-	const [dictPage, setDictPage] = useState(1);  // Dictionary page number
+	const [dictPage, setDictPage] = useState(getNumberParam('page', 1));
 	const [minPage, setMinPage] = useState(1);
 	const [maxPage, setMaxPage] = useState(1);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
-	const [pageInputValue, setPageInputValue] = useState('1');
+	const [pageInputValue, setPageInputValue] = useState(getParam('page', '1'));
 	
-	console.log('[RENDER] dictPage:', dictPage, 'pageInputValue:', pageInputValue);
-
-	// Search and filter state
-	const [searchQuery, setSearchQuery] = useState('');
-	const [searchInput, setSearchInput] = useState('');
-	const [showIncompleteOnly, setShowIncompleteOnly] = useState(false);
-	const [showNeedingReview, setShowNeedingReview] = useState(false);
-	const [headFilter, setHeadFilter] = useState('');
-	const [posFilter, setPosFilter] = useState('');
-	const [sortBy, setSortBy] = useState<'sort_key' | 'updated_at'>('sort_key');
-	const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-	const [showAdvanced, setShowAdvanced] = useState(false);
-	
-	// Page size for filtered results
-	const FILTERED_PAGE_SIZE = 50;
+	// Search and filter state from URL
+	const [searchQuery, setSearchQuery] = useState(getParam('q'));
+	const [searchInput, setSearchInput] = useState(getParam('q'));
+	const [showIncompleteOnly, setShowIncompleteOnly] = useState(getBoolParam('incomplete'));
+	const [showNeedingReview, setShowNeedingReview] = useState(getBoolParam('needsReview'));
+	const [headFilter, setHeadFilter] = useState(getParam('head'));
+	const [posFilter, setPosFilter] = useState(getParam('pos'));
+	const [sortBy, setSortBy] = useState<'sort_key' | 'updated_at'>(
+		(getParam('sort') as 'sort_key' | 'updated_at') || 'sort_key'
+	);
+	const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>(
+		(getParam('order') as 'asc' | 'desc') || 'asc'
+	);
+	const [showAdvanced, setShowAdvanced] = useState(getBoolParam('advanced'));
 
 	const fetchEntries = useCallback(async () => {
 		console.log('[fetchEntries] Called with dictPage:', dictPage);
@@ -341,22 +399,79 @@ export default function EntriesPage() {
 	}, [dictPage, searchQuery, showIncompleteOnly, showNeedingReview, headFilter, posFilter, sortBy, sortOrder]);
 
 	useEffect(() => {
-		console.log('[useEffect fetchEntries] Triggered');
 		fetchEntries();
 	}, [fetchEntries]);
+	
+	// Sync state to URL whenever it changes
+	useEffect(() => {
+		const params = new URLSearchParams();
+		
+		// Add parameters only if they differ from defaults
+		if (dictPage !== 1) params.set('page', dictPage.toString());
+		if (searchQuery) params.set('q', searchQuery);
+		if (showIncompleteOnly) params.set('incomplete', 'true');
+		if (showNeedingReview) params.set('needsReview', 'true');
+		if (headFilter) params.set('head', headFilter);
+		if (posFilter) params.set('pos', posFilter);
+		if (sortBy !== 'sort_key') params.set('sort', sortBy);
+		if (sortOrder !== 'asc') params.set('order', sortOrder);
+		if (showAdvanced) params.set('advanced', 'true');
+		
+		// Update URL without causing navigation
+		setSearchParams(params, { replace: true });
+	}, [dictPage, searchQuery, showIncompleteOnly, showNeedingReview, headFilter, posFilter, sortBy, sortOrder, showAdvanced, setSearchParams]);
+	
+	// Save scroll position before navigating away
+	useEffect(() => {
+		const saveScrollPosition = () => {
+			sessionStorage.setItem('entriesPageScrollY', window.scrollY.toString());
+		};
+		
+		// Save scroll position periodically while on the page
+		const intervalId = setInterval(saveScrollPosition, 500);
+		
+		// Save when clicking a link
+		const handleClick = (e: MouseEvent) => {
+			const target = e.target as HTMLElement;
+			if (target.closest('a') || target.closest('button')) {
+				saveScrollPosition();
+			}
+		};
+		document.addEventListener('click', handleClick);
+		
+		return () => {
+			clearInterval(intervalId);
+			document.removeEventListener('click', handleClick);
+		};
+	}, []);
+	
+	// Restore scroll position after entries load
+	useEffect(() => {
+		if (!loading && entries.length > 0) {
+			const savedScroll = sessionStorage.getItem('entriesPageScrollY');
+			if (savedScroll) {
+				const scrollY = parseInt(savedScroll, 10);
+				// Use requestAnimationFrame to ensure DOM is ready
+				requestAnimationFrame(() => {
+					window.scrollTo(0, scrollY);
+					sessionStorage.removeItem('entriesPageScrollY');
+				});
+			}
+		}
+	}, [loading, entries.length]);
 
 	// Debounced search
 	useEffect(() => {
-		console.log('[useEffect search] searchInput changed to:', searchInput);
 		const timer = setTimeout(() => {
-			console.log('[useEffect search] Timeout fired, updating searchQuery');
-			setSearchQuery(searchInput);
-			setDictPage(1); // Reset to first page on new search
-			setPageInputValue('1'); // Reset input value too
+			if (searchQuery !== searchInput) {
+				setSearchQuery(searchInput);
+				setDictPage(1);
+				setPageInputValue('1');
+			}
 		}, 300);
 
 		return () => clearTimeout(timer);
-	}, [searchInput]);
+	}, [searchInput, searchQuery]);
 
 	const handleEntryClick = (id: number) => {
 		navigate(`/entries/${id}`);

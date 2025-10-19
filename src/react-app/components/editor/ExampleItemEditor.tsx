@@ -85,12 +85,13 @@ export function ExampleItemEditor({
 				
 				{/* Inline Taiwanese text */}
 				<div className="inline-material-field" style={{ flex: 1 }}>
+					<label htmlFor={`field-${itemPath}-tw`}>tw:</label>
 					<textarea
 						value={item.tw || ''}
 						onChange={(e) => onUpdate({ tw: e.target.value })}
 						disabled={!canEdit}
 						rows={1}
-						placeholder="tw:"
+						placeholder=" "
 						id={`field-${itemPath}-tw`}
 						style={{ resize: 'none', overflow: 'hidden' }}
 						onInput={(e) => {

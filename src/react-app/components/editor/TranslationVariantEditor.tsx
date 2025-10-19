@@ -1,5 +1,6 @@
 import { TranslationVariant, EditorCallbacks } from './types';
 import { FieldVisibilityMenu, MenuItem } from './FieldVisibilityMenu';
+import { ChipInput } from './ChipInput';
 
 interface TranslationVariantEditorProps {
 	variant: TranslationVariant;
@@ -44,12 +45,13 @@ export function TranslationVariantEditor({
 				
 				{/* Inline English translation */}
 				<div className="inline-material-field" style={{ flex: 1 }}>
+					<label htmlFor={`field-${path}-en-${variantIndex}`}>en:</label>
 					<textarea
 						value={variant.en || ''}
 						onChange={(e) => onUpdate({ en: e.target.value })}
 						disabled={!canEdit}
 						rows={1}
-						placeholder="en:"
+						placeholder=" "
 						id={`field-${path}-en-${variantIndex}`}
 						style={{ resize: 'none', overflow: 'hidden' }}
 						onInput={(e) => {
@@ -69,6 +71,21 @@ export function TranslationVariantEditor({
 					canEdit={canEdit}
 					menuItems={menuItems}
 				/>
+			</div>
+
+			{/* Boolean flags */}
+			<div className="compact-field-row">
+				{isFieldVisible(variantPath, 'dup') && (
+					<label className="checkbox-field">
+						<input
+							type="checkbox"
+							checked={variant.dup || false}
+							onChange={(e) => onUpdate({ dup: e.target.checked || undefined })}
+							disabled={!canEdit}
+						/>
+						<span>dup</span>
+					</label>
+				)}
 			</div>
 
 			{/* Optional fields */}
@@ -116,43 +133,17 @@ export function TranslationVariantEditor({
 				)}
 			</div>
 
-			{/* Alt array */}
+			{/* Alt array with ChipInput */}
 			{isFieldVisible(variantPath, 'alt') && (
-				<div className="array-field">
-					<label>alt:</label>
-					{(variant.alt || []).map((alt, altIdx) => (
-						<div key={altIdx} className="array-item">
-							<input
-								type="text"
-								value={alt}
-								onChange={(e) => {
-									const newAlt = [...(variant.alt || [])];
-									newAlt[altIdx] = e.target.value;
-									onUpdate({ alt: newAlt });
-								}}
-								disabled={!canEdit}
-							/>
-							{canEdit && (
-								<button
-									onClick={() => {
-										const newAlt = (variant.alt || []).filter((_, i) => i !== altIdx);
-										onUpdate({ alt: newAlt });
-									}}
-									className="item-remove btn-icon btn-danger"
-								>
-									✕
-								</button>
-							)}
-						</div>
-					))}
-					{canEdit && (
-						<button
-							onClick={() => onUpdate({ alt: [...(variant.alt || []), ''] })}
-							className="btn-secondary btn-sm"
-						>
-							+ Add alt
-						</button>
-					)}
+				<div className="inline-material-field" style={{ flex: 1 }}>
+					<label htmlFor={`field-${path}-alt-${variantIndex}`}>alt:</label>
+					<ChipInput
+						values={variant.alt || []}
+						onChange={(values) => onUpdate({ alt: values.length > 0 ? values : undefined })}
+						disabled={!canEdit}
+						placeholder="Alternative forms"
+						id={`field-${path}-alt-${variantIndex}`}
+					/>
 				</div>
 			)}
 
