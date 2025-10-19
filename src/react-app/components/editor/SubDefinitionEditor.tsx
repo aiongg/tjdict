@@ -1,5 +1,5 @@
 import { SubDefinition, ExampleItem, EditorCallbacks } from './types';
-import { FieldVisibilityMenu } from './FieldVisibilityMenu';
+import { FieldVisibilityMenu, MenuItem } from './FieldVisibilityMenu';
 import { ExampleItemEditor } from './ExampleItemEditor';
 
 interface SubDefinitionEditorProps {
@@ -108,41 +108,73 @@ export function SubDefinitionEditor({
 		onUpdate({ [parentField]: newParentArr });
 	};
 
+	// Build menu items
+	const menuItems: MenuItem[] = [];
+	
+	// Add section creation items
+	if (!subDef.ex || subDef.ex.length === 0) {
+		menuItems.push({
+			label: '+ Add Ex',
+			onClick: () => handleArrayAdd('ex', { tw: '', en: [{ en: '' }] })
+		});
+	}
+	if (!subDef.drv || subDef.drv.length === 0) {
+		menuItems.push({
+			label: '+ Add Drv',
+			onClick: () => handleArrayAdd('drv', { tw: '', en: [{ en: '' }] })
+		});
+	}
+	if (!subDef.idm || subDef.idm.length === 0) {
+		menuItems.push({
+			label: '+ Add Idm',
+			onClick: () => handleArrayAdd('idm', { tw: '', en: [{ en: '' }] })
+		});
+	}
+	
+	// Add delete button
+	if (totalSubDefs > 1) {
+		menuItems.push({
+			label: 'Delete definition',
+			onClick: () => onRemove(),
+			danger: true,
+			divider: menuItems.length > 0
+		});
+	}
+
 	return (
 		<div className="sub-definition">
-			<div className="sub-def-header">
+			<div className="sub-def-header compact-header">
 				{totalSubDefs > 1 && (
 					<span className="circled-number">{getCircledNumber(subIndex)}</span>
 				)}
+				
+				{/* Inline English translation */}
+				<div className="inline-material-field" style={{ flex: 1 }}>
+					<textarea
+						value={subDef.en || ''}
+						onChange={(e) => onUpdate({ en: e.target.value })}
+						disabled={!canEdit}
+						placeholder="en:"
+						rows={1}
+						id={`field-${subDefPath}-en`}
+						style={{ resize: 'none', overflow: 'hidden' }}
+						onInput={(e) => {
+							// Auto-resize textarea
+							const target = e.target as HTMLTextAreaElement;
+							target.style.height = 'auto';
+							target.style.height = target.scrollHeight + 'px';
+						}}
+					/>
+				</div>
+
 				<FieldVisibilityMenu
 					path={subDefPath}
 					availableFields={getAvailableFields(subDefPath)}
 					isFieldVisible={isFieldVisible}
 					onToggleField={onToggleField}
 					canEdit={canEdit}
+					menuItems={menuItems}
 				/>
-				{canEdit && totalSubDefs > 1 && (
-					<button
-						onClick={onRemove}
-						className="item-remove btn-icon btn-danger"
-						title="Remove sub-definition"
-					>
-						✕
-					</button>
-				)}
-			</div>
-
-			{/* English translation (string) */}
-			<div className="material-field">
-				<textarea
-					value={subDef.en || ''}
-					onChange={(e) => onUpdate({ en: e.target.value })}
-					disabled={!canEdit}
-					placeholder=" "
-					rows={2}
-					id={`field-${subDefPath}-en`}
-				/>
-				<label htmlFor={`field-${subDefPath}-en`}>en:</label>
 			</div>
 
 			{/* Optional fields */}
@@ -284,10 +316,9 @@ export function SubDefinitionEditor({
 				</div>
 			)}
 
-		{/* Examples */}
-		{((subDef.ex && subDef.ex.length > 0) || canEdit) && (
+		{/* Examples - only show if has items */}
+		{subDef.ex && subDef.ex.length > 0 && (
 			<div className="examples-section">
-				<div className="section-label">¶ ex</div>
 				{(subDef.ex || []).map((ex, exIdx) => (
 					<ExampleItemEditor
 						key={exIdx}
@@ -316,10 +347,11 @@ export function SubDefinitionEditor({
 			</div>
 		)}
 
-		{/* Derivatives */}
-		{((subDef.drv && subDef.drv.length > 0) || canEdit) && (
-			<div className="derivatives-section">
-					<div className="section-label">◊ drv</div>
+		{/* Derivatives - only show if has items */}
+		{subDef.drv && subDef.drv.length > 0 && (
+			<>
+				{subDef.ex && subDef.ex.length > 0 && <div className="section-divider"></div>}
+				<div className="derivatives-section">
 					{(subDef.drv || []).map((drv, drvIdx) => (
 						<ExampleItemEditor
 							key={drvIdx}
@@ -346,12 +378,16 @@ export function SubDefinitionEditor({
 						</button>
 					)}
 				</div>
-			)}
+			</>
+		)}
 
-		{/* Idioms */}
-		{((subDef.idm && subDef.idm.length > 0) || canEdit) && (
-			<div className="idioms-section">
-					<div className="section-label">※ idm</div>
+		{/* Idioms - only show if has items */}
+		{subDef.idm && subDef.idm.length > 0 && (
+			<>
+				{((subDef.ex && subDef.ex.length > 0) || (subDef.drv && subDef.drv.length > 0)) && (
+					<div className="section-divider"></div>
+				)}
+				<div className="idioms-section">
 					{(subDef.idm || []).map((idm, idmIdx) => (
 						<ExampleItemEditor
 							key={idmIdx}
@@ -378,7 +414,8 @@ export function SubDefinitionEditor({
 						</button>
 					)}
 				</div>
-			)}
+			</>
+		)}
 		</div>
 	);
 }

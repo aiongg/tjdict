@@ -1,5 +1,5 @@
-import { ExampleItem, TranslationVariant, EditorCallbacks } from './types';
-import { FieldVisibilityMenu } from './FieldVisibilityMenu';
+import { ExampleItem, EditorCallbacks } from './types';
+import { FieldVisibilityMenu, MenuItem } from './FieldVisibilityMenu';
 import { TranslationVariantEditor } from './TranslationVariantEditor';
 
 interface ExampleItemEditorProps {
@@ -44,39 +44,72 @@ export function ExampleItemEditor({
 		}
 	};
 
+	// Build menu items
+	const menuItems: MenuItem[] = [
+		{
+			label: '+ Add translation variant',
+			onClick: () => onUpdate({ en: [...(item.en || []), { en: '' }] })
+		}
+	];
+	
+	// Add nested item options if nesting level allows
+	if (nestingLevel < 2 && onAddNested) {
+		menuItems.push(
+			{
+				label: '+ Add nested ex',
+				onClick: () => onAddNested('ex', { tw: '', en: [{ en: '' }] })
+			},
+			{
+				label: '+ Add nested drv',
+				onClick: () => onAddNested('drv', { tw: '', en: [{ en: '' }] })
+			},
+			{
+				label: '+ Add nested idm',
+				onClick: () => onAddNested('idm', { tw: '', en: [{ en: '' }] })
+			}
+		);
+	}
+	
+	// Add delete button
+	menuItems.push({
+		label: `Delete ${fieldType}`,
+		onClick: () => onRemove(),
+		danger: true,
+		divider: true
+	});
+
 	return (
 		<div className={`compact-item nested-level-${nestingLevel}`}>
-			<div className="item-header">
+			<div className="item-header compact-header">
 				<span className="item-symbol">{getSymbol(fieldType)}</span>
+				
+				{/* Inline Taiwanese text */}
+				<div className="inline-material-field" style={{ flex: 1 }}>
+					<textarea
+						value={item.tw || ''}
+						onChange={(e) => onUpdate({ tw: e.target.value })}
+						disabled={!canEdit}
+						rows={1}
+						placeholder="tw:"
+						id={`field-${itemPath}-tw`}
+						style={{ resize: 'none', overflow: 'hidden' }}
+						onInput={(e) => {
+							// Auto-resize textarea
+							const target = e.target as HTMLTextAreaElement;
+							target.style.height = 'auto';
+							target.style.height = target.scrollHeight + 'px';
+						}}
+					/>
+				</div>
+
 				<FieldVisibilityMenu
 					path={itemPath}
 					availableFields={getAvailableFields(itemPath)}
 					isFieldVisible={isFieldVisible}
 					onToggleField={onToggleField}
 					canEdit={canEdit}
+					menuItems={menuItems}
 				/>
-				{canEdit && (
-					<button
-						onClick={onRemove}
-						className="item-remove btn-icon btn-danger"
-						title={`Remove ${fieldType}`}
-					>
-						✕
-					</button>
-				)}
-			</div>
-
-			{/* Taiwanese text */}
-			<div className="material-field">
-				<textarea
-					value={item.tw || ''}
-					onChange={(e) => onUpdate({ tw: e.target.value })}
-					disabled={!canEdit}
-					rows={1}
-					placeholder=" "
-					id={`field-${itemPath}-tw`}
-				/>
-				<label htmlFor={`field-${itemPath}-tw`}>tw:</label>
 			</div>
 
 		{/* English translations (array of TranslationVariants) */}
@@ -102,14 +135,6 @@ export function ExampleItemEditor({
 					totalVariants={(item.en || []).length}
 				/>
 			))}
-				{canEdit && (
-					<button
-						onClick={() => onUpdate({ en: [...(item.en || []), { en: '' }] })}
-						className="btn-secondary btn-sm"
-					>
-						+ Add translation variant
-					</button>
-				)}
 			</div>
 
 			{/* Optional simple fields */}
@@ -252,12 +277,11 @@ export function ExampleItemEditor({
 			)}
 
 			{/* Nested ex/drv/idm (only if nesting level < 2) */}
-			{nestingLevel < 2 && onAddNested && onUpdateNested && onRemoveNested && (
+			{nestingLevel < 2 && onUpdateNested && onRemoveNested && (
 				<div className="nested-items">
 					{/* Nested examples */}
 					{item.ex && item.ex.length > 0 && (
 						<div className="nested-section">
-							<div className="section-label">¶ nested ex:</div>
 							{item.ex.map((nestedItem, nestedIdx) => (
 								<ExampleItemEditor
 									key={nestedIdx}
@@ -278,7 +302,6 @@ export function ExampleItemEditor({
 					{/* Nested derivatives */}
 					{item.drv && item.drv.length > 0 && (
 						<div className="nested-section">
-							<div className="section-label">◊ nested drv:</div>
 							{item.drv.map((nestedItem, nestedIdx) => (
 								<ExampleItemEditor
 									key={nestedIdx}
@@ -299,7 +322,6 @@ export function ExampleItemEditor({
 					{/* Nested idioms */}
 					{item.idm && item.idm.length > 0 && (
 						<div className="nested-section">
-							<div className="section-label">※ nested idm:</div>
 							{item.idm.map((nestedItem, nestedIdx) => (
 								<ExampleItemEditor
 									key={nestedIdx}
@@ -314,30 +336,6 @@ export function ExampleItemEditor({
 									nestingLevel={nestingLevel + 1}
 								/>
 							))}
-						</div>
-					)}
-
-					{/* Add nested item buttons */}
-					{canEdit && nestingLevel < 2 && (
-						<div className="nested-actions">
-							<button
-								onClick={() => onAddNested('ex', { tw: '', en: [{ en: '' }] })}
-								className="btn-secondary btn-sm"
-							>
-								+ Add nested ex
-							</button>
-							<button
-								onClick={() => onAddNested('drv', { tw: '', en: [{ en: '' }] })}
-								className="btn-secondary btn-sm"
-							>
-								+ Add nested drv
-							</button>
-							<button
-								onClick={() => onAddNested('idm', { tw: '', en: [{ en: '' }] })}
-								className="btn-secondary btn-sm"
-							>
-								+ Add nested idm
-							</button>
 						</div>
 					)}
 				</div>

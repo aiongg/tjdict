@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { PosDefinition, SubDefinition, EditorCallbacks } from './types';
-import { FieldVisibilityMenu } from './FieldVisibilityMenu';
+import { FieldVisibilityMenu, MenuItem } from './FieldVisibilityMenu';
 import { SubDefinitionEditor } from './SubDefinitionEditor';
 
 interface PosDefinitionEditorProps {
@@ -32,50 +32,58 @@ export function PosDefinitionEditor({
 	const posDefPath = `defs[${posIndex}]`;
 	const { isFieldVisible, onToggleField, getAvailableFields } = callbacks;
 
+	const menuItems: MenuItem[] = [
+		{
+			label: '+ Add definition',
+			onClick: () => onAddSubDefinition()
+		}
+	];
+
+	if (totalPosDefs > 1) {
+		menuItems.push({
+			label: 'Delete POS definition',
+			onClick: () => onRemove(),
+			danger: true,
+			divider: true
+		});
+	}
+
 	return (
 		<div className="pos-definition">
-			<div 
-				className="pos-def-header" 
-				onClick={() => setIsCollapsed(!isCollapsed)}
-			>
-				<span className="collapse-icon">{isCollapsed ? '▶' : '▼'}</span>
-				<span className="pos-badge">{posDef.pos || 'unknown'}</span>
+			<div className="pos-def-header compact-header">
+				<span 
+					className="collapse-icon"
+					onClick={() => setIsCollapsed(!isCollapsed)}
+					style={{ cursor: 'pointer' }}
+				>
+					{isCollapsed ? '▶' : '▼'}
+				</span>
+				
+				{/* Inline POS input styled like a badge */}
+				<div className="inline-material-field">
+					<input
+						type="text"
+						value={posDef.pos || ''}
+						onChange={(e) => onUpdate({ pos: e.target.value })}
+						disabled={!canEdit}
+						placeholder="pos"
+						className="badge-input"
+						id={`field-${posDefPath}-pos`}
+					/>
+				</div>
+
 				<FieldVisibilityMenu
 					path={posDefPath}
 					availableFields={getAvailableFields(posDefPath)}
 					isFieldVisible={isFieldVisible}
 					onToggleField={onToggleField}
 					canEdit={canEdit}
+					menuItems={menuItems}
 				/>
-				{canEdit && totalPosDefs > 1 && (
-					<button
-						onClick={(e) => {
-							e.stopPropagation();
-							onRemove();
-						}}
-						className="item-remove btn-icon btn-danger"
-						title="Remove POS definition"
-					>
-						✕
-					</button>
-				)}
 			</div>
 
 			{!isCollapsed && (
 				<div className="pos-def-content">
-					{/* POS field */}
-					<div className="material-field">
-						<input
-							type="text"
-							value={posDef.pos || ''}
-							onChange={(e) => onUpdate({ pos: e.target.value })}
-							disabled={!canEdit}
-							placeholder=" "
-							id={`field-${posDefPath}-pos`}
-						/>
-						<label htmlFor={`field-${posDefPath}-pos`}>pos:</label>
-					</div>
-
 					{/* POS-level fields */}
 					<div className="compact-field-row">
 						{isFieldVisible(posDefPath, 'mw') && (
@@ -123,16 +131,6 @@ export function PosDefinitionEditor({
 							/>
 						))}
 					</div>
-
-					{/* Add sub-definition button */}
-					{canEdit && (
-						<button
-							onClick={onAddSubDefinition}
-							className="btn-secondary btn-sm"
-						>
-							+ Add definition
-						</button>
-					)}
 				</div>
 			)}
 		</div>

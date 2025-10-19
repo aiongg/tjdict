@@ -102,26 +102,37 @@ entriesRouter.get("/", async (c) => {
 	const myReviews: { [key: number]: EntryReview } = {};
 
 	if (entryIds.length > 0) {
-		const placeholders = entryIds.map(() => "?").join(",");
-		const reviewsQuery = `
-			SELECT er.*, u.email as user_email
-			FROM entry_reviews er
-			JOIN users u ON er.user_id = u.id
-			WHERE er.entry_id IN (${placeholders})
-		`;
-		const { results: reviews } = await c.env.prod_tjdict
-			.prepare(reviewsQuery)
-			.bind(...entryIds)
-			.all();
+		// SQLite has a limit of 999 variables per query, so we need to batch
+		const BATCH_SIZE = 500; // Use 500 to be safe
+		const batches = [];
+		
+		for (let i = 0; i < entryIds.length; i += BATCH_SIZE) {
+			batches.push(entryIds.slice(i, i + BATCH_SIZE));
+		}
 
-		for (const review of reviews as unknown as EntryReviewWithUser[]) {
-			if (!reviewsData[review.entry_id]) {
-				reviewsData[review.entry_id] = [];
-			}
-			reviewsData[review.entry_id].push(review);
+		// Fetch reviews in batches
+		for (const batch of batches) {
+			const placeholders = batch.map(() => "?").join(",");
+			const reviewsQuery = `
+				SELECT er.*, u.email as user_email
+				FROM entry_reviews er
+				JOIN users u ON er.user_id = u.id
+				WHERE er.entry_id IN (${placeholders})
+			`;
+			const { results: reviews } = await c.env.prod_tjdict
+				.prepare(reviewsQuery)
+				.bind(...batch)
+				.all();
 
-			if (review.user_id === payload.userId) {
-				myReviews[review.entry_id] = review;
+			for (const review of reviews as unknown as EntryReviewWithUser[]) {
+				if (!reviewsData[review.entry_id]) {
+					reviewsData[review.entry_id] = [];
+				}
+				reviewsData[review.entry_id].push(review);
+
+				if (review.user_id === payload.userId) {
+					myReviews[review.entry_id] = review;
+				}
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 import { TranslationVariant, EditorCallbacks } from './types';
-import { FieldVisibilityMenu } from './FieldVisibilityMenu';
+import { FieldVisibilityMenu, MenuItem } from './FieldVisibilityMenu';
 
 interface TranslationVariantEditorProps {
 	variant: TranslationVariant;
@@ -28,39 +28,47 @@ export function TranslationVariantEditor({
 	const { isFieldVisible, onToggleField, getAvailableFields } = callbacks;
 	const showLabel = totalVariants > 1; // Only show label if multiple variants
 
+	// Build menu items
+	const menuItems: MenuItem[] = [
+		{
+			label: 'Delete variant',
+			onClick: () => onRemove(),
+			danger: true
+		}
+	];
+
 	return (
 		<div className={`compact-variant nested-level-${nestingLevel}`}>
-			<div className="variant-header">
-				{showLabel && <div className="variant-label">{String.fromCharCode(97 + variantIndex)}:</div>}
+			<div className="variant-header compact-header">
+				{showLabel && <span className="variant-label">{String.fromCharCode(97 + variantIndex)}:</span>}
+				
+				{/* Inline English translation */}
+				<div className="inline-material-field" style={{ flex: 1 }}>
+					<textarea
+						value={variant.en || ''}
+						onChange={(e) => onUpdate({ en: e.target.value })}
+						disabled={!canEdit}
+						rows={1}
+						placeholder="en:"
+						id={`field-${path}-en-${variantIndex}`}
+						style={{ resize: 'none', overflow: 'hidden' }}
+						onInput={(e) => {
+							// Auto-resize textarea
+							const target = e.target as HTMLTextAreaElement;
+							target.style.height = 'auto';
+							target.style.height = target.scrollHeight + 'px';
+						}}
+					/>
+				</div>
+
 				<FieldVisibilityMenu
 					path={variantPath}
 					availableFields={getAvailableFields(variantPath)}
 					isFieldVisible={isFieldVisible}
 					onToggleField={onToggleField}
 					canEdit={canEdit}
+					menuItems={menuItems}
 				/>
-				{canEdit && (
-					<button
-						onClick={onRemove}
-						className="item-remove btn-icon btn-danger"
-						title="Remove variant"
-					>
-						✕
-					</button>
-				)}
-			</div>
-
-			{/* English translation */}
-			<div className="material-field">
-				<textarea
-					value={variant.en || ''}
-					onChange={(e) => onUpdate({ en: e.target.value })}
-					disabled={!canEdit}
-					rows={1}
-					placeholder=" "
-					id={`field-${path}-en-${variantIndex}`}
-				/>
-				<label htmlFor={`field-${path}-en-${variantIndex}`}>en:</label>
 			</div>
 
 			{/* Optional fields */}

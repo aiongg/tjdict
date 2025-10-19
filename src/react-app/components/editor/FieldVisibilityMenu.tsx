@@ -1,11 +1,19 @@
 import { useState, useEffect, useRef } from 'react';
 
+export interface MenuItem {
+	label: string;
+	onClick: (e: React.MouseEvent) => void;
+	danger?: boolean;
+	divider?: boolean;
+}
+
 interface FieldVisibilityMenuProps {
 	path: string;
 	availableFields: string[];
 	isFieldVisible: (path: string, field: string) => boolean;
 	onToggleField: (path: string, field: string) => void;
 	canEdit: boolean;
+	menuItems?: MenuItem[];
 }
 
 export function FieldVisibilityMenu({
@@ -13,7 +21,8 @@ export function FieldVisibilityMenu({
 	availableFields,
 	isFieldVisible,
 	onToggleField,
-	canEdit
+	canEdit,
+	menuItems = []
 }: FieldVisibilityMenuProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement>(null);
@@ -34,10 +43,8 @@ export function FieldVisibilityMenu({
 
 	if (!canEdit) return null;
 	
-	// Debug: show button even if no fields to help diagnose issues
-	if (availableFields.length === 0) {
-		console.log('FieldVisibilityMenu: No available fields for path:', path);
-	}
+	const hasContent = availableFields.length > 0 || menuItems.length > 0;
+	if (!hasContent) return null;
 
 	return (
 		<div className="field-visibility-menu" ref={menuRef}>
@@ -47,12 +54,13 @@ export function FieldVisibilityMenu({
 					e.stopPropagation();
 					setIsOpen(!isOpen);
 				}}
-				title="Toggle field visibility"
+				title="Options"
 			>
 				⋮
 			</button>
 			{isOpen && (
 				<div className="menu-dropdown">
+					{/* Field toggles */}
 					{availableFields.map(field => (
 						<label key={field} className="menu-item">
 							<input
@@ -64,6 +72,28 @@ export function FieldVisibilityMenu({
 							/>
 							<span>{field}</span>
 						</label>
+					))}
+					
+					{/* Divider if we have both fields and actions */}
+					{availableFields.length > 0 && menuItems.length > 0 && (
+						<div className="menu-divider"></div>
+					)}
+					
+					{/* Action items */}
+					{menuItems.map((item, index) => (
+						<div key={index}>
+							{item.divider && <div className="menu-divider"></div>}
+							<button
+								className={`menu-item menu-action ${item.danger ? 'menu-action-danger' : ''}`}
+								onClick={(e) => {
+									e.stopPropagation();
+									item.onClick(e);
+									setIsOpen(false);
+								}}
+							>
+								{item.label}
+							</button>
+						</div>
 					))}
 				</div>
 			)}

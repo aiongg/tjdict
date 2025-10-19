@@ -276,6 +276,9 @@ export default function EntriesPage() {
 	const [sortBy, setSortBy] = useState<'sort_key' | 'updated_at'>('sort_key');
 	const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 	const [showAdvanced, setShowAdvanced] = useState(false);
+	
+	// Page size for filtered results
+	const FILTERED_PAGE_SIZE = 50;
 
 	const fetchEntries = useCallback(async () => {
 		console.log('[fetchEntries] Called with dictPage:', dictPage);
@@ -290,8 +293,8 @@ export default function EntriesPage() {
 			if (hasFilters) {
 				// Use filtered search with pagination
 				const params = new URLSearchParams({
-					page: '1', // Always show page 1 of filtered results
-					pageSize: '1000', // Large page size for filtered results
+					page: dictPage.toString(),
+					pageSize: FILTERED_PAGE_SIZE.toString(),
 					sortBy,
 					sortOrder,
 				});
@@ -309,9 +312,10 @@ export default function EntriesPage() {
 
 				const data = await response.json();
 				setEntries(data.entries);
-				// When filtering, we don't use dict page navigation
+				// Calculate pagination for filtered results
+				const totalPages = Math.ceil(data.total / FILTERED_PAGE_SIZE);
 				setMinPage(1);
-				setMaxPage(1);
+				setMaxPage(Math.max(1, totalPages));
 			} else {
 				// Use dictionary page-based navigation
 				const params = new URLSearchParams({
