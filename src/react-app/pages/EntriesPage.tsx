@@ -2,20 +2,25 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { Navigation } from '../components/Navigation';
+import { PaginationControls } from '../components/PaginationControls';
 
 interface TranslationVariant {
-	en?: string;
+	en: string;
 	mw?: string;
 	etym?: string;
 	alt?: string[];
 	[key: string]: unknown;
 }
 
-interface DefinitionItem {
-	pos?: string | string[];
-	cat?: string;
-	en?: string;
+interface PosDefinition {
+	pos: string;  // Single string: "n", "v", etc.
+	defs: SubDefinition[];
+}
+
+interface SubDefinition {
+	en?: string;  // Simple string at definition level
 	mw?: string;
+	cat?: string;
 	alt?: string[];
 	cf?: string[];
 	det?: string;
@@ -27,7 +32,7 @@ interface DefinitionItem {
 
 interface ExampleItem {
 	tw: string;
-	en?: string | TranslationVariant[];
+	en?: TranslationVariant[];  // Always array for a/b/c variants
 	mw?: string;
 	etym?: string;
 	alt?: string[];
@@ -36,28 +41,30 @@ interface ExampleItem {
 
 interface DerivativeItem {
 	tw: string;
-	en?: string | TranslationVariant[];
+	en?: TranslationVariant[];  // Always array for a/b/c variants
 	mw?: string;
 	etym?: string;
-	ex?: ExampleItem[];
 	alt?: string[];
+	ex?: ExampleItem[];
 	[key: string]: unknown;
 }
 
 interface IdiomItem {
 	tw: string;
-	en?: string | TranslationVariant[];
+	en?: TranslationVariant[];  // Always array for a/b/c variants
 	mw?: string;
 	etym?: string;
 	alt?: string[];
+	ex?: ExampleItem[];
 	[key: string]: unknown;
 }
 
 interface EntryData {
 	head: string;
 	head_number?: number;
+	page?: number;
 	etym?: string;
-	defs: DefinitionItem[];
+	defs: PosDefinition[];
 }
 
 // Convert number to superscript
@@ -115,133 +122,133 @@ interface EntryWithReviews extends Entry {
 	my_review?: EntryReview;
 }
 
-interface EntryListResponse {
-	entries: EntryWithReviews[];
-	total: number;
-	page: number;
-	pageSize: number;
-}
-
 // Components for rendering dictionary entries
 const ExtraDisplay = ({ data, bullet }: { data: ExampleItem | DerivativeItem | IdiomItem; bullet: string }) => {
-	const hasEn = 'en' in data && data.en;
-	const hasMw = 'mw' in data && data.mw;
-	const hasEtym = 'etym' in data && data.etym;
-	const hasAlt = 'alt' in data && data.alt && Array.isArray(data.alt);
-	const hasEx = 'ex' in data && data.ex && Array.isArray(data.ex);
+	const hasEn = 'en' in data && data.en && Array.isArray(data.en);
+	const hasAlt = 'alt' in data && Array.isArray(data.alt);
+	const hasEx = 'ex' in data && Array.isArray((data as DerivativeItem | IdiomItem).ex);
 	
-	// Format translation variants
-	const formatTranslations = (): string | null => {
-		if (!hasEn) return null;
+	// Format translation variants (en is always TranslationVariant[])
+	const renderTranslations = () => {
+		if (!hasEn || !Array.isArray(data.en)) return null;
 		
-		const enValue = data.en;
+		const enArray = data.en;
+		const labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+		const showLabels = enArray.length > 1; // Only show labels if multiple variants
 		
-		// Check if en is an array of translation variants
-		if (Array.isArray(enValue)) {
-			const labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-			return enValue.map((variant, idx) => {
-				const label = labels[idx] || `${idx + 1}`;
-				const parts: string[] = [];
-				
-				// Add label
-				parts.push(`${label}.`);
-				
-				// Add measure word if present
-				if (typeof variant === 'object' && variant !== null && 'mw' in variant && variant.mw) {
-					parts.push(`(${variant.mw})`);
-				}
-				
-				// Add etymology if present
-				if (typeof variant === 'object' && variant !== null && 'etym' in variant && variant.etym) {
-					parts.push(`(${variant.etym})`);
-				}
-				
-				// Add translation
-				if (typeof variant === 'object' && variant !== null && 'en' in variant && variant.en) {
-					parts.push(variant.en as string);
-				}
-				
-				// Add alternatives if present
-				if (typeof variant === 'object' && variant !== null && 'alt' in variant && Array.isArray(variant.alt)) {
-					variant.alt.forEach((alt: string) => {
-						parts.push(`; ≃ ${alt}`);
-					});
-				}
-				
-				return parts.join(' ');
-			}).join('; ');
-		}
-		
-		// Simple string translation
-		return enValue as string;
+		return enArray.map((variant, idx) => {
+			const label = labels[idx] || `${idx + 1}`;
+			const parts: React.ReactNode[] = [];
+			
+			// Add label only if there are multiple variants (semibold)
+			if (showLabels) {
+				parts.push(<span key="label" className="variant-label">{label}. </span>);
+			}
+			
+			// Add measure word if present
+			if (variant.mw) {
+				parts.push(<span key="mw">({variant.mw}) </span>);
+			}
+			
+			// Add etymology if present
+			if (variant.etym) {
+				parts.push(<span key="etym">({variant.etym}) </span>);
+			}
+			
+			// Add translation
+			if (variant.en) {
+				parts.push(<span key="en">{variant.en}</span>);
+			}
+			
+			// Add alternatives if present
+			if (Array.isArray(variant.alt)) {
+				variant.alt.forEach((alt: string, altIdx) => {
+					parts.push(<span key={`alt-${altIdx}`}>; ≃ {alt}</span>);
+				});
+			}
+			
+			return (
+				<span key={idx}>
+					{parts}
+					{idx < enArray.length - 1 && '; '}
+				</span>
+			);
+		});
 	};
-	
-	const translationText = formatTranslations();
 	
 	return (
 		<div className="ex">
 			<span className="ex-tw">{bullet} {data.tw}</span>
-			{hasMw && !Array.isArray(data.en) ? <span className="mw"> ({(data as DerivativeItem).mw}):</span> : null}
-			{hasEtym && !Array.isArray(data.en) ? <span className="etym"> ({data.etym})</span> : null}
-			{translationText ? <span className="en"> {translationText}</span> : null}
-			{hasAlt && !Array.isArray(data.en) ? data.alt!.map((alt, i) => (
+			<span className="en"> {renderTranslations()}</span>
+			{hasAlt && data.alt ? data.alt.map((alt, i) => (
 				<span key={i} className="alt">; ≃ {alt}</span>
 			)) : null}
-			{hasEx ? (data.ex as ExampleItem[]).map((ex, i) => (
+			{hasEx && (data as DerivativeItem | IdiomItem).ex ? (data as DerivativeItem | IdiomItem).ex!.map((ex, i) => (
 				<ExtraDisplay key={i} data={ex} bullet="¶" />
 			)) : null}
 		</div>
 	);
 };
 
-const DefinitionDisplay = ({ def, num }: { def: DefinitionItem; num?: number }) => {
-	const pos = Array.isArray(def.pos) ? def.pos.join(', ') : def.pos;
-	
+// Display a single sub-definition variant
+const SubDefDisplay = ({ subDef, num }: { subDef: SubDefinition; num?: number }) => {
 	return (
-		<div className="defn">
+		<div className="subdef">
 			{num !== undefined && <span className="def-num">{getCircledNum(num)}</span>}
-			{pos && <span className="pos">{pos}</span>}
-			{def.cat && <span className="cat"> {def.cat}</span>}
-			{def.mw && <span className="mw"> {def.mw}:</span>}
-			{def.en && <span className="en"> {def.en}</span>}
-			{def.alt && def.alt.map((alt, i) => (
+			{subDef.cat && <span className="cat"> {subDef.cat}</span>}
+			{subDef.mw && <span className="mw"> {subDef.mw}:</span>}
+			{subDef.en && <span className="en"> {subDef.en}</span>}
+			{Array.isArray(subDef.alt) && subDef.alt.map((alt, i) => (
 				<span key={i} className="alt">; ≃ {alt}</span>
 			))}
-			{def.cf && def.cf.map((cf, i) => (
+			{Array.isArray(subDef.cf) && subDef.cf.map((cf, i) => (
 				<span key={i} className="cf">; cf {cf}</span>
 			))}
-			{def.det && <span className="det">; ⇒ {def.det}</span>}
+			{subDef.det && <span className="det">; ⇒ {subDef.det}</span>}
 			
-			{def.ex && def.ex.map((ex, i) => (
+			{Array.isArray(subDef.ex) && subDef.ex.map((ex, i) => (
 				<ExtraDisplay key={`ex-${i}`} data={ex} bullet="¶" />
 			))}
-			{def.drv && def.drv.map((drv, i) => (
+			{Array.isArray(subDef.drv) && subDef.drv.map((drv, i) => (
 				<ExtraDisplay key={`drv-${i}`} data={drv} bullet="◊" />
 			))}
-			{def.idm && def.idm.map((idm, i) => (
+			{Array.isArray(subDef.idm) && subDef.idm.map((idm, i) => (
 				<ExtraDisplay key={`idm-${i}`} data={idm} bullet="∆" />
 			))}
 		</div>
 	);
 };
 
-const EntryDisplay = ({ entryData }: { entryData: EntryData }) => {
-	const hasSingleDef = entryData.defs.length === 1;
+// Display a POS group with its definitions
+const PosDefDisplay = ({ posDef }: { posDef: PosDefinition }) => {
+	const hasSingleDef = posDef.defs.length === 1;
 	
+	return (
+		<div className="pos-def">
+			<span className="pos">{posDef.pos}</span>
+			{hasSingleDef ? (
+				<SubDefDisplay subDef={posDef.defs[0]} />
+			) : (
+				posDef.defs.map((subDef, i) => (
+					<SubDefDisplay key={i} subDef={subDef} num={i + 1} />
+				))
+			)}
+		</div>
+	);
+};
+
+const EntryDisplay = ({ entryData }: { entryData: EntryData }) => {
 	return (
 		<div className="entry-display">
 			<div className="entry-headword">
 				<span className="head">{formatHeadword(entryData.head, entryData.head_number)}</span>
 				{entryData.etym && <span className="etym"> ({entryData.etym})</span>}
+				{entryData.page && <span className="page-num"> [p. {entryData.page}]</span>}
 			</div>
 			
-			{hasSingleDef ? (
-				<DefinitionDisplay def={entryData.defs[0]} />
-			) : (
-				entryData.defs.map((def, i) => (
-					<DefinitionDisplay key={i} def={def} num={i + 1} />
-				))
-			)}
+			{entryData.defs.map((posDef, i) => (
+				<PosDefDisplay key={i} posDef={posDef} />
+			))}
 		</div>
 	);
 };
@@ -250,11 +257,14 @@ export default function EntriesPage() {
 	const { user } = useAuth();
 	const navigate = useNavigate();
 	const [entries, setEntries] = useState<EntryWithReviews[]>([]);
-	const [total, setTotal] = useState(0);
-	const [page, setPage] = useState(1);
-	const [pageSize] = useState(50);
+	const [dictPage, setDictPage] = useState(1);  // Dictionary page number
+	const [minPage, setMinPage] = useState(1);
+	const [maxPage, setMaxPage] = useState(1);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
+	const [pageInputValue, setPageInputValue] = useState('1');
+	
+	console.log('[RENDER] dictPage:', dictPage, 'pageInputValue:', pageInputValue);
 
 	// Search and filter state
 	const [searchQuery, setSearchQuery] = useState('');
@@ -268,47 +278,77 @@ export default function EntriesPage() {
 	const [showAdvanced, setShowAdvanced] = useState(false);
 
 	const fetchEntries = useCallback(async () => {
+		console.log('[fetchEntries] Called with dictPage:', dictPage);
 		setLoading(true);
 		setError('');
 
-		const params = new URLSearchParams({
-			page: page.toString(),
-			pageSize: pageSize.toString(),
-			sortBy,
-			sortOrder,
-		});
-
-		if (searchQuery) params.append('q', searchQuery);
-		if (showIncompleteOnly) params.append('complete', 'false');
-		if (showNeedingReview) params.append('needsReview', 'true');
-		if (headFilter) params.append('head', headFilter);
-		if (posFilter) params.append('pos', posFilter);
+		// Check if any filters are active
+		const hasFilters = searchQuery || showIncompleteOnly || showNeedingReview || headFilter || posFilter;
+		console.log('[fetchEntries] hasFilters:', hasFilters);
 
 		try {
-			const response = await fetch(`/api/entries?${params}`);
-			if (!response.ok) {
-				throw new Error('Failed to fetch entries');
-			}
+			if (hasFilters) {
+				// Use filtered search with pagination
+				const params = new URLSearchParams({
+					page: '1', // Always show page 1 of filtered results
+					pageSize: '1000', // Large page size for filtered results
+					sortBy,
+					sortOrder,
+				});
 
-			const data: EntryListResponse = await response.json();
-			setEntries(data.entries);
-			setTotal(data.total);
+				if (searchQuery) params.append('q', searchQuery);
+				if (showIncompleteOnly) params.append('complete', 'false');
+				if (showNeedingReview) params.append('needsReview', 'true');
+				if (headFilter) params.append('head', headFilter);
+				if (posFilter) params.append('pos', posFilter);
+
+				const response = await fetch(`/api/entries?${params}`);
+				if (!response.ok) {
+					throw new Error('Failed to fetch entries');
+				}
+
+				const data = await response.json();
+				setEntries(data.entries);
+				// When filtering, we don't use dict page navigation
+				setMinPage(1);
+				setMaxPage(1);
+			} else {
+				// Use dictionary page-based navigation
+				const params = new URLSearchParams({
+					sortBy,
+					sortOrder,
+				});
+
+				const response = await fetch(`/api/entries/by-page/${dictPage}?${params}`);
+				if (!response.ok) {
+					throw new Error('Failed to fetch entries');
+				}
+
+				const data = await response.json();
+				setEntries(data.entries);
+				setMinPage(data.minPage);
+				setMaxPage(data.maxPage);
+			}
 		} catch (err) {
 			setError(err instanceof Error ? err.message : 'Failed to load entries');
 		} finally {
 			setLoading(false);
 		}
-	}, [page, pageSize, searchQuery, showIncompleteOnly, showNeedingReview, headFilter, posFilter, sortBy, sortOrder]);
+	}, [dictPage, searchQuery, showIncompleteOnly, showNeedingReview, headFilter, posFilter, sortBy, sortOrder]);
 
 	useEffect(() => {
+		console.log('[useEffect fetchEntries] Triggered');
 		fetchEntries();
 	}, [fetchEntries]);
 
 	// Debounced search
 	useEffect(() => {
+		console.log('[useEffect search] searchInput changed to:', searchInput);
 		const timer = setTimeout(() => {
+			console.log('[useEffect search] Timeout fired, updating searchQuery');
 			setSearchQuery(searchInput);
-			setPage(1); // Reset to first page on new search
+			setDictPage(1); // Reset to first page on new search
+			setPageInputValue('1'); // Reset input value too
 		}, 300);
 
 		return () => clearTimeout(timer);
@@ -339,97 +379,19 @@ export default function EntriesPage() {
 		return parts.join(' • ');
 	};
 
-	const totalPages = Math.ceil(total / pageSize);
-	const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-
-	const jumpToLetter = (letter: string) => {
-		setHeadFilter(letter);
-		setPage(1);
-	};
-
 	const goToPage = (pageNum: number) => {
-		setPage(Math.max(1, Math.min(totalPages, pageNum)));
+		console.log('[goToPage] Called with pageNum:', pageNum);
+		const targetPage = Math.max(minPage, Math.min(maxPage, pageNum));
+		console.log('[goToPage] Target page:', targetPage, 'minPage:', minPage, 'maxPage:', maxPage);
+		console.log('[goToPage] Setting dictPage to:', targetPage);
+		setDictPage(targetPage);
+		console.log('[goToPage] Setting pageInputValue to:', targetPage.toString());
+		setPageInputValue(targetPage.toString());
+		console.log('[goToPage] Complete');
 	};
 
-	// Pagination component
-	const PaginationControls = () => (
-		<div className="pagination-container">
-			<div className="letter-nav">
-				{letters.map(letter => (
-					<button
-						key={letter}
-						onClick={() => jumpToLetter(letter)}
-						className={`letter-btn ${headFilter === letter ? 'active' : ''}`}
-						title={`Jump to ${letter}`}
-					>
-						{letter}
-					</button>
-				))}
-				{headFilter && (
-					<button
-						onClick={() => {
-							setHeadFilter('');
-							setPage(1);
-						}}
-						className="letter-btn clear-btn"
-						title="Clear filter"
-					>
-						✕
-					</button>
-				)}
-			</div>
-
-			{totalPages > 1 && (
-				<div className="pagination">
-					<button
-						onClick={() => goToPage(1)}
-						disabled={page === 1}
-						className="btn-secondary btn-sm"
-					>
-						« First
-					</button>
-					<button
-						onClick={() => goToPage(page - 1)}
-						disabled={page === 1}
-						className="btn-secondary btn-sm"
-					>
-						‹ Prev
-					</button>
-					
-					<div className="page-selector">
-						<span className="page-info">Page</span>
-						<input
-							type="number"
-							min="1"
-							max={totalPages}
-							value={page}
-							onChange={(e) => {
-								const num = parseInt(e.target.value);
-								if (!isNaN(num)) goToPage(num);
-							}}
-							className="page-input"
-						/>
-						<span className="page-info">of {totalPages}</span>
-					</div>
-
-					<button
-						onClick={() => goToPage(page + 1)}
-						disabled={page === totalPages}
-						className="btn-secondary btn-sm"
-					>
-						Next ›
-					</button>
-					<button
-						onClick={() => goToPage(totalPages)}
-						disabled={page === totalPages}
-						className="btn-secondary btn-sm"
-					>
-						Last »
-					</button>
-				</div>
-			)}
-		</div>
-	);
+	// Check if any filters are active
+	const hasFilters = searchQuery || showIncompleteOnly || showNeedingReview || headFilter || posFilter;
 
 	return (
 		<div className="entries-page">
@@ -460,7 +422,8 @@ export default function EntriesPage() {
 							checked={showIncompleteOnly}
 							onChange={(e) => {
 								setShowIncompleteOnly(e.target.checked);
-								setPage(1);
+								setDictPage(1);
+								setPageInputValue('1');
 							}}
 						/>
 						Incomplete entries only
@@ -472,7 +435,8 @@ export default function EntriesPage() {
 							checked={showNeedingReview}
 							onChange={(e) => {
 								setShowNeedingReview(e.target.checked);
-								setPage(1);
+								setDictPage(1);
+								setPageInputValue('1');
 							}}
 						/>
 						Needs review
@@ -497,7 +461,8 @@ export default function EntriesPage() {
 									value={headFilter}
 									onChange={(e) => {
 										setHeadFilter(e.target.value);
-										setPage(1);
+										setDictPage(1);
+										setPageInputValue('1');
 									}}
 								/>
 							</div>
@@ -506,11 +471,12 @@ export default function EntriesPage() {
 								<label>Part of Speech:</label>
 								<input
 									type="text"
-									placeholder="e.g., n., v., adj."
+									placeholder="e.g., n, v, adj"
 									value={posFilter}
 									onChange={(e) => {
 										setPosFilter(e.target.value);
-										setPage(1);
+										setDictPage(1);
+										setPageInputValue('1');
 									}}
 								/>
 							</div>
@@ -544,7 +510,18 @@ export default function EntriesPage() {
 			</div>
 
 			{/* Pagination at top */}
-			{!loading && !error && entries.length > 0 && <PaginationControls />}
+			{!loading && !error && entries.length > 0 && (
+				<PaginationControls
+					hasFilters={hasFilters}
+					entries={entries as unknown as { id: number; [key: string]: unknown }[]}
+					dictPage={dictPage}
+					minPage={minPage}
+					maxPage={maxPage}
+					pageInputValue={pageInputValue}
+					setPageInputValue={setPageInputValue}
+					goToPage={goToPage}
+				/>
+			)}
 
 			<div className="entry-list">
 				{loading ? (
@@ -583,7 +560,18 @@ export default function EntriesPage() {
 			</div>
 
 			{/* Pagination at bottom */}
-			{!loading && !error && entries.length > 0 && <PaginationControls />}
+			{!loading && !error && entries.length > 0 && (
+				<PaginationControls
+					hasFilters={hasFilters}
+					entries={entries as unknown as { id: number; [key: string]: unknown }[]}
+					dictPage={dictPage}
+					minPage={minPage}
+					maxPage={maxPage}
+					pageInputValue={pageInputValue}
+					setPageInputValue={setPageInputValue}
+					goToPage={goToPage}
+				/>
+			)}
 		</div>
 	);
 }

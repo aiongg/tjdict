@@ -3,63 +3,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { Navigation } from '../components/Navigation';
 import { ReviewPanel } from '../components/ReviewPanel.tsx';
+import { PosDefinitionEditor } from '../components/editor/PosDefinitionEditor';
+import { FieldVisibilityMenu } from '../components/editor/FieldVisibilityMenu';
+import type { EntryData } from '../components/editor/types';
 
-interface TranslationVariant {
-	en?: string;
-	mw?: string;
-	etym?: string;
-	alt?: string[];
-	[key: string]: unknown;
-}
-
-interface DefinitionItem {
-	pos?: string | string[];
-	cat?: string;
-	en?: string;
-	mw?: string;
-	alt?: string[];
-	cf?: string[];
-	det?: string;
-	ex?: ExampleItem[];
-	drv?: DerivativeItem[];
-	idm?: IdiomItem[];
-	[key: string]: unknown;
-}
-
-interface ExampleItem {
-	tw: string;
-	en?: string | TranslationVariant[];
-	mw?: string;
-	etym?: string;
-	alt?: string[];
-	[key: string]: unknown;
-}
-
-interface DerivativeItem {
-	tw: string;
-	en?: string | TranslationVariant[];
-	mw?: string;
-	etym?: string;
-	ex?: ExampleItem[];
-	alt?: string[];
-	[key: string]: unknown;
-}
-
-interface IdiomItem {
-	tw: string;
-	en?: string | TranslationVariant[];
-	mw?: string;
-	etym?: string;
-	alt?: string[];
-	[key: string]: unknown;
-}
-
-interface EntryData {
-	head: string;
-	head_number?: number;
-	etym?: string;
-	defs: DefinitionItem[];
-}
+// Import types from shared editor types
+import type { PosDefinition, SubDefinition } from '../components/editor/types';
 
 interface Entry {
 	id: number;
@@ -79,13 +28,15 @@ export default function EntryEditorPage() {
 	const [, setEntry] = useState<Entry | null>(null);
 	const [entryData, setEntryData] = useState<EntryData>({
 		head: '',
-		etym: '',
-		defs: [{ pos: '', en: '' }]
+		defs: [{
+			pos: 'n',
+			defs: [{ en: '' }]
+		}]
 	});
 	const [isComplete, setIsComplete] = useState(false);
 	const [activeTab, setActiveTab] = useState<'edit' | 'reviews'>('edit');
-	const [collapsedSections, setCollapsedSections] = useState<Set<string>>(new Set());
-	const [collapsedDefs, setCollapsedDefs] = useState<Set<number>>(new Set());
+	// Field visibility tracking using JSON path notation
+	const [visibleFields, setVisibleFields] = useState<Map<string, Set<string>>>(new Map());
 
 	const isNewEntry = id === 'new';
 	const canEdit = user?.role === 'editor' || user?.role === 'admin';
@@ -160,72 +111,154 @@ export default function EntryEditorPage() {
 		}
 	};
 
-	const toggleSection = (key: string) => {
-		const newCollapsed = new Set(collapsedSections);
-		if (newCollapsed.has(key)) {
-			newCollapsed.delete(key);
-		} else {
-			newCollapsed.add(key);
+
+	// Helper to get/set nested values using JSON path
+	const getByPath = (obj: unknown, path: string): unknown => {
+		const keys = path.split(/[.[\]]+/).filter(k => k);
+		let current: unknown = obj;
+		for (const key of keys) {
+			if (current && typeof current === 'object' && key in current) {
+				current = (current as Record<string, unknown>)[key];
+			} else {
+				return undefined;
+			}
 		}
-		setCollapsedSections(newCollapsed);
+		return current;
 	};
 
-	const toggleDef = (index: number) => {
-		const newCollapsed = new Set(collapsedDefs);
-		if (newCollapsed.has(index)) {
-			newCollapsed.delete(index);
-		} else {
-			newCollapsed.add(index);
+	const setByPath = (obj: unknown, path: string, value: unknown): unknown => {
+		if (!path) return value;
+		
+		const keys = path.split(/[.[\]]+/).filter(k => k);
+		const newObj = JSON.parse(JSON.stringify(obj)); // Deep clone
+		let current: unknown = newObj;
+		
+		for (let i = 0; i < keys.length - 1; i++) {
+			const key = keys[i];
+			if (current && typeof current === 'object' && key in current) {
+				current = (current as Record<string, unknown>)[key];
+			}
 		}
-		setCollapsedDefs(newCollapsed);
+		
+		if (current && typeof current === 'object') {
+			(current as Record<string, unknown>)[keys[keys.length - 1]] = value;
+		}
+		
+		return newObj;
 	};
 
-	const updateDef = (index: number, updates: Partial<DefinitionItem>) => {
-		const newDefs = [...entryData.defs];
-		newDefs[index] = { ...newDefs[index], ...updates };
-		setEntryData({ ...entryData, defs: newDefs });
-	};
-
-	const addDef = () => {
+	// PosDefinition management
+	const addPosDefinition = () => {
 		setEntryData({
 			...entryData,
-			defs: [...entryData.defs, { pos: '', en: '' }]
+			defs: [...entryData.defs, { pos: 'n', defs: [{ en: '' }] }]
 		});
 	};
 
-	const removeDef = (index: number) => {
+	const removePosDefinition = (index: number) => {
 		if (entryData.defs.length === 1) return;
 		const newDefs = entryData.defs.filter((_, i) => i !== index);
 		setEntryData({ ...entryData, defs: newDefs });
 	};
 
-	const addToArray = <T extends ExampleItem | DerivativeItem | IdiomItem>(
-		defIndex: number,
-		field: 'ex' | 'drv' | 'idm',
-		item: T
-	) => {
-		const def = entryData.defs[defIndex];
-		const arr = (def[field] || []) as T[];
-		updateDef(defIndex, { [field]: [...arr, item] });
+	const updatePosDefinition = (index: number, updates: Partial<PosDefinition>) => {
+		const newDefs = [...entryData.defs];
+		newDefs[index] = { ...newDefs[index], ...updates };
+		setEntryData({ ...entryData, defs: newDefs });
 	};
 
-	const removeFromArray = (defIndex: number, field: 'ex' | 'drv' | 'idm', itemIndex: number) => {
-		const def = entryData.defs[defIndex];
-		const arr = def[field] || [];
-		updateDef(defIndex, { [field]: arr.filter((_, i) => i !== itemIndex) });
+	// SubDefinition management
+	const addSubDefinition = (posIndex: number) => {
+		const newDefs = [...entryData.defs];
+		newDefs[posIndex] = {
+			...newDefs[posIndex],
+			defs: [...newDefs[posIndex].defs, { en: '' }]
+		};
+		setEntryData({ ...entryData, defs: newDefs });
 	};
 
-	const updateArrayItem = <T extends ExampleItem | DerivativeItem | IdiomItem>(
-		defIndex: number,
-		field: 'ex' | 'drv' | 'idm',
-		itemIndex: number,
-		updates: Partial<T>
-	) => {
-		const def = entryData.defs[defIndex];
-		const arr = (def[field] || []) as T[];
-		const newArr = [...arr];
-		newArr[itemIndex] = { ...(newArr[itemIndex] as T), ...updates };
-		updateDef(defIndex, { [field]: newArr });
+	const removeSubDefinition = (posIndex: number, subIndex: number) => {
+		const newDefs = [...entryData.defs];
+		if (newDefs[posIndex].defs.length === 1) return;
+		newDefs[posIndex] = {
+			...newDefs[posIndex],
+			defs: newDefs[posIndex].defs.filter((_, i) => i !== subIndex)
+		};
+		setEntryData({ ...entryData, defs: newDefs });
+	};
+
+	const updateSubDefinition = (posIndex: number, subIndex: number, updates: Partial<SubDefinition>) => {
+		const newDefs = [...entryData.defs];
+		const subDefs = [...newDefs[posIndex].defs];
+		subDefs[subIndex] = { ...subDefs[subIndex], ...updates };
+		newDefs[posIndex] = { ...newDefs[posIndex], defs: subDefs };
+		setEntryData({ ...entryData, defs: newDefs });
+	};
+
+
+	// Field visibility management
+	const isFieldVisible = (path: string, fieldName: string): boolean => {
+		const fields = visibleFields.get(path);
+		if (!fields) {
+			// If not in map, check if field has a value in the data
+			const obj = getByPath(entryData, path);
+			if (obj && typeof obj === 'object' && fieldName in obj) {
+				const value = (obj as Record<string, unknown>)[fieldName];
+				// Show if field has a value (even empty string) or is an array
+				return value !== undefined && value !== null;
+			}
+			return false;
+		}
+		return fields.has(fieldName);
+	};
+
+	const toggleFieldVisibility = (path: string, fieldName: string) => {
+		const newVisibleFields = new Map(visibleFields);
+		const fields = newVisibleFields.get(path) || new Set<string>();
+		
+		if (fields.has(fieldName)) {
+			fields.delete(fieldName);
+		} else {
+			fields.add(fieldName);
+			// If field doesn't exist in data, add it with empty value
+			const obj = getByPath(entryData, path) as Record<string, unknown> | undefined;
+			if (obj && !(fieldName in obj)) {
+				const newData = setByPath(entryData, `${path}.${fieldName}`, 
+					fieldName === 'alt' || fieldName === 'cf' || fieldName === 'ex' || fieldName === 'drv' || fieldName === 'idm' ? [] : ''
+				);
+				setEntryData(newData as EntryData);
+			}
+		}
+		
+		newVisibleFields.set(path, fields);
+		setVisibleFields(newVisibleFields);
+	};
+
+	const getAvailableFields = (path: string): string[] => {
+		// Determine available fields based on path
+		if (path === 'entry') {
+			return ['head_number', 'page', 'etym'];
+		} else if (path.match(/^defs\[\d+\]$/)) {
+			// PosDefinition level
+			return ['mw', 'etym'];
+		} else if (path.match(/^defs\[\d+\]\.defs\[\d+\]$/)) {
+			// SubDefinition level
+			return ['mw', 'cat', 'etym', 'det', 'alt', 'cf'];
+		} else if (path.match(/\.(ex|drv|idm)\[\d+\]$/)) {
+			// ExampleItem level
+			return ['mw', 'cat', 'etym', 'det', 'alt', 'cf'];
+		} else if (path.match(/\.en\[\d+\]$/)) {
+			// TranslationVariant level
+			return ['mw', 'cat', 'etym', 'alt'];
+		}
+		return [];
+	};
+
+	// Prepare editor callbacks for child components
+	const editorCallbacks = {
+		isFieldVisible,
+		onToggleField: toggleFieldVisibility,
+		getAvailableFields
 	};
 
 	if (loading) {
@@ -278,6 +311,17 @@ export default function EntryEditorPage() {
 
 				{activeTab === 'edit' ? (
 					<div className="compact-form">
+						<div className="entry-level-header">
+							<h3>Entry Fields</h3>
+							<FieldVisibilityMenu
+								path="entry"
+								availableFields={getAvailableFields('entry')}
+								isFieldVisible={isFieldVisible}
+								onToggleField={toggleFieldVisibility}
+								canEdit={canEdit}
+							/>
+						</div>
+
 						{/* Head */}
 						<div className="material-field">
 							<input
@@ -291,9 +335,9 @@ export default function EntryEditorPage() {
 							<label htmlFor="field-head">head:</label>
 						</div>
 
-						{/* Head Number & Etymology on desktop */}
+						{/* Head Number, Page & Etymology */}
 						<div className="desktop-field-row">
-							{entryData.head_number !== undefined && (
+							{isFieldVisible('entry', 'head_number') && (
 								<div className="material-field">
 									<input
 										type="number"
@@ -307,7 +351,21 @@ export default function EntryEditorPage() {
 								</div>
 							)}
 
-							{entryData.etym !== undefined && (
+							{isFieldVisible('entry', 'page') && (
+								<div className="material-field">
+									<input
+										type="number"
+										value={entryData.page || ''}
+										onChange={(e) => setEntryData({ ...entryData, page: parseInt(e.target.value) || undefined })}
+										disabled={!canEdit}
+										placeholder=" "
+										id="field-page"
+									/>
+									<label htmlFor="field-page">page:</label>
+								</div>
+							)}
+
+							{isFieldVisible('entry', 'etym') && (
 								<div className="material-field">
 									<input
 										type="text"
@@ -334,557 +392,25 @@ export default function EntryEditorPage() {
 							<label htmlFor="field-complete">Mark as complete</label>
 						</div>
 
-						{/* Definitions */}
-						{entryData.defs.map((def, defIndex) => (
-							<div key={defIndex} style={{ marginTop: '1.5rem' }} className={collapsedDefs.has(defIndex) ? 'definition-collapsed' : ''}>
-								<div 
-									className="compact-section-header" 
-									onClick={() => toggleDef(defIndex)}
-									style={{ marginBottom: '0.75rem' }}
-								>
-									<span className="collapse-icon">▼</span>
-									<span>def {defIndex + 1}</span>
-									{entryData.defs.length > 1 && canEdit && (
-										<button
-											onClick={(e) => {
-												e.stopPropagation();
-												removeDef(defIndex);
-											}}
-											className="item-remove"
-											style={{ marginLeft: 'auto', position: 'relative', top: 'auto', right: 'auto' }}
-										>
-											✕
-										</button>
-									)}
-								</div>
-
-								{!collapsedDefs.has(defIndex) && (
-									<div>
-										{/* POS, Category, Measure Word - horizontal on desktop */}
-										<div className="desktop-field-row">
-											<div className="material-field">
-												<input
-													type="text"
-													value={Array.isArray(def.pos) ? def.pos.join(', ') : (def.pos || '')}
-													onChange={(e) => updateDef(defIndex, { pos: e.target.value })}
-													disabled={!canEdit}
-													placeholder=" "
-													id={`field-pos-${defIndex}`}
-												/>
-												<label htmlFor={`field-pos-${defIndex}`}>pos:</label>
-											</div>
-
-											<div className="material-field">
-												<input
-													type="text"
-													value={def.cat || ''}
-													onChange={(e) => updateDef(defIndex, { cat: e.target.value })}
-													disabled={!canEdit}
-													placeholder=" "
-													id={`field-cat-${defIndex}`}
-												/>
-												<label htmlFor={`field-cat-${defIndex}`}>cat:</label>
-											</div>
-
-											<div className="material-field">
-												<input
-													type="text"
-													value={def.mw || ''}
-													onChange={(e) => updateDef(defIndex, { mw: e.target.value })}
-													disabled={!canEdit}
-													placeholder=" "
-													id={`field-mw-${defIndex}`}
-												/>
-												<label htmlFor={`field-mw-${defIndex}`}>mw:</label>
-											</div>
-										</div>
-
-										{/* English */}
-										<div className="material-field">
-											<textarea
-												value={def.en || ''}
-												onChange={(e) => updateDef(defIndex, { en: e.target.value })}
-												disabled={!canEdit}
-												placeholder=" "
-												rows={2}
-												id={`field-en-${defIndex}`}
-											/>
-											<label htmlFor={`field-en-${defIndex}`}>en:</label>
-										</div>
-
-										{/* Examples */}
-										<CompactSection
-											title="¶ ex"
-											collapsed={collapsedSections.has(`${defIndex}-ex`)}
-											onToggle={() => toggleSection(`${defIndex}-ex`)}
-										>
-											{(def.ex || []).map((example, exIndex) => (
-												<div key={exIndex} className="compact-item">
-													{canEdit && (
-														<button
-															onClick={() => removeFromArray(defIndex, 'ex', exIndex)}
-															className="item-remove btn-icon btn-danger"
-														>
-															✕
-														</button>
-													)}
-													<div className="material-field">
-														<textarea
-															value={example.tw}
-															onChange={(e) => updateArrayItem<ExampleItem>(
-																defIndex, 'ex', exIndex, { tw: e.target.value }
-															)}
-															disabled={!canEdit}
-															rows={1}
-															placeholder=" "
-															id={`field-ex-tw-${defIndex}-${exIndex}`}
-														/>
-														<label htmlFor={`field-ex-tw-${defIndex}-${exIndex}`}>tw:</label>
-													</div>
-													{Array.isArray(example.en) ? (
-														<>
-															{example.en.map((variant, varIdx) => (
-																<div key={varIdx} className="compact-variant">
-																	<div className="variant-label">{String.fromCharCode(97 + varIdx)}:</div>
-																	{canEdit && (
-																		<button
-																			onClick={() => {
-																				const newVariants = (example.en as TranslationVariant[]).filter((_, i) => i !== varIdx);
-																				updateArrayItem<ExampleItem>(defIndex, 'ex', exIndex, { 
-																					en: newVariants.length > 0 ? newVariants : '' 
-																				});
-																			}}
-																			className="item-remove btn-icon btn-danger"
-																		>
-																			✕
-																		</button>
-																	)}
-																	<div className="material-field">
-																		<textarea
-																			value={(variant as TranslationVariant).en || ''}
-																			onChange={(e) => {
-																				const newVariants = [...example.en as TranslationVariant[]];
-																				newVariants[varIdx] = { ...newVariants[varIdx], en: e.target.value };
-																				updateArrayItem<ExampleItem>(defIndex, 'ex', exIndex, { en: newVariants });
-																			}}
-																			disabled={!canEdit}
-																			rows={1}
-																			placeholder=" "
-																			id={`field-ex-en-${defIndex}-${exIndex}-${varIdx}`}
-																		/>
-																		<label htmlFor={`field-ex-en-${defIndex}-${exIndex}-${varIdx}`}>en:</label>
-																	</div>
-																	<div className="compact-field-row">
-																		<div className="material-field">
-																			<input
-																				type="text"
-																				value={(variant as TranslationVariant).mw || ''}
-																				onChange={(e) => {
-																					const newVariants = [...example.en as TranslationVariant[]];
-																					newVariants[varIdx] = { ...newVariants[varIdx], mw: e.target.value };
-																					updateArrayItem<ExampleItem>(defIndex, 'ex', exIndex, { en: newVariants });
-																				}}
-																				disabled={!canEdit}
-																				placeholder=" "
-																				id={`field-ex-mw-${defIndex}-${exIndex}-${varIdx}`}
-																			/>
-																			<label htmlFor={`field-ex-mw-${defIndex}-${exIndex}-${varIdx}`}>mw:</label>
-																		</div>
-																		<div className="material-field">
-																			<input
-																				type="text"
-																				value={(variant as TranslationVariant).etym || ''}
-																				onChange={(e) => {
-																					const newVariants = [...example.en as TranslationVariant[]];
-																					newVariants[varIdx] = { ...newVariants[varIdx], etym: e.target.value };
-																					updateArrayItem<ExampleItem>(defIndex, 'ex', exIndex, { en: newVariants });
-																				}}
-																				disabled={!canEdit}
-																				placeholder=" "
-																				id={`field-ex-etym-${defIndex}-${exIndex}-${varIdx}`}
-																			/>
-																			<label htmlFor={`field-ex-etym-${defIndex}-${exIndex}-${varIdx}`}>etym:</label>
-																		</div>
-																	</div>
-																</div>
-															))}
-															{canEdit && (
-																<button
-																	onClick={() => {
-																		const newVariants = [...example.en as TranslationVariant[], { en: '' }];
-																		updateArrayItem<ExampleItem>(defIndex, 'ex', exIndex, { en: newVariants });
-																	}}
-																	className="section-add btn-secondary"
-																>
-																	+ variant
-																</button>
-															)}
-														</>
-													) : (
-														<>
-															<div className="material-field">
-																<textarea
-																	value={example.en || ''}
-																	onChange={(e) => updateArrayItem<ExampleItem>(
-																		defIndex, 'ex', exIndex, { en: e.target.value }
-																	)}
-																	disabled={!canEdit}
-																	rows={1}
-																	placeholder=" "
-																	id={`field-ex-en-simple-${defIndex}-${exIndex}`}
-																/>
-																<label htmlFor={`field-ex-en-simple-${defIndex}-${exIndex}`}>en:</label>
-															</div>
-															{canEdit && (
-																<button
-																	onClick={() => {
-																		const currentEn = (typeof example.en === 'string' ? example.en : '') || '';
-																		const newVariants: TranslationVariant[] = [{ en: currentEn }];
-																		updateArrayItem<ExampleItem>(defIndex, 'ex', exIndex, { en: newVariants });
-																	}}
-																	className="section-add btn-secondary"
-																	style={{ fontSize: '0.75rem', padding: '0.125rem 0.5rem' }}
-																>
-																	+ variant
-																</button>
-															)}
-														</>
-													)}
-												</div>
-											))}
-											{canEdit && (
-												<button
-													onClick={() => addToArray<ExampleItem>(defIndex, 'ex', { tw: '', en: '' })}
-													className="section-add btn-secondary"
-												>
-													+
-												</button>
-											)}
-										</CompactSection>
-
-										{/* Derivatives */}
-										<CompactSection
-											title="◊ drv"
-											collapsed={collapsedSections.has(`${defIndex}-drv`)}
-											onToggle={() => toggleSection(`${defIndex}-drv`)}
-										>
-											{(def.drv || []).map((derivative, drvIndex) => (
-												<div key={drvIndex} className="compact-item">
-													{canEdit && (
-														<button
-															onClick={() => removeFromArray(defIndex, 'drv', drvIndex)}
-															className="item-remove btn-icon btn-danger"
-														>
-															✕
-														</button>
-													)}
-													<div className="material-field">
-														<textarea
-															value={derivative.tw}
-															onChange={(e) => updateArrayItem<DerivativeItem>(
-																defIndex, 'drv', drvIndex, { tw: e.target.value }
-															)}
-															disabled={!canEdit}
-															rows={1}
-															placeholder=" "
-															id={`field-drv-tw-${defIndex}-${drvIndex}`}
-														/>
-														<label htmlFor={`field-drv-tw-${defIndex}-${drvIndex}`}>tw:</label>
-													</div>
-													{!Array.isArray(derivative.en) && (
-														<div className="material-field">
-															<input
-																type="text"
-																value={derivative.mw || ''}
-																onChange={(e) => updateArrayItem<DerivativeItem>(
-																	defIndex, 'drv', drvIndex, { mw: e.target.value }
-																)}
-																disabled={!canEdit}
-																placeholder=" "
-																id={`field-drv-mw-${defIndex}-${drvIndex}`}
-															/>
-															<label htmlFor={`field-drv-mw-${defIndex}-${drvIndex}`}>mw:</label>
-														</div>
-													)}
-													{Array.isArray(derivative.en) ? (
-														<>
-															{derivative.en.map((variant, varIdx) => (
-																<div key={varIdx} className="compact-variant">
-																	<div className="variant-label">{String.fromCharCode(97 + varIdx)}:</div>
-																	{canEdit && (
-																		<button
-																			onClick={() => {
-																				const newVariants = (derivative.en as TranslationVariant[]).filter((_, i) => i !== varIdx);
-																				updateArrayItem<DerivativeItem>(defIndex, 'drv', drvIndex, { 
-																					en: newVariants.length > 0 ? newVariants : '' 
-																				});
-																			}}
-																			className="item-remove btn-icon btn-danger"
-																		>
-																			✕
-																		</button>
-																	)}
-																	<div className="material-field">
-																		<textarea
-																			value={(variant as TranslationVariant).en || ''}
-																			onChange={(e) => {
-																				const newVariants = [...derivative.en as TranslationVariant[]];
-																				newVariants[varIdx] = { ...newVariants[varIdx], en: e.target.value };
-																				updateArrayItem<DerivativeItem>(defIndex, 'drv', drvIndex, { en: newVariants });
-																			}}
-																			disabled={!canEdit}
-																			rows={1}
-																			placeholder=" "
-																			id={`field-drv-en-${defIndex}-${drvIndex}-${varIdx}`}
-																		/>
-																		<label htmlFor={`field-drv-en-${defIndex}-${drvIndex}-${varIdx}`}>en:</label>
-																	</div>
-																	<div className="compact-field-row">
-																		<div className="material-field">
-																			<input
-																				type="text"
-																				value={(variant as TranslationVariant).mw || ''}
-																				onChange={(e) => {
-																					const newVariants = [...derivative.en as TranslationVariant[]];
-																					newVariants[varIdx] = { ...newVariants[varIdx], mw: e.target.value };
-																					updateArrayItem<DerivativeItem>(defIndex, 'drv', drvIndex, { en: newVariants });
-																				}}
-																				disabled={!canEdit}
-																				placeholder=" "
-																				id={`field-drv-mw-${defIndex}-${drvIndex}-${varIdx}`}
-																			/>
-																			<label htmlFor={`field-drv-mw-${defIndex}-${drvIndex}-${varIdx}`}>mw:</label>
-																		</div>
-																		<div className="material-field">
-																			<input
-																				type="text"
-																				value={(variant as TranslationVariant).etym || ''}
-																				onChange={(e) => {
-																					const newVariants = [...derivative.en as TranslationVariant[]];
-																					newVariants[varIdx] = { ...newVariants[varIdx], etym: e.target.value };
-																					updateArrayItem<DerivativeItem>(defIndex, 'drv', drvIndex, { en: newVariants });
-																				}}
-																				disabled={!canEdit}
-																				placeholder=" "
-																				id={`field-drv-etym-${defIndex}-${drvIndex}-${varIdx}`}
-																			/>
-																			<label htmlFor={`field-drv-etym-${defIndex}-${drvIndex}-${varIdx}`}>etym:</label>
-																		</div>
-																	</div>
-																</div>
-															))}
-															{canEdit && (
-																<button
-																	onClick={() => {
-																		const newVariants = [...derivative.en as TranslationVariant[], { en: '' }];
-																		updateArrayItem<DerivativeItem>(defIndex, 'drv', drvIndex, { en: newVariants });
-																	}}
-																	className="section-add btn-secondary"
-																>
-																	+ variant
-																</button>
-															)}
-														</>
-													) : (
-														<>
-															<div className="material-field">
-																<textarea
-																	value={derivative.en || ''}
-																	onChange={(e) => updateArrayItem<DerivativeItem>(
-																		defIndex, 'drv', drvIndex, { en: e.target.value }
-																	)}
-																	disabled={!canEdit}
-																	rows={1}
-																	placeholder=" "
-																	id={`field-drv-en-simple-${defIndex}-${drvIndex}`}
-																/>
-																<label htmlFor={`field-drv-en-simple-${defIndex}-${drvIndex}`}>en:</label>
-															</div>
-															{canEdit && (
-																<button
-																	onClick={() => {
-																		const currentEn = (typeof derivative.en === 'string' ? derivative.en : '') || '';
-																		const currentMw = derivative.mw;
-																		const newVariants: TranslationVariant[] = [{ en: currentEn, ...(currentMw && { mw: currentMw }) }];
-																		updateArrayItem<DerivativeItem>(defIndex, 'drv', drvIndex, { en: newVariants });
-																	}}
-																	className="section-add btn-secondary"
-																	style={{ fontSize: '0.75rem', padding: '0.125rem 0.5rem' }}
-																>
-																	+ variant
-																</button>
-															)}
-														</>
-													)}
-												</div>
-											))}
-											{canEdit && (
-												<button
-													onClick={() => addToArray<DerivativeItem>(defIndex, 'drv', { tw: '', en: '' })}
-													className="section-add btn-secondary"
-												>
-													+
-												</button>
-											)}
-										</CompactSection>
-
-										{/* Idioms */}
-										<CompactSection
-											title="※ idm"
-											collapsed={collapsedSections.has(`${defIndex}-idm`)}
-											onToggle={() => toggleSection(`${defIndex}-idm`)}
-										>
-											{(def.idm || []).map((idiom, idmIndex) => (
-												<div key={idmIndex} className="compact-item">
-													{canEdit && (
-														<button
-															onClick={() => removeFromArray(defIndex, 'idm', idmIndex)}
-															className="item-remove btn-icon btn-danger"
-														>
-															✕
-														</button>
-													)}
-													<div className="material-field">
-														<textarea
-															value={idiom.tw}
-															onChange={(e) => updateArrayItem<IdiomItem>(
-																defIndex, 'idm', idmIndex, { tw: e.target.value }
-															)}
-															disabled={!canEdit}
-															rows={1}
-															placeholder=" "
-															id={`field-idm-tw-${defIndex}-${idmIndex}`}
-														/>
-														<label htmlFor={`field-idm-tw-${defIndex}-${idmIndex}`}>tw:</label>
-													</div>
-													{Array.isArray(idiom.en) ? (
-														<>
-															{idiom.en.map((variant, varIdx) => (
-																<div key={varIdx} className="compact-variant">
-																	<div className="variant-label">{String.fromCharCode(97 + varIdx)}:</div>
-																	{canEdit && (
-																		<button
-																			onClick={() => {
-																				const newVariants = (idiom.en as TranslationVariant[]).filter((_, i) => i !== varIdx);
-																				updateArrayItem<IdiomItem>(defIndex, 'idm', idmIndex, { 
-																					en: newVariants.length > 0 ? newVariants : '' 
-																				});
-																			}}
-																			className="item-remove btn-icon btn-danger"
-																		>
-																			✕
-																		</button>
-																	)}
-																	<div className="material-field">
-																		<textarea
-																			value={(variant as TranslationVariant).en || ''}
-																			onChange={(e) => {
-																				const newVariants = [...idiom.en as TranslationVariant[]];
-																				newVariants[varIdx] = { ...newVariants[varIdx], en: e.target.value };
-																				updateArrayItem<IdiomItem>(defIndex, 'idm', idmIndex, { en: newVariants });
-																			}}
-																			disabled={!canEdit}
-																			rows={1}
-																			placeholder=" "
-																			id={`field-idm-en-${defIndex}-${idmIndex}-${varIdx}`}
-																		/>
-																		<label htmlFor={`field-idm-en-${defIndex}-${idmIndex}-${varIdx}`}>en:</label>
-																	</div>
-																	<div className="compact-field-row">
-																		<div className="material-field">
-																			<input
-																				type="text"
-																				value={(variant as TranslationVariant).mw || ''}
-																				onChange={(e) => {
-																					const newVariants = [...idiom.en as TranslationVariant[]];
-																					newVariants[varIdx] = { ...newVariants[varIdx], mw: e.target.value };
-																					updateArrayItem<IdiomItem>(defIndex, 'idm', idmIndex, { en: newVariants });
-																				}}
-																				disabled={!canEdit}
-																				placeholder=" "
-																				id={`field-idm-mw-${defIndex}-${idmIndex}-${varIdx}`}
-																			/>
-																			<label htmlFor={`field-idm-mw-${defIndex}-${idmIndex}-${varIdx}`}>mw:</label>
-																		</div>
-																		<div className="material-field">
-																			<input
-																				type="text"
-																				value={(variant as TranslationVariant).etym || ''}
-																				onChange={(e) => {
-																					const newVariants = [...idiom.en as TranslationVariant[]];
-																					newVariants[varIdx] = { ...newVariants[varIdx], etym: e.target.value };
-																					updateArrayItem<IdiomItem>(defIndex, 'idm', idmIndex, { en: newVariants });
-																				}}
-																				disabled={!canEdit}
-																				placeholder=" "
-																				id={`field-idm-etym-${defIndex}-${idmIndex}-${varIdx}`}
-																			/>
-																			<label htmlFor={`field-idm-etym-${defIndex}-${idmIndex}-${varIdx}`}>etym:</label>
-																		</div>
-																	</div>
-																</div>
-															))}
-															{canEdit && (
-																<button
-																	onClick={() => {
-																		const newVariants = [...idiom.en as TranslationVariant[], { en: '' }];
-																		updateArrayItem<IdiomItem>(defIndex, 'idm', idmIndex, { en: newVariants });
-																	}}
-																	className="section-add btn-secondary"
-																>
-																	+ variant
-																</button>
-															)}
-														</>
-													) : (
-														<>
-															<div className="material-field">
-																<textarea
-																	value={idiom.en || ''}
-																	onChange={(e) => updateArrayItem<IdiomItem>(
-																		defIndex, 'idm', idmIndex, { en: e.target.value }
-																	)}
-																	disabled={!canEdit}
-																	rows={1}
-																	placeholder=" "
-																	id={`field-idm-en-simple-${defIndex}-${idmIndex}`}
-																/>
-																<label htmlFor={`field-idm-en-simple-${defIndex}-${idmIndex}`}>en:</label>
-															</div>
-															{canEdit && (
-																<button
-																	onClick={() => {
-																		const currentEn = (typeof idiom.en === 'string' ? idiom.en : '') || '';
-																		const newVariants: TranslationVariant[] = [{ en: currentEn }];
-																		updateArrayItem<IdiomItem>(defIndex, 'idm', idmIndex, { en: newVariants });
-																	}}
-																	className="section-add btn-secondary"
-																	style={{ fontSize: '0.75rem', padding: '0.125rem 0.5rem' }}
-																>
-																	+ variant
-																</button>
-															)}
-														</>
-													)}
-												</div>
-											))}
-											{canEdit && (
-												<button
-													onClick={() => addToArray<IdiomItem>(defIndex, 'idm', { tw: '', en: '' })}
-													className="section-add btn-secondary"
-												>
-													+
-												</button>
-											)}
-										</CompactSection>
-									</div>
-								)}
-							</div>
+						{/* POS Definitions */}
+						{entryData.defs.map((posDef, posIndex) => (
+							<PosDefinitionEditor
+								key={posIndex}
+								posDef={posDef}
+								posIndex={posIndex}
+								onUpdate={(updates) => updatePosDefinition(posIndex, updates)}
+								onRemove={() => removePosDefinition(posIndex)}
+								onAddSubDefinition={() => addSubDefinition(posIndex)}
+								onRemoveSubDefinition={(subIndex) => removeSubDefinition(posIndex, subIndex)}
+								onUpdateSubDefinition={(subIndex, updates) => updateSubDefinition(posIndex, subIndex, updates)}
+								canEdit={canEdit}
+								callbacks={editorCallbacks}
+								totalPosDefs={entryData.defs.length}
+							/>
 						))}
-
 						{canEdit && (
-							<button onClick={addDef} className="btn-secondary" style={{ marginTop: '1rem' }}>
-								+ Add Definition
+							<button onClick={addPosDefinition} className="btn-secondary" style={{ marginTop: '1rem' }}>
+								+ Add POS Definition
 							</button>
 						)}
 					</div>
@@ -898,27 +424,3 @@ export default function EntryEditorPage() {
 	);
 }
 
-// Compact collapsible section component
-function CompactSection({ 
-	title, 
-	collapsed, 
-	onToggle, 
-	children 
-}: { 
-	title: string; 
-	collapsed: boolean; 
-	onToggle: () => void; 
-	children: React.ReactNode;
-}) {
-	return (
-		<div className={`compact-section ${collapsed ? 'collapsed' : ''}`}>
-			<div className="compact-section-header" onClick={onToggle}>
-				<span className="collapse-icon">▼</span>
-				<span>{title}</span>
-			</div>
-			<div className="compact-section-content">
-				{children}
-			</div>
-		</div>
-	);
-}

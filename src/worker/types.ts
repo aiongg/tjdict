@@ -100,55 +100,74 @@ export interface UserListResponse {
 
 // Dictionary types
 
+// Translation variant (for multiple translations a/b/c)
+export interface TranslationVariant {
+	en: string;
+	mw?: string;
+	cat?: string;
+	etym?: string;
+	alt?: string[];
+	ex?: ExampleItem[];
+	[key: string]: unknown;
+}
+
 // Entry data structure (stored as JSON in entry_data column)
-// Note: All entries have a defs array with at least one DefinitionItem
-// Even entries with a single definition are normalized to defs[0]
 export interface EntryData {
 	head: string;
 	head_number?: number;  // Disambiguation number for homonyms (e.g., 1, 2, 3)
+	page?: number;  // Page number in original dictionary
 	etym?: string;
-	defs: DefinitionItem[];
+	defs: PosDefinition[];  // Array of definitions grouped by part of speech
 }
 
-export interface DefinitionItem {
-	pos?: string | string[];
-	cat?: string;
-	en?: string;
-	mw?: string;
-	alt?: string[];
-	cf?: string[];
-	det?: string;
-	ex?: ExampleItem[];
-	drv?: DerivativeItem[];
-	idm?: IdiomItem[];
+// Top-level definition grouped by part of speech
+export interface PosDefinition {
+	pos: string;  // Part of speech (single string: "n", "v", "adj", etc.)
+	mw?: string;  // Measure word (can be at POS level)
+	etym?: string;  // Etymology (can be at POS level)
+	defs: SubDefinition[];  // Array of definition variants for this POS
+}
+
+// Individual definition variant within a POS
+export interface SubDefinition {
+	en?: string;  // English translation (simple string at definition level)
+	mw?: string;  // Measure word
+	cat?: string;  // Category
+	etym?: string;  // Etymology (can be at both entry and definition level)
+	alt?: string[];  // Alternatives
+	cf?: string[];  // Cross-references
+	det?: string;  // Details
+	ex?: ExampleItem[];  // Examples
+	drv?: DerivativeItem[];  // Derivatives
+	idm?: IdiomItem[];  // Idioms
 	[key: string]: unknown;
 }
 
+// Generic item for examples, derivatives, and idioms (all have the same structure)
+// These can be nested recursively (e.g., drv can have ex, ex can have drv, etc.)
 export interface ExampleItem {
 	tw: string;
-	en?: string;
-	[key: string]: unknown;
-}
-
-export interface DerivativeItem {
-	tw: string;
-	en?: string;
+	en?: TranslationVariant[];  // Always array for a/b/c variants
 	mw?: string;
-	ex?: ExampleItem[];
+	cat?: string;
+	etym?: string;
+	det?: string;  // Details/notes
+	alt?: string[];
+	cf?: string[];
+	ex?: ExampleItem[];  // Nested examples
 	[key: string]: unknown;
 }
 
-export interface IdiomItem {
-	tw: string;
-	en?: string;
-	[key: string]: unknown;
-}
+// Type aliases for clarity
+export type DerivativeItem = ExampleItem;
+export type IdiomItem = ExampleItem;
 
 // Database entry
 export interface Entry {
 	id: number;
 	head: string;
 	head_number: number | null;
+	page: number | null;
 	sort_key: string;
 	entry_data: string;
 	is_complete: number;

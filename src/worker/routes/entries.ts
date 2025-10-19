@@ -203,15 +203,17 @@ entriesRouter.post("/", requireEditor, async (c) => {
 	const isComplete = body.is_complete !== undefined ? (body.is_complete ? 1 : 0) : 0;
 	const entryDataJson = JSON.stringify(body.entry_data);
 	const headNumber = body.entry_data.head_number || null;
+	const pageNumber = body.entry_data.page || null;
 
 	const result = await c.env.prod_tjdict
 		.prepare(`
-			INSERT INTO entries (head, head_number, sort_key, entry_data, is_complete, created_by, updated_by)
-			VALUES (?, ?, ?, ?, ?, ?, ?)
+			INSERT INTO entries (head, head_number, page, sort_key, entry_data, is_complete, created_by, updated_by)
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 		`)
 		.bind(
 			body.entry_data.head,
 			headNumber,
+			pageNumber,
 			sortKey,
 			entryDataJson,
 			isComplete,
@@ -258,10 +260,12 @@ entriesRouter.put("/:id", requireEditor, async (c) => {
 	const entryDataJson = JSON.stringify(body.entry_data);
 	const isComplete = body.is_complete !== undefined ? (body.is_complete ? 1 : 0) : undefined;
 	const headNumber = body.entry_data.head_number || null;
+	const pageNumber = body.entry_data.page || null;
 
 	const updateFields: string[] = [
 		"head = ?",
 		"head_number = ?",
+		"page = ?",
 		"sort_key = ?",
 		"entry_data = ?",
 		"updated_by = ?",
@@ -270,6 +274,7 @@ entriesRouter.put("/:id", requireEditor, async (c) => {
 	const updateParams: (string | number | null)[] = [
 		body.entry_data.head,
 		headNumber,
+		pageNumber,
 		sortKey,
 		entryDataJson,
 		payload.userId
@@ -384,4 +389,79 @@ entriesRouter.delete("/:id/reviews", async (c) => {
 
 	return c.json({ success: true });
 });
+
+// GET /api/entries/by-page/:pageNum - Get all entries from a specific dictionary page
+entriesRouter.get("/by-page/:pageNum", async (c) => {
+	const pageNum = parseInt(c.req.param("pageNum"));
+	
+	if (isNaN(pageNum) || pageNum < 1) {
+		return c.json({ error: "Invalid page number" }, 400);
+	}
+
+	const query = c.req.query();
+	const sortBy = (query.sortBy || "sort_key") as "head" | "updated_at" | "sort_key";
+	const sortOrder = (query.sortOrder || "asc") as "asc" | "desc";
+
+	// Get all entries for this dictionary page
+	const sql = `
+		SELECT id, head, head_number, page, sort_key, entry_data, is_complete, updated_at
+		FROM entries
+		WHERE page = ?
+		ORDER BY ${sortBy} ${sortOrder}
+	`;
+
+	const { results: entries } = await c.env.prod_tjdict.prepare(sql).bind(pageNum).all();
+
+	// Get reviews for these entries (same as main list endpoint)
+	const entryIds = (entries as unknown as Entry[]).map((e: Entry) => e.id);
+	const reviewsData: { [key: number]: EntryReviewWithUser[] } = {};
+	const myReviews: { [key: number]: EntryReview } = {};
+
+	if (entryIds.length > 0) {
+		const placeholders = entryIds.map(() => "?").join(",");
+		const reviewsQuery = `
+			SELECT er.*, u.email as user_email
+			FROM entry_reviews er
+			JOIN users u ON er.user_id = u.id
+			WHERE er.entry_id IN (${placeholders})
+		`;
+		const { results: reviews } = await c.env.prod_tjdict
+			.prepare(reviewsQuery)
+			.bind(...entryIds)
+			.all();
+
+		for (const review of reviews as unknown as EntryReviewWithUser[]) {
+			if (!reviewsData[review.entry_id]) {
+				reviewsData[review.entry_id] = [];
+			}
+			reviewsData[review.entry_id].push(review);
+
+			// Track current user's review
+			if (review.user_id === c.get("user").userId) {
+				myReviews[review.entry_id] = review;
+			}
+		}
+	}
+
+	// Combine entries with reviews
+	const entriesWithReviews: EntryWithReviews[] = (entries as unknown as Entry[]).map((entry: Entry) => ({
+		...entry,
+		reviews: reviewsData[entry.id] || [],
+		my_review: myReviews[entry.id]
+	}));
+
+	// Get min and max page numbers for navigation
+	const minMaxQuery = `SELECT MIN(page) as minPage, MAX(page) as maxPage FROM entries WHERE page IS NOT NULL`;
+	const { results: minMaxResults } = await c.env.prod_tjdict.prepare(minMaxQuery).all();
+	const { minPage, maxPage } = minMaxResults[0] as { minPage: number; maxPage: number };
+
+	return c.json({
+		entries: entriesWithReviews,
+		currentPage: pageNum,
+		minPage: minPage || 1,
+		maxPage: maxPage || 1,
+		totalEntries: entries.length
+	});
+});
+
 
