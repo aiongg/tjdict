@@ -1,6 +1,7 @@
 import { ExampleItem, EditorCallbacks } from './types';
 import { FieldVisibilityMenu, MenuItem } from './FieldVisibilityMenu';
 import { TranslationVariantEditor } from './TranslationVariantEditor';
+import { ChipInput } from './ChipInput';
 
 interface ExampleItemEditorProps {
 	item: ExampleItem;
@@ -140,19 +141,18 @@ export function ExampleItemEditor({
 
 			{/* Optional simple fields */}
 			<div className="compact-field-row">
-				{isFieldVisible(itemPath, 'mw') && (
-					<div className="material-field">
-						<input
-							type="text"
-							value={item.mw || ''}
-							onChange={(e) => onUpdate({ mw: e.target.value })}
-							disabled={!canEdit}
-							placeholder=" "
-							id={`field-${itemPath}-mw`}
-						/>
-						<label htmlFor={`field-${itemPath}-mw`}>mw:</label>
-					</div>
-				)}
+			{isFieldVisible(itemPath, 'mw') && (
+				<div className="inline-material-field" style={{ flex: 1 }}>
+					<label htmlFor={`field-${itemPath}-mw`}>mw:</label>
+					<ChipInput
+						values={item.mw || []}
+						onChange={(values) => onUpdate({ mw: values.length > 0 ? values : undefined })}
+						disabled={!canEdit}
+						placeholder="Main word(s)"
+						id={`field-${itemPath}-mw`}
+					/>
+				</div>
+			)}
 
 				{isFieldVisible(itemPath, 'cat') && (
 					<div className="material-field">

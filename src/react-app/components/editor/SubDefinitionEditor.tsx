@@ -218,19 +218,18 @@ export function SubDefinitionEditor({
 
 			{/* Optional fields */}
 			<div className="compact-field-row">
-				{isFieldVisible(subDefPath, 'mw') && (
-					<div className="material-field">
-						<input
-							type="text"
-							value={subDef.mw || ''}
-							onChange={(e) => onUpdate({ mw: e.target.value })}
-							disabled={!canEdit}
-							placeholder=" "
-							id={`field-${subDefPath}-mw`}
-						/>
-						<label htmlFor={`field-${subDefPath}-mw`}>mw:</label>
-					</div>
-				)}
+			{isFieldVisible(subDefPath, 'mw') && (
+				<div className="inline-material-field" style={{ flex: 1 }}>
+					<label htmlFor={`field-${subDefPath}-mw`}>mw:</label>
+					<ChipInput
+						values={subDef.mw || []}
+						onChange={(values) => onUpdate({ mw: values.length > 0 ? values : undefined })}
+						disabled={!canEdit}
+						placeholder="Main word(s)"
+						id={`field-${subDefPath}-mw`}
+					/>
+				</div>
+			)}
 
 				{isFieldVisible(subDefPath, 'cat') && (
 					<div className="material-field">

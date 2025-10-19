@@ -90,19 +90,18 @@ export function TranslationVariantEditor({
 
 			{/* Optional fields */}
 			<div className="compact-field-row">
-				{isFieldVisible(variantPath, 'mw') && (
-					<div className="material-field">
-						<input
-							type="text"
-							value={variant.mw || ''}
-							onChange={(e) => onUpdate({ mw: e.target.value })}
-							disabled={!canEdit}
-							placeholder=" "
-							id={`field-${path}-mw-${variantIndex}`}
-						/>
-						<label htmlFor={`field-${path}-mw-${variantIndex}`}>mw:</label>
-					</div>
-				)}
+			{isFieldVisible(variantPath, 'mw') && (
+				<div className="inline-material-field" style={{ flex: 1 }}>
+					<label htmlFor={`field-${path}-mw-${variantIndex}`}>mw:</label>
+					<ChipInput
+						values={variant.mw || []}
+						onChange={(values) => onUpdate({ mw: values.length > 0 ? values : undefined })}
+						disabled={!canEdit}
+						placeholder="Main word(s)"
+						id={`field-${path}-mw-${variantIndex}`}
+					/>
+				</div>
+			)}
 
 				{isFieldVisible(variantPath, 'cat') && (
 					<div className="material-field">

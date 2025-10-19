@@ -90,19 +90,18 @@ export function PosDefinitionEditor({
 				<div className="pos-def-content">
 					{/* POS-level fields */}
 					<div className="compact-field-row">
-						{isFieldVisible(posDefPath, 'mw') && (
-							<div className="material-field">
-								<input
-									type="text"
-									value={posDef.mw || ''}
-									onChange={(e) => onUpdate({ mw: e.target.value })}
-									disabled={!canEdit}
-									placeholder=" "
-									id={`field-${posDefPath}-mw`}
-								/>
-								<label htmlFor={`field-${posDefPath}-mw`}>mw:</label>
-							</div>
-						)}
+					{isFieldVisible(posDefPath, 'mw') && (
+						<div className="inline-material-field" style={{ flex: 1 }}>
+							<label htmlFor={`field-${posDefPath}-mw`}>mw:</label>
+							<ChipInput
+								values={posDef.mw || []}
+								onChange={(values) => onUpdate({ mw: values.length > 0 ? values : undefined })}
+								disabled={!canEdit}
+								placeholder="Main word(s)"
+								id={`field-${posDefPath}-mw`}
+							/>
+						</div>
+					)}
 
 						{isFieldVisible(posDefPath, 'etym') && (
 							<div className="material-field">

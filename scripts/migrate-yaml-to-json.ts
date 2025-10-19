@@ -218,12 +218,21 @@ function normalizeFieldsToArrays(obj: unknown): unknown {
 	const newObj: Record<string, unknown> = {};
 	
 	// Fields that should always be arrays
-	const arrayFields = ['alt', 'cf', 'ex', 'drv', 'idm'];
+	const arrayFields = ['alt', 'cf', 'ex', 'drv', 'idm', 'mw'];
 	
 	for (const [key, value] of Object.entries(objRecord)) {
-		if (key === 'mw' && Array.isArray(value)) {
-			// Collapse mw array into comma-separated string
-			newObj[key] = value.map(v => String(v)).join(', ');
+		if (key === 'mw') {
+			// Special handling for mw: always convert to array of strings
+			if (value === undefined || value === null) {
+				// Skip undefined/null mw fields
+				continue;
+			} else if (Array.isArray(value)) {
+				// Already an array, just ensure strings and recurse
+				newObj[key] = value.map(v => String(v));
+			} else {
+				// Single value - convert to array
+				newObj[key] = [String(value)];
+			}
 		} else if (arrayFields.includes(key) && value !== undefined && value !== null && !Array.isArray(value)) {
 			// Wrap single value in array
 			newObj[key] = [value];
@@ -404,9 +413,19 @@ function restructureNestedDefs(defItem: unknown): unknown {
 		}
 		
 		// Copy any other fields (but not the numbered ones or pos)
+		// Special handling for mw to convert to array
 		for (const [key, value] of Object.entries(def)) {
 			if (key !== 'pos' && !/^\d+$/.test(key)) {
-				restructured[key] = value;
+				if (key === 'mw' && value !== undefined && value !== null) {
+					// Convert mw to array
+					if (Array.isArray(value)) {
+						restructured[key] = value.map(v => String(v));
+					} else {
+						restructured[key] = [String(value)];
+					}
+				} else {
+					restructured[key] = value;
+				}
 			}
 		}
 		

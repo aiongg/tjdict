@@ -42,7 +42,10 @@
           }
         },
         "mw": {
-          "type": "string"
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "etym": {
           "type": "string"
@@ -64,7 +67,10 @@
           "type": "string"
         },
         "mw": {
-          "type": "string"
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "cat": {
           "type": "string"
@@ -127,7 +133,10 @@
           "type": "boolean"
         },
         "mw": {
-          "type": "string"
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "cat": {
           "type": "string"
@@ -163,7 +172,10 @@
           }
         },
         "mw": {
-          "type": "string"
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "cat": {
           "type": "string"
