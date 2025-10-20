@@ -33,10 +33,11 @@ export function DashboardPage() {
 		setError('');
 
 		try {
-			const response = await fetch('/api/users/me/nickname', {
+			const response = await fetch('/api/admin/users/me/nickname', {
 				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ nickname: nickname.trim() })
+				body: JSON.stringify({ nickname: nickname.trim() }),
+				credentials: 'include'
 			});
 
 			if (!response.ok) {

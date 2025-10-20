@@ -685,14 +685,15 @@
 
 .chip-input-container {
 	position: relative;
-	min-height: 38px;
-	padding: 6px 8px;
+	min-height: 44px;
+	padding: 0 0.5rem;
 	border-radius: 4px;
-	background: var(--color-input-bg);
+	background: var(--color-bg);
 	cursor: text;
 	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
+	box-sizing: border-box;
 }
 
 /* Outlined variant */
@@ -707,7 +708,7 @@
 .chip-input-container.outlined.focused {
 	border-color: var(--color-primary);
 	border-width: 2px;
-	padding: 5px 7px;
+	padding: calc(0.5rem - 1px);
 	box-shadow: 0 0 0 1px rgba(25, 118, 210, 0.1);
 }
 
@@ -739,7 +740,8 @@
 	align-items: center;
 	height: 24px;
 	padding: 0 8px;
-	background: rgba(0, 0, 0, 0.08);
+	background: var(--color-bg);
+	border: 1px solid var(--color-border);
 	border-radius: 12px;
 	font-size: 0.8125rem;
 	font-weight: 400;
@@ -761,7 +763,8 @@
 }
 
 .chip:hover {
-	background: rgba(0, 0, 0, 0.12);
+	background: var(--color-card-bg);
+	border-color: var(--color-text-secondary);
 }
 
 .chip-text {
@@ -791,12 +794,12 @@
 }
 
 .chip-remove:hover {
-	background: rgba(0, 0, 0, 0.12);
+	background: var(--color-border);
 	color: var(--color-text);
 }
 
 .chip-remove:active {
-	background: rgba(0, 0, 0, 0.24);
+	background: var(--color-text-secondary);
 }
 
 .chip-remove svg {

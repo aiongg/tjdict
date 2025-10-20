@@ -267,7 +267,7 @@ authRouter.get("/me", requireAuth, async (c) => {
 	const payload = c.get("user");
 
 	const { results } = await c.env.prod_tjdict
-		.prepare("SELECT id, email, role, totp_enabled FROM users WHERE id = ?")
+		.prepare("SELECT id, email, role, nickname, totp_enabled FROM users WHERE id = ?")
 		.bind(payload.userId)
 		.all();
 
