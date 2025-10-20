@@ -17,12 +17,12 @@
 		"qrcode": "^1.5.4",
 		"react": "19.0.0",
 		"react-dom": "19.0.0",
-		"react-router-dom": "^7.9.4"
+		"react-router-dom": "^7.9.4",
+		"react-zoom-pan-pinch": "^3.7.0"
 	},
 	"devDependencies": {
 		"@cloudflare/vite-plugin": "1.7.5",
 		"@eslint/js": "9.29.0",
-		"@types/node": "24.0.4",
 		"@types/qrcode": "^1.5.5",
 		"@types/react": "19.0.10",
 		"@types/react-dom": "19.0.4",

@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 import { Navigation } from '../components/Navigation';
 import { PaginationControls } from '../components/PaginationControls';
+import { PageImageViewer } from '../components/PageImageViewer';
 
 interface TranslationVariant {
 	en: string;
@@ -140,53 +142,52 @@ const ExtraDisplay = ({ data, bullet }: { data: ExampleItem | DerivativeItem | I
 		const labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 		const showLabels = enArray.length > 1; // Only show labels if multiple variants
 		
-		return enArray.map((variant, idx) => {
-			const label = labels[idx] || `${idx + 1}`;
-			const parts: React.ReactNode[] = [];
-			
-			// Add label only if there are multiple variants (semibold)
-			if (showLabels) {
-				parts.push(<span key="label" className="variant-label">{label}. </span>);
-			}
-			
-			// Add measure word if present
-			if (variant.mw) {
-				parts.push(<span key="mw">({variant.mw}) </span>);
-			}
-			
-			// Add etymology if present
-			if (variant.etym) {
-				parts.push(<span key="etym">({variant.etym}) </span>);
-			}
-			
-			// Add translation
-			if (variant.en) {
-				parts.push(<span key="en">{variant.en}</span>);
-			}
-			
-			// Add alternatives if present
-			if (Array.isArray(variant.alt)) {
-				variant.alt.forEach((alt: string, altIdx) => {
-					parts.push(<span key={`alt-${altIdx}`}>; ≃ {alt}</span>);
-				});
-			}
-			
-			return (
-				<span key={idx}>
-					{parts}
-					{idx < enArray.length - 1 && '; '}
-				</span>
-			);
-		});
-	};
-	
-	return (
-		<div className="ex">
-			<span className="ex-tw">{bullet} {data.tw}</span>
-			<span className="en"> {renderTranslations()}</span>
-			{hasAlt && data.alt ? data.alt.map((alt, i) => (
-				<span key={i} className="alt">; ≃ {alt}</span>
-			)) : null}
+	return enArray.map((variant, idx) => {
+		const label = labels[idx] || `${idx + 1}`;
+		const parts: React.ReactNode[] = [];
+		
+		// Add label only if there are multiple variants (semibold)
+		if (showLabels) {
+			parts.push(<span key="label" className="variant-label">{label}. </span>);
+		}
+		
+		// Add measure word if present
+		if (variant.mw) {
+			parts.push(<span key="mw">({variant.mw}) </span>);
+		}
+		
+		// Add etymology if present
+		if (variant.etym) {
+			parts.push(<span key="etym">({variant.etym}) </span>);
+		}
+		
+		// Add translation
+		if (variant.en) {
+			parts.push(<span key="en">{variant.en}</span>);
+		}
+		
+		// Add alternatives if present
+		if (Array.isArray(variant.alt)) {
+			variant.alt.forEach((alt: string, altIdx) => {
+				parts.push(<span key={`alt-${altIdx}`}>; ≃ {alt}</span>);
+			});
+		}
+		
+		return (
+			<div key={idx} className="en">
+				{parts}
+			</div>
+		);
+	});
+};
+
+return (
+	<div className="ex">
+		<span className="ex-tw">{bullet} {data.tw}</span>
+		{renderTranslations()}
+		{hasAlt && data.alt ? data.alt.map((alt, i) => (
+			<span key={i} className="alt">; ≃ {alt}</span>
+		)) : null}
 			{hasEx && (data as DerivativeItem | IdiomItem).ex ? (data as DerivativeItem | IdiomItem).ex!.map((ex, i) => (
 				<ExtraDisplay key={i} data={ex} bullet="¶" />
 			)) : null}
@@ -336,6 +337,11 @@ export default function EntriesPage() {
 	const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>(
 		(getParam('order') as 'asc' | 'desc') || 'asc'
 	);
+	
+	// Image viewer state
+	const [imageViewerOpen, setImageViewerOpen] = useState(false);
+	const [imageViewerPage, setImageViewerPage] = useState<number | null>(null);
+	const isDesktop = useMediaQuery('(min-width: 1280px)');
 	const [showAdvanced, setShowAdvanced] = useState(getBoolParam('advanced'));
 
 	const fetchEntries = useCallback(async () => {
@@ -474,11 +480,27 @@ export default function EntriesPage() {
 	}, [searchInput, searchQuery]);
 
 	const handleEntryClick = (id: number) => {
+		// Don't navigate if user is selecting text
+		const selection = window.getSelection();
+		if (selection && selection.toString().length > 0) {
+			return;
+		}
 		navigate(`/entries/${id}`);
 	};
 
 	const handleNewEntry = () => {
 		navigate('/entries/new');
+	};
+
+	const handlePageClick = (pageNum: number | undefined) => {
+		if (pageNum) {
+			setImageViewerPage(pageNum);
+			setImageViewerOpen(true);
+		}
+	};
+
+	const handleCloseImageViewer = () => {
+		setImageViewerOpen(false);
 	};
 
 	const getReviewSummary = (entry: EntryWithReviews): string => {
@@ -513,7 +535,7 @@ export default function EntriesPage() {
 	const hasFilters = searchQuery || showIncompleteOnly || showNeedingReview || headFilter || posFilter;
 
 	return (
-		<div className="entries-page">
+		<div className={`entries-page ${imageViewerOpen && isDesktop ? 'with-image-viewer' : ''}`}>
 			<Navigation />
 
 			<div className="page-header">
@@ -661,6 +683,17 @@ export default function EntriesPage() {
 								className="entry-item"
 								onClick={() => handleEntryClick(entry.id)}
 							>
+								{entryData.page && (
+									<span 
+										className="page-link"
+										onClick={(e) => {
+											e.stopPropagation();
+											handlePageClick(entryData.page);
+										}}
+									>
+										p. {entryData.page}
+									</span>
+								)}
 								<div className="entry-meta-badges">
 									{!entry.is_complete && (
 										<span className="badge badge-incomplete">Incomplete</span>
@@ -689,6 +722,16 @@ export default function EntriesPage() {
 					pageInputValue={pageInputValue}
 					setPageInputValue={setPageInputValue}
 					goToPage={goToPage}
+				/>
+			)}
+
+			{/* Page Image Viewer */}
+			{imageViewerOpen && imageViewerPage && (
+				<PageImageViewer
+					pageNumber={imageViewerPage}
+					isOpen={imageViewerOpen}
+					onClose={handleCloseImageViewer}
+					mode={isDesktop ? 'desktop' : 'mobile'}
 				/>
 			)}
 		</div>

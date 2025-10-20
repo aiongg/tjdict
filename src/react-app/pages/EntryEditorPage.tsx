@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 import { Navigation } from '../components/Navigation';
 import { ReviewPanel } from '../components/ReviewPanel.tsx';
 import { PosDefinitionEditor } from '../components/editor/PosDefinitionEditor';
 import { FieldVisibilityMenu } from '../components/editor/FieldVisibilityMenu';
+import { PageImageViewer } from '../components/PageImageViewer';
 import type { EntryData } from '../components/editor/types';
 
 // Import types from shared editor types
@@ -35,6 +37,12 @@ export default function EntryEditorPage() {
 	});
 	const [isComplete, setIsComplete] = useState(false);
 	const [activeTab, setActiveTab] = useState<'edit' | 'reviews'>('edit');
+	
+	// Image viewer state
+	const [imageViewerOpen, setImageViewerOpen] = useState(false);
+	const [imageViewerPage, setImageViewerPage] = useState<number | null>(null);
+	const isDesktop = useMediaQuery('(min-width: 1280px)');
+	
 	// Field visibility tracking using JSON path notation
 	const [visibleFields, setVisibleFields] = useState<Map<string, Set<string>>>(new Map());
 
@@ -66,6 +74,17 @@ export default function EntryEditorPage() {
 
 		fetchEntry();
 	}, [id, isNewEntry]);
+
+	const handlePageClick = (pageNum: number | undefined) => {
+		if (pageNum) {
+			setImageViewerPage(pageNum);
+			setImageViewerOpen(true);
+		}
+	};
+
+	const handleCloseImageViewer = () => {
+		setImageViewerOpen(false);
+	};
 
 	const handleSave = async () => {
 		if (!canEdit) {
@@ -282,12 +301,21 @@ export default function EntryEditorPage() {
 	}
 
 	return (
-		<div>
+		<div className={imageViewerOpen && isDesktop ? 'with-image-viewer' : ''}>
 			<Navigation />
 			<div className="page-container">
 				<div className="editor-header">
 					<h1>{isNewEntry ? 'New Entry' : 'Edit Entry'}</h1>
 					<div className="editor-actions">
+						{entryData.page && (
+							<button 
+								onClick={() => handlePageClick(entryData.page)} 
+								className="btn-secondary"
+								title="View dictionary page"
+							>
+								📖 View Page {entryData.page}
+							</button>
+						)}
 						<button onClick={() => navigate(-1)} className="btn-secondary">
 							Cancel
 						</button>
@@ -370,19 +398,19 @@ export default function EntryEditorPage() {
 								</div>
 							)}
 
-							{isFieldVisible('entry', 'page') && (
-								<div className="material-field">
-									<input
-										type="number"
-										value={entryData.page || ''}
-										onChange={(e) => setEntryData({ ...entryData, page: parseInt(e.target.value) || undefined })}
-										disabled={!canEdit}
-										placeholder=" "
-										id="field-page"
-									/>
-									<label htmlFor="field-page">page:</label>
-								</div>
-							)}
+						{isFieldVisible('entry', 'page') && (
+							<div className="material-field">
+								<input
+									type="number"
+									value={entryData.page || ''}
+									onChange={(e) => setEntryData({ ...entryData, page: parseInt(e.target.value) || undefined })}
+									disabled={!canEdit}
+									placeholder=" "
+									id="field-page"
+								/>
+								<label htmlFor="field-page">page:</label>
+							</div>
+						)}
 
 							{isFieldVisible('entry', 'etym') && (
 								<div className="material-field">
@@ -428,6 +456,16 @@ export default function EntryEditorPage() {
 					</div>
 				)}
 			</div>
+
+			{/* Page Image Viewer */}
+			{imageViewerOpen && imageViewerPage && (
+				<PageImageViewer
+					pageNumber={imageViewerPage}
+					isOpen={imageViewerOpen}
+					onClose={handleCloseImageViewer}
+					mode={isDesktop ? 'desktop' : 'mobile'}
+				/>
+			)}
 		</div>
 	);
 }
