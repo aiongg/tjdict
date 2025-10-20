@@ -3,7 +3,7 @@
 // Translation variant (for multiple translations a/b/c)
 export interface TranslationVariant {
 	en: string;
-	mw?: string[];  // Main word(s) - array of strings
+	mw?: string[];  // Measure word(s) - array of strings
 	cat?: string;
 	etym?: string;
 	dup?: boolean;  // Reduplication flag
@@ -15,7 +15,7 @@ export interface TranslationVariant {
 // Top-level definition grouped by part of speech
 export interface PosDefinition {
 	pos?: string[];  // Part of speech (array of strings: ["n"], ["v", "adj"], etc.) - optional for incomplete entries
-	mw?: string[];  // Main word(s) - array of strings (can be at POS level)
+	mw?: string[];  // Measure word(s) - array of strings (can be at POS level)
 	etym?: string;  // Etymology (can be at POS level)
 	defs: SubDefinition[];  // Array of definition variants for this POS
 }
@@ -23,7 +23,7 @@ export interface PosDefinition {
 // Individual definition variant within a POS
 export interface SubDefinition {
 	en?: string;  // English translation (simple string at definition level)
-	mw?: string[];  // Main word(s) - array of strings
+	mw?: string[];  // Measure word(s) - array of strings
 	cat?: string;  // Category
 	etym?: string;  // Etymology
 	bound?: boolean;  // Bound morpheme flag
@@ -43,7 +43,7 @@ export interface SubDefinition {
 export interface ExampleItem {
 	tw: string;
 	en?: TranslationVariant[];  // Always array for a/b/c variants
-	mw?: string[];  // Main word(s) - array of strings
+	mw?: string[];  // Measure word(s) - array of strings
 	cat?: string;
 	etym?: string;
 	det?: string;  // Details/notes

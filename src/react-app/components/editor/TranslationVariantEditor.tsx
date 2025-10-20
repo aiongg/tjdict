@@ -74,67 +74,63 @@ export function TranslationVariantEditor({
 			</div>
 
 			{/* Boolean flags */}
-			<div className="compact-field-row">
-				{isFieldVisible(variantPath, 'dup') && (
-					<label className="checkbox-field">
-						<input
-							type="checkbox"
-							checked={variant.dup || false}
-							onChange={(e) => onUpdate({ dup: e.target.checked || undefined })}
-							disabled={!canEdit}
-						/>
-						<span>dup</span>
-					</label>
-				)}
-			</div>
+			{isFieldVisible(variantPath, 'dup') && (
+				<label className="checkbox-field">
+					<input
+						type="checkbox"
+						checked={variant.dup || false}
+						onChange={(e) => onUpdate({ dup: e.target.checked || undefined })}
+						disabled={!canEdit}
+					/>
+					<span>dup</span>
+				</label>
+			)}
 
 			{/* Optional fields */}
-			<div className="compact-field-row">
 			{isFieldVisible(variantPath, 'mw') && (
-				<div className="inline-material-field" style={{ flex: 1 }}>
+				<div className="inline-material-field">
 					<label htmlFor={`field-${path}-mw-${variantIndex}`}>mw:</label>
 					<ChipInput
 						values={variant.mw || []}
 						onChange={(values) => onUpdate({ mw: values.length > 0 ? values : undefined })}
 						disabled={!canEdit}
-						placeholder="Main word(s)"
+						placeholder="Measure word(s)"
 						id={`field-${path}-mw-${variantIndex}`}
 					/>
 				</div>
 			)}
 
-				{isFieldVisible(variantPath, 'cat') && (
-					<div className="material-field">
-						<input
-							type="text"
-							value={variant.cat || ''}
-							onChange={(e) => onUpdate({ cat: e.target.value })}
-							disabled={!canEdit}
-							placeholder=" "
-							id={`field-${path}-cat-${variantIndex}`}
-						/>
-						<label htmlFor={`field-${path}-cat-${variantIndex}`}>cat:</label>
-					</div>
-				)}
+			{isFieldVisible(variantPath, 'cat') && (
+				<div className="material-field">
+					<input
+						type="text"
+						value={variant.cat || ''}
+						onChange={(e) => onUpdate({ cat: e.target.value })}
+						disabled={!canEdit}
+						placeholder=" "
+						id={`field-${path}-cat-${variantIndex}`}
+					/>
+					<label htmlFor={`field-${path}-cat-${variantIndex}`}>cat:</label>
+				</div>
+			)}
 
-				{isFieldVisible(variantPath, 'etym') && (
-					<div className="material-field">
-						<input
-							type="text"
-							value={variant.etym || ''}
-							onChange={(e) => onUpdate({ etym: e.target.value })}
-							disabled={!canEdit}
-							placeholder=" "
-							id={`field-${path}-etym-${variantIndex}`}
-						/>
-						<label htmlFor={`field-${path}-etym-${variantIndex}`}>etym:</label>
-					</div>
-				)}
-			</div>
+			{isFieldVisible(variantPath, 'etym') && (
+				<div className="material-field">
+					<input
+						type="text"
+						value={variant.etym || ''}
+						onChange={(e) => onUpdate({ etym: e.target.value })}
+						disabled={!canEdit}
+						placeholder=" "
+						id={`field-${path}-etym-${variantIndex}`}
+					/>
+					<label htmlFor={`field-${path}-etym-${variantIndex}`}>etym:</label>
+				</div>
+			)}
 
 			{/* Alt array with ChipInput */}
 			{isFieldVisible(variantPath, 'alt') && (
-				<div className="inline-material-field" style={{ flex: 1 }}>
+				<div className="inline-material-field">
 					<label htmlFor={`field-${path}-alt-${variantIndex}`}>alt:</label>
 					<ChipInput
 						values={variant.alt || []}

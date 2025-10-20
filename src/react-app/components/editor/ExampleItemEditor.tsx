@@ -140,62 +140,60 @@ export function ExampleItemEditor({
 			</div>
 
 			{/* Optional simple fields */}
-			<div className="compact-field-row">
 			{isFieldVisible(itemPath, 'mw') && (
-				<div className="inline-material-field" style={{ flex: 1 }}>
+				<div className="inline-material-field">
 					<label htmlFor={`field-${itemPath}-mw`}>mw:</label>
 					<ChipInput
 						values={item.mw || []}
 						onChange={(values) => onUpdate({ mw: values.length > 0 ? values : undefined })}
 						disabled={!canEdit}
-						placeholder="Main word(s)"
+						placeholder="Measure word(s)"
 						id={`field-${itemPath}-mw`}
 					/>
 				</div>
 			)}
 
-				{isFieldVisible(itemPath, 'cat') && (
-					<div className="material-field">
-						<input
-							type="text"
-							value={item.cat || ''}
-							onChange={(e) => onUpdate({ cat: e.target.value })}
-							disabled={!canEdit}
-							placeholder=" "
-							id={`field-${itemPath}-cat`}
-						/>
-						<label htmlFor={`field-${itemPath}-cat`}>cat:</label>
-					</div>
-				)}
+			{isFieldVisible(itemPath, 'cat') && (
+				<div className="material-field">
+					<input
+						type="text"
+						value={item.cat || ''}
+						onChange={(e) => onUpdate({ cat: e.target.value })}
+						disabled={!canEdit}
+						placeholder=" "
+						id={`field-${itemPath}-cat`}
+					/>
+					<label htmlFor={`field-${itemPath}-cat`}>cat:</label>
+				</div>
+			)}
 
-				{isFieldVisible(itemPath, 'etym') && (
-					<div className="material-field">
-						<input
-							type="text"
-							value={item.etym || ''}
-							onChange={(e) => onUpdate({ etym: e.target.value })}
-							disabled={!canEdit}
-							placeholder=" "
-							id={`field-${itemPath}-etym`}
-						/>
-						<label htmlFor={`field-${itemPath}-etym`}>etym:</label>
-					</div>
-				)}
+			{isFieldVisible(itemPath, 'etym') && (
+				<div className="material-field">
+					<input
+						type="text"
+						value={item.etym || ''}
+						onChange={(e) => onUpdate({ etym: e.target.value })}
+						disabled={!canEdit}
+						placeholder=" "
+						id={`field-${itemPath}-etym`}
+					/>
+					<label htmlFor={`field-${itemPath}-etym`}>etym:</label>
+				</div>
+			)}
 
-				{isFieldVisible(itemPath, 'det') && (
-					<div className="material-field">
-						<input
-							type="text"
-							value={item.det || ''}
-							onChange={(e) => onUpdate({ det: e.target.value })}
-							disabled={!canEdit}
-							placeholder=" "
-							id={`field-${itemPath}-det`}
-						/>
-						<label htmlFor={`field-${itemPath}-det`}>det:</label>
-					</div>
-				)}
-			</div>
+			{isFieldVisible(itemPath, 'det') && (
+				<div className="material-field">
+					<input
+						type="text"
+						value={item.det || ''}
+						onChange={(e) => onUpdate({ det: e.target.value })}
+						disabled={!canEdit}
+						placeholder=" "
+						id={`field-${itemPath}-det`}
+					/>
+					<label htmlFor={`field-${itemPath}-det`}>det:</label>
+				</div>
+			)}
 
 			{/* Alt array */}
 			{isFieldVisible(itemPath, 'alt') && (

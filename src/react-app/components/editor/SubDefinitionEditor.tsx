@@ -180,103 +180,99 @@ export function SubDefinitionEditor({
 			</div>
 
 			{/* Boolean flags */}
-			<div className="compact-field-row">
-				{isFieldVisible(subDefPath, 'bound') && (
-					<label className="checkbox-field">
-						<input
-							type="checkbox"
-							checked={subDef.bound || false}
-							onChange={(e) => onUpdate({ bound: e.target.checked || undefined })}
-							disabled={!canEdit}
-						/>
-						<span>bound</span>
-					</label>
-				)}
-				{isFieldVisible(subDefPath, 'dup') && (
-					<label className="checkbox-field">
-						<input
-							type="checkbox"
-							checked={subDef.dup || false}
-							onChange={(e) => onUpdate({ dup: e.target.checked || undefined })}
-							disabled={!canEdit}
-						/>
-						<span>dup</span>
-					</label>
-				)}
-				{isFieldVisible(subDefPath, 'takes_a2') && (
-					<label className="checkbox-field">
-						<input
-							type="checkbox"
-							checked={subDef.takes_a2 || false}
-							onChange={(e) => onUpdate({ takes_a2: e.target.checked || undefined })}
-							disabled={!canEdit}
-						/>
-						<span>takes_a2</span>
-					</label>
-				)}
-			</div>
+			{isFieldVisible(subDefPath, 'bound') && (
+				<label className="checkbox-field">
+					<input
+						type="checkbox"
+						checked={subDef.bound || false}
+						onChange={(e) => onUpdate({ bound: e.target.checked || undefined })}
+						disabled={!canEdit}
+					/>
+					<span>bound</span>
+				</label>
+			)}
+			{isFieldVisible(subDefPath, 'dup') && (
+				<label className="checkbox-field">
+					<input
+						type="checkbox"
+						checked={subDef.dup || false}
+						onChange={(e) => onUpdate({ dup: e.target.checked || undefined })}
+						disabled={!canEdit}
+					/>
+					<span>dup</span>
+				</label>
+			)}
+			{isFieldVisible(subDefPath, 'takes_a2') && (
+				<label className="checkbox-field">
+					<input
+						type="checkbox"
+						checked={subDef.takes_a2 || false}
+						onChange={(e) => onUpdate({ takes_a2: e.target.checked || undefined })}
+						disabled={!canEdit}
+					/>
+					<span>takes_a2</span>
+				</label>
+			)}
 
 			{/* Optional fields */}
-			<div className="compact-field-row">
 			{isFieldVisible(subDefPath, 'mw') && (
-				<div className="inline-material-field" style={{ flex: 1 }}>
+				<div className="inline-material-field">
 					<label htmlFor={`field-${subDefPath}-mw`}>mw:</label>
 					<ChipInput
 						values={subDef.mw || []}
 						onChange={(values) => onUpdate({ mw: values.length > 0 ? values : undefined })}
 						disabled={!canEdit}
-						placeholder="Main word(s)"
+						placeholder="Measure word(s)"
 						id={`field-${subDefPath}-mw`}
 					/>
 				</div>
 			)}
 
-				{isFieldVisible(subDefPath, 'cat') && (
-					<div className="material-field">
-						<input
-							type="text"
-							value={subDef.cat || ''}
-							onChange={(e) => onUpdate({ cat: e.target.value })}
-							disabled={!canEdit}
-							placeholder=" "
-							id={`field-${subDefPath}-cat`}
-						/>
-						<label htmlFor={`field-${subDefPath}-cat`}>cat:</label>
-					</div>
-				)}
+			{isFieldVisible(subDefPath, 'cat') && (
+				<div className="material-field">
+					<input
+						type="text"
+						value={subDef.cat || ''}
+						onChange={(e) => onUpdate({ cat: e.target.value })}
+						disabled={!canEdit}
+						placeholder=" "
+						id={`field-${subDefPath}-cat`}
+					/>
+					<label htmlFor={`field-${subDefPath}-cat`}>cat:</label>
+				</div>
+			)}
 
-				{isFieldVisible(subDefPath, 'etym') && (
-					<div className="material-field">
-						<input
-							type="text"
-							value={subDef.etym || ''}
-							onChange={(e) => onUpdate({ etym: e.target.value })}
-							disabled={!canEdit}
-							placeholder=" "
-							id={`field-${subDefPath}-etym`}
-						/>
-						<label htmlFor={`field-${subDefPath}-etym`}>etym:</label>
-					</div>
-				)}
+			{isFieldVisible(subDefPath, 'etym') && (
+				<div className="material-field">
+					<input
+						type="text"
+						value={subDef.etym || ''}
+						onChange={(e) => onUpdate({ etym: e.target.value })}
+						disabled={!canEdit}
+						placeholder=" "
+						id={`field-${subDefPath}-etym`}
+					/>
+					<label htmlFor={`field-${subDefPath}-etym`}>etym:</label>
+				</div>
+			)}
 
-				{isFieldVisible(subDefPath, 'det') && (
-					<div className="material-field">
-						<input
-							type="text"
-							value={subDef.det || ''}
-							onChange={(e) => onUpdate({ det: e.target.value })}
-							disabled={!canEdit}
-							placeholder=" "
-							id={`field-${subDefPath}-det`}
-						/>
-						<label htmlFor={`field-${subDefPath}-det`}>det:</label>
-					</div>
-				)}
-			</div>
+			{isFieldVisible(subDefPath, 'det') && (
+				<div className="material-field">
+					<input
+						type="text"
+						value={subDef.det || ''}
+						onChange={(e) => onUpdate({ det: e.target.value })}
+						disabled={!canEdit}
+						placeholder=" "
+						id={`field-${subDefPath}-det`}
+					/>
+					<label htmlFor={`field-${subDefPath}-det`}>det:</label>
+				</div>
+			)}
 
 			{/* Alt array with ChipInput */}
 			{isFieldVisible(subDefPath, 'alt') && (
-				<div className="inline-material-field" style={{ flex: 1 }}>
+				<div className="inline-material-field">
 					<label htmlFor={`field-${subDefPath}-alt`}>alt:</label>
 					<ChipInput
 						values={subDef.alt || []}
@@ -290,7 +286,7 @@ export function SubDefinitionEditor({
 
 			{/* Cf array with ChipInput */}
 			{isFieldVisible(subDefPath, 'cf') && (
-				<div className="inline-material-field" style={{ flex: 1 }}>
+				<div className="inline-material-field">
 					<label htmlFor={`field-${subDefPath}-cf`}>cf:</label>
 					<ChipInput
 						values={subDef.cf || []}

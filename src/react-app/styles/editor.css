@@ -169,35 +169,7 @@
 	flex: 1;
 }
 
-/* Desktop field row */
-.desktop-field-row {
-	display: flex;
-	gap: 1rem;
-	align-items: flex-start;
-}
-
-.desktop-field-row .material-field {
-	flex: 1;
-	min-width: 0;
-}
-
-@media (max-width: 768px) {
-	.desktop-field-row {
-		flex-direction: column;
-		gap: 0;
-	}
-}
-
-.compact-field-row {
-	display: flex;
-	gap: 0.5rem;
-	align-items: flex-start;
-}
-
-.compact-field-row .material-field {
-	flex: 1;
-	min-width: 0;
-}
+/* Field rows - removed horizontal layouts, all fields are now vertical */
 
 /* ===========================================
    Unified Compact Header
@@ -207,7 +179,7 @@
 	align-items: center;
 	gap: 0.5rem;
 	padding: 0.5rem;
-	background: var(--color-card-bg);
+	background: transparent;
 	border-radius: 4px;
 	margin-bottom: 0.5rem;
 }
@@ -387,9 +359,9 @@
    =========================================== */
 .entry-header-compact {
 	margin-bottom: 1.5rem;
-	background: var(--color-card-bg) !important;
-	border: 1px solid var(--color-border);
-	padding: 0.75rem !important;
+	background: transparent !important;
+	border: none;
+	padding: 0 !important;
 }
 
 /* Done checkbox button */
@@ -431,8 +403,9 @@
    =========================================== */
 .pos-definition {
 	margin-top: 1.5rem;
-	border: 1px solid var(--color-border);
-	border-radius: 8px;
+	border: none;
+	border-left: 2px solid var(--color-border);
+	padding-left: 1rem;
 	/* Remove overflow: hidden to prevent clipping of dropdown menus */
 }
 
@@ -442,7 +415,7 @@
 }
 
 .pos-def-header:hover {
-	background: var(--color-bg);
+	background: transparent;
 }
 
 .pos-def-header .collapse-icon {
@@ -452,17 +425,18 @@
 }
 
 .pos-def-content {
-	padding: 1rem;
+	padding: 0;
+	padding-top: 0.5rem;
 }
 
 /* ===========================================
    Sub-Definition Editor
    =========================================== */
 .sub-definition {
-	padding: 1rem;
-	border-left: 3px solid var(--color-border);
-	background: var(--color-card-bg);
-	border-radius: 4px;
+	padding: 0;
+	padding-left: 1rem;
+	border-left: 2px solid var(--color-border);
+	background: transparent;
 }
 
 .sub-definition:nth-child(n+2) {
@@ -489,12 +463,12 @@
    Compact Item (for ex/drv/idm)
    =========================================== */
 .compact-item {
-	padding: 0.75rem;
+	padding: 0;
+	padding-left: 1rem;
 	margin-bottom: 0.75rem;
-	background: var(--color-bg);
-	border: 1px solid var(--color-border);
-	border-left: 3px solid var(--color-border);
-	border-radius: 4px;
+	background: transparent;
+	border: none;
+	border-left: 2px solid var(--color-border);
 }
 
 .item-header {
@@ -516,17 +490,11 @@
 }
 
 .compact-variant {
-	padding: 0 0.5rem;
-	/* margin-bottom: 0.5rem; */
-	margin-left: 1rem;
-	background: rgba(0, 0, 0, 0.03);
-	border-left: 3px solid rgba(59, 130, 246, 0.4);
-	border-radius: 4px;
-}
-
-[data-theme="dark"] .compact-variant {
-	background: rgba(255, 255, 255, 0.03);
-	border-left: 3px solid rgba(96, 165, 250, 0.4);
+	padding: 0;
+	padding-left: 1rem;
+	margin-left: 0;
+	background: transparent;
+	border-left: 2px solid var(--color-border);
 }
 
 .variant-header {
@@ -548,16 +516,11 @@
 }
 
 .nested-level-1 {
-	margin-left: 1.5rem;
-	border-left: 2px solid var(--color-border);
-	padding-left: 1rem;
+	margin-left: 1rem;
 }
 
 .nested-level-2 {
-	margin-left: 3rem;
-	border-left: 2px solid var(--color-border);
-	padding-left: 1rem;
-	opacity: 0.9;
+	margin-left: 2rem;
 }
 
 .nested-section {
@@ -636,23 +599,26 @@
 	}
 
 	.pos-def-header {
-		padding: 0 0.75rem;
+		padding: 0;
 	}
 	
 	.pos-def-content {
-		padding: 0.75rem;
+		padding: 0;
+		padding-top: 0.5rem;
 	}
 	
 	.sub-definition {
-		padding: 0 0.75rem;
+		padding-left: 1rem;
 		margin-left: 0;
 		border-left-width: 2px;
 	}
 	
-	.nested-level-1,
+	.nested-level-1 {
+		margin-left: 1rem;
+	}
+	
 	.nested-level-2 {
-		margin-left: 0.75rem;
-		padding-left: 0.75rem;
+		margin-left: 2rem;
 	}
 	
 	.field-visibility-menu .menu-dropdown {

@@ -89,34 +89,32 @@ export function PosDefinitionEditor({
 			{!isCollapsed && (
 				<div className="pos-def-content">
 					{/* POS-level fields */}
-					<div className="compact-field-row">
 					{isFieldVisible(posDefPath, 'mw') && (
-						<div className="inline-material-field" style={{ flex: 1 }}>
+						<div className="inline-material-field">
 							<label htmlFor={`field-${posDefPath}-mw`}>mw:</label>
 							<ChipInput
 								values={posDef.mw || []}
 								onChange={(values) => onUpdate({ mw: values.length > 0 ? values : undefined })}
 								disabled={!canEdit}
-								placeholder="Main word(s)"
+								placeholder="Measure word(s)"
 								id={`field-${posDefPath}-mw`}
 							/>
 						</div>
 					)}
 
-						{isFieldVisible(posDefPath, 'etym') && (
-							<div className="material-field">
-								<input
-									type="text"
-									value={posDef.etym || ''}
-									onChange={(e) => onUpdate({ etym: e.target.value })}
-									disabled={!canEdit}
-									placeholder=" "
-									id={`field-${posDefPath}-etym`}
-								/>
-								<label htmlFor={`field-${posDefPath}-etym`}>etym:</label>
-							</div>
-						)}
-					</div>
+					{isFieldVisible(posDefPath, 'etym') && (
+						<div className="material-field">
+							<input
+								type="text"
+								value={posDef.etym || ''}
+								onChange={(e) => onUpdate({ etym: e.target.value })}
+								disabled={!canEdit}
+								placeholder=" "
+								id={`field-${posDefPath}-etym`}
+							/>
+							<label htmlFor={`field-${posDefPath}-etym`}>etym:</label>
+						</div>
+					)}
 
 					{/* Sub-definitions */}
 					<div className="sub-definitions">

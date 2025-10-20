@@ -60,6 +60,8 @@ export default function EntryEditorPage() {
 	
 	// Field visibility tracking using JSON path notation
 	const [visibleFields, setVisibleFields] = useState<Map<string, Set<string>>>(new Map());
+	// Track explicitly hidden fields (to override the "has data" default visibility)
+	const [hiddenFields, setHiddenFields] = useState<Map<string, Set<string>>>(new Map());
 
 	const isNewEntry = id === 'new';
 	const canEdit = user?.role === 'editor' || user?.role === 'admin';
@@ -314,40 +316,71 @@ export default function EntryEditorPage() {
 
 	// Field visibility management
 	const isFieldVisible = (path: string, fieldName: string): boolean => {
-		const fields = visibleFields.get(path);
-		if (!fields) {
-			// If not in map, check if field has a value in the data
-			// For top-level entry fields, check entryData directly
-			if (path === 'entry') {
-				const value = (entryData as unknown as Record<string, unknown>)[fieldName];
-				// Don't show 'page' by default even if it has a value
-				if (fieldName === 'page') {
-					return false;
-				}
-				// Show 'head_number' and 'etym' if they have values
-				return value !== undefined && value !== null && value !== '';
-			}
-			
-			// For nested paths, use getByPath
-			const obj = getByPath(entryData, path);
-			if (obj && typeof obj === 'object' && fieldName in obj) {
-				const value = (obj as Record<string, unknown>)[fieldName];
-				// Show if field has a value (even empty string) or is an array
-				return value !== undefined && value !== null;
-			}
+		// First check if explicitly hidden
+		const hidden = hiddenFields.get(path);
+		if (hidden && hidden.has(fieldName)) {
 			return false;
 		}
-		return fields.has(fieldName);
+		
+		// Then check if explicitly shown
+		const fields = visibleFields.get(path);
+		if (fields && fields.has(fieldName)) {
+			return true;
+		}
+		
+		// Finally, check if field has a value in the data (default visibility)
+		// For top-level entry fields, check entryData directly
+		if (path === 'entry') {
+			const value = (entryData as unknown as Record<string, unknown>)[fieldName];
+			// Don't show 'page' by default even if it has a value
+			if (fieldName === 'page') {
+				return false;
+			}
+			// Show 'head_number' and 'etym' if they have values
+			return value !== undefined && value !== null && value !== '';
+		}
+		
+		// For nested paths, use getByPath
+		const obj = getByPath(entryData, path);
+		if (obj && typeof obj === 'object' && fieldName in obj) {
+			const value = (obj as Record<string, unknown>)[fieldName];
+			// Show if field has a value (even empty string) or is an array
+			return value !== undefined && value !== null;
+		}
+		return false;
 	};
 
 	const toggleFieldVisibility = (path: string, fieldName: string) => {
-		const newVisibleFields = new Map(visibleFields);
-		const fields = newVisibleFields.get(path) || new Set<string>();
+		// Check if field is currently visible (either in map or has data)
+		const currentlyVisible = isFieldVisible(path, fieldName);
 		
-		if (fields.has(fieldName)) {
-			fields.delete(fieldName);
+		if (currentlyVisible) {
+			// Hide it: remove from visible, add to hidden
+			const newVisibleFields = new Map(visibleFields);
+			const visibleSet = newVisibleFields.get(path) || new Set<string>();
+			visibleSet.delete(fieldName);
+			newVisibleFields.set(path, visibleSet);
+			setVisibleFields(newVisibleFields);
+			
+			const newHiddenFields = new Map(hiddenFields);
+			const hiddenSet = newHiddenFields.get(path) || new Set<string>();
+			hiddenSet.add(fieldName);
+			newHiddenFields.set(path, hiddenSet);
+			setHiddenFields(newHiddenFields);
 		} else {
-			fields.add(fieldName);
+			// Show it: remove from hidden, add to visible
+			const newHiddenFields = new Map(hiddenFields);
+			const hiddenSet = newHiddenFields.get(path) || new Set<string>();
+			hiddenSet.delete(fieldName);
+			newHiddenFields.set(path, hiddenSet);
+			setHiddenFields(newHiddenFields);
+			
+			const newVisibleFields = new Map(visibleFields);
+			const visibleSet = newVisibleFields.get(path) || new Set<string>();
+			visibleSet.add(fieldName);
+			newVisibleFields.set(path, visibleSet);
+			setVisibleFields(newVisibleFields);
+			
 			// If field doesn't exist in data, add it with empty value
 			const obj = getByPath(entryData, path) as Record<string, unknown> | undefined;
 			if (obj && !(fieldName in obj)) {
@@ -363,9 +396,6 @@ export default function EntryEditorPage() {
 				setEntryData(newData as EntryData);
 			}
 		}
-		
-		newVisibleFields.set(path, fields);
-		setVisibleFields(newVisibleFields);
 	};
 
 	const getAvailableFields = (path: string): string[] => {
@@ -474,7 +504,18 @@ export default function EntryEditorPage() {
 					<div className="compact-form">
 						{/* Compact Entry Header */}
 						<div className="entry-header-compact">
-							{/* First row: head field, done checkbox, and menu */}
+							{/* Complete checkbox above everything */}
+							<label className="checkbox-field" style={{ marginBottom: '1rem' }}>
+								<input
+									type="checkbox"
+									checked={isComplete}
+									onChange={(e) => canEdit && setIsComplete(e.target.checked)}
+									disabled={!canEdit}
+								/>
+								<span>Mark complete</span>
+							</label>
+							
+							{/* Head field with menu */}
 							<div className="compact-header">
 								<div className="inline-material-field" style={{ flex: 1 }}>
 									<label htmlFor="field-head">head:</label>
@@ -488,17 +529,6 @@ export default function EntryEditorPage() {
 									/>
 								</div>
 								
-								{/* Compact Done checkbox */}
-								<button
-									className={`done-checkbox ${isComplete ? 'checked' : ''}`}
-									onClick={() => canEdit && setIsComplete(!isComplete)}
-									disabled={!canEdit}
-									title={isComplete ? 'Mark as incomplete' : 'Mark as complete'}
-									type="button"
-								>
-									{isComplete ? '✓' : '○'}
-								</button>
-								
 								<FieldVisibilityMenu
 									path="entry"
 									availableFields={getAvailableFields('entry')}
@@ -508,50 +538,46 @@ export default function EntryEditorPage() {
 								/>
 							</div>
 							
-							{/* Second row: num, page, etym fields */}
-							{(isFieldVisible('entry', 'head_number') || isFieldVisible('entry', 'page') || isFieldVisible('entry', 'etym')) && (
-								<div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
-									{isFieldVisible('entry', 'head_number') && (
-										<div className="inline-material-field" style={{ width: '120px' }}>
-											<label htmlFor="field-head-number">num:</label>
-											<input
-												type="number"
-												value={entryData.head_number || ''}
-												onChange={(e) => setEntryData({ ...entryData, head_number: parseInt(e.target.value) || undefined })}
-												disabled={!canEdit}
-												placeholder=" "
-												id="field-head-number"
-											/>
-										</div>
-									)}
+							{/* Additional fields stacked vertically */}
+							{isFieldVisible('entry', 'head_number') && (
+								<div className="material-field">
+									<input
+										type="number"
+										value={entryData.head_number || ''}
+										onChange={(e) => setEntryData({ ...entryData, head_number: parseInt(e.target.value) || undefined })}
+										disabled={!canEdit}
+										placeholder=" "
+										id="field-head-number"
+									/>
+									<label htmlFor="field-head-number">num:</label>
+								</div>
+							)}
 
-									{isFieldVisible('entry', 'page') && (
-										<div className="inline-material-field" style={{ width: '120px' }}>
-											<label htmlFor="field-page">page:</label>
-											<input
-												type="number"
-												value={entryData.page || ''}
-												onChange={(e) => setEntryData({ ...entryData, page: parseInt(e.target.value) || undefined })}
-												disabled={!canEdit}
-												placeholder=" "
-												id="field-page"
-											/>
-										</div>
-									)}
+							{isFieldVisible('entry', 'page') && (
+								<div className="material-field">
+									<input
+										type="number"
+										value={entryData.page || ''}
+										onChange={(e) => setEntryData({ ...entryData, page: parseInt(e.target.value) || undefined })}
+										disabled={!canEdit}
+										placeholder=" "
+										id="field-page"
+									/>
+									<label htmlFor="field-page">page:</label>
+								</div>
+							)}
 
-									{isFieldVisible('entry', 'etym') && (
-										<div className="inline-material-field" style={{ flex: 1, minWidth: '150px' }}>
-											<label htmlFor="field-etym">etym:</label>
-											<input
-												type="text"
-												value={entryData.etym || ''}
-												onChange={(e) => setEntryData({ ...entryData, etym: e.target.value })}
-												disabled={!canEdit}
-												placeholder=" "
-												id="field-etym"
-											/>
-										</div>
-									)}
+							{isFieldVisible('entry', 'etym') && (
+								<div className="material-field">
+									<input
+										type="text"
+										value={entryData.etym || ''}
+										onChange={(e) => setEntryData({ ...entryData, etym: e.target.value })}
+										disabled={!canEdit}
+										placeholder=" "
+										id="field-etym"
+									/>
+									<label htmlFor="field-etym">etym:</label>
 								</div>
 							)}
 						</div>
