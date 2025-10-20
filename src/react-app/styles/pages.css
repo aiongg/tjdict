@@ -269,9 +269,22 @@
 	margin-bottom: 0.5rem;
 }
 
+.entry-display-simple {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.25rem;
+}
+
 .head {
 	font-weight: 700;
 	font-size: 1.1rem;
+	color: var(--color-text);
+}
+
+.det-simple {
+	font-size: 1.1rem;
+	font-weight: 400;
 	color: var(--color-text);
 }
 

@@ -84,7 +84,7 @@ select {
 	color: var(--color-text);
 	font-size: 1rem;
 	font-family: inherit;
-	min-height: 44px;
+	min-height: 36px;
 }
 
 textarea {

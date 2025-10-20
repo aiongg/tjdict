@@ -8,6 +8,7 @@ import { Navigation } from '../components/Navigation';
 import { PaginationControls } from '../components/PaginationControls';
 import { PageImageViewer } from '../components/PageImageViewer';
 import { ReviewBadge } from '../components/ReviewBadge';
+import { getCircledNumber } from '../utils/tools';
 
 interface TranslationVariant {
 	en: string;
@@ -83,16 +84,6 @@ const toSuperscript = (num: number): string => {
 		'5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹'
 	};
 	return num.toString().split('').map(d => superscriptMap[d] || d).join('');
-};
-
-// Circled numbers for definitions
-const circledNumbers = ["⓿", "❶", "❷", "❸", "❹", "❺", "❻", "❼", "❽", "❾", "❿", "⓫", "⓬", "⓭", "⓮", "⓯", "⓰", "⓱", "⓲", "⓳", "⓴"];
-
-const getCircledNum = (num: number): string => {
-	if (num >= 0 && num <= 20) {
-		return circledNumbers[num];
-	}
-	return num.toString();
 };
 
 // Format headword with superscript number if present
@@ -238,7 +229,7 @@ const SubDefDisplay = ({ subDef, num, hasSingleDef }: { subDef: SubDefinition; n
 
 	return (
 		<div className="subdef">
-			{num !== undefined && <span className="def-num">{getCircledNum(num)}</span>}
+			{num !== undefined && <span className="def-num">{getCircledNumber(num)}</span>}
 			{/* For single definition, show flags after pos (handled in PosDefDisplay) */}
 			{/* For multiple definitions, show flags before English */}
 			{!hasSingleDef && renderFlags()}
@@ -307,6 +298,34 @@ const PosDefDisplay = ({ posDef }: { posDef: PosDefinition }) => {
 };
 
 const EntryDisplay = ({ entryData }: { entryData: EntryData }) => {
+	// Check if this is a simple det-only entry
+	// Conditions: 1 pos def, 1 sub def, only det field is populated (and optionally head_number/etym at entry level)
+	const isSimpleDetOnly = 
+		entryData.defs.length === 1 && 
+		entryData.defs[0].defs.length === 1 &&
+		entryData.defs[0].defs[0].det &&
+		!entryData.defs[0].defs[0].en &&
+		!entryData.defs[0].defs[0].mw &&
+		!entryData.defs[0].defs[0].cat &&
+		!entryData.defs[0].defs[0].bound &&
+		!entryData.defs[0].defs[0].dup &&
+		!entryData.defs[0].defs[0].takes_a2 &&
+		!entryData.defs[0].defs[0].alt &&
+		!entryData.defs[0].defs[0].cf &&
+		!entryData.defs[0].defs[0].ex &&
+		!entryData.defs[0].defs[0].drv &&
+		!entryData.defs[0].defs[0].idm;
+	
+	if (isSimpleDetOnly) {
+		return (
+			<div className="entry-display entry-display-simple">
+				<span className="head">{formatHeadword(entryData.head, entryData.head_number)}</span>
+				{entryData.etym && <span className="etym"> ({entryData.etym})</span>}
+				<span className="det-simple"> ⇒ {entryData.defs[0].defs[0].det}</span>
+			</div>
+		);
+	}
+	
 	return (
 		<div className="entry-display">
 			<div className="entry-headword">

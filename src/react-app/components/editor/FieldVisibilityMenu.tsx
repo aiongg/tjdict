@@ -46,6 +46,21 @@ export function FieldVisibilityMenu({
 	const hasContent = availableFields.length > 0 || menuItems.length > 0;
 	if (!hasContent) return null;
 
+	// Separate boolean flags from other fields
+	const booleanFlags = ['bound', 'takes_a2', 'dup'];
+	const regularFields = availableFields.filter(f => !booleanFlags.includes(f));
+	const flagFields = availableFields.filter(f => booleanFlags.includes(f));
+
+	// Get display label for field
+	const getFieldLabel = (field: string): string => {
+		switch (field) {
+			case 'bound': return 'B.';
+			case 'takes_a2': return '[á]';
+			case 'dup': return '[x]';
+			default: return field;
+		}
+	};
+
 	return (
 		<div className="field-visibility-menu" ref={menuRef}>
 			<button
@@ -60,8 +75,8 @@ export function FieldVisibilityMenu({
 			</button>
 			{isOpen && (
 				<div className="menu-dropdown">
-					{/* Field toggles */}
-					{availableFields.map(field => (
+					{/* Regular field toggles */}
+					{regularFields.map(field => (
 						<label key={field} className="menu-item">
 							<input
 								type="checkbox"
@@ -74,7 +89,26 @@ export function FieldVisibilityMenu({
 						</label>
 					))}
 					
-					{/* Divider if we have both fields and actions */}
+					{/* Boolean flag toggles */}
+					{flagFields.length > 0 && (
+						<>
+							{regularFields.length > 0 && <div className="menu-divider"></div>}
+							{flagFields.map(field => (
+								<label key={field} className="menu-item">
+									<input
+										type="checkbox"
+										checked={isFieldVisible(path, field)}
+										onChange={() => {
+											onToggleField(path, field);
+										}}
+									/>
+									<span>{getFieldLabel(field)}</span>
+								</label>
+							))}
+						</>
+					)}
+					
+					{/* Divider if we have fields and actions */}
 					{availableFields.length > 0 && menuItems.length > 0 && (
 						<div className="menu-divider"></div>
 					)}

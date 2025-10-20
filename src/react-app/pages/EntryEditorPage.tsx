@@ -282,6 +282,9 @@ export default function EntryEditorPage() {
 		// Check if field is currently visible (either in map or has data)
 		const currentlyVisible = isFieldVisible(path, fieldName);
 		
+		// Special handling for boolean flags - they toggle the actual boolean value
+		const isBooleanFlag = fieldName === 'bound' || fieldName === 'dup' || fieldName === 'takes_a2';
+		
 		if (currentlyVisible) {
 			// Hide it: remove from visible, add to hidden
 			const newVisibleFields = new Map(visibleFields);
@@ -295,6 +298,12 @@ export default function EntryEditorPage() {
 			hiddenSet.add(fieldName);
 			newHiddenFields.set(path, hiddenSet);
 			setHiddenFields(newHiddenFields);
+			
+			// For boolean flags, set value to false/undefined when hidden
+			if (isBooleanFlag) {
+				const newData = setByPath(entryData, `${path}.${fieldName}`, undefined);
+				setEntryData(newData as EntryData);
+			}
 		} else {
 			// Show it: remove from hidden, add to visible
 			const newHiddenFields = new Map(hiddenFields);
@@ -309,18 +318,23 @@ export default function EntryEditorPage() {
 			newVisibleFields.set(path, visibleSet);
 			setVisibleFields(newVisibleFields);
 			
-			// If field doesn't exist in data, add it with empty value
+			// If field doesn't exist in data, add it with appropriate default value
 			const obj = getByPath(entryData, path) as Record<string, unknown> | undefined;
 			if (obj && !(fieldName in obj)) {
 				let defaultValue: unknown;
 				if (fieldName === 'alt' || fieldName === 'cf' || fieldName === 'ex' || fieldName === 'drv' || fieldName === 'idm') {
 					defaultValue = [];
-				} else if (fieldName === 'bound' || fieldName === 'dup' || fieldName === 'takes_a2') {
-					defaultValue = false;
+				} else if (isBooleanFlag) {
+					// Boolean flags default to true when shown
+					defaultValue = true;
 				} else {
 					defaultValue = '';
 				}
 				const newData = setByPath(entryData, `${path}.${fieldName}`, defaultValue);
+				setEntryData(newData as EntryData);
+			} else if (obj && isBooleanFlag) {
+				// If boolean flag exists but is false/undefined, set it to true when showing
+				const newData = setByPath(entryData, `${path}.${fieldName}`, true);
 				setEntryData(newData as EntryData);
 			}
 		}

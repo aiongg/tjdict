@@ -2,6 +2,7 @@ import { SubDefinition, ExampleItem, EditorCallbacks } from './types';
 import { FieldVisibilityMenu, MenuItem } from './FieldVisibilityMenu';
 import { ExampleItemEditor } from './ExampleItemEditor';
 import { ChipInput } from './ChipInput';
+import { getCircledNumber } from '../../utils/tools';
 
 interface SubDefinitionEditorProps {
 	subDef: SubDefinition;
@@ -26,12 +27,6 @@ export function SubDefinitionEditor({
 }: SubDefinitionEditorProps) {
 	const subDefPath = `defs[${posIndex}].defs[${subIndex}]`;
 	const { isFieldVisible, onToggleField, getAvailableFields } = callbacks;
-
-	// Get circled number (①②③)
-	const getCircledNumber = (num: number) => {
-		const circledNums = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩'];
-		return circledNums[num] || `(${num + 1})`;
-	};
 
 	const handleArrayUpdate = (field: 'ex' | 'drv' | 'idm', itemIndex: number, updates: Partial<ExampleItem>) => {
 		const arr = (subDef[field] || []) as ExampleItem[];
@@ -149,6 +144,21 @@ export function SubDefinitionEditor({
 					<span className="circled-number">{getCircledNumber(subIndex)}</span>
 				)}
 				
+				{/* Inline flag labels */}
+				{(isFieldVisible(subDefPath, 'bound') || isFieldVisible(subDefPath, 'takes_a2') || isFieldVisible(subDefPath, 'dup')) && (
+					<div className="inline-flag-labels">
+						{isFieldVisible(subDefPath, 'bound') && subDef.bound && (
+							<span className="flag-label flag-bound"><b>B.</b></span>
+						)}
+						{isFieldVisible(subDefPath, 'takes_a2') && subDef.takes_a2 && (
+							<span className="flag-label flag-takes-a2"><i>[á]</i></span>
+						)}
+						{isFieldVisible(subDefPath, 'dup') && subDef.dup && (
+							<span className="flag-label flag-dup"><i>[x]</i></span>
+						)}
+					</div>
+				)}
+				
 				{/* Inline English translation */}
 				<div className="inline-material-field" style={{ flex: 1 }}>
 					<label htmlFor={`field-${subDefPath}-en`}>en:</label>
@@ -178,41 +188,6 @@ export function SubDefinitionEditor({
 					menuItems={menuItems}
 				/>
 			</div>
-
-			{/* Boolean flags */}
-			{isFieldVisible(subDefPath, 'bound') && (
-				<label className="checkbox-field">
-					<input
-						type="checkbox"
-						checked={subDef.bound || false}
-						onChange={(e) => onUpdate({ bound: e.target.checked || undefined })}
-						disabled={!canEdit}
-					/>
-					<span>bound</span>
-				</label>
-			)}
-			{isFieldVisible(subDefPath, 'dup') && (
-				<label className="checkbox-field">
-					<input
-						type="checkbox"
-						checked={subDef.dup || false}
-						onChange={(e) => onUpdate({ dup: e.target.checked || undefined })}
-						disabled={!canEdit}
-					/>
-					<span>dup</span>
-				</label>
-			)}
-			{isFieldVisible(subDefPath, 'takes_a2') && (
-				<label className="checkbox-field">
-					<input
-						type="checkbox"
-						checked={subDef.takes_a2 || false}
-						onChange={(e) => onUpdate({ takes_a2: e.target.checked || undefined })}
-						disabled={!canEdit}
-					/>
-					<span>takes_a2</span>
-				</label>
-			)}
 
 			{/* Optional fields */}
 			{isFieldVisible(subDefPath, 'mw') && (
@@ -321,7 +296,7 @@ export function SubDefinitionEditor({
 				{canEdit && (
 					<button
 						onClick={() => handleArrayAdd('ex', { tw: '', en: [{ en: '' }] })}
-						className="btn-secondary btn-sm"
+						className="btn-secondary btn-sm add-item-button"
 					>
 						+ Add ex
 					</button>
@@ -354,7 +329,7 @@ export function SubDefinitionEditor({
 					{canEdit && (
 						<button
 							onClick={() => handleArrayAdd('drv', { tw: '', en: [{ en: '' }] })}
-							className="btn-secondary btn-sm"
+							className="btn-secondary btn-sm add-item-button"
 						>
 							+ Add drv
 						</button>
@@ -390,7 +365,7 @@ export function SubDefinitionEditor({
 					{canEdit && (
 						<button
 							onClick={() => handleArrayAdd('idm', { tw: '', en: [{ en: '' }] })}
-							className="btn-secondary btn-sm"
+							className="btn-secondary btn-sm add-item-button"
 						>
 							+ Add idm
 						</button>
