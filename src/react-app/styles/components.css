@@ -91,6 +91,7 @@ textarea {
 	min-height: 80px;
 	resize: vertical;
 	line-height: 1.5;
+	field-sizing: content;
 }
 
 input:focus,

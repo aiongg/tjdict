@@ -419,7 +419,7 @@ export default function EntryEditorPage() {
 								className="btn-secondary"
 								title="View dictionary page"
 							>
-								📖 View Page {entryData.page}
+								📖 p. {entryData.page}
 							</button>
 						)}
 						<button onClick={() => navigate(-1)} className="btn-secondary">

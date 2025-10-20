@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { Navigation } from '../components/Navigation';
 
 export function DashboardPage() {
 	const { user, checkAuth } = useAuth();
+	const navigate = useNavigate();
 	const [isEditingNickname, setIsEditingNickname] = useState(false);
 	const [nickname, setNickname] = useState(user?.nickname || '');
 	const [isSaving, setIsSaving] = useState(false);
@@ -119,16 +121,23 @@ export function DashboardPage() {
 					</div>
 				</div>
 
-				<div className="card">
-					<h2>Taiwanese-English Dictionary</h2>
-					<p className="text-muted">
-						Use the Dictionary link in the navigation to browse and edit dictionary entries.
-					</p>
+			<div className="card">
+				<h2>Taiwanese-English Dictionary</h2>
+				<p className="text-muted">
+					Welcome to the TJDict editor!
+				</p>
 
-					<div className="placeholder-box">
-						<p>Welcome to the TJDict editor!</p>
-					</div>
-				</div>
+				<button
+					onClick={() => navigate('/entries')}
+					style={{
+						padding: '0.75rem 1.5rem',
+						fontSize: '1rem',
+						marginTop: '1rem',
+					}}
+				>
+					Go to Dictionary
+				</button>
+			</div>
 			</div>
 		</div>
 	);

@@ -112,6 +112,7 @@
 .material-field textarea {
 	min-height: 2.5rem;
 	resize: vertical;
+	field-sizing: content;
 }
 
 .material-field label {
@@ -264,6 +265,7 @@
 	resize: none;
 	overflow: hidden;
 	line-height: 1.4;
+	field-sizing: content;
 }
 
 /* Badge-styled input for POS field */
