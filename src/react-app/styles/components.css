@@ -539,7 +539,7 @@ label {
 }
 
 .review-badge--default {
-	background: white;
+	background: var(--color-card-bg);
 	color: var(--color-text);
 	border: 1px solid var(--color-border);
 }
@@ -577,7 +577,7 @@ label {
 	top: 100%;
 	right: 0;
 	margin-top: 0.25rem;
-	background: white;
+	background: var(--color-card-bg);
 	border: 1px solid var(--color-border);
 	border-radius: 8px;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -591,7 +591,7 @@ label {
 	width: 100%;
 	padding: 0.75rem 1rem;
 	border: none;
-	background: white;
+	background: var(--color-card-bg);
 	color: var(--color-text);
 	text-align: left;
 	cursor: pointer;
@@ -604,13 +604,13 @@ label {
 }
 
 .review-badge-dropdown-item--approve:hover:not(:disabled) {
-	background: #d1fae5;
-	color: #065f46;
+	background: rgba(16, 185, 129, 0.15);
+	color: #10b981;
 }
 
 .review-badge-dropdown-item--needs-work:hover:not(:disabled) {
-	background: #fee2e2;
-	color: #991b1b;
+	background: rgba(239, 68, 68, 0.15);
+	color: #ef4444;
 }
 
 .review-badge-dropdown-item:disabled {
