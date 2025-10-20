@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { useImageViewer } from '../contexts/ImageViewerContext';
+import { useEntry, useUpdateEntry, useSubmitReview } from '../hooks/useEntriesQuery';
 import { Navigation } from '../components/Navigation';
 import { ReviewPanel } from '../components/ReviewPanel.tsx';
 import { ReviewBadge } from '../components/ReviewBadge';
@@ -14,33 +15,21 @@ import type { EntryData } from '../components/editor/types';
 // Import types from shared editor types
 import type { PosDefinition, SubDefinition } from '../components/editor/types';
 
-interface EntryReview {
-	id: number;
-	entry_id: number;
-	user_id: number;
-	status: 'approved' | 'needs_work';
-	reviewed_at: string;
-	user_email: string;
-	user_nickname: string | null;
-}
-
-interface EntryComment {
-	id: number;
-	entry_id: number;
-	user_id: number;
-	comment: string;
-	created_at: string;
-	user_email: string;
-	user_nickname: string | null;
-}
-
 export default function EntryEditorPage() {
 	const { id } = useParams<{ id: string }>();
 	const navigate = useNavigate();
+	const location = useLocation();
 	const { user } = useAuth();
-	const [loading, setLoading] = useState(true);
-	const [saving, setSaving] = useState(false);
-	const [error, setError] = useState('');
+	
+	const isNewEntry = id === 'new';
+	const canEdit = user?.role === 'editor' || user?.role === 'admin';
+	
+	// Use React Query to fetch entry
+	const { data: fetchedEntry, isLoading: loading, error: queryError } = useEntry(id);
+	const updateEntryMutation = useUpdateEntry(id);
+	const submitReviewMutation = useSubmitReview();
+	
+	// Local state for editing
 	const [entryData, setEntryData] = useState<EntryData>({
 		head: '',
 		defs: [{
@@ -50,9 +39,12 @@ export default function EntryEditorPage() {
 	});
 	const [isComplete, setIsComplete] = useState(false);
 	const [activeTab, setActiveTab] = useState<'edit' | 'reviews'>('edit');
-	const [reviews, setReviews] = useState<EntryReview[]>([]);
-	const [comments, setComments] = useState<EntryComment[]>([]);
-	const [myReview, setMyReview] = useState<EntryReview | null>(null);
+	
+	// Extract data from query result
+	const reviews = fetchedEntry?.reviews || [];
+	const comments = fetchedEntry?.comments || [];
+	const myReview = fetchedEntry?.my_review || null;
+	const error = queryError ? (queryError as Error).message : '';
 	
 	// Image viewer state
 	const { isOpen: imageViewerOpen, currentPage: imageViewerPage, openViewer, closeViewer } = useImageViewer();
@@ -63,36 +55,13 @@ export default function EntryEditorPage() {
 	// Track explicitly hidden fields (to override the "has data" default visibility)
 	const [hiddenFields, setHiddenFields] = useState<Map<string, Set<string>>>(new Map());
 
-	const isNewEntry = id === 'new';
-	const canEdit = user?.role === 'editor' || user?.role === 'admin';
-
+	// Populate entryData when fetchedEntry is loaded
 	useEffect(() => {
-		if (isNewEntry) {
-			setLoading(false);
-			return;
+		if (fetchedEntry && !isNewEntry) {
+			setEntryData(JSON.parse(fetchedEntry.entry_data));
+			setIsComplete(fetchedEntry.is_complete === 1);
 		}
-
-		const fetchEntry = async () => {
-			try {
-				const response = await fetch(`/api/entries/${id}`);
-				if (!response.ok) {
-					throw new Error('Failed to fetch entry');
-				}
-				const data = await response.json();
-				setEntryData(JSON.parse(data.entry_data));
-				setIsComplete(data.is_complete === 1);
-				setReviews(data.reviews || []);
-				setComments(data.comments || []);
-				setMyReview(data.my_review || null);
-			} catch (err) {
-				setError(err instanceof Error ? err.message : 'Failed to load entry');
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchEntry();
-	}, [id, isNewEntry]);
+	}, [fetchedEntry, isNewEntry]);
 
 	const handlePageClick = (pageNum: number | undefined) => {
 		if (pageNum) {
@@ -155,79 +124,38 @@ export default function EntryEditorPage() {
 
 	const handleSave = async () => {
 		if (!canEdit) {
-			setError('You do not have permission to edit entries');
 			return;
 		}
 
-		setSaving(true);
-		setError('');
-
 		try {
-			const url = isNewEntry ? '/api/entries' : `/api/entries/${id}`;
-			const method = isNewEntry ? 'POST' : 'PUT';
-
 			// Process entry data to convert numbers to superscript in cf and alt fields
 			const processedEntryData = processEntryDataForSave(entryData);
 
-			const response = await fetch(url, {
-				method,
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					head: entryData.head,
-					head_number: entryData.head_number || null,
-					entry_data: processedEntryData,
-					is_complete: isComplete,
-				}),
+			const result = await updateEntryMutation.mutateAsync({
+				head: entryData.head,
+				head_number: entryData.head_number || undefined,
+				entry_data: processedEntryData,
+				is_complete: isComplete,
 			});
-
-			if (!response.ok) {
-				throw new Error('Failed to save entry');
-			}
-
-			const saved = await response.json();
 
 			if (isNewEntry) {
 				// For new entries, navigate to the edit page for that entry
-				navigate(`/entries/${saved.id}`);
+				navigate(`/entries/${result.id}`);
 			} else {
-				// For existing entries, go back to the list
-				navigate(-1); // Use browser back to preserve state
+				// For existing entries, go back to the list with preserved state
+				const returnUrl = (location.state as { returnUrl?: string })?.returnUrl || '/entries';
+				navigate(returnUrl);
 			}
 		} catch (err) {
-			setError(err instanceof Error ? err.message : 'Failed to save entry');
-		} finally {
-			setSaving(false);
+			console.error('Failed to save entry:', err);
 		}
 	};
 
 	const handleReviewStatusChange = async (status: 'approved' | 'needs_work') => {
 		if (!id || isNewEntry) return;
 
-		try {
-			const response = await fetch(`/api/entries/${id}/reviews`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ status })
-			});
-
-			if (!response.ok) {
-				throw new Error('Failed to submit review');
-			}
-
-			// Refresh entry data to get updated reviews
-			const entryResponse = await fetch(`/api/entries/${id}`);
-			if (entryResponse.ok) {
-				const data = await entryResponse.json();
-				setReviews(data.reviews || []);
-				setComments(data.comments || []);
-				setMyReview(data.my_review || null);
-			}
-		} catch (error) {
-			console.error('Error submitting review:', error);
-			throw error;
-		}
+		// Use the mutation with optimistic updates
+		await submitReviewMutation.mutateAsync({ entryId: parseInt(id), status });
 	};
 
 	// Helper to get/set nested values using JSON path
@@ -452,18 +380,33 @@ export default function EntryEditorPage() {
 								📖 p. {entryData.page}
 							</button>
 						)}
-						<button onClick={() => navigate(-1)} className="btn-secondary">
+						<button 
+							onClick={() => {
+								const returnUrl = (location.state as { returnUrl?: string })?.returnUrl || '/entries';
+								navigate(returnUrl);
+							}} 
+							className="btn-secondary"
+						>
 							Cancel
 						</button>
 						{canEdit && (
-							<button onClick={handleSave} disabled={saving} className="btn-primary">
-								{saving ? 'Saving...' : 'Save'}
+							<button 
+								onClick={handleSave} 
+								disabled={updateEntryMutation.isPending} 
+								className="btn-primary"
+							>
+								{updateEntryMutation.isPending ? 'Saving...' : 'Save'}
 							</button>
 						)}
 					</div>
 				</div>
 
 			{error && <div className="alert-error">{error}</div>}
+			{updateEntryMutation.isError && (
+				<div className="alert-error">
+					Failed to save: {(updateEntryMutation.error as Error)?.message || 'Unknown error'}
+				</div>
+			)}
 
 			<div className="editor-tabs-container">
 				<div className="editor-tabs">
@@ -487,6 +430,7 @@ export default function EntryEditorPage() {
 						<ReviewBadge
 							currentStatus={myReview?.status || null}
 							onStatusChange={handleReviewStatusChange}
+							disabled={submitReviewMutation.isPending}
 						/>
 					</div>
 				)}

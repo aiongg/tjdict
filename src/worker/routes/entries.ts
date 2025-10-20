@@ -22,6 +22,105 @@ type Variables = {
 	user: JWTPayload;
 };
 
+// Generate sort key with syllable and tone awareness
+// Format: FIRST_SYL_BASE#SINGLE_OR_MULTI#WHOLE_WORD_BASE#TONES
+function generateSortKey(head: string): string {
+	// Remove superscript numbers and parenthesized numbers first
+	const cleanHead = head.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, '').replace(/\(\d+\)/g, '').trim();
+	
+	// Stop at first variant delimiter (/, |, or space)
+	const firstVariant = cleanHead.split(/[/|\s]/)[0];
+	
+	// Convert to NFD (decomposed form) and lowercase
+	const normalized = firstVariant.toLowerCase().normalize('NFD');
+	
+	// Tone diacritic to number mapping
+	const toneMap: { [key: string]: string } = {
+		'\u0301': '2', // acute
+		'\u0300': '3', // grave
+		'\u0302': '5', // circumflex
+		'\u0304': '7', // macron
+		'\u030D': '8', // vertical line above
+		'\u0306': '9', // breve
+	};
+	
+	// Process syllable by syllable (split by hyphens)
+	const syllables = normalized.split('-');
+	const baseSyllables: string[] = [];
+	const toneNumbers: string[] = [];
+	
+	for (const syllable of syllables) {
+		let baseChars = '';
+		let modifiers = '';
+		let explicitTone = '';
+		
+		for (let i = 0; i < syllable.length; i++) {
+			const char = syllable[i];
+			
+			// Check if this is a special modifier that should be replaced with %
+			if (char === '\u0358') { // combining dot above right
+				modifiers += '%';
+				continue;
+			}
+			if (char === '\u207F') { // superscript n
+				modifiers += '%';
+				continue;
+			}
+			
+			// Check if this is a combining diacritic (tone marker)
+			if (char >= '\u0300' && char <= '\u036F') {
+				// If it's a tone diacritic we recognize, save the tone number
+				if (toneMap[char]) {
+					explicitTone = toneMap[char];
+				}
+				// Skip the diacritic itself (don't add to result)
+				continue;
+			}
+			
+			// Keep alphanumeric characters as base
+			if ((char >= 'a' && char <= 'z') || (char >= '0' && char <= '9')) {
+				baseChars += char;
+				continue;
+			}
+			
+			// Skip any other special characters
+		}
+		
+		// Determine tone number for this syllable
+		let toneNumber = '1'; // default tone
+		
+		if (explicitTone) {
+			// Explicit tone mark takes precedence
+			toneNumber = explicitTone;
+		} else {
+			// Check if syllable ends in p, t, k, or h (including h followed by %)
+			const fullBase = baseChars + modifiers;
+			if (fullBase.endsWith('p') || fullBase.endsWith('t') || 
+			    fullBase.endsWith('k') || fullBase.endsWith('h') || 
+			    fullBase.endsWith('h%')) {
+				toneNumber = '4';
+			} else {
+				toneNumber = '1';
+			}
+		}
+		
+		baseSyllables.push(baseChars + modifiers);
+		toneNumbers.push(toneNumber);
+	}
+	
+	if (baseSyllables.length === 0) {
+		return '';
+	}
+	
+	// Build the sort key: FIRST_SYL_BASE#SINGLE_OR_MULTI#WHOLE_WORD_BASE#TONES
+	const firstSylBase = baseSyllables[0];
+	const singleOrMulti = baseSyllables.length === 1 ? '1' : '2';
+	const wholeWordBase = baseSyllables.join('-');
+	const tones = toneNumbers.join('');
+	
+	return `${firstSylBase}#${singleOrMulti}#${wholeWordBase}#${tones}`;
+}
+
 export const entriesRouter = new Hono<{ Bindings: Env; Variables: Variables }>();
 
 // Apply auth middleware to all routes
@@ -213,10 +312,12 @@ entriesRouter.get("/:id", async (c) => {
 		return c.json({ error: "Entry not found" }, 404);
 	}
 
-	// Get all reviews for this entry (for timeline)
+	// Get all reviews for this entry (for timeline) and latest review per user
+	// Using a window function to efficiently get latest review per user
 	const { results: allReviews } = await c.env.prod_tjdict
 		.prepare(`
-			SELECT er.*, u.email as user_email, u.nickname as user_nickname
+			SELECT er.*, u.email as user_email, u.nickname as user_nickname,
+				ROW_NUMBER() OVER (PARTITION BY er.user_id ORDER BY er.reviewed_at DESC) as rn
 			FROM entry_reviews er
 			JOIN users u ON er.user_id = u.id
 			WHERE er.entry_id = ?
@@ -225,16 +326,10 @@ entriesRouter.get("/:id", async (c) => {
 		.bind(id)
 		.all();
 
-	const allReviewsList = allReviews as unknown as EntryReviewWithUser[];
+	const allReviewsList = allReviews as unknown as (EntryReviewWithUser & { rn: number })[];
 	
-	// Get latest review per user for current status
-	const latestReviewsMap = new Map<number, EntryReviewWithUser>();
-	for (const review of allReviewsList) {
-		if (!latestReviewsMap.has(review.user_id)) {
-			latestReviewsMap.set(review.user_id, review);
-		}
-	}
-	const reviewsList = Array.from(latestReviewsMap.values());
+	// Get latest review per user (rn = 1)
+	const reviewsList = allReviewsList.filter(r => r.rn === 1).map(({ rn, ...review }) => review);
 	const myReview = reviewsList.find(r => r.user_id === payload.userId);
 
 	// Get all comments for this entry
@@ -272,12 +367,7 @@ entriesRouter.post("/", requireEditor, async (c) => {
 	}
 
 	// Generate sort key
-	const sortKey = body.entry_data.head
-		.toLowerCase()
-		.normalize("NFD")
-		.replace(/[\u0300-\u036f]/g, "")
-		.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, "")
-		.replace(/[^a-z0-9]/g, "");
+	const sortKey = generateSortKey(body.entry_data.head);
 
 	const isComplete = body.is_complete !== undefined ? (body.is_complete ? 1 : 0) : 0;
 	const entryDataJson = JSON.stringify(body.entry_data);
@@ -329,12 +419,7 @@ entriesRouter.put("/:id", requireEditor, async (c) => {
 	}
 
 	// Generate sort key
-	const sortKey = body.entry_data.head
-		.toLowerCase()
-		.normalize("NFD")
-		.replace(/[\u0300-\u036f]/g, "")
-		.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g, "")
-		.replace(/[^a-z0-9]/g, "");
+	const sortKey = generateSortKey(body.entry_data.head);
 
 	const entryDataJson = JSON.stringify(body.entry_data);
 	const isComplete = body.is_complete !== undefined ? (body.is_complete ? 1 : 0) : undefined;

@@ -118,7 +118,6 @@ input[type="radio"] {
 
 label {
 	display: block;
-	margin-bottom: 0.5rem;
 	color: var(--color-text);
 	font-weight: 500;
 }

@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
+import { useSetupStatus } from "./hooks/useAuthQuery";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { SetupPage } from "./pages/SetupPage";
 import { LoginPage } from "./pages/LoginPage";
@@ -9,32 +10,24 @@ import { ChangePasswordPage } from "./pages/ChangePasswordPage";
 import { UsersPage } from "./pages/UsersPage";
 import EntriesPage from "./pages/EntriesPage";
 import EntryEditorPage from "./pages/EntryEditorPage";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import "./App.css";
 
 function App() {
 	const { user, loading } = useAuth();
-	const [needsSetup, setNeedsSetup] = useState<boolean | null>(null);
+	const { data: setupStatus, isLoading: setupLoading } = useSetupStatus();
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		// Check if setup is needed
-		fetch('/api/auth/setup/status')
-			.then(res => res.json())
-			.then(data => {
-				setNeedsSetup(data.needsSetup);
-				// If setup is needed and we're at root or login, redirect to setup
-				if (data.needsSetup && (window.location.pathname === '/' || window.location.pathname === '/login')) {
-					navigate('/setup');
-				}
-			})
-			.catch(err => {
-				console.error('Failed to check setup status:', err);
-				setNeedsSetup(false);
-			});
-	}, [navigate]);
+	const needsSetup = setupStatus?.needsSetup ?? false;
 
-	if (loading || needsSetup === null) {
+	useEffect(() => {
+		// If setup is needed and we're at root or login, redirect to setup
+		if (needsSetup && (window.location.pathname === '/' || window.location.pathname === '/login')) {
+			navigate('/setup');
+		}
+	}, [needsSetup, navigate]);
+
+	if (loading || setupLoading) {
 		return (
 			<div style={{ textAlign: 'center', padding: '2rem' }}>
 				<p>Loading...</p>

@@ -77,16 +77,102 @@ function parseHeadword(head: string): { cleanHead: string; headNumber?: number }
 	return { cleanHead: head };
 }
 
-// Normalize headword for alphabetical sorting
+// Normalize headword for alphabetical sorting with syllable and tone awareness
+// Format: FIRST_SYL_BASE#SINGLE_OR_MULTI#WHOLE_WORD_BASE#TONES
 function generateSortKey(head: string): string {
 	const { cleanHead } = parseHeadword(head);
-	return cleanHead
-		.toLowerCase()
-		// Remove diacritics (tone markers)
-		.normalize('NFD')
-		.replace(/[\u0300-\u036f]/g, '')
-		// Remove special characters but keep letters
-		.replace(/[^a-z0-9]/g, '');
+	
+	// Stop at first variant delimiter (/, |, or space)
+	const firstVariant = cleanHead.split(/[/|\s]/)[0];
+	
+	// Convert to NFD (decomposed form) and lowercase
+	const normalized = firstVariant.toLowerCase().normalize('NFD');
+	
+	// Tone diacritic to number mapping
+	const toneMap: { [key: string]: string } = {
+		'\u0301': '2', // acute
+		'\u0300': '3', // grave
+		'\u0302': '5', // circumflex
+		'\u0304': '7', // macron
+		'\u030D': '8', // vertical line above
+		'\u0306': '9', // breve
+	};
+	
+	// Process syllable by syllable (split by hyphens)
+	const syllables = normalized.split('-');
+	const baseSyllables: string[] = [];
+	const toneNumbers: string[] = [];
+	
+	for (const syllable of syllables) {
+		let baseChars = '';
+		let modifiers = '';
+		let explicitTone = '';
+		
+		for (let i = 0; i < syllable.length; i++) {
+			const char = syllable[i];
+			
+			// Check if this is a special modifier that should be replaced with %
+			if (char === '\u0358') { // combining dot above right
+				modifiers += '%';
+				continue;
+			}
+			if (char === '\u207F') { // superscript n
+				modifiers += '%';
+				continue;
+			}
+			
+			// Check if this is a combining diacritic (tone marker)
+			if (char >= '\u0300' && char <= '\u036F') {
+				// If it's a tone diacritic we recognize, save the tone number
+				if (toneMap[char]) {
+					explicitTone = toneMap[char];
+				}
+				// Skip the diacritic itself (don't add to result)
+				continue;
+			}
+			
+			// Keep alphanumeric characters as base
+			if ((char >= 'a' && char <= 'z') || (char >= '0' && char <= '9')) {
+				baseChars += char;
+				continue;
+			}
+			
+			// Skip any other special characters
+		}
+		
+		// Determine tone number for this syllable
+		let toneNumber = '1'; // default tone
+		
+		if (explicitTone) {
+			// Explicit tone mark takes precedence
+			toneNumber = explicitTone;
+		} else {
+			// Check if syllable ends in p, t, k, or h (including h followed by %)
+			const fullBase = baseChars + modifiers;
+			if (fullBase.endsWith('p') || fullBase.endsWith('t') || 
+			    fullBase.endsWith('k') || fullBase.endsWith('h') || 
+			    fullBase.endsWith('h%')) {
+				toneNumber = '4';
+			} else {
+				toneNumber = '1';
+			}
+		}
+		
+		baseSyllables.push(baseChars + modifiers);
+		toneNumbers.push(toneNumber);
+	}
+	
+	if (baseSyllables.length === 0) {
+		return '';
+	}
+	
+	// Build the sort key: FIRST_SYL_BASE#SINGLE_OR_MULTI#WHOLE_WORD_BASE#TONES
+	const firstSylBase = baseSyllables[0];
+	const singleOrMulti = baseSyllables.length === 1 ? '1' : '2';
+	const wholeWordBase = baseSyllables.join('-');
+	const tones = toneNumbers.join('');
+	
+	return `${firstSylBase}#${singleOrMulti}#${wholeWordBase}#${tones}`;
 }
 
 // Collapse a/b/c keys into an array

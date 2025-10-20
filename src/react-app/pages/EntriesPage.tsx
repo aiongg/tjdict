@@ -1,8 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { useImageViewer } from '../contexts/ImageViewerContext';
+import { useEntriesList, useSubmitReview } from '../hooks/useEntriesQuery';
 import { Navigation } from '../components/Navigation';
 import { PaginationControls } from '../components/PaginationControls';
 import { PageImageViewer } from '../components/PageImageViewer';
@@ -325,9 +326,6 @@ export default function EntriesPage() {
 	const navigate = useNavigate();
 	const [searchParams, setSearchParams] = useSearchParams();
 	
-	// Page size for filtered results
-	const FILTERED_PAGE_SIZE = 50;
-	
 	// Parse URL parameters for initial state
 	const getParam = (key: string, defaultValue: string = ''): string => {
 		return searchParams.get(key) || defaultValue;
@@ -343,16 +341,6 @@ export default function EntriesPage() {
 		return value ? parseInt(value, 10) || defaultValue : defaultValue;
 	};
 	
-	// Initialize state from URL
-	const [entries, setEntries] = useState<EntryWithReviews[]>([]);
-	const [dictPage, setDictPage] = useState(getNumberParam('page', 1));
-	const [minPage, setMinPage] = useState(1);
-	const [maxPage, setMaxPage] = useState(1);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState('');
-	const [pageInputValue, setPageInputValue] = useState(getParam('page', '1'));
-	const [openReviewDropdown, setOpenReviewDropdown] = useState<number | null>(null);
-	
 	// Search and filter state from URL
 	const [searchQuery, setSearchQuery] = useState(getParam('q'));
 	const [searchInput, setSearchInput] = useState(getParam('q'));
@@ -367,74 +355,42 @@ export default function EntriesPage() {
 		(getParam('order') as 'asc' | 'desc') || 'asc'
 	);
 	
+	// Page state
+	const [dictPage, setDictPage] = useState(getNumberParam('page', 1));
+	const [pageInputValue, setPageInputValue] = useState(getParam('page', '1'));
+	const [openReviewDropdown, setOpenReviewDropdown] = useState<number | null>(null);
+	
+	// Check if any filters are active
+	const hasFilters = searchQuery || showIncompleteOnly || showNeedingReview || headFilter || posFilter;
+	
+	// Build filter object for React Query
+	const filters = {
+		page: dictPage,
+		dictPage: hasFilters ? undefined : dictPage,
+		pageSize: 50,
+		q: searchQuery || undefined,
+		incomplete: showIncompleteOnly || undefined,
+		needsReview: showNeedingReview || undefined,
+		head: headFilter || undefined,
+		pos: posFilter || undefined,
+		sortBy,
+		sortOrder,
+	};
+	
+	// Use React Query to fetch entries
+	const { data, isLoading: loading, error: queryError } = useEntriesList(filters);
+	const entries = data?.entries || [];
+	const minPage = data?.minPage || 1;
+	const maxPage = data?.maxPage || 1;
+	const error = queryError ? (queryError as Error).message : '';
+	
+	// Use mutation for review submission
+	const submitReviewMutation = useSubmitReview();
+	
 	// Image viewer state
 	const { isOpen: imageViewerOpen, currentPage: imageViewerPage, openViewer, closeViewer } = useImageViewer();
 	const isDesktop = useMediaQuery('(min-width: 1280px)');
 	const [showAdvanced, setShowAdvanced] = useState(getBoolParam('advanced'));
-
-	const fetchEntries = useCallback(async () => {
-		console.log('[fetchEntries] Called with dictPage:', dictPage);
-		setLoading(true);
-		setError('');
-
-		// Check if any filters are active
-		const hasFilters = searchQuery || showIncompleteOnly || showNeedingReview || headFilter || posFilter;
-		console.log('[fetchEntries] hasFilters:', hasFilters);
-
-		try {
-			if (hasFilters) {
-				// Use filtered search with pagination
-				const params = new URLSearchParams({
-					page: dictPage.toString(),
-					pageSize: FILTERED_PAGE_SIZE.toString(),
-					sortBy,
-					sortOrder,
-				});
-
-				if (searchQuery) params.append('q', searchQuery);
-				if (showIncompleteOnly) params.append('complete', 'false');
-				if (showNeedingReview) params.append('needsReview', 'true');
-				if (headFilter) params.append('head', headFilter);
-				if (posFilter) params.append('pos', posFilter);
-
-				const response = await fetch(`/api/entries?${params}`);
-				if (!response.ok) {
-					throw new Error('Failed to fetch entries');
-				}
-
-				const data = await response.json();
-				setEntries(data.entries);
-				// Calculate pagination for filtered results
-				const totalPages = Math.ceil(data.total / FILTERED_PAGE_SIZE);
-				setMinPage(1);
-				setMaxPage(Math.max(1, totalPages));
-			} else {
-				// Use dictionary page-based navigation
-				const params = new URLSearchParams({
-					sortBy,
-					sortOrder,
-				});
-
-				const response = await fetch(`/api/entries/by-page/${dictPage}?${params}`);
-				if (!response.ok) {
-					throw new Error('Failed to fetch entries');
-				}
-
-				const data = await response.json();
-				setEntries(data.entries);
-				setMinPage(data.minPage);
-				setMaxPage(data.maxPage);
-			}
-		} catch (err) {
-			setError(err instanceof Error ? err.message : 'Failed to load entries');
-		} finally {
-			setLoading(false);
-		}
-	}, [dictPage, searchQuery, showIncompleteOnly, showNeedingReview, headFilter, posFilter, sortBy, sortOrder]);
-
-	useEffect(() => {
-		fetchEntries();
-	}, [fetchEntries]);
 	
 	// Sync state to URL whenever it changes
 	useEffect(() => {
@@ -458,7 +414,9 @@ export default function EntriesPage() {
 	// Save scroll position before navigating away
 	useEffect(() => {
 		const saveScrollPosition = () => {
+			const timestamp = Date.now();
 			sessionStorage.setItem('entriesPageScrollY', window.scrollY.toString());
+			sessionStorage.setItem('entriesPageScrollTimestamp', timestamp.toString());
 		};
 		
 		// Save scroll position periodically while on the page
@@ -479,17 +437,44 @@ export default function EntriesPage() {
 		};
 	}, []);
 	
-	// Restore scroll position after entries load
-	useEffect(() => {
+	// Restore scroll position after entries load - use useLayoutEffect for better timing
+	useLayoutEffect(() => {
 		if (!loading && entries.length > 0) {
 			const savedScroll = sessionStorage.getItem('entriesPageScrollY');
-			if (savedScroll) {
-				const scrollY = parseInt(savedScroll, 10);
-				// Use requestAnimationFrame to ensure DOM is ready
-				requestAnimationFrame(() => {
-					window.scrollTo(0, scrollY);
+			const savedTimestamp = sessionStorage.getItem('entriesPageScrollTimestamp');
+			
+			if (savedScroll && savedTimestamp) {
+				const timestamp = parseInt(savedTimestamp, 10);
+				const age = Date.now() - timestamp;
+				
+				// Only restore if scroll position was saved in the last 5 minutes
+				if (age < 5 * 60 * 1000) {
+					const scrollY = parseInt(savedScroll, 10);
+					
+					// Use multiple strategies to ensure scroll happens after DOM paint
+					const attemptScroll = () => {
+						window.scrollTo(0, scrollY);
+					};
+					
+					// Immediate attempt
+					attemptScroll();
+					
+					// Retry with requestAnimationFrame
+					requestAnimationFrame(() => {
+						attemptScroll();
+						
+						// Final retry with small delay to ensure all images/content loaded
+						setTimeout(attemptScroll, 50);
+					});
+					
+					// Clear after restoration
 					sessionStorage.removeItem('entriesPageScrollY');
-				});
+					sessionStorage.removeItem('entriesPageScrollTimestamp');
+				} else {
+					// Clear stale scroll position
+					sessionStorage.removeItem('entriesPageScrollY');
+					sessionStorage.removeItem('entriesPageScrollTimestamp');
+				}
 			}
 		}
 	}, [loading, entries.length]);
@@ -513,7 +498,8 @@ export default function EntriesPage() {
 		if (selection && selection.toString().length > 0) {
 			return;
 		}
-		navigate(`/entries/${id}`);
+		// Pass current search params to preserve state on return
+		navigate(`/entries/${id}`, { state: { returnUrl: `/entries?${searchParams.toString()}` } });
 	};
 
 	const handleNewEntry = () => {
@@ -544,23 +530,8 @@ export default function EntriesPage() {
 	};
 
 	const handleReviewStatusChange = async (entryId: number, status: 'approved' | 'needs_work') => {
-		try {
-			const response = await fetch(`/api/entries/${entryId}/reviews`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ status })
-			});
-
-			if (!response.ok) {
-				throw new Error('Failed to submit review');
-			}
-
-			// Refresh entries to show updated status
-			fetchEntries();
-		} catch (error) {
-			console.error('Error submitting review:', error);
-			throw error;
-		}
+		// Use the mutation with optimistic updates
+		await submitReviewMutation.mutateAsync({ entryId, status });
 	};
 
 	const goToPage = (pageNum: number) => {
@@ -573,9 +544,6 @@ export default function EntriesPage() {
 		setPageInputValue(targetPage.toString());
 		console.log('[goToPage] Complete');
 	};
-
-	// Check if any filters are active
-	const hasFilters = searchQuery || showIncompleteOnly || showNeedingReview || headFilter || posFilter;
 
 	return (
 		<div className={`entries-page ${imageViewerOpen && isDesktop ? 'with-image-viewer' : ''}`}>
