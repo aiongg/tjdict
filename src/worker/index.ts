@@ -8,6 +8,7 @@ import type { JWTPayload } from "./types";
 
 type Env = {
 	prod_tjdict: D1Database;
+	DICTIONARY_IMAGES: R2Bucket;
 };
 
 type Variables = {

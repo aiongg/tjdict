@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useMediaQuery } from '../hooks/useMediaQuery';
+import { useImageViewer } from '../contexts/ImageViewerContext';
 import { Navigation } from '../components/Navigation';
 import { PaginationControls } from '../components/PaginationControls';
 import { PageImageViewer } from '../components/PageImageViewer';
@@ -93,9 +94,24 @@ const getCircledNum = (num: number): string => {
 };
 
 // Format headword with superscript number if present
+// The number should appear after the first variant (before /, |, or space)
 const formatHeadword = (head: string, headNumber?: number): string => {
 	if (headNumber) {
-		return `${head}${toSuperscript(headNumber)}`;
+		// Find the position of the first separator: /, |, or space
+		const separators = ['/', '|', ' '];
+		let firstSepPos = head.length;
+		
+		for (const sep of separators) {
+			const pos = head.indexOf(sep);
+			if (pos !== -1 && pos < firstSepPos) {
+				firstSepPos = pos;
+			}
+		}
+		
+		// Insert superscript number after first variant
+		const firstPart = head.substring(0, firstSepPos);
+		const rest = head.substring(firstSepPos);
+		return `${firstPart}${toSuperscript(headNumber)}${rest}`;
 	}
 	return head;
 };
@@ -282,7 +298,6 @@ const EntryDisplay = ({ entryData }: { entryData: EntryData }) => {
 			<div className="entry-headword">
 				<span className="head">{formatHeadword(entryData.head, entryData.head_number)}</span>
 				{entryData.etym && <span className="etym"> ({entryData.etym})</span>}
-				{entryData.page && <span className="page-num"> [p. {entryData.page}]</span>}
 			</div>
 			
 			{entryData.defs.map((posDef, i) => (
@@ -339,8 +354,7 @@ export default function EntriesPage() {
 	);
 	
 	// Image viewer state
-	const [imageViewerOpen, setImageViewerOpen] = useState(false);
-	const [imageViewerPage, setImageViewerPage] = useState<number | null>(null);
+	const { isOpen: imageViewerOpen, currentPage: imageViewerPage, openViewer, closeViewer } = useImageViewer();
 	const isDesktop = useMediaQuery('(min-width: 1280px)');
 	const [showAdvanced, setShowAdvanced] = useState(getBoolParam('advanced'));
 
@@ -494,13 +508,12 @@ export default function EntriesPage() {
 
 	const handlePageClick = (pageNum: number | undefined) => {
 		if (pageNum) {
-			setImageViewerPage(pageNum);
-			setImageViewerOpen(true);
+			openViewer(pageNum);
 		}
 	};
 
 	const handleCloseImageViewer = () => {
-		setImageViewerOpen(false);
+		closeViewer();
 	};
 
 	const getReviewSummary = (entry: EntryWithReviews): string => {

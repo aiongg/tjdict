@@ -197,3 +197,9 @@ dist
 !.env.example
 .dev.vars*
 !.dev.vars.example
+
+
+# Local working folders
+data
+pdf
+tj_images

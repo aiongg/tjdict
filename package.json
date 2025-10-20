@@ -49,7 +49,8 @@
 		"migrate": "tsx scripts/migrate-yaml-to-json.ts",
 		"import-data": "tsx scripts/import-data.ts",
 		"preview": "npm run build && vite preview",
-		"test:parse": "tsx scripts/test-parseHeadword.ts"
+		"test:parse": "tsx scripts/test-parseHeadword.ts",
+		"upload-images": "./scripts/upload-images-to-r2.sh"
 	},
 	"type": "module"
 }

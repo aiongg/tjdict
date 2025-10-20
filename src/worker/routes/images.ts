@@ -1,10 +1,14 @@
 import { Hono } from 'hono';
 
-const images = new Hono();
+type Env = {
+	DICTIONARY_IMAGES: R2Bucket;
+};
+
+const images = new Hono<{ Bindings: Env }>();
 
 // Protected endpoint to serve dictionary page images
-// In development, images should be served from tj_images/ directory
-// In production (Cloudflare), images need to be uploaded as assets or served from R2/KV
+// In production: Serves from Cloudflare R2 bucket (authenticated users only)
+// In development: Fetches from local tj_images/ directory via public URL
 images.get('/:filename', async (c) => {
 	const filename = c.req.param('filename');
 	
@@ -20,24 +24,42 @@ images.get('/:filename', async (c) => {
 	}
 	
 	try {
-		// In development with Vite, we can fetch from the public URL
-		// The images should be in the public directory or accessible via URL
-		const imageUrl = `/tj_images/${filename}`;
+		// Check if R2 bucket is available (production)
+		const bucket = c.env.DICTIONARY_IMAGES;
 		
-		// Fetch the image
-		const response = await fetch(new URL(imageUrl, c.req.url));
-		
-		if (!response.ok) {
-			return c.json({ error: 'Image not found' }, 404);
+		if (bucket) {
+			// Production: Fetch from R2 bucket
+			const object = await bucket.get(filename);
+			
+			if (!object) {
+				return c.json({ error: 'Image not found' }, 404);
+			}
+			
+			// Return image with proper headers
+			return new Response(object.body, {
+				headers: {
+					'Content-Type': 'image/webp',
+					'Cache-Control': 'public, max-age=31536000', // Cache for 1 year
+					'ETag': object.etag,
+				},
+			});
+		} else {
+			// Development: Fetch from local tj_images directory
+			const imageUrl = `/tj_images/${filename}`;
+			const response = await fetch(new URL(imageUrl, c.req.url));
+			
+			if (!response.ok) {
+				return c.json({ error: 'Image not found' }, 404);
+			}
+			
+			// Return image with proper headers
+			return new Response(response.body, {
+				headers: {
+					'Content-Type': 'image/webp',
+					'Cache-Control': 'public, max-age=31536000',
+				},
+			});
 		}
-		
-		// Return image with proper headers
-		return new Response(response.body, {
-			headers: {
-				'Content-Type': 'image/webp',
-				'Cache-Control': 'public, max-age=31536000', // Cache for 1 year
-			},
-		});
 	} catch (error) {
 		console.error(`Error fetching image ${filename}:`, error);
 		return c.json({ error: 'Image not found' }, 404);

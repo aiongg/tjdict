@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
+import { useImageViewer } from '../contexts/ImageViewerContext';
 
 interface PageImageViewerProps {
 	pageNumber: number;
@@ -9,6 +10,7 @@ interface PageImageViewerProps {
 }
 
 export function PageImageViewer({ pageNumber, isOpen, onClose, mode }: PageImageViewerProps) {
+	const { setPage } = useImageViewer();
 	const [currentPage, setCurrentPage] = useState(pageNumber);
 	const [imageError, setImageError] = useState(false);
 	const transformRef = useRef<ReactZoomPanPinchRef>(null);
@@ -43,25 +45,29 @@ export function PageImageViewer({ pageNumber, isOpen, onClose, mode }: PageImage
 
 	const handlePrevPage = useCallback(() => {
 		if (currentPage > 1) {
-			setCurrentPage(currentPage - 1);
+			const newPage = currentPage - 1;
+			setCurrentPage(newPage);
+			setPage(newPage); // Update global state
 			setImageError(false);
 			// Reset zoom/pan when changing pages
 			if (transformRef.current) {
 				transformRef.current.resetTransform();
 			}
 		}
-	}, [currentPage]);
+	}, [currentPage, setPage]);
 
 	const handleNextPage = useCallback(() => {
 		if (currentPage < 588) {
-			setCurrentPage(currentPage + 1);
+			const newPage = currentPage + 1;
+			setCurrentPage(newPage);
+			setPage(newPage); // Update global state
 			setImageError(false);
 			// Reset zoom/pan when changing pages
 			if (transformRef.current) {
 				transformRef.current.resetTransform();
 			}
 		}
-	}, [currentPage]);
+	}, [currentPage, setPage]);
 
 	const handleImageError = () => {
 		setImageError(true);

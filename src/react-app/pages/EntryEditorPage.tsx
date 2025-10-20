@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useMediaQuery } from '../hooks/useMediaQuery';
+import { useImageViewer } from '../contexts/ImageViewerContext';
 import { Navigation } from '../components/Navigation';
 import { ReviewPanel } from '../components/ReviewPanel.tsx';
 import { PosDefinitionEditor } from '../components/editor/PosDefinitionEditor';
@@ -39,8 +40,7 @@ export default function EntryEditorPage() {
 	const [activeTab, setActiveTab] = useState<'edit' | 'reviews'>('edit');
 	
 	// Image viewer state
-	const [imageViewerOpen, setImageViewerOpen] = useState(false);
-	const [imageViewerPage, setImageViewerPage] = useState<number | null>(null);
+	const { isOpen: imageViewerOpen, currentPage: imageViewerPage, openViewer, closeViewer } = useImageViewer();
 	const isDesktop = useMediaQuery('(min-width: 1280px)');
 	
 	// Field visibility tracking using JSON path notation
@@ -77,13 +77,61 @@ export default function EntryEditorPage() {
 
 	const handlePageClick = (pageNum: number | undefined) => {
 		if (pageNum) {
-			setImageViewerPage(pageNum);
-			setImageViewerOpen(true);
+			openViewer(pageNum);
 		}
 	};
 
 	const handleCloseImageViewer = () => {
-		setImageViewerOpen(false);
+		closeViewer();
+	};
+
+	// Convert numbers to superscript in a string
+	const convertNumbersToSuperscript = (str: string): string => {
+		const superscriptMap: { [key: string]: string } = {
+			'0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
+			'5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹'
+		};
+		return str.replace(/\d/g, (digit) => superscriptMap[digit] || digit);
+	};
+
+	// Recursively process entry data to convert numbers in cf and alt fields to superscript
+	const processEntryDataForSave = (data: EntryData): EntryData => {
+		const processed = JSON.parse(JSON.stringify(data)); // Deep clone
+
+		// Helper to process cf and alt arrays in any object
+		const processFields = (obj: unknown): void => {
+			if (!obj || typeof obj !== 'object') return;
+
+			const record = obj as Record<string, unknown>;
+
+			// Convert cf array
+			if (Array.isArray(record.cf)) {
+				record.cf = record.cf.map((item: unknown) => 
+					typeof item === 'string' ? convertNumbersToSuperscript(item) : item
+				);
+			}
+
+			// Convert alt array
+			if (Array.isArray(record.alt)) {
+				record.alt = record.alt.map((item: unknown) => 
+					typeof item === 'string' ? convertNumbersToSuperscript(item) : item
+				);
+			}
+
+			// Recursively process nested objects and arrays
+			for (const key in record) {
+				if (record[key] && typeof record[key] === 'object') {
+					if (Array.isArray(record[key])) {
+						(record[key] as unknown[]).forEach((item: unknown) => processFields(item));
+					} else {
+						processFields(record[key]);
+					}
+				}
+			}
+		};
+
+		processFields(processed);
+		return processed;
 	};
 
 	const handleSave = async () => {
@@ -99,6 +147,9 @@ export default function EntryEditorPage() {
 			const url = isNewEntry ? '/api/entries' : `/api/entries/${id}`;
 			const method = isNewEntry ? 'POST' : 'PUT';
 
+			// Process entry data to convert numbers to superscript in cf and alt fields
+			const processedEntryData = processEntryDataForSave(entryData);
+
 			const response = await fetch(url, {
 				method,
 				headers: {
@@ -107,7 +158,7 @@ export default function EntryEditorPage() {
 				body: JSON.stringify({
 					head: entryData.head,
 					head_number: entryData.head_number || null,
-					entry_data: entryData,
+					entry_data: processedEntryData,
 					is_complete: isComplete,
 				}),
 			});
@@ -223,6 +274,18 @@ export default function EntryEditorPage() {
 		const fields = visibleFields.get(path);
 		if (!fields) {
 			// If not in map, check if field has a value in the data
+			// For top-level entry fields, check entryData directly
+			if (path === 'entry') {
+				const value = (entryData as unknown as Record<string, unknown>)[fieldName];
+				// Don't show 'page' by default even if it has a value
+				if (fieldName === 'page') {
+					return false;
+				}
+				// Show 'head_number' and 'etym' if they have values
+				return value !== undefined && value !== null && value !== '';
+			}
+			
+			// For nested paths, use getByPath
 			const obj = getByPath(entryData, path);
 			if (obj && typeof obj === 'object' && fieldName in obj) {
 				const value = (obj as Record<string, unknown>)[fieldName];
@@ -349,80 +412,85 @@ export default function EntryEditorPage() {
 				{activeTab === 'edit' ? (
 					<div className="compact-form">
 						{/* Compact Entry Header */}
-						<div className="entry-header-compact compact-header">
-							<div className="inline-material-field" style={{ flex: 1 }}>
-								<label htmlFor="field-head">head:</label>
-								<input
-									type="text"
-									value={entryData.head}
-									onChange={(e) => setEntryData({ ...entryData, head: e.target.value })}
-									disabled={!canEdit}
-									placeholder=" "
-									id="field-head"
-								/>
-							</div>
-							
-							{/* Compact Done checkbox */}
-							<button
-								className={`done-checkbox ${isComplete ? 'checked' : ''}`}
-								onClick={() => canEdit && setIsComplete(!isComplete)}
-								disabled={!canEdit}
-								title={isComplete ? 'Mark as incomplete' : 'Mark as complete'}
-								type="button"
-							>
-								{isComplete ? '✓' : '○'}
-							</button>
-							
-							<FieldVisibilityMenu
-								path="entry"
-								availableFields={getAvailableFields('entry')}
-								isFieldVisible={isFieldVisible}
-								onToggleField={toggleFieldVisibility}
-								canEdit={canEdit}
-							/>
-						</div>
-
-						{/* Head Number, Page & Etymology */}
-						<div className="desktop-field-row">
-							{isFieldVisible('entry', 'head_number') && (
-								<div className="material-field">
-									<input
-										type="number"
-										value={entryData.head_number || ''}
-										onChange={(e) => setEntryData({ ...entryData, head_number: parseInt(e.target.value) || undefined })}
-										disabled={!canEdit}
-										placeholder=" "
-										id="field-head-number"
-									/>
-									<label htmlFor="field-head-number">num:</label>
-								</div>
-							)}
-
-						{isFieldVisible('entry', 'page') && (
-							<div className="material-field">
-								<input
-									type="number"
-									value={entryData.page || ''}
-									onChange={(e) => setEntryData({ ...entryData, page: parseInt(e.target.value) || undefined })}
-									disabled={!canEdit}
-									placeholder=" "
-									id="field-page"
-								/>
-								<label htmlFor="field-page">page:</label>
-							</div>
-						)}
-
-							{isFieldVisible('entry', 'etym') && (
-								<div className="material-field">
+						<div className="entry-header-compact">
+							{/* First row: head field, done checkbox, and menu */}
+							<div className="compact-header">
+								<div className="inline-material-field" style={{ flex: 1 }}>
+									<label htmlFor="field-head">head:</label>
 									<input
 										type="text"
-										value={entryData.etym || ''}
-										onChange={(e) => setEntryData({ ...entryData, etym: e.target.value })}
+										value={entryData.head}
+										onChange={(e) => setEntryData({ ...entryData, head: e.target.value })}
 										disabled={!canEdit}
 										placeholder=" "
-										id="field-etym"
+										id="field-head"
 									/>
-									<label htmlFor="field-etym">etym:</label>
+								</div>
+								
+								{/* Compact Done checkbox */}
+								<button
+									className={`done-checkbox ${isComplete ? 'checked' : ''}`}
+									onClick={() => canEdit && setIsComplete(!isComplete)}
+									disabled={!canEdit}
+									title={isComplete ? 'Mark as incomplete' : 'Mark as complete'}
+									type="button"
+								>
+									{isComplete ? '✓' : '○'}
+								</button>
+								
+								<FieldVisibilityMenu
+									path="entry"
+									availableFields={getAvailableFields('entry')}
+									isFieldVisible={isFieldVisible}
+									onToggleField={toggleFieldVisibility}
+									canEdit={canEdit}
+								/>
+							</div>
+							
+							{/* Second row: num, page, etym fields */}
+							{(isFieldVisible('entry', 'head_number') || isFieldVisible('entry', 'page') || isFieldVisible('entry', 'etym')) && (
+								<div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem', flexWrap: 'wrap' }}>
+									{isFieldVisible('entry', 'head_number') && (
+										<div className="inline-material-field" style={{ width: '120px' }}>
+											<label htmlFor="field-head-number">num:</label>
+											<input
+												type="number"
+												value={entryData.head_number || ''}
+												onChange={(e) => setEntryData({ ...entryData, head_number: parseInt(e.target.value) || undefined })}
+												disabled={!canEdit}
+												placeholder=" "
+												id="field-head-number"
+											/>
+										</div>
+									)}
+
+									{isFieldVisible('entry', 'page') && (
+										<div className="inline-material-field" style={{ width: '120px' }}>
+											<label htmlFor="field-page">page:</label>
+											<input
+												type="number"
+												value={entryData.page || ''}
+												onChange={(e) => setEntryData({ ...entryData, page: parseInt(e.target.value) || undefined })}
+												disabled={!canEdit}
+												placeholder=" "
+												id="field-page"
+											/>
+										</div>
+									)}
+
+									{isFieldVisible('entry', 'etym') && (
+										<div className="inline-material-field" style={{ flex: 1, minWidth: '150px' }}>
+											<label htmlFor="field-etym">etym:</label>
+											<input
+												type="text"
+												value={entryData.etym || ''}
+												onChange={(e) => setEntryData({ ...entryData, etym: e.target.value })}
+												disabled={!canEdit}
+												placeholder=" "
+												id="field-etym"
+											/>
+										</div>
+									)}
 								</div>
 							)}
 						</div>

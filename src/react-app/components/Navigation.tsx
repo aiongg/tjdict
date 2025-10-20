@@ -58,7 +58,9 @@ export function Navigation() {
 				{isMobile ? (
 					<>
 						<div className="nav-mobile-header">
-							<h1 className="app-name-mobile">TJDict</h1>
+							<Link to="/dashboard" className="nav-logo-mobile" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none' }}>
+								<img src="/android-chrome-192x192.png" alt="TJDict" style={{ width: '32px', height: '32px' }} />
+							</Link>
 							<button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
 								☰
 							</button>
@@ -101,8 +103,8 @@ export function Navigation() {
 				) : (
 					<>
 						<div className="nav-links">
-							<Link to="/dashboard" className="nav-brand">
-								<strong>TJDict</strong>
+							<Link to="/dashboard" className="nav-brand" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+								<img src="/android-chrome-192x192.png" alt="TJDict" style={{ width: '32px', height: '32px' }} />
 							</Link>
 							<Link to="/entries" className="nav-link">
 								Dictionary

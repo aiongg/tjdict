@@ -21,5 +21,11 @@
 			"database_id": "4fcac29b-7171-4673-bf28-0e7bba25543f",
 			"migrations_dir": "./src/worker/migrations"
 		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "DICTIONARY_IMAGES",
+			"bucket_name": "tjdict-images"
+		}
 	]
 }
