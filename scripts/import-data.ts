@@ -10,7 +10,8 @@ const __dirname = path.dirname(__filename);
 
 async function importData() {
 	const dataDir = path.join(__dirname, '..', 'data');
-	const sqlDir = path.join(dataDir, 'sql-chunks');
+	const buildDir = path.join(dataDir, 'build');
+	const sqlDir = path.join(buildDir, 'sql-chunks');
 	
 	if (!fs.existsSync(sqlDir)) {
 		console.error(`ERROR: SQL chunks directory not found: ${sqlDir}`);

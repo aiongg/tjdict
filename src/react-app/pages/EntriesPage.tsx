@@ -9,6 +9,7 @@ import { PaginationControls } from '../components/PaginationControls';
 import { PageImageViewer } from '../components/PageImageViewer';
 import { ReviewBadge } from '../components/ReviewBadge';
 import { getCircledNumber } from '../utils/tools';
+import { Headword } from '../components/entries/Headword';
 
 interface TranslationVariant {
 	en: string;
@@ -76,38 +77,6 @@ interface EntryData {
 	etym?: string;
 	defs: PosDefinition[];
 }
-
-// Convert number to superscript
-const toSuperscript = (num: number): string => {
-	const superscriptMap: { [key: string]: string } = {
-		'0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
-		'5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹'
-	};
-	return num.toString().split('').map(d => superscriptMap[d] || d).join('');
-};
-
-// Format headword with superscript number if present
-// The number should appear after the first variant (before /, |, or space)
-const formatHeadword = (head: string, headNumber?: number): string => {
-	if (headNumber) {
-		// Find the position of the first separator: /, |, or space
-		const separators = ['/', '|', ' '];
-		let firstSepPos = head.length;
-		
-		for (const sep of separators) {
-			const pos = head.indexOf(sep);
-			if (pos !== -1 && pos < firstSepPos) {
-				firstSepPos = pos;
-			}
-		}
-		
-		// Insert superscript number after first variant
-		const firstPart = head.substring(0, firstSepPos);
-		const rest = head.substring(firstSepPos);
-		return `${firstPart}${toSuperscript(headNumber)}${rest}`;
-	}
-	return head;
-};
 
 interface Entry {
 	id: number;
@@ -319,8 +288,11 @@ const EntryDisplay = ({ entryData }: { entryData: EntryData }) => {
 	if (isSimpleDetOnly) {
 		return (
 			<div className="entry-display entry-display-simple">
-				<span className="head">{formatHeadword(entryData.head, entryData.head_number)}</span>
-				{entryData.etym && <span className="etym"> ({entryData.etym})</span>}
+				<Headword 
+					head={entryData.head} 
+					headNumber={entryData.head_number}
+					etym={entryData.etym}
+				/>
 				<span className="det-simple"> ⇒ {entryData.defs[0].defs[0].det}</span>
 			</div>
 		);
@@ -329,8 +301,11 @@ const EntryDisplay = ({ entryData }: { entryData: EntryData }) => {
 	return (
 		<div className="entry-display">
 			<div className="entry-headword">
-				<span className="head">{formatHeadword(entryData.head, entryData.head_number)}</span>
-				{entryData.etym && <span className="etym"> ({entryData.etym})</span>}
+				<Headword 
+					head={entryData.head} 
+					headNumber={entryData.head_number}
+					etym={entryData.etym}
+				/>
 			</div>
 			
 			{entryData.defs.map((posDef, i) => (

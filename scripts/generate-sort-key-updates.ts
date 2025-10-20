@@ -19,8 +19,9 @@ interface ProcessedEntry {
 // Generate SQL UPDATE statements from entries.json
 async function generateSqlUpdates() {
 	const dataDir = path.join(__dirname, '..', 'data');
-	const inputFile = path.join(dataDir, 'entries.json');
-	const outputFile = path.join(dataDir, 'update-sort-keys.sql');
+	const buildDir = path.join(dataDir, 'build');
+	const inputFile = path.join(buildDir, 'entries.json');
+	const outputFile = path.join(buildDir, 'update-sort-keys.sql');
 	
 	console.log('Reading entries.json...');
 	
@@ -73,7 +74,7 @@ async function generateSqlUpdates() {
 	console.log(`\nSuccessfully generated ${outputFile}`);
 	console.log(`Total UPDATE statements: ${entries.length}`);
 	console.log(`\nTo apply these changes to your database, run:`);
-	console.log(`  wrangler d1 execute prod_tjdict --file=data/update-sort-keys.sql`);
+	console.log(`  wrangler d1 execute prod_tjdict --file=data/build/update-sort-keys.sql`);
 	console.log(`\nOr on your production server, execute the SQL file directly.`);
 }
 

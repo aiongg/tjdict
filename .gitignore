@@ -200,6 +200,6 @@ dist
 
 
 # Local working folders
-data
+data/build
 pdf
 tj_images

@@ -282,6 +282,15 @@
 	color: var(--color-text);
 }
 
+.head-variants {
+	font-weight: 400;
+}
+
+.head.head-variant {
+	font-weight: 500;
+	font-style: italic;
+}
+
 .det-simple {
 	font-size: 1.1rem;
 	font-weight: 400;

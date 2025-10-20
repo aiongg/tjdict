@@ -1,5 +1,17 @@
 /* CSS Variables and Theme Colors */
 :root {
+	/* Font family */
+	font-family: 'Noto Sans', system-ui, -apple-system, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+	
+	/* Font rendering */
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	
+	/* Default light theme */
 	--color-bg: #ffffff;
 	--color-card-bg: #f9fafb;
 	--color-border: #e5e7eb;
@@ -15,7 +27,43 @@
 	--color-shadow: rgba(0, 0, 0, 0.1);
 }
 
-/* Dark Theme */
+/* System preference dark mode (applies unless manually overridden to light) */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) {
+		--color-bg: #1a1a1a;
+		--color-card-bg: #2a2a2a;
+		--color-border: #444;
+		--color-text: #e4e4e7;
+		--color-text-secondary: #a1a1aa;
+		--color-primary: #3b82f6;
+		--color-primary-hover: #2563eb;
+		--color-danger: #ef4444;
+		--color-danger-hover: #dc2626;
+		--color-success: #10b981;
+		--color-warning: #f59e0b;
+		--color-nav-bg: #2a2a2a;
+		--color-shadow: rgba(0, 0, 0, 0.3);
+	}
+}
+
+/* Manual light theme override */
+[data-theme="light"] {
+	--color-bg: #ffffff;
+	--color-card-bg: #f9fafb;
+	--color-border: #e5e7eb;
+	--color-text: #1f2937;
+	--color-text-secondary: #6b7280;
+	--color-primary: #3b82f6;
+	--color-primary-hover: #2563eb;
+	--color-danger: #ef4444;
+	--color-danger-hover: #dc2626;
+	--color-success: #10b981;
+	--color-warning: #f59e0b;
+	--color-nav-bg: #ffffff;
+	--color-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Manual dark theme override */
 [data-theme="dark"] {
 	--color-bg: #1a1a1a;
 	--color-card-bg: #2a2a2a;
@@ -38,11 +86,8 @@
 
 body {
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-		sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+	min-width: 320px;
+	min-height: 100vh;
 	background: var(--color-bg);
 	color: var(--color-text);
 }

@@ -748,7 +748,13 @@ function processYAMLFile(filePath: string, isComplete: boolean, defaultPage: num
 // Main migration function
 async function migrate() {
 	const dataDir = path.join(__dirname, '..', 'data');
-	const outputFile = path.join(dataDir, 'entries.json');
+	const buildDir = path.join(dataDir, 'build');
+	const outputFile = path.join(buildDir, 'entries.json');
+	
+	// Ensure build directory exists
+	if (!fs.existsSync(buildDir)) {
+		fs.mkdirSync(buildDir, { recursive: true });
+	}
 	
 	console.log('Starting YAML to JSON migration...\n');
 	
@@ -791,7 +797,7 @@ async function migrate() {
 	fs.writeFileSync(outputFile, JSON.stringify(allEntries, null, 2));
 	
 	// Write SQL files in chunks (max 50KB per file to stay well under 100KB limit)
-	const sqlDir = path.join(dataDir, 'sql-chunks');
+	const sqlDir = path.join(buildDir, 'sql-chunks');
 	if (!fs.existsSync(sqlDir)) {
 		fs.mkdirSync(sqlDir, { recursive: true });
 	}
