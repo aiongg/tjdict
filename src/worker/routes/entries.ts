@@ -6,9 +6,11 @@ import type {
 	EntryReview,
 	EntryWithReviews,
 	EntryReviewWithUser,
+	EntryCommentWithUser,
 	EntryListResponse,
 	UpdateEntryRequest,
 	CreateReviewRequest,
+	CreateCommentRequest,
 	JWTPayload,
 } from "../types";
 
@@ -96,9 +98,11 @@ entriesRouter.get("/", async (c) => {
 		.bind(...params, pageSize, offset)
 		.all();
 
-	// Get reviews for these entries
+	// Get reviews and comments for these entries
 	const entryIds = (entries as unknown as Entry[]).map(e => e.id);
 	const reviewsData: { [key: number]: EntryReviewWithUser[] } = {};
+	const allReviewsData: { [key: number]: EntryReviewWithUser[] } = {};
+	const commentsData: { [key: number]: EntryCommentWithUser[] } = {};
 	const myReviews: { [key: number]: EntryReview } = {};
 
 	if (entryIds.length > 0) {
@@ -114,33 +118,72 @@ entriesRouter.get("/", async (c) => {
 		for (const batch of batches) {
 			const placeholders = batch.map(() => "?").join(",");
 			const reviewsQuery = `
-				SELECT er.*, u.email as user_email
+				SELECT er.*, u.email as user_email, u.nickname as user_nickname
 				FROM entry_reviews er
 				JOIN users u ON er.user_id = u.id
 				WHERE er.entry_id IN (${placeholders})
+				ORDER BY er.reviewed_at DESC
 			`;
 			const { results: reviews } = await c.env.prod_tjdict
 				.prepare(reviewsQuery)
 				.bind(...batch)
 				.all();
 
+			// Group reviews by entry and get latest per user
 			for (const review of reviews as unknown as EntryReviewWithUser[]) {
+				// Store all reviews for timeline
+				if (!allReviewsData[review.entry_id]) {
+					allReviewsData[review.entry_id] = [];
+				}
+				allReviewsData[review.entry_id].push(review);
+
+				// Store only latest review per user for current status
 				if (!reviewsData[review.entry_id]) {
 					reviewsData[review.entry_id] = [];
 				}
-				reviewsData[review.entry_id].push(review);
+				// Check if we already have a review from this user
+				const existingIndex = reviewsData[review.entry_id].findIndex(r => r.user_id === review.user_id);
+				if (existingIndex === -1) {
+					reviewsData[review.entry_id].push(review);
+				}
 
-				if (review.user_id === payload.userId) {
+				// Track current user's latest review
+				if (review.user_id === payload.userId && !myReviews[review.entry_id]) {
 					myReviews[review.entry_id] = review;
 				}
 			}
 		}
+
+		// Fetch comments in batches
+		for (const batch of batches) {
+			const placeholders = batch.map(() => "?").join(",");
+			const commentsQuery = `
+				SELECT ec.*, u.email as user_email, u.nickname as user_nickname
+				FROM entry_comments ec
+				JOIN users u ON ec.user_id = u.id
+				WHERE ec.entry_id IN (${placeholders})
+				ORDER BY ec.created_at DESC
+			`;
+			const { results: comments } = await c.env.prod_tjdict
+				.prepare(commentsQuery)
+				.bind(...batch)
+				.all();
+
+			for (const comment of comments as unknown as EntryCommentWithUser[]) {
+				if (!commentsData[comment.entry_id]) {
+					commentsData[comment.entry_id] = [];
+				}
+				commentsData[comment.entry_id].push(comment);
+			}
+		}
 	}
 
-	// Combine entries with reviews
+	// Combine entries with reviews and comments
 	const entriesWithReviews: EntryWithReviews[] = (entries as unknown as Entry[]).map(entry => ({
 		...entry,
 		reviews: reviewsData[entry.id] || [],
+		all_reviews: allReviewsData[entry.id] || [],
+		comments: commentsData[entry.id] || [],
 		my_review: myReviews[entry.id]
 	}));
 
@@ -170,10 +213,10 @@ entriesRouter.get("/:id", async (c) => {
 		return c.json({ error: "Entry not found" }, 404);
 	}
 
-	// Get all reviews for this entry
-	const { results: reviews } = await c.env.prod_tjdict
+	// Get all reviews for this entry (for timeline)
+	const { results: allReviews } = await c.env.prod_tjdict
 		.prepare(`
-			SELECT er.*, u.email as user_email
+			SELECT er.*, u.email as user_email, u.nickname as user_nickname
 			FROM entry_reviews er
 			JOIN users u ON er.user_id = u.id
 			WHERE er.entry_id = ?
@@ -182,12 +225,37 @@ entriesRouter.get("/:id", async (c) => {
 		.bind(id)
 		.all();
 
-	const reviewsList = reviews as unknown as EntryReviewWithUser[];
+	const allReviewsList = allReviews as unknown as EntryReviewWithUser[];
+	
+	// Get latest review per user for current status
+	const latestReviewsMap = new Map<number, EntryReviewWithUser>();
+	for (const review of allReviewsList) {
+		if (!latestReviewsMap.has(review.user_id)) {
+			latestReviewsMap.set(review.user_id, review);
+		}
+	}
+	const reviewsList = Array.from(latestReviewsMap.values());
 	const myReview = reviewsList.find(r => r.user_id === payload.userId);
+
+	// Get all comments for this entry
+	const { results: comments } = await c.env.prod_tjdict
+		.prepare(`
+			SELECT ec.*, u.email as user_email, u.nickname as user_nickname
+			FROM entry_comments ec
+			JOIN users u ON ec.user_id = u.id
+			WHERE ec.entry_id = ?
+			ORDER BY ec.created_at ASC
+		`)
+		.bind(id)
+		.all();
+
+	const commentsList = comments as unknown as EntryCommentWithUser[];
 
 	const entryWithReviews: EntryWithReviews = {
 		...entry,
 		reviews: reviewsList,
+		all_reviews: allReviewsList,
+		comments: commentsList,
 		my_review: myReview
 	};
 
@@ -332,7 +400,7 @@ entriesRouter.get("/:id/reviews", async (c) => {
 
 	const { results } = await c.env.prod_tjdict
 		.prepare(`
-			SELECT er.*, u.email as user_email
+			SELECT er.*, u.email as user_email, u.nickname as user_nickname
 			FROM entry_reviews er
 			JOIN users u ON er.user_id = u.id
 			WHERE er.entry_id = ?
@@ -344,7 +412,7 @@ entriesRouter.get("/:id/reviews", async (c) => {
 	return c.json(results as unknown as EntryReviewWithUser[]);
 });
 
-// POST /api/entries/:id/reviews - Create/update review
+// POST /api/entries/:id/reviews - Create new review
 entriesRouter.post("/:id/reviews", async (c) => {
 	const id = parseInt(c.req.param("id"));
 	const payload = c.get("user");
@@ -364,17 +432,13 @@ entriesRouter.post("/:id/reviews", async (c) => {
 		return c.json({ error: "Entry not found" }, 404);
 	}
 
-	// Upsert review
+	// Insert new review (always creates a new record)
 	const result = await c.env.prod_tjdict
 		.prepare(`
-			INSERT INTO entry_reviews (entry_id, user_id, status, comment)
-			VALUES (?, ?, ?, ?)
-			ON CONFLICT(entry_id, user_id) DO UPDATE SET
-				status = excluded.status,
-				comment = excluded.comment,
-				reviewed_at = CURRENT_TIMESTAMP
+			INSERT INTO entry_reviews (entry_id, user_id, status)
+			VALUES (?, ?, ?)
 		`)
-		.bind(id, payload.userId, body.status, body.comment || null)
+		.bind(id, payload.userId, body.status)
 		.run();
 
 	if (!result.success) {
@@ -384,18 +448,70 @@ entriesRouter.post("/:id/reviews", async (c) => {
 	return c.json({ success: true });
 });
 
-// DELETE /api/entries/:id/reviews - Delete own review
-entriesRouter.delete("/:id/reviews", async (c) => {
+// POST /api/entries/:id/comments - Create new comment
+entriesRouter.post("/:id/comments", async (c) => {
 	const id = parseInt(c.req.param("id"));
 	const payload = c.get("user");
+	const body = await c.req.json<CreateCommentRequest>();
 
+	if (!body.comment || body.comment.trim().length === 0) {
+		return c.json({ error: "Comment cannot be empty" }, 400);
+	}
+
+	// Check if entry exists
+	const { results: entryResults } = await c.env.prod_tjdict
+		.prepare("SELECT id FROM entries WHERE id = ?")
+		.bind(id)
+		.all();
+
+	if (entryResults.length === 0) {
+		return c.json({ error: "Entry not found" }, 404);
+	}
+
+	// Insert new comment
 	const result = await c.env.prod_tjdict
-		.prepare("DELETE FROM entry_reviews WHERE entry_id = ? AND user_id = ?")
-		.bind(id, payload.userId)
+		.prepare(`
+			INSERT INTO entry_comments (entry_id, user_id, comment)
+			VALUES (?, ?, ?)
+		`)
+		.bind(id, payload.userId, body.comment.trim())
 		.run();
 
 	if (!result.success) {
-		return c.json({ error: "Failed to delete review" }, 500);
+		return c.json({ error: "Failed to save comment" }, 500);
+	}
+
+	return c.json({ success: true, id: result.meta.last_row_id });
+});
+
+// DELETE /api/entries/:id/comments/:commentId - Delete own comment
+entriesRouter.delete("/:id/comments/:commentId", async (c) => {
+	const id = parseInt(c.req.param("id"));
+	const commentId = parseInt(c.req.param("commentId"));
+	const payload = c.get("user");
+
+	// Check if comment exists and belongs to user
+	const { results } = await c.env.prod_tjdict
+		.prepare("SELECT user_id FROM entry_comments WHERE id = ? AND entry_id = ?")
+		.bind(commentId, id)
+		.all();
+
+	if (results.length === 0) {
+		return c.json({ error: "Comment not found" }, 404);
+	}
+
+	const comment = results[0] as { user_id: number };
+	if (comment.user_id !== payload.userId) {
+		return c.json({ error: "You can only delete your own comments" }, 403);
+	}
+
+	const result = await c.env.prod_tjdict
+		.prepare("DELETE FROM entry_comments WHERE id = ?")
+		.bind(commentId)
+		.run();
+
+	if (!result.success) {
+		return c.json({ error: "Failed to delete comment" }, 500);
 	}
 
 	return c.json({ success: true });
@@ -423,41 +539,80 @@ entriesRouter.get("/by-page/:pageNum", async (c) => {
 
 	const { results: entries } = await c.env.prod_tjdict.prepare(sql).bind(pageNum).all();
 
-	// Get reviews for these entries (same as main list endpoint)
+	// Get reviews and comments for these entries
 	const entryIds = (entries as unknown as Entry[]).map((e: Entry) => e.id);
 	const reviewsData: { [key: number]: EntryReviewWithUser[] } = {};
+	const allReviewsData: { [key: number]: EntryReviewWithUser[] } = {};
+	const commentsData: { [key: number]: EntryCommentWithUser[] } = {};
 	const myReviews: { [key: number]: EntryReview } = {};
+	const payload = c.get("user");
 
 	if (entryIds.length > 0) {
 		const placeholders = entryIds.map(() => "?").join(",");
+		
+		// Fetch reviews
 		const reviewsQuery = `
-			SELECT er.*, u.email as user_email
+			SELECT er.*, u.email as user_email, u.nickname as user_nickname
 			FROM entry_reviews er
 			JOIN users u ON er.user_id = u.id
 			WHERE er.entry_id IN (${placeholders})
+			ORDER BY er.reviewed_at DESC
 		`;
 		const { results: reviews } = await c.env.prod_tjdict
 			.prepare(reviewsQuery)
 			.bind(...entryIds)
 			.all();
 
+		// Group reviews by entry and get latest per user
 		for (const review of reviews as unknown as EntryReviewWithUser[]) {
+			// Store all reviews for timeline
+			if (!allReviewsData[review.entry_id]) {
+				allReviewsData[review.entry_id] = [];
+			}
+			allReviewsData[review.entry_id].push(review);
+
+			// Store only latest review per user for current status
 			if (!reviewsData[review.entry_id]) {
 				reviewsData[review.entry_id] = [];
 			}
-			reviewsData[review.entry_id].push(review);
+			const existingIndex = reviewsData[review.entry_id].findIndex(r => r.user_id === review.user_id);
+			if (existingIndex === -1) {
+				reviewsData[review.entry_id].push(review);
+			}
 
-			// Track current user's review
-			if (review.user_id === c.get("user").userId) {
+			// Track current user's latest review
+			if (review.user_id === payload.userId && !myReviews[review.entry_id]) {
 				myReviews[review.entry_id] = review;
 			}
 		}
+
+		// Fetch comments
+		const commentsQuery = `
+			SELECT ec.*, u.email as user_email, u.nickname as user_nickname
+			FROM entry_comments ec
+			JOIN users u ON ec.user_id = u.id
+			WHERE ec.entry_id IN (${placeholders})
+			ORDER BY ec.created_at DESC
+		`;
+		const { results: comments } = await c.env.prod_tjdict
+			.prepare(commentsQuery)
+			.bind(...entryIds)
+			.all();
+
+		for (const comment of comments as unknown as EntryCommentWithUser[]) {
+			if (!commentsData[comment.entry_id]) {
+				commentsData[comment.entry_id] = [];
+			}
+			commentsData[comment.entry_id].push(comment);
+		}
 	}
 
-	// Combine entries with reviews
+	// Combine entries with reviews and comments
 	const entriesWithReviews: EntryWithReviews[] = (entries as unknown as Entry[]).map((entry: Entry) => ({
 		...entry,
 		reviews: reviewsData[entry.id] || [],
+		all_reviews: allReviewsData[entry.id] || [],
+		comments: commentsData[entry.id] || [],
 		my_review: myReviews[entry.id]
 	}));
 

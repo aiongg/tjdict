@@ -16,7 +16,8 @@ export function Setup2FAPage() {
 
 	useEffect(() => {
 		// Fetch 2FA setup data
-		fetch('/api/auth/setup-2fa', {
+		fetch('/api/auth/setup-2fa/init', {
+			method: 'POST',
 			credentials: 'include',
 		})
 			.then(res => {
@@ -45,7 +46,7 @@ export function Setup2FAPage() {
 		setLoading(true);
 
 		try {
-			const response = await fetch('/api/auth/setup-2fa', {
+			const response = await fetch('/api/auth/setup-2fa/verify', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

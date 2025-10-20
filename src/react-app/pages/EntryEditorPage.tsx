@@ -5,6 +5,7 @@ import { useMediaQuery } from '../hooks/useMediaQuery';
 import { useImageViewer } from '../contexts/ImageViewerContext';
 import { Navigation } from '../components/Navigation';
 import { ReviewPanel } from '../components/ReviewPanel.tsx';
+import { ReviewBadge } from '../components/ReviewBadge';
 import { PosDefinitionEditor } from '../components/editor/PosDefinitionEditor';
 import { FieldVisibilityMenu } from '../components/editor/FieldVisibilityMenu';
 import { PageImageViewer } from '../components/PageImageViewer';
@@ -13,12 +14,24 @@ import type { EntryData } from '../components/editor/types';
 // Import types from shared editor types
 import type { PosDefinition, SubDefinition } from '../components/editor/types';
 
-interface Entry {
+interface EntryReview {
 	id: number;
-	head: string;
-	entry_data: string;
-	is_complete: number;
-	updated_at: string;
+	entry_id: number;
+	user_id: number;
+	status: 'approved' | 'needs_work';
+	reviewed_at: string;
+	user_email: string;
+	user_nickname: string | null;
+}
+
+interface EntryComment {
+	id: number;
+	entry_id: number;
+	user_id: number;
+	comment: string;
+	created_at: string;
+	user_email: string;
+	user_nickname: string | null;
 }
 
 export default function EntryEditorPage() {
@@ -28,7 +41,6 @@ export default function EntryEditorPage() {
 	const [loading, setLoading] = useState(true);
 	const [saving, setSaving] = useState(false);
 	const [error, setError] = useState('');
-	const [, setEntry] = useState<Entry | null>(null);
 	const [entryData, setEntryData] = useState<EntryData>({
 		head: '',
 		defs: [{
@@ -38,6 +50,9 @@ export default function EntryEditorPage() {
 	});
 	const [isComplete, setIsComplete] = useState(false);
 	const [activeTab, setActiveTab] = useState<'edit' | 'reviews'>('edit');
+	const [reviews, setReviews] = useState<EntryReview[]>([]);
+	const [comments, setComments] = useState<EntryComment[]>([]);
+	const [myReview, setMyReview] = useState<EntryReview | null>(null);
 	
 	// Image viewer state
 	const { isOpen: imageViewerOpen, currentPage: imageViewerPage, openViewer, closeViewer } = useImageViewer();
@@ -62,9 +77,11 @@ export default function EntryEditorPage() {
 					throw new Error('Failed to fetch entry');
 				}
 				const data = await response.json();
-				setEntry(data);
 				setEntryData(JSON.parse(data.entry_data));
 				setIsComplete(data.is_complete === 1);
+				setReviews(data.reviews || []);
+				setComments(data.comments || []);
+				setMyReview(data.my_review || null);
 			} catch (err) {
 				setError(err instanceof Error ? err.message : 'Failed to load entry');
 			} finally {
@@ -174,7 +191,6 @@ export default function EntryEditorPage() {
 				navigate(`/entries/${saved.id}`);
 			} else {
 				// For existing entries, go back to the list
-				setEntry(saved);
 				navigate(-1); // Use browser back to preserve state
 			}
 		} catch (err) {
@@ -184,6 +200,33 @@ export default function EntryEditorPage() {
 		}
 	};
 
+	const handleReviewStatusChange = async (status: 'approved' | 'needs_work') => {
+		if (!id || isNewEntry) return;
+
+		try {
+			const response = await fetch(`/api/entries/${id}/reviews`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ status })
+			});
+
+			if (!response.ok) {
+				throw new Error('Failed to submit review');
+			}
+
+			// Refresh entry data to get updated reviews
+			const entryResponse = await fetch(`/api/entries/${id}`);
+			if (entryResponse.ok) {
+				const data = await entryResponse.json();
+				setReviews(data.reviews || []);
+				setComments(data.comments || []);
+				setMyReview(data.my_review || null);
+			}
+		} catch (error) {
+			console.error('Error submitting review:', error);
+			throw error;
+		}
+	};
 
 	// Helper to get/set nested values using JSON path
 	const getByPath = (obj: unknown, path: string): unknown => {
@@ -390,8 +433,9 @@ export default function EntryEditorPage() {
 					</div>
 				</div>
 
-				{error && <div className="alert-error">{error}</div>}
+			{error && <div className="alert-error">{error}</div>}
 
+			<div className="editor-tabs-container">
 				<div className="editor-tabs">
 					<button
 						className={`tab-button ${activeTab === 'edit' ? 'active' : ''}`}
@@ -408,6 +452,23 @@ export default function EntryEditorPage() {
 						</button>
 					)}
 				</div>
+				{!isNewEntry && (
+					<div className="editor-review-badge">
+						<ReviewBadge
+							currentStatus={myReview?.status || null}
+							onStatusChange={handleReviewStatusChange}
+						/>
+					</div>
+				)}
+			</div>
+
+			{!isNewEntry && (
+				<div className="editor-review-summary">
+					<span>{reviews.filter(r => r.status === 'approved').length} ✓</span>
+					<span>{reviews.filter(r => r.status === 'needs_work').length} ✗</span>
+					<span>{comments.length} 💬</span>
+				</div>
+			)}
 
 				{activeTab === 'edit' ? (
 					<div className="compact-form">

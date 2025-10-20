@@ -26,7 +26,7 @@ export function SetupPage() {
 		setLoading(true);
 
 		try {
-			const response = await fetch('/api/auth/setup/create-admin', {
+			const response = await fetch('/api/auth/setup/admin', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

@@ -78,18 +78,31 @@ authRouter.post("/setup/admin", async (c) => {
 	// Create admin user
 	const salt = generateSalt();
 	const passwordHash = await hashPassword(password, salt);
+	const nickname = email.split('@')[0]; // Generate nickname from email
 
 	const result = await c.env.prod_tjdict
 		.prepare(
-			`INSERT INTO users (email, password_hash, password_salt, role, is_active) 
-       VALUES (?, ?, ?, 'admin', 1)`
+			`INSERT INTO users (email, password_hash, password_salt, role, nickname, is_active) 
+      VALUES (?, ?, ?, 'admin', ?, 1)`
 		)
-		.bind(email, passwordHash, salt)
+		.bind(email, passwordHash, salt, nickname)
 		.run();
 
 	if (!result.success) {
 		return c.json({ error: "Failed to create admin user" }, 500);
 	}
+
+	// Get the newly created user ID
+	const userId = result.meta.last_row_id;
+
+	// Create a temp token so the user can set up 2FA
+	const tempToken = await generateTempToken(userId);
+	setCookie(c, "temp_token", tempToken, {
+		httpOnly: true,
+		secure: true,
+		sameSite: "Strict",
+		maxAge: 600, // 10 minutes
+	});
 
 	return c.json({ success: true });
 });
@@ -114,7 +127,7 @@ authRouter.post("/login", async (c) => {
 	}
 
 	// Verify password
-	const isValid = await verifyPassword(password, user.password_salt, user.password_hash);
+	const isValid = await verifyPassword(password, user.password_hash, user.password_salt);
 	if (!isValid) {
 		return c.json({ error: "Invalid credentials" }, 401);
 	}
@@ -267,6 +280,7 @@ authRouter.get("/me", requireAuth, async (c) => {
 		id: user.id,
 		email: user.email,
 		role: user.role,
+		nickname: user.nickname,
 		totpEnabled: user.totp_enabled === 1,
 	};
 
@@ -428,7 +442,7 @@ authRouter.post("/change-password", async (c) => {
 	}
 
 	// Verify current password
-	const isValid = await verifyPassword(currentPassword, user.password_salt, user.password_hash);
+	const isValid = await verifyPassword(currentPassword, user.password_hash, user.password_salt);
 	if (!isValid) {
 		return c.json({ error: "Current password is incorrect" }, 401);
 	}

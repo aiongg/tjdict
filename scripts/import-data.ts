@@ -34,6 +34,13 @@ async function importData() {
 	let successCount = 0;
 	let failCount = 0;
 	
+	// Check if --remote flag is passed
+	const isRemote = process.argv.includes('--remote');
+	const remoteFlag = isRemote ? ' --remote' : '';
+	const yesFlag = isRemote ? ' --yes' : ''; // Auto-confirm for remote to avoid prompts
+	
+	console.log(`Target: ${isRemote ? 'REMOTE (production)' : 'LOCAL'}\n`);
+	
 	for (let i = 0; i < chunkFiles.length; i++) {
 		const chunkFile = chunkFiles[i];
 		const chunkPath = path.join(sqlDir, chunkFile);
@@ -41,12 +48,12 @@ async function importData() {
 		console.log(`[${i + 1}/${chunkFiles.length}] Importing ${chunkFile}...`);
 		
 		try {
-			execSync(`wrangler d1 execute prod_tjdict --file="${chunkPath}"`, {
+			execSync(`wrangler d1 execute prod_tjdict --file="${chunkPath}"${remoteFlag}${yesFlag}`, {
 				stdio: 'inherit',
 				cwd: path.join(__dirname, '..')
 			});
 			successCount++;
-		} catch (error) {
+		} catch {
 			console.error(`  ERROR: Failed to import ${chunkFile}`);
 			failCount++;
 			// Continue with next chunk instead of failing completely

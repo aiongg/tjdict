@@ -6,6 +6,7 @@ import { useImageViewer } from '../contexts/ImageViewerContext';
 import { Navigation } from '../components/Navigation';
 import { PaginationControls } from '../components/PaginationControls';
 import { PageImageViewer } from '../components/PageImageViewer';
+import { ReviewBadge } from '../components/ReviewBadge';
 
 interface TranslationVariant {
 	en: string;
@@ -133,14 +134,26 @@ interface EntryReview {
 	id: number;
 	entry_id: number;
 	user_id: number;
-	status: 'pending' | 'approved' | 'needs_work';
-	comment: string | null;
+	status: 'approved' | 'needs_work';
 	reviewed_at: string;
 	user_email: string;
+	user_nickname: string | null;
+}
+
+interface EntryComment {
+	id: number;
+	entry_id: number;
+	user_id: number;
+	comment: string;
+	created_at: string;
+	user_email: string;
+	user_nickname: string | null;
 }
 
 interface EntryWithReviews extends Entry {
 	reviews: EntryReview[];
+	all_reviews: EntryReview[];
+	comments: EntryComment[];
 	my_review?: EntryReview;
 }
 
@@ -338,6 +351,7 @@ export default function EntriesPage() {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
 	const [pageInputValue, setPageInputValue] = useState(getParam('page', '1'));
+	const [openReviewDropdown, setOpenReviewDropdown] = useState<number | null>(null);
 	
 	// Search and filter state from URL
 	const [searchQuery, setSearchQuery] = useState(getParam('q'));
@@ -517,20 +531,36 @@ export default function EntriesPage() {
 	};
 
 	const getReviewSummary = (entry: EntryWithReviews): string => {
-		if (!entry.reviews || entry.reviews.length === 0) {
-			return 'No reviews';
-		}
-
 		const approved = entry.reviews.filter(r => r.status === 'approved').length;
 		const needsWork = entry.reviews.filter(r => r.status === 'needs_work').length;
-		const pending = entry.reviews.filter(r => r.status === 'pending').length;
+		const commentCount = entry.comments.length;
 
 		const parts = [];
-		if (approved > 0) parts.push(`${approved} ✓`);
-		if (needsWork > 0) parts.push(`${needsWork} ✗`);
-		if (pending > 0) parts.push(`${pending} ⋯`);
+		parts.push(`${approved} ✓`);
+		parts.push(`${needsWork} ✗`);
+		parts.push(`${commentCount} 💬`);
 
 		return parts.join(' • ');
+	};
+
+	const handleReviewStatusChange = async (entryId: number, status: 'approved' | 'needs_work') => {
+		try {
+			const response = await fetch(`/api/entries/${entryId}/reviews`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ status })
+			});
+
+			if (!response.ok) {
+				throw new Error('Failed to submit review');
+			}
+
+			// Refresh entries to show updated status
+			fetchEntries();
+		} catch (error) {
+			console.error('Error submitting review:', error);
+			throw error;
+		}
 	};
 
 	const goToPage = (pageNum: number) => {
@@ -690,10 +720,11 @@ export default function EntriesPage() {
 					<>
 						{entries.map((entry) => {
 							const entryData: EntryData = JSON.parse(entry.entry_data);
+							const isReviewDropdownOpen = openReviewDropdown === entry.id;
 							return (
 							<div
 								key={entry.id}
-								className="entry-item"
+								className={`entry-item ${isReviewDropdownOpen ? 'review-dropdown-open' : ''}`}
 								onClick={() => handleEntryClick(entry.id)}
 							>
 								{entryData.page && (
@@ -717,6 +748,18 @@ export default function EntriesPage() {
 								</div>
 								
 								<EntryDisplay entryData={entryData} />
+								
+								<div
+									className="entry-review-badge"
+									onClick={(e) => e.stopPropagation()}
+								>
+									<ReviewBadge
+										currentStatus={entry.my_review?.status || null}
+										onStatusChange={(status) => handleReviewStatusChange(entry.id, status)}
+										compact={true}
+										onDropdownOpenChange={(isOpen) => setOpenReviewDropdown(isOpen ? entry.id : null)}
+									/>
+								</div>
 							</div>
 						);
 						})}

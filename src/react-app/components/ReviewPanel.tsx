@@ -1,14 +1,26 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import { ReviewBadge } from './ReviewBadge';
+import { Timeline } from './Timeline';
 
 interface EntryReview {
 	id: number;
 	entry_id: number;
 	user_id: number;
-	status: 'pending' | 'approved' | 'needs_work';
-	comment: string | null;
+	status: 'approved' | 'needs_work';
 	reviewed_at: string;
 	user_email: string;
+	user_nickname: string | null;
+}
+
+interface EntryComment {
+	id: number;
+	entry_id: number;
+	user_id: number;
+	comment: string;
+	created_at: string;
+	user_email: string;
+	user_nickname: string | null;
 }
 
 interface ReviewPanelProps {
@@ -18,50 +30,52 @@ interface ReviewPanelProps {
 export function ReviewPanel({ entryId }: ReviewPanelProps) {
 	const { user } = useAuth();
 	const [reviews, setReviews] = useState<EntryReview[]>([]);
+	const [allReviews, setAllReviews] = useState<EntryReview[]>([]);
+	const [comments, setComments] = useState<EntryComment[]>([]);
 	const [myReview, setMyReview] = useState<EntryReview | null>(null);
 	const [loading, setLoading] = useState(true);
-	const [submitting, setSubmitting] = useState(false);
-	const [status, setStatus] = useState<'approved' | 'needs_work'>('approved');
-	const [comment, setComment] = useState('');
 	const [error, setError] = useState('');
 
-	const fetchReviews = async () => {
+	const fetchData = async () => {
 		try {
-			const response = await fetch(`/api/entries/${entryId}/reviews`);
+			const response = await fetch(`/api/entries/${entryId}`);
 			if (!response.ok) {
-				throw new Error('Failed to fetch reviews');
+				throw new Error('Failed to fetch entry data');
 			}
-			const data: EntryReview[] = await response.json();
-			setReviews(data);
+			const data = await response.json();
+			
+			// Get latest reviews per user (for current status section)
+			setReviews(data.reviews || []);
+			
+			// Get all reviews (for timeline)
+			setAllReviews(data.all_reviews || []);
+			
+			// Get comments
+			setComments(data.comments || []);
 			
 			// Find current user's review
-			const userReview = data.find(r => r.user_id === user?.id);
-			if (userReview) {
-				setMyReview(userReview);
-				setStatus(userReview.status === 'pending' ? 'approved' : userReview.status);
-				setComment(userReview.comment || '');
-			}
+			const userReview = (data.reviews || []).find((r: EntryReview) => r.user_id === user?.id);
+			setMyReview(userReview || null);
 		} catch (err) {
-			setError(err instanceof Error ? err.message : 'Failed to load reviews');
+			setError(err instanceof Error ? err.message : 'Failed to load data');
 		} finally {
 			setLoading(false);
 		}
 	};
 
 	useEffect(() => {
-		fetchReviews();
+		fetchData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [entryId]);
 
-	const handleSubmitReview = async () => {
-		setSubmitting(true);
+	const handleReviewStatusChange = async (status: 'approved' | 'needs_work') => {
 		setError('');
 
 		try {
 			const response = await fetch(`/api/entries/${entryId}/reviews`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ status, comment: comment || null })
+				body: JSON.stringify({ status })
 			});
 
 			if (!response.ok) {
@@ -69,168 +83,91 @@ export function ReviewPanel({ entryId }: ReviewPanelProps) {
 				throw new Error(errorData.error || 'Failed to submit review');
 			}
 
-			// Refresh reviews
-			await fetchReviews();
+			// Refresh data
+			await fetchData();
 		} catch (err) {
 			setError(err instanceof Error ? err.message : 'Failed to submit review');
-		} finally {
-			setSubmitting(false);
+			throw err; // Re-throw so ReviewBadge can handle it
 		}
 	};
 
-	const handleDeleteReview = async () => {
-		if (!confirm('Are you sure you want to delete your review?')) return;
-
-		setSubmitting(true);
-		setError('');
-
-		try {
-			const response = await fetch(`/api/entries/${entryId}/reviews`, {
-				method: 'DELETE'
-			});
-
-			if (!response.ok) {
-				throw new Error('Failed to delete review');
-			}
-
-			setMyReview(null);
-			setStatus('approved');
-			setComment('');
-			await fetchReviews();
-		} catch (err) {
-			setError(err instanceof Error ? err.message : 'Failed to delete review');
-		} finally {
-			setSubmitting(false);
-		}
-	};
-
-	const getStatusBadgeClass = (reviewStatus: string) => {
-		switch (reviewStatus) {
-			case 'approved': return 'badge-active';
-			case 'needs_work': return 'badge-incomplete';
-			default: return 'badge';
-		}
-	};
-
-	const formatDate = (dateStr: string) => {
-		const date = new Date(dateStr);
-		return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+	const getUserDisplay = (nickname: string | null, email: string) => {
+		return nickname || email.split('@')[0];
 	};
 
 	if (loading) {
 		return (
 			<div className="review-panel">
-				<h3>Reviews</h3>
-				<div className="loading">Loading reviews...</div>
+				<h2>Reviews & Comments</h2>
+				<div className="loading">Loading...</div>
 			</div>
 		);
 	}
 
+	// Group current reviews by status
+	const approvedReviews = reviews.filter(r => r.status === 'approved');
+	const needsWorkReviews = reviews.filter(r => r.status === 'needs_work');
+
 	return (
 		<div className="review-panel">
-			<h2>Entry Reviews</h2>
+			<h2>Reviews & Comments</h2>
 
 			{error && <div className="error-message">{error}</div>}
 
-			{/* All Reviews List */}
-			<div className="reviews-list">
-				<h4>All Reviews ({reviews.length})</h4>
-				{reviews.length === 0 ? (
-					<p className="text-muted">No reviews yet</p>
-				) : (
-					<div className="review-items">
-						{reviews.map((review) => (
-							<div key={review.id} className="review-item">
-								<div className="review-header">
-									<span className="review-user">{review.user_email}</span>
-									<span className={`badge ${getStatusBadgeClass(review.status)}`}>
-										{review.status === 'approved' ? 'Approved' : 'Needs Work'}
-									</span>
+			{/* Current Review Status Section */}
+			<div className="review-status-section">
+				<div className="review-status-header">
+					<h3>Current Review Status</h3>
+					<ReviewBadge
+						currentStatus={myReview?.status || null}
+						onStatusChange={handleReviewStatusChange}
+					/>
+				</div>
+
+				<div className="review-status-summary">
+					{reviews.length === 0 ? (
+						<p className="text-muted">No reviews yet</p>
+					) : (
+						<>
+							{approvedReviews.length > 0 && (
+								<div className="review-status-group review-status-group--approved">
+									<h4>✓ Approved ({approvedReviews.length})</h4>
+									<ul className="reviewer-list">
+										{approvedReviews.map(review => (
+											<li key={review.id}>
+												{getUserDisplay(review.user_nickname, review.user_email)}
+											</li>
+										))}
+									</ul>
 								</div>
-								{review.comment && (
-									<p className="review-comment">{review.comment}</p>
-								)}
-								<span className="review-date">{formatDate(review.reviewed_at)}</span>
-							</div>
-						))}
-					</div>
-				)}
-			</div>
+							)}
 
-			{/* My Review Section */}
-			<div className="my-review">
-				<h4>My Review</h4>
-				{myReview ? (
-					<div className="my-review-status">
-						<div className="status-display">
-							<span className={`badge ${getStatusBadgeClass(myReview.status)}`}>
-								{myReview.status === 'approved' ? 'Approved' : 'Needs Work'}
-							</span>
-							<span className="review-date">{formatDate(myReview.reviewed_at)}</span>
-						</div>
-						{myReview.comment && (
-							<p className="review-comment">{myReview.comment}</p>
-						)}
-						<button
-							onClick={handleDeleteReview}
-							disabled={submitting}
-							className="btn-secondary btn-sm"
-						>
-							Delete My Review
-						</button>
-					</div>
-				) : (
-					<p className="text-muted">You haven't reviewed this entry yet</p>
-				)}
-
-				<div className="review-form">
-					<h5>{myReview ? 'Update Review' : 'Add Review'}</h5>
-					
-					<div className="form-group">
-						<label>Status</label>
-						<div className="radio-group">
-							<label className="radio-label">
-								<input
-									type="radio"
-									value="approved"
-									checked={status === 'approved'}
-									onChange={(e) => setStatus(e.target.value as 'approved')}
-								/>
-								<span>Approved</span>
-							</label>
-							<label className="radio-label">
-								<input
-									type="radio"
-									value="needs_work"
-									checked={status === 'needs_work'}
-									onChange={(e) => setStatus(e.target.value as 'needs_work')}
-								/>
-								<span>Needs Work</span>
-							</label>
-						</div>
-					</div>
-
-					<div className="form-group">
-						<label htmlFor="comment">Comment (optional)</label>
-						<textarea
-							id="comment"
-							value={comment}
-							onChange={(e) => setComment(e.target.value)}
-							placeholder="Add a comment..."
-							rows={3}
-						/>
-					</div>
-
-					<button
-						onClick={handleSubmitReview}
-						disabled={submitting}
-						className="btn-primary"
-					>
-						{submitting ? 'Submitting...' : (myReview ? 'Update Review' : 'Submit Review')}
-					</button>
+							{needsWorkReviews.length > 0 && (
+								<div className="review-status-group review-status-group--needs-work">
+									<h4>✗ Needs Work ({needsWorkReviews.length})</h4>
+									<ul className="reviewer-list">
+										{needsWorkReviews.map(review => (
+											<li key={review.id}>
+												{getUserDisplay(review.user_nickname, review.user_email)}
+											</li>
+										))}
+									</ul>
+								</div>
+							)}
+						</>
+					)}
 				</div>
 			</div>
+
+			{/* Timeline Section */}
+			<Timeline
+				entryId={entryId}
+				comments={comments}
+				reviews={allReviews}
+				currentUserId={user?.id}
+				onCommentAdded={fetchData}
+				onCommentDeleted={fetchData}
+			/>
 		</div>
 	);
 }
-

@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { generateSalt, hashPassword } from "../utils/auth";
-import { requireAdmin } from "../middleware/auth";
+import { requireAdmin, requireAuth } from "../middleware/auth";
 import type {
 	User,
 	JWTPayload,
@@ -18,6 +18,11 @@ type Variables = {
 	user: JWTPayload;
 };
 
+// Helper: Generate nickname from email
+function generateNickname(email: string): string {
+	return email.split('@')[0];
+}
+
 // Helper: Generate random password
 function generateRandomPassword(length: number = 12): string {
 	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
@@ -28,14 +33,39 @@ function generateRandomPassword(length: number = 12): string {
 
 export const usersRouter = new Hono<{ Bindings: Env; Variables: Variables }>();
 
-// Apply admin middleware to all routes
+// Update current user's nickname (any authenticated user)
+usersRouter.patch("/me/nickname", requireAuth, async (c) => {
+	const payload = c.get("user");
+	const { nickname } = await c.req.json<{ nickname: string }>();
+
+	if (!nickname || nickname.trim().length === 0) {
+		return c.json({ error: "Nickname cannot be empty" }, 400);
+	}
+
+	if (nickname.length > 50) {
+		return c.json({ error: "Nickname must be 50 characters or less" }, 400);
+	}
+
+	const result = await c.env.prod_tjdict
+		.prepare("UPDATE users SET nickname = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?")
+		.bind(nickname.trim(), payload.userId)
+		.run();
+
+	if (!result.success) {
+		return c.json({ error: "Failed to update nickname" }, 500);
+	}
+
+	return c.json({ success: true, nickname: nickname.trim() });
+});
+
+// Apply admin middleware to all routes below
 usersRouter.use("*", requireAdmin);
 
 // List all users (admin only)
 usersRouter.get("/", async (c) => {
 	const { results } = await c.env.prod_tjdict
 		.prepare(
-			`SELECT id, email, role, is_active, totp_enabled, requires_password_change, 
+			`SELECT id, email, role, nickname, is_active, totp_enabled, requires_password_change, 
               last_login, created_at 
        FROM users 
        ORDER BY created_at DESC`
@@ -46,6 +76,7 @@ usersRouter.get("/", async (c) => {
 		id: user.id,
 		email: user.email,
 		role: user.role,
+		nickname: user.nickname,
 		isActive: user.is_active === 1,
 		totpEnabled: user.totp_enabled === 1,
 		requiresPasswordChange: user.requires_password_change === 1,
@@ -85,13 +116,16 @@ usersRouter.post("/", async (c) => {
 	const salt = generateSalt();
 	const passwordHash = await hashPassword(tempPassword, salt);
 
+	// Generate nickname from email
+	const nickname = generateNickname(email);
+
 	// Create user
 	const result = await c.env.prod_tjdict
 		.prepare(
-			`INSERT INTO users (email, password_hash, password_salt, role, requires_password_change, is_active)
-       VALUES (?, ?, ?, ?, 1, 1)`
+			`INSERT INTO users (email, password_hash, password_salt, role, nickname, requires_password_change, is_active)
+       VALUES (?, ?, ?, ?, ?, 1, 1)`
 		)
-		.bind(email, passwordHash, salt, role)
+		.bind(email, passwordHash, salt, role, nickname)
 		.run();
 
 	if (!result.success) {

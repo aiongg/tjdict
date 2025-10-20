@@ -8,6 +8,7 @@ export interface User {
 	totp_enabled: number;
 	totp_backup_codes: string | null;
 	is_active: number;
+	nickname: string | null;
 	requires_password_change: number;
 	last_login: string | null;
 	created_at: string;
@@ -56,6 +57,7 @@ export interface UserResponse {
 	id: number;
 	email: string;
 	role: string;
+	nickname: string | null;
 	totpEnabled: boolean;
 }
 
@@ -91,6 +93,7 @@ export interface UserListResponse {
 	id: number;
 	email: string;
 	role: string;
+	nickname: string | null;
 	isActive: boolean;
 	totpEnabled: boolean;
 	requiresPasswordChange: boolean;
@@ -186,9 +189,16 @@ export interface EntryReview {
 	id: number;
 	entry_id: number;
 	user_id: number;
-	status: 'pending' | 'approved' | 'needs_work';
-	comment: string | null;
+	status: 'approved' | 'needs_work';
 	reviewed_at: string;
+}
+
+export interface EntryComment {
+	id: number;
+	entry_id: number;
+	user_id: number;
+	comment: string;
+	created_at: string;
 }
 
 // API types
@@ -201,11 +211,19 @@ export interface EntryListResponse {
 
 export interface EntryWithReviews extends Entry {
 	reviews: EntryReviewWithUser[];
+	all_reviews: EntryReviewWithUser[];
+	comments: EntryCommentWithUser[];
 	my_review?: EntryReview;
 }
 
 export interface EntryReviewWithUser extends EntryReview {
 	user_email: string;
+	user_nickname: string | null;
+}
+
+export interface EntryCommentWithUser extends EntryComment {
+	user_email: string;
+	user_nickname: string | null;
 }
 
 export interface EntrySearchParams {
@@ -227,6 +245,9 @@ export interface UpdateEntryRequest {
 
 export interface CreateReviewRequest {
 	status: 'approved' | 'needs_work';
-	comment?: string;
+}
+
+export interface CreateCommentRequest {
+	comment: string;
 }
 

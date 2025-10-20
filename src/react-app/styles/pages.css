@@ -209,13 +209,16 @@
 	padding: 1.25rem;
 	margin-bottom: 1rem;
 	cursor: pointer;
-	transition: all 0.2s;
+	transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.entry-item:hover {
+.entry-item:hover:not(.review-dropdown-open) {
 	border-color: var(--color-primary);
-	transform: translateY(-1px);
 	box-shadow: 0 2px 4px var(--color-shadow);
+}
+
+.entry-item.review-dropdown-open {
+	z-index: 100 !important;
 }
 
 .entry-meta-badges {

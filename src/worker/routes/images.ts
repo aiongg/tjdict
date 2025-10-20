@@ -24,11 +24,33 @@ images.get('/:filename', async (c) => {
 	}
 	
 	try {
-		// Check if R2 bucket is available (production)
-		const bucket = c.env.DICTIONARY_IMAGES;
+		// Check if we're in development mode (local dev server)
+		const isDevelopment = c.req.url.includes('localhost') || c.req.url.includes('127.0.0.1');
 		
-		if (bucket) {
+		if (isDevelopment) {
+			// Development: Fetch from local tj_images directory
+			const imageUrl = `/tj_images/${filename}`;
+			const response = await fetch(new URL(imageUrl, c.req.url));
+			
+			if (!response.ok) {
+				return c.json({ error: 'Image not found in local directory' }, 404);
+			}
+			
+			// Return image with proper headers
+			return new Response(response.body, {
+				headers: {
+					'Content-Type': 'image/webp',
+					'Cache-Control': 'public, max-age=31536000',
+				},
+			});
+		} else {
 			// Production: Fetch from R2 bucket
+			const bucket = c.env.DICTIONARY_IMAGES;
+			
+			if (!bucket) {
+				return c.json({ error: 'R2 bucket not configured' }, 500);
+			}
+			
 			const object = await bucket.get(filename);
 			
 			if (!object) {
@@ -41,22 +63,6 @@ images.get('/:filename', async (c) => {
 					'Content-Type': 'image/webp',
 					'Cache-Control': 'public, max-age=31536000', // Cache for 1 year
 					'ETag': object.etag,
-				},
-			});
-		} else {
-			// Development: Fetch from local tj_images directory
-			const imageUrl = `/tj_images/${filename}`;
-			const response = await fetch(new URL(imageUrl, c.req.url));
-			
-			if (!response.ok) {
-				return c.json({ error: 'Image not found' }, 404);
-			}
-			
-			// Return image with proper headers
-			return new Response(response.body, {
-				headers: {
-					'Content-Type': 'image/webp',
-					'Cache-Control': 'public, max-age=31536000',
 				},
 			});
 		}
