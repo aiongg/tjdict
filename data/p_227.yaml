@@ -1,0 +1,231 @@
+- head: kà-chṳ
+  det: kà-chu
+- head: ka-chiáng/-chióng
+  etym: (< log Chi [嘉獎])
+  pos: v
+  en:
+- head: ká-chiap
+  pos: v
+  en:
+- head: kà-chiàu
+  etym: (< log Chi [駕照])
+  pos: n
+  mw: tiuⁿ
+  en:
+- head: Ka-chiu
+  etym: (< log Chi < ab California + [州])
+  pos: n
+  en:
+- head: kā-chóa
+  pos: v
+  en:
+- head: ka-choa̍h
+  pos: n
+  mw: chiah
+  en:
+  idm:
+    - tw: ~-hiàn
+      mw: ê
+      en:
+      ex:
+        - tw: chhàu-~-hiàn
+          en:
+    - tw: ~-nn̄g
+      en:
+    - tw: ~-sái
+      en:
+- head: ka-chōe
+  det: ka-chē
+- head: ka-cho̍k
+  etym: (< log Sin [家族])
+  pos: n
+  en:
+  drv:
+    - tw: ~-á
+      mw: ê
+      en:
+- head: ka-chù
+  det: ka-chì
+- head: kà-chu/-chṳ
+  etym: (< log Sin [教書])
+  pos: v
+  en:
+  alt: [kà-chheh]
+- head: ká-chúi
+  pos: v
+  en:
+- head: Ka-gī
+  etym: (< log Sin [嘉義])
+  pos: n
+  en:
+- head: ka-hāi-chiá
+  etym: (< log Nip [加害者])
+  pos: n
+  mw: ê
+  en:
+- head: ka-hō¹
+  etym: (< log Nip [加號])
+  pos: n
+  mw: ê
+  en:
+  alt: [phu-lá-suh]
+- head: ka-hō²
+  pos: v
+  en:
+  det: ke-hō
+- head: ka-hō͘ pēⁿ-pâng/… pīⁿ-pâng
+  etym: < log Chi [加護病房] < tr En intensive care unit
+  pos: n
+  mw: keng
+  en:
+- head: ka-hoat
+  etym: < log [加法]
+  pos: n
+  en:
+- head: ka-hun
+  etym: < log Chi [加分]
+  pos: v
+  en:
+  alt: [ke tiám-sò͘]
+- head: ka-ia̍h
+  etym: < sem Sin [交易]
+  pos: adj
+  en:
+- head: ka-iû
+  etym: < log Chi [加油]
+  pos: v
+  1:
+    en:
+    alt: [thiⁿ-iû]
+    drv:
+      - tw: ~-chām
+        etym: < log Chi [~站]
+        mw: ê, keng
+        en:
+  2:
+    en:
+  3:
+    en:
+  4:
+    en:
+- head: ka-jia̍t/gia̍t/-lia̍t
+  etym: < log Nip [加熱]
+  pos: v
+  en:
+- head: ka-ji̍p/-gi̍p/-li̍p
+  etym: < log Nip [加入]
+  pos: v
+  en:
+- head: kā-kā-kún
+  pos: adj
+  en:
+- head: ka-kang
+  etym: < log Nip [加工]
+  pos: v
+  en:
+  drv:
+    - tw: ~-khu
+      etym: (< log Chi [區])
+      mw: ê, khu
+      en:
+    - tw: ~-phín
+      etym: (< log Nip [~品])
+      en:
+- head: ka-kàu
+  etym: < log Chi [家教]
+  pos: n
+  mw: ê
+  en:
+- head: ka-kéng
+  etym: < log Chi [家境]
+  pos: n
+  en:
+- head: kà-khong|kè-
+  etym: < log Chi [架空]
+  pos: v
+  en:
+- head: ka-khū
+  det: ka-kū
+- head: ka-kī
+  det: ka-tī
+- head: ká-kî|kà-
+  etym: < log Chi [假期]
+  mw: ê
+  pos: n
+  en:
+- head: ka-kiâng/-kiông
+  etym: < log Chi [加強]
+  pos: v
+  en:
+- head: kà-koai
+  pos: v
+  1:
+    en:
+  2:
+    en:
+- head: ka-kū/-khū
+  etym: < log Chi [家具]
+  pos: n
+  mw: cho͘
+  en:
+- head: ka-la̍h-hî
+  pos: n
+  mw: bóe
+  en:
+- head: Ka-lâm Pêng-goân
+  etym: < log [嘉南平原]
+  pos: n
+  en:
+- head: Ka-lâm Tāi-chùn|…Tōa-
+  etym: < log [嘉南大圳]
+  pos: n
+  en:
+- head: ka-la̍uh
+  etym: < [□落]
+  pos: v
+  en:
+  ex:
+    - tw: phah-~
+      en:
+- head: ka-lé
+  pos: n
+  mw: sian
+  en:
+  drv:
+    - tw: ~ ang-á
+      en: do.
+    - tw: ~-hì
+      mw: chhut
+      en:
+- head: ka-léng-sún
+  det: ka-lún-sún
+- head: ka-lí
+  etym: < Tam kari
+  pos: n
+  en:
+  alt: [ka-lé]
+- head: ka-lī
+  etym: < ka-tī, q.v.
+- head: ka-lí-hún
+  pos: n
+  en:
+- head: ka-lí-pn̄g
+  pos: n
+  en:
+- head: ka-lián-phak -lán-
+  pos: v
+  en:
+  ex:
+    - tw: khùn ~
+      en:
+- head: ka-lûn
+  etym: < log Chi [加侖] < En gallon
+  pos: mw
+  en:
+- head: ka-lún-sún -léng-|kâⁿ-
+  pos: v
+  en:
+- head: ka-ná|kha-
+  etym: < kan-ná < kan-na²(4), q.v.; > kha-ná q.v.)
+  pos: adv
+  en:

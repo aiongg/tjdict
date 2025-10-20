@@ -1,0 +1,104 @@
+- head: kàu-hun
+- head: kàu-hùn
+  etym: (< log Sin [教訓])
+  defs:
+    - pos: n
+      mw: pái
+    - pos: v
+- head: kau-í
+  etym: (< log Sin [交椅])
+  pos: n
+  mw: chiah
+- head: kàu-io̍k
+  etym: (< log Nip [教育])
+  pos: n
+  drv:
+    - tw: ~-kio̍k
+      etym: (< log Chi [~局])
+      en:
+    - tw: ~-po͘
+      etym: (< log Chi [~部])
+      en:
+    - tw: ~-pō͘-tiúⁿ
+      etym: (< log Chi [~部長])
+      mw: ê
+      en:
+- head: kau-iû
+  etym: (< log Chi [郊遊])
+  pos: v
+- head: kāu-jiō
+  pos: adj
+- head: kau-kài
+  etym: (< log Sin [交界])
+  pos: [n, v]
+  alt: [keh-kài]
+- head: kâu-kang
+- head: káu-kang
+- head: kāu-kang
+- head: kàu-kàu
+- head: kāu-kāu-siâu-siâu
+- head: kâu-kha-kâu-chhiú
+- head: káu-khang
+- head: káu-kháng
+- head: káu-khí-á
+- head: kàu-kho-si, kàu-kho-su/kàu-kho-chu/kàu-khe-su/kàu-khe-chu/kàu-kho̤-chṳ
+- head: kàu-khòaⁿ
+- head: kau-khu
+  etym: (< log Chi; cf Nip [近郊住宅區][郊區])
+  pos: n
+- head: kàu-khùi
+- head: kàu-kî
+  etym: (< log Sin + tr [到期])
+  pos: v
+- head: kâu-kiâⁿ
+- head: kâu-kiáⁿ
+- head: kàu-koaⁿ
+  etym: (< log Nip [教官])
+  pos: n
+  mw: ê
+- head: káu-koài
+  etym: (< sem log Sin [狡怪])
+  pos: adj
+  1:
+  2:
+  3:
+- head: kau-koan
+  etym: (< log Sin [交關])
+  pos: v
+- head: kàu-liān
+  etym: (< log Nip [教練])
+  pos: n
+  mw: ê
+- head: kau-liâng
+- head: kau-liû
+  etym: (< log Nip [交流])
+  defs:
+    - pos: n
+      ex:
+        - tw: bûn-hòa ~
+          en:
+    - pos: v
+    - pos: adj
+      drv:
+        - tw: ~-tiān
+          etym: (< ab log Nip [交流電氣] < tr; cf En alternating current; ant ti̍t-liû-tiān [~電])
+          en:
+        - tw: ~-tō
+          en:
+          etym: (< log Chi [~道])
+          mw: tiâu
+- head: kau-ló
+- head: káu-lô͘-châi
+- head: kau-ōaⁿ
+  etym: (< log Chi [交換])
+  pos: v
+- head: kàu-oân/-goân
+  etym: (< log Nip [教員])
+  pos: n
+  mw: ê
+- head: kāu-ōe, kāu-ōe-sái
+- head: kau-óng
+  etym: (< log Chi [交往])
+  pos: v
+  alt: [kau-pôe, kiâⁿ]
+- head: káu-pâi

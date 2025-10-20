@@ -1,0 +1,170 @@
+- head: kàm-kang
+  etym: (< log Chi [監工])
+  pos: n
+  mw: ê
+- head: kám-kek
+  etym: (< log Sin [感激])
+  pos: v
+- head: kám-khài
+  etym: (< log Sin [感慨])
+  pos: v
+- head: kàm-khó
+  etym: (< log Chi [監考])
+  pos: v
+- head: kám-kong, kám-kng
+  etym: (< log Nip [感光])
+  pos: v
+- head: kám-kóng
+- head: kàm-lí-chhù
+  etym: (< log Chi [監理處])
+  pos: n
+  mw: keng
+- head: kàm-lí-só͘
+  etym: (< log Chi [監理所])
+- head: kám-liām
+- head: kâm-m̂
+- head: kám-mō͘
+  etym: (< log Nip < Sin [感冒])
+  pos: v
+  drv:
+    - tw: ~-oân/-goân
+      etym: (< log Chi [~員])
+      mw: ê
+      en:
+- head: kàm-phiò
+  etym: (< log Chi [監票])
+  pos: v
+  drv:
+    - tw: ~-oân/-goân
+      etym: (< log Chi [~員])
+      mw: ê
+      en:
+- head: kam-pòe
+  etym: (< kan-pòe < log Sin [乾貝][甘貝])
+  pos: n
+  mw: tè
+  1:
+  2:
+    alt: [kang-iâu-chū]
+- head: kám-sèng
+  etym: (< log Nip [感性])
+  pos: adj
+- head: kàm-sī
+  etym: (< log [監視])
+  pos: v
+- head: kám-siā
+  etym: (< log Sin [感謝])
+  pos: v
+  alt: [to-siā]
+- head: kám-siáng/-sióng
+  etym: (< log Nip < sem Sin [感想])
+  pos: n
+- head: kám-sim
+  etym: (< log Nip < Sin [感心])
+  defs:
+    - pos: v
+    - pos: adj
+- head: kám-sióng
+- head: kám-siū
+  etym: (< log Nip [感受])
+  pos: n
+  mw: ê
+- head: kàm-sū
+  etym: (< log Nip [監事])
+  pos: n
+  mw: ê
+- head: kám-tēng
+  etym: (< log Nip [鑑定])
+  pos: v
+  1:
+  2:
+  3:
+- head: kàm-thiaⁿ
+  etym: (< log Chi [監听])
+  pos: v
+- head: kam-tih-tih
+- head: kám--tio̍h
+- head: kám-tó͘
+- head: kàm-tok|kam-
+  etym: (< log Nip <> Sin [監督])
+  pos: v
+- head: kám-tōng
+  etym: (< log Sin [感動])
+  pos: v
+- head: kám-un
+- head: kan¹
+  etym: (< log Sin [奸])
+  defs:
+    - pos: suf
+      ex:
+        - tw: Tâi-~
+          en:
+    - pos: adj
+- head: kan²
+- head: kan³
+  etym: (< log Sin [乾])
+  pos: v
+  ex:
+    - tw: ~ ·chi̍t ·poe!
+      en:
+- head: kân
+- head: kán, kát
+- head: kàn
+- head: kăn, kân
+- head: kan-á
+- head: kan-á-sun, kaⁿ-ná-sun
+- head: kàn-chiap|kan-
+  etym: (< log Nip [間接])
+  pos: adv
+- head: kán-hòa
+  etym: (< log Chi [簡化])
+  pos: v
+  alt: [kan-tan-hòa]
+- head: kan-jiáu/-giáu/-liáu
+  etym: (< log Chi [干擾])
+  pos: [n, v]
+- head: kán-kài
+  etym: (< log Chi [簡介])
+  pos: n
+  mw: ê
+- head: kàn-kàn-kiò
+- head: kan-khiáu
+  etym: (< log Sin [奸巧])
+  pos: adj
+- head: kan-khó͘
+  etym: (< log Sin [艱苦])
+  defs:
+    - pos: v
+      etym: (< sem)
+      ex:
+        - tw: I lâng ~.
+          en:
+    - pos: adj
+      1:
+        drv:
+          - tw: ~-chîⁿ
+            en:
+      2:
+        etym: (< sem)
+        ex:
+          - tw: I sè-hàn chin ~.
+            en:
+        drv:
+          - tw: ~-lâng
+            mw: ê
+            a:
+              en:
+            b:
+              en:
+      3:
+        etym: (< sem)
+        ex:
+          - tw: pēⁿ/-pīⁿ kà chin ~
+            en:
+        drv:
+          - tw: ~-sim
+            en:
+    - pos: adv
+      ex:
+        - tw: ~ chò/chòe
+          en:

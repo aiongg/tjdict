@@ -1,0 +1,1324 @@
+- head: ·e¹
+  etym: < ·ni¹, qv
+  pos: suf
+  en:
+- head: ·e² (·le², qv)
+  pos: suf
+  en:
+- head: ·e³
+  etym: < ê⁴
+  pos: suf
+  1:
+    en:
+    alt: [·a]
+    ex:
+      - tw: Táu-~
+        en:
+  2:
+    en:
+    ex:
+      - tw: Tiuⁿ-~
+        en:
+  3:
+    en:
+    ex:
+      - tw: thâi-ti-~
+        en:
+      - tw: tông-~
+        en:
+- head: ·e⁴
+  pos: gp
+  1:
+    en:
+    ex:
+      - tw: chhûn/chhūn sí ~
+        en:
+      - tw: kō͘ kiâⁿ ~
+        en:
+  2:
+    en:
+    ex:
+      - tw: Lí nā khì, it-tēng ē hông lia̍h-·khì ~.
+        en:
+      - tw: pau-sí-~ qv
+        en:
+- head: e¹|oe
+  etym: < SEY [挨]
+  pos: v
+  1:
+    en:
+    ex:
+      - tw: kā lâng ~-~-·tó
+        en:
+  2:
+    en:
+    ex:
+      - tw: ~ chio̍h-bō-á
+        en:
+  3:
+    en:
+    alt: [oaiⁿ]
+    ex:
+      - tw: ~ hiân-á
+        en:
+- head: e²
+  cat: sl
+  pos: v
+  en:
+  ex:
+    - tw: e chîⁿ
+      en:
+- head: ê¹
+  pos: pref
+  en:
+  ex:
+    - tw: ~-à
+      en:
+    - tw: ~-chái-khí
+      en:
+    - tw: ~-hng
+      en:
+    - tw: ~-tàu
+      en:
+- head: ê²|ôe
+  etym: < Sin [鞋]
+  pos: n
+  mw: siang,kha
+  en:
+- head: ê³|gê
+  pos: mw
+  en:
+- head: ê⁴|hê|gê
+  pos: gp
+  en:
+  ex:
+    - tw: góa ~ pêng-iú
+      en:
+    - tw: bô chîⁿ ~ lâng
+      en:
+- head: é¹|óe
+  etym: < Sin [矮]
+  pos: adj
+  en:
+- head: é²
+  pos: excl
+  1:
+    en:
+    cf: [hóe]
+  2:
+    en:
+  3:
+    en:
+    det: è²
+- head: è
+  pos: v
+  en:
+  det: òe¹
+- head: è|é|eh
+  pos: excl
+  en:
+  cf: [òe²]
+  ex:
+    - tw: ~, lán chhut-lâi-khì sàn-pō͘, hó ·bô?
+      en:
+- head: ē¹|ōe
+  etym: < Sin; ant bē¹[會]
+  defs:
+    - pos: inf
+      en:
+      ex:
+        - tw: thun-~-lo̍h-·khì
+          en:
+    - pos: v
+      1:
+        en:
+        ex:
+          - tw: í-keng ~ kiâⁿ ·a
+            en:
+      2:
+        en:
+        alt: [gâu]
+        ex:
+          - tw: ~ tha̍k-chheh
+            en:
+      3:
+        en:
+        ex:
+          - tw: Lán ê bāng it-tēng ~ si̍t-hiān.
+            en:
+- head: ē²
+  etym: < Sin [下]
+  defs:
+    - pos: n
+      bound: true
+      en:
+      alt: [ē-kha]
+      ex:
+        - tw: Sai-gû, kak seⁿ tī ba̍k-chiu-~.
+          en:
+    - pos: dem
+      en:
+      alt: [āu]
+      ex:
+        - tw: ~ lé pài
+          en:
+- head: ē³
+  etym: < Sin [下]
+  pos: mw
+  takes_a2: true
+  en:
+  ex:
+    - tw: ba̍k-chiu nih nn̄g ~
+      en:
+- head: ĕ
+  det: ĕⁿ
+- head: ē...-tit/-chit/-lih/-ih/-ì/-eh/-è|ōe
+  pos: aux
+  en:
+  ex:
+    - tw: Chit chiah í-á ē-chē-·tit.
+      en:
+    - tw: ē-hông-kóng-·tit
+      en:
+    - tw: ē-chò-tit tōa tāi-chì
+      en:
+- head: e-á
+  det: oe-á
+- head: ê-á|ôe-
+  pos: n
+  mw: siang,kha
+  en:
+- head: e-á-chhài
+  det: oe-á-chhài
+- head: ê-á-chhiáng/-chhiúⁿ|ôe…chhiúⁿ
+  pos: n
+  mw: keng
+  en:
+- head: é-á-lâng|óe-
+  page: 134
+  pos: n
+  mw: ê
+  en:
+  cf: [é-lâng]
+- head: é-á tang-koe|óe-
+  pos: n
+  mw: ê
+  en:
+- head: ê-àm (v ê¹)
+  pos: n
+  en:
+  alt: [eng-àm]
+- head: é-bih-bih
+  det: é-pih-pih
+- head: ê-bīn|ôe-
+  etym: < Sin [鞋面]
+  pos: n
+  mw: ê
+  en:
+- head: ē-bīn
+  etym: < log Sin [下面]
+  pos: n
+  en:
+  cf: [ē-kha, ē-té]
+  ex:
+    - tw: ~ só͘ boeh/beh kóng ·ê sī góa ka-tī/kī siūⁿ ·ê
+      en:
+    - tw: Góa ê ì-kiàn siá tī ~
+      en:
+- head: ê-chái
+  etym: < ê-chá-khí; v ê¹, chái
+  pos: n
+  takes_a2: true
+  en:
+- head: ē-chan
+  etym: ant téng-chan
+  pos: n
+  en:
+  drv:
+    - tw: ~-khí
+      en:
+- head: ē-chhiú¹
+  etym: < Sin [下手]
+  pos: n
+  mw: ê
+  en:
+  alt: [ē-kha-chhiú]
+- head: ē-chhiú²
+  pos: n
+  mw: ê
+  1:
+    en:
+  2:
+    en:
+    alt: [bé-chhiú]
+- head: ê-chhiûⁿ|ôe-
+  pos: n
+  mw: ê
+  en:
+- head: e-chîⁿ (v e²)
+  cat: sl
+  pos: v
+  en:
+- head: ê-chi̍h|ôe-
+  pos: n
+  mw: tè
+  en:
+- head: ê-chū|ôe-
+  pos: n
+  takes_a2: true
+  mw: tè
+  en:
+- head: ê-ĕ
+  cat: baby
+  pos: n
+  mw: siang, kha
+  en:
+- head: ĕ-·è¹
+  pos: excl
+  en:
+- head: ĕ-·è²
+  pos: excl
+  en:
+- head: é-é-mh
+  det: é-é-muh¹ ²
+- head: é-é-muh¹/-mh
+  etym: < En < a.m. < acr Liâm-á-to àn-té meridiem
+  pos: n
+  en:
+- head: é-é-muh²/-mh (En AM < acr En amplitude modulation)
+  pos: n
+  en:
+- head: ē-ē-thò͘
+  pos: v
+  en:
+- head: ē-ĕng
+  det: ē-iŏng
+- head: ē-êng-tit/-lih/-eh/-é|ōe
+  det: ē-iông-tit
+- head: ē-ēng-·tit/-·chit/-·lih/-·ì/-·eh/-·è|ōe
+  det: ē-iōng-·tit
+- head: é-fûh-é-muh
+  etym: < En FM < acr En frequency modulation
+  pos: n
+  en:
+- head: ē-hâi/-hoâi
+  pos: n
+  mw: ê
+  en:
+  ex:
+    - tw: lauh/làu ~
+      en:
+- head: ē-ham
+  pos: n
+  mw: ê
+  en:
+  alt: [ē-hâi]
+- head: ê-hīⁿ|ôe-
+  pos: n
+  mw: tè
+  en:
+- head: ē-hiáng
+  det: ē-hiáu
+- head: ē-hiáu/-hiáng|ōe-
+  defs:
+    - pos: v
+      en:
+      ex:
+        - tw: Góa ~ Eng-gí.
+          en:
+        - tw: Che góa ~.
+          en:
+        - tw: siūⁿ-~
+          en:
+          drv:
+            - tw: ~-tit/-chit/-lih/-eh do.
+              en:
+    - pos: aux
+      en:
+      ex:
+        - tw: Góa ~ siu-lí chhia.
+          en:
+        - tw: kan-na ~ khàu
+          en:
+      idm:
+        - tw: ~ thau chia̍h, bē-hiáu chhit chhùi
+          en:
+- head: ê-hng|ē-
+  etym: v ê¹; > ĕng
+  en:
+- head: ē-hô|ōe-
+  pos: adj
+  en:
+  ex:
+    - tw: sǹg-~ do.
+      en:
+- head: é-hòa, óe-hòa
+  etym: < log Chi [矮化]
+  pos: v
+  en:
+- head: ē-hoâi
+  det: ē-hâi
+- head: ē-hù|ōe-
+  pos: v
+  en:
+- head: è-ī-jù/-jṳ
+  etym: < En AIDS < acr ac-quired immune deficiency syn-drome
+  pos: n
+  en:
+- head: ē-iâⁿ²
+  pos: v
+  en:
+  cf: [ē-khì, ē-kiâⁿ]
+  ex:
+    - tw: the̍h-~
+      en:
+- head: ē-iŏng/-ĕng
+  etym: < ē-iông-tit
+  pos: aux
+  1:
+    en:
+  2:
+    en:
+- head: ē-iông-tit/-lih/-eh/-è -êng- |ōe-
+  pos: aux
+  1:
+    en:
+    ex:
+      - tw: Góa ~ ji̍p-·lâi bo?
+        en:
+  2:
+    en:
+    ex:
+      - tw: Lán ~ mài khì
+        en:
+      - tw: Mn̂g khui-·a, ~ chhut-·khì ·a
+        en:
+- head: ē-iōng-·tit/-·chit/-·lih/-·ih/-·ì/-·eh/-·è -ēng-|ōe-
+  page: 135
+  pos: adj
+  1:
+    en:
+    ex:
+      - tw: Chit ki pit iáu~.
+        en:
+  2:
+    en:
+    alt: [ē-sái-·tit]
+    ex:
+      - tw: LÍ án-ne chò, ~
+        en:
+- head: ê-iû|ôe-
+  etym: < Sin [鞋油]
+  pos: n
+  mw: a̍p
+  en:
+- head: ē-jīn-tit/-chit/-lih/-ì/-eh/-è -gīn- -līn- |ōe-
+  pos: [v, adj]
+  en:
+  ex:
+    - tw: iáu ~ in bó͘
+      en:
+    - tw: in bó͘, i iáu ē-jīn-·tit
+      en:
+- head: ē-kai-chân
+  pos: n
+  en:
+- head: ē-kâiⁿ (ant bē-kâiⁿ)
+  pos: v
+  en:
+  ex:
+    - tw: khòaⁿ lí kám iáu ~
+      en:
+    - tw: tùi i kám iáu~
+      en:
+- head: Ē-káng
+  pos: n
+  en:
+- head: é-káu
+  etym: < * é-kháu < sem Sin[啞口]
+  defs:
+    - pos: n
+      mw: ê
+      en:
+      alt: [é-káu-·ê]
+    - pos: v
+      1:
+        en:
+        drv:
+          - tw: ~-·ê
+            mw: ê
+            en:
+      2:
+        etym: < sem
+        en:
+        cf: [kā-chhùi]
+      3:
+        etym: < sem
+        en:
+        drv:
+          - tw: ~-hì
+            mw: chhut
+            en:
+- head: ē-kha
+  defs:
+    - pos: n
+      en:
+      ex:
+        - tw: hō͘ chhiū-á teh tī ~
+          en:
+        - tw: poa̍h-lo̍h-khì ~
+          en:
+        - tw: chhiū-á ~
+          en:
+    - pos: dem
+      en:
+      alt: [ē-té]
+      ex:
+        - tw: ~ chàn
+          en:
+        - tw: ~ thoah
+          en:
+- head: ē-kham...·tit/-chit/-lih/-ì/-eh/-è|bōe-
+  pos: adv
+  en:
+  ex:
+    - tw: ē-kham hông kóng ·tit
+      en:
+- head: ē-kham-tit/-chit/-lih/-ih/-ì/-eh/-è|ōe-
+  defs:
+    - pos: v
+      en:
+      ex:
+        - tw: Chi̍t ji̍t khùn saⁿ tiám-cheng, kám ē-kham-·tit?
+          en:
+    - pos: adv
+      en:
+      ex:
+        - tw: Siàu-liân, ~ bôa.
+          en:
+- head: ē-khí|ōe-
+  etym: < log Sin [得起] + tr
+  pos: v
+  en:
+  ex:
+    - tw: chia̍h-~
+      en:
+      alt: [chia̍h-ē-tó]
+    - tw: khòaⁿ-~
+      en:
+    - tw:
+      en:
+    - tw: khòaⁿ i ~
+      en:
+- head: ē-khì|ōe-
+  pos: v
+  1:
+    en:
+    cf: [ē-iâⁿ, ē-kiâⁿ]
+    ex:
+      - tw: cháu-~
+  2:
+    en:
+    ex:
+      - tw: chia̍h-~
+        en:
+      - tw: the̍h-~
+        en:
+- head: é-khîh-sîh-kong|e-khú-sûh-kong/-kng
+  etym: < En X + log Chi < tr En X ray [X光]
+  pos: n
+  en:
+  alt: [tiān-kong]
+  ex:
+    - tw: chiò ~.
+      en:
+- head: ê-khoán
+  pos: adv
+  en:
+- head: e-khú-sûh-kong/-kng
+  det: é-khîhⁿ-#sr⁵h-kong
+- head: ē-kì-tit/-chit/-lih/-eh/-è|ōe-
+  pos: v
+  en:
+  ex:
+    - tw: Thài-thài ê seⁿ-ji̍t ài ~
+      en:
+    - tw: ài ~ chia̍h io̍h-á
+      en:
+- head: ē-kiâⁿ|ōe-
+  pos: v
+  en:
+  cf: [ē-iâⁿ, ē-khì]
+  ex:
+    - tw: kiò-~ ;
+      en:
+    - tw: sak-~
+      en:
+    - tw: the̍h-~
+      en:
+- head: é-kó͘|óe-
+  pos: adj
+  1:
+    en:
+  2:
+    en:
+- head: ē-lâi|ōe-
+  pos: v
+  en:
+  ex:
+    - tw: khang-khòe iáu chò-~
+      en:
+- head: é-lâng|óe-
+  etym: < Sin [矮人]
+  pos: n
+  mw: ê
+  1:
+    en:
+  2:
+    en:
+- head: ē-lī|ōe-
+  page: 136
+  pos: v
+  en:
+  ex:
+    - tw: chit-má cháu, iáu cháu-~
+      en:
+- head: ē-lo̍h|ōe-
+  pos: v
+  en:
+  ex:
+    - tw: Chit tâi chhia, la̍k ê lâng chē-~.
+      en:
+- head: Ē-mn̂g/-mûi
+  pos: n
+  en:
+- head: ê ōe
+  etym: < tr Chi [ê話]
+  pos: conj
+  en:
+  alt: [·chiá]
+  ex:
+    - tw: nā bô ~
+      en:
+- head: ê-phīⁿ|ôe-
+  pos: n
+  mw: ê
+  en:
+- head: é-pih-pih/-bih-bih|óe-
+  pos: adj
+  en:
+  alt: [é-/óe-tuh-tuh]
+- head: ê-po͘
+  etym: < hyp ē-po͘, qv ; cf ê-tàu
+  en:
+- head: ē-po͘
+  etym: < Sin [下晡]
+  pos: n
+  en:
+- head: ē-pòaⁿ
+  pos: adj
+  en:
+  ex:
+    - tw: ~ koe̍h
+      en:
+    - tw: ~ nî
+      en:
+      drv:
+        - tw: ~-sin
+          en:
+- head: ē-pòe
+  etym: < Sin [下輩]
+  pos: n
+  mw: ê
+  en:
+- head: ê-poe̍h|ôe-pu̍ih
+  etym: < Sin [鞋拔]
+  pos: n
+  takes_a2: true
+  mw: ki
+  en:
+- head: é-pû|óe-
+  pos: adj
+  en:
+  dup: true
+- head: e-pú-lóng
+  etym: < Nip epuron < En apron
+  pos: n
+  mw: tiâu
+  en:
+  alt: [ûi-/û-su-kûn, ûi-kûn, ûi-sin-kûn]
+- head: é-pûi|óe-
+  pos: adj
+  en:
+- head: ē-sái|ōe-
+  defs:
+    - pos: aux
+      en:
+      alt: [ē-iŏng]
+      ex:
+        - tw: Lí ~ mài cháu
+          en:
+        - tw: ~ chhì-khòaⁿ-bāi/-māi ·le.
+          en:
+        - tw: ~ kóng bô-lâng pí i khah gâu
+          en:
+    - pos: adj
+      en:
+      alt: [ē-iōng-·tit]
+      ex:
+        - tw: "I kóng: ē-·sái."
+          en:
+- head: ē-sái-tit/-chit/-lih/-lí/-·lì/-ih/-í/-eh/-é/-·è|ōe- (v ē-sái)
+  defs:
+    - pos: aux
+      en:
+      det: ē-sái
+    - pos: adj
+      en:
+      ex:
+        - tw: Á-ne ē-sái-·tit ·a.
+          en:
+- head: ē-sái-·tit/-·chit/-·lí/-·ì/-·è|ōe-
+  etym: < ē-sái-·tit qv
+  en:
+- head: ê sî
+  pos: [n, conj]
+  en:
+  ex:
+    - tw: siāng-khò ~
+      en:
+- head: ē-si
+  pos: n
+  mw: ê
+  en:
+- head: ē-sin
+  etym: < log Sin [下身]
+  pos: n
+  en:
+  alt: [ē-pòaⁿ-sin]
+- head: e-sú-khá-lè-tà
+  etym: < Nip esukarētā < En escalator
+  pos: n
+  mw: ê
+  en:
+- head: ē-tàng|ōe-
+  defs:
+    - pos: v
+      en:
+      ex:
+        - tw: Góa nā mài, kám ~?
+          en:
+    - pos: aux
+      1:
+        en:
+        ex:
+          - tw: Góa saⁿ chhēng-hó ·a, lí ~ ji̍p-·lâi ·a.
+            en:
+      2:
+        en:
+        ex:
+          - tw: Hō͘ soah ·a, ~ khì ·a.
+            en:
+      3:
+        en:
+        ex:
+          - tw: Chit ê būn-tê ~ án-ne kái-koat.
+            en:
+- head: ê-tàu|ē- (v ê¹)
+  etym: < [ê晝]
+  pos: n
+  1:
+    en:
+  2:
+    etym: < sem
+    en:
+- head: ē-táu
+  pos: n
+  mw: ê
+  en:
+  alt: [chhùi-ē-táu, ē-hâi]
+- head: ē-tàu
+  etym: < dia ê-tàu(2)
+  pos: n
+  en:
+- head: ê-tàu-sî|ē-
+  pos: n
+  en:
+- head: ê-tàu-tǹg
+  pos: n
+  mw: tǹg
+  en:
+- head: ê-té|ôe-tóe
+  etym: < Sin [鞋底]
+  pos: n
+  mw: tè
+  en:
+- head: ē-té/-tóe
+  defs:
+    - pos: n
+      en:
+      cf: [ē-kha, ē-bīn]
+      ex:
+        - tw: teh tī~
+          en:
+    - pos: dem
+      en:
+      det: ē-kha
+- head: ê-teⁿ|ôe-tiⁿ
+  pos: n
+  mw: tè, ki
+  en:
+- head: ê-thoa|ôe-
+  pos: n
+  takes_a2: true
+  mw: siang,kha
+  en:
+  alt: [thoa-á-ê, su-lip-pah]
+- head: ê-tiàm|ôe-
+  pos: n
+  mw: keng
+  en:
+- head: ē-tio̍h|ōe-
+  pos: [v, adj]
+  en:
+  ex:
+    - tw: Án-ne kám~?
+      en:
+- head: ē-tit|ōe-
+  pos: aux
+  en:
+  alt: [ē-tàng]
+  ex:
+    - tw: Lí ~ mài khì
+      en:
+- head: ē-ti̍t|ōe-
+  page: 137
+  pos: adj
+  en:
+  ex:
+    - tw: Án-ne a̍h~!?
+      en:
+- head: ē-tit-thang|ōe-
+  etym: < aux + aux; v ē-tit
+  pos: aux
+  en:
+- head: ē-tó|ōe-
+  pos: adv
+  alt: [ē-khí]
+  ex:
+    - tw: Che góa chia̍h-~.
+      en:
+- head: ê-tòa|ôe-
+  etym: < Sin [鞋帶]
+  pos: n
+  mw: tiâu
+  en:
+  ex:
+    - tw: kat~
+      en:
+    - tw: pa̍k do.
+      en:
+- head: ê-tóe
+  det: ē-té
+- head: ê-tû|ôe-
+  pos: n
+  takes_a2: true
+  mw: ê
+  en:
+- head: e ò̤
+  det: òe¹
+- head: e o̤-á
+  det: oe-á
+- head: e o̤-á-chhài
+  det: oe-á-chhài
+- head: eⁿ
+  pos: excl
+  en:
+  dup: true
+  cf: [èⁿ¹]
+  ex:
+    - tw: ~, ~, ~, mài bong!
+      en:
+- head: èⁿ¹
+  pos: excl
+  1:
+    ex:
+      - tw: ~, mài bong!
+        en:
+      - tw: ~, khiā khah chúi ·le!
+        en:
+  2:
+    ex:
+      - tw: ~, lí ná iáu-bōe/-bē khì?
+        en:
+- head: èⁿ²
+  pos: excl
+  alt: [àⁿ⁴, qv]
+- head: ēⁿ
+  pos: excl
+- head: ĕⁿ¹
+  pos: onom
+  en:
+  dup: true
+- head: ĕⁿ²|ĕ|hĕⁿ|hĕ
+  pos: excl
+  alt: [n̆g]
+  ex:
+    - tw: ~, ná ē án-ne?
+      en:
+- head: eⁿ-á|iⁿ-
+  pos: n
+  mw: ê
+  en:
+  alt: [âng-eⁿ-á]
+- head: ĕⁿ-·èⁿ|ĕ-·è
+  pos: excl
+  ex:
+    - tw: ~, mài chiah óa-·lâi!
+      en:
+- head: èⁿ-héⁿ-·èⁿ
+  pos: onom
+- head: ēⁿ-·tò/-·tò͘
+  pos: excl
+- head: eh¹
+  etym: < tit¹, qv
+  pos: suf
+- head: eh²|ih
+  pos: prep
+  det: leh³
+- head: eh³
+  pos: excl
+  det: è²
+- head: e̍h|oe̍h
+  etym: < Sin [狹]
+  pos: adj
+- head: e̍h-chiⁿ-chiⁿ|oe̍h-
+  etym: < [#狹 chiⁿ chiⁿ]
+  pos: adj
+- head: ehⁿ
+  pos: v
+  ex:
+    - tw: ~ kui-po͘
+      en:
+- head: ĕhⁿ|hĕhⁿ
+  pos: excl
+  cf: [ĕ²]
+  ex:
+    - tw: ~, chia chi̍t jī m̄-tio̍h.
+      en:
+- head: ek¹
+  etym: < Sin [億]
+  pos: num
+- head: ek²
+  etym: < Sin [溢]
+  pos: v
+  1:
+    ex:
+      - tw: leng~-~-·chhut-·lâi
+        en:
+  2:
+    etym: < sem
+    ex:
+      - tw: Éng~-lâi-~-khì.
+        en:
+- head: e̍k
+  etym: < Sin [譯]
+  pos: v
+- head: e̍k-keng
+  pos: n
+  takes_a2: true
+  mw: keng
+  en:
+- head: e̍k-kin/-kun
+  etym: < log Nip [浴巾]
+  pos: n
+  mw: tiâu
+  en:
+- head: ek-leng/-lin/-ne/-ni
+  pos: v
+- head: e̍k-pún
+  etym: < log [譯本]
+  pos: n
+  mw: pún
+  en:
+- head: e̍k-sit/-sek
+  etym: < log Nip [浴室]
+  pos: n
+  mw: keng
+  1:
+    en:
+    alt: [e̍k-keng-á, sé/sóe-seng-khu-keng]
+  2:
+    en:
+- head: ek-sng
+  pos: v
+  alt: [chhiah-sng]
+- head: e̍k-tháng
+  pos: n
+  1:
+    mw: kha
+    en:
+  2:
+    mw: kha
+    en:
+  3:
+    mw: ê
+    en:
+- head: e̍k-thé
+  etym: < log Nip [液體]
+  pos: n
+- head: e̍k-tî
+  etym: < log Sin [浴池]
+  pos: n
+  mw: khut
+  en:
+- head: ém-ár-ai
+  etym: < Em MRI < acr mag-natic resonance imageng
+  pos: n
+- head: eng
+  defs:
+    - pos: v
+      1:
+      2:
+      3:
+      4:
+        ex:
+          - tw: ba̍k-chiu ~-tio̍h hong-poe-soa
+            en:
+    - pos: adj
+      ex:
+        - tw: Chio̍h-thâu-á-lō͘, chhia kòe/kè, chin ~.
+          en:
+- head: êng|âiⁿ
+  etym: < Sin [閑]
+  defs:
+    - pos: v
+      ex:
+        - tw: ~-·tī-·leh ê ke-khì
+          en:
+    - pos: adj
+      ex:
+        - tw: khǹg-leh ~
+          en:
+      idm:
+        - tw: ~-~ bô tāi-chì
+          en:
+- head: éng¹
+  page: 138
+  defs:
+    - pos: n
+      mw: lia̍p, éng
+    - pos: v
+      ex:
+        - tw: Hái-chúi ~-·kòe-·lâi ·a
+          en:
+- head: éng²
+  pos: adv
+  ex:
+    - tw: Lâng ~ ē sí.
+      en:
+- head: èng
+  etym: < log Sin [壅]
+  pos: v
+  ex:
+    - tw: kā chhài ~ kóa pûi
+      en:
+- head: ēng
+  det: iōng¹ 2
+- head: ĕng
+  etym: < contr ê-hng, qv
+- head: eng-á
+  pos: n
+  mw: chiah
+  en:
+- head: eng-àm
+  etym: < contr *ê-hng-àm [eng暗]
+  pos: n
+  1:
+  2:
+    drv:
+      - tw: ~-sî(á)
+        alt: [àm-sî, mê-·sî]
+        en:
+- head: Eng-bûn
+  etym: < log Chi < ab En English + [文][英文]
+  pos: n
+- head: èng-chhài
+  etym: < log Sin [蕹菜]
+  pos: n
+  mw: châng, pé, ki
+  en:
+  drv:
+    - tw: ~-chúi
+      en:
+- head: eng-chhioh
+  etym: < log [英尺]
+  pos: mw
+- head: eng-chhùn
+  etym: < log [英寸]
+  pos: mw
+  alt: [ìn-chì]
+- head: èng-chiàn
+  etym: < log Chi [應戰]
+  pos: v
+  alt: [chiap-tīn]
+- head: èng-chiau lí-lông … lú-  …lṳ-
+  etym: < ana [昭,招] etc < log Chi [應chiau女郎]
+  pos: n
+  mw: ê
+  en:
+- head: êng-chō-siang/-siong
+  etym: < log Chi [營造商]
+  pos: n
+  mw: ê, keng
+  en:
+- head: Eng-gí/-gú/-gṳ
+  etym: < log < ab En English + [語][英語]
+  pos: n
+- head: êng-gia̍p
+  etym: < log Nip [營業]
+  pos: v
+  drv:
+    - tw: ~-sòe/-sè
+      etym: < log Nip [~稅]
+      en:
+- head: Eng-gú
+  det: Eng-gí
+- head: éng-hiáng, éng-hióng
+  etym: < log Nip < Sin [影響]
+  defs:
+    - pos: n
+      mw: ê
+    - pos: v
+  drv:
+    - tw: ~-le̍k/-la̍k
+      etym: < log Nip [~力]
+      mw: ê
+      en:
+- head: eng-hiông
+  etym: < log Sin [英雄]
+  pos: n
+  mw: ê
+  en:
+  ex:
+    - tw: bîn-cho̍k ~
+      en:
+- head: éng-hióng
+  det: éng-hiáng
+- head: êng-hôa hù-kùi
+  etym: < log Sin [榮華富貴]
+  pos: n
+- head: eng-hoe
+  etym: < log Nip [櫻花]
+  pos: n
+  mw: lúi, châng
+  en:
+- head: èng-hù
+  etym: < log Chi [應付]
+  pos: v
+- head: êng-ī/-īⁿ/-ū
+  etym: < log Chi [榮譽]
+  pos: adj
+- head: eng-ia
+  defs:
+    - pos: n
+      alt: [thô͘-soa-hún-á]
+    - pos: v
+      1:
+      2:
+- head: êng-iáng/-ióng
+  etym: < log Nip [榮養/營養]
+  defs:
+    - pos: n
+      idm:
+        - tw: ~ put-liâng
+          en:
+      drv:
+        - tw: ~-hun
+          en:
+          etym: < log Nip [~分]
+        - tw: ~-phín
+          en:
+          etym: < log Chi [~品]
+        - tw: ~-siā
+          mw: ki
+          en:
+        - tw: ~-su
+          en:
+          etym: < log Chi [~師]
+          mw: ê
+    - pos: adj
+      alt: [chu-iáng]
+- head: êng-ióng
+  det: êng-iáng
+- head: èng-iōng
+  etym: < log Nip [應用]
+  pos: v
+- head: eng-kai¹|èng-
+  etym: < log Sin [應該]
+  pos: aux
+- head: eng-kai²
+  etym: < sem eng-kai¹ [應該]
+  pos: excl
+  alt: [kham-kai]
+- head: èng-kai
+  det: eng-kai¹
+- head: èng-kài pit-gia̍p-seng
+  etym: < log Chi [應屆畢業生]
+  pos: n
+  mw: ê
+  en:
+- head: êng-kang
+  pos: n
+- head: éng-kiú
+  etym: < log Nip [永久]
+  pos: adj
+  drv:
+    - tw: ~ki-/ku-liû-khoân/-koân
+      etym: < log Chi [~居留權]
+      en:
+    - tw: ~-sèng
+      etym: < log [~性]
+      en:
+- head: eng-ko
+  etym: < log Sin [鸚哥]
+  pos: n
+  mw: chiah
+  en:
+- head: éng-kòe/-kè/-kò̤ [永過]
+  etym: < [往過]
+  pos: n
+- head: Eng-kok
+  etym: < log Chi < ab En England + [國][英國]
+  pos: n
+- head: êng-lâng
+  etym: < log Sin + tr [閑人]
+  pos: n
+  mw: ê
+  1:
+    en:
+    alt: [ê-sin-lâng]
+  2:
+    en:
+    ex:
+      - tw: ~ mài ji̍p-·lâi
+        en:
+- head: eng-lí
+  page: 139
+  etym: < log Nip [英里]
+  pos: mw
+  alt: [mai]
+- head: êng-lī sū-gia̍p
+  etym: < log Chi [營利事業]
+  pos: n
+  mw: ê
+  en:
+- head: êng-lo-lo
+  pos: adj
+  en:
+- head: éng-oán
+  etym: < log Sin [永遠]
+  defs:
+    - pos: [n, adj]
+      idm:
+        - tw: ~ ê oa̍h-miā
+          en:
+    - pos: adv
+- head: êng-ōe
+  etym: < log Sin [閑話]
+  pos: n
+  mw: kù
+  en:
+  alt: [êng-á-ōe]
+- head: éng-pái
+  etym: < [永擺][往#]
+  pos: n
+  takes_a2: true
+  en:
+  alt: [éng-kòe]
+- head: eng-phōng-phōng/-phong-phong/-phông-phông
+  pos: adj
+  en:
+  alt: [phōng-phōng-eng]
+- head: èng-piàn lêng-le̍k
+  etym: < log [應變能力]
+  pos: n
+  en:
+- head: eng-pōng¹
+  etym: < log Chi [英鎊]
+  pos: n
+  en:
+  alt: [pōng¹]
+- head: eng-pōng²
+  etym: < log Chi [英鎊]
+  pos: n
+  en:
+  alt: [pōng²]
+- head: eng-sî
+  etym: < contr ê-hng-sî [eng時]
+  pos: n
+  en:
+  alt: [eng-àm-sî]
+- head: êng-sian-sian
+  pos: adj
+  en:
+- head: ēng-sim
+  det: iōng-sim
+- head: èng-siû
+  etym: < log Sin [應酬]
+  pos: [n, v]
+  en:
+- head: êng-tē/-tōe
+  etym: < log Sin [閑地]
+- head: èng-teng/-tin
+  etym: < log Chi [應徵]
+  pos: v
+  en:
+- head: eng-thô
+  etym: < log Sin [櫻桃]
+  pos: n
+  mw: lia̍p, châng
+  en:
+- head: èng-tin
+  det: èng-teng
+- head: êng-tōe
+  det: êng-tē
+- head: èng-tong
+  etym: < log Sin [應當]
+  pos: [aux, adj]
+  en:
+- head: e̍p
+  pos: onom
+  en:
+  alt: [a̍p]
+- head: ĕp|ép
+  pos: onom
+  en:
+  alt: [ăp/a̍p]
+- head: fá-khûn-sṳh/-suh
+  det: fák-#sirh
+- head: fák-sṳh/-suh
+  etym: < En FAX < ad En facsimile telegraph
+  defs:
+    - pos: n
+      1:
+        en:
+        ex:
+          - tw: iōng ~ kià hō͘ ·lí
+            en:
+      2:
+        en:
+    - pos: v
+      en:
+      ex:
+        - tw: ~ hō͘ ·lí
+          en:
+- head: Fo-mó͘-sà|Fo͘-
+  etym: < Port Formo-sa
+  pos: n
+  en:
+- head: fu-láp-pì -lóp- -ló͘-
+  etym: < En floppy
+  pos: n
+  mw: tè
+  en:

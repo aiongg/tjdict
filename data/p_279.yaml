@@ -1,0 +1,63 @@
+- head: khùn-pá
+- head: khùn-pâng
+- head: khun-pò͘
+  etym: (< log Nip [昆布] < Sin)
+  pos: n
+  mw: tè
+  alt: [khòm-bù]
+- head: khùn-saⁿ
+- head: khùn-siaⁿ
+- head: khùn-sîn
+- head: khùn-tàu
+- head: khùn-tē-á
+- head: Khún-teng
+- head: khùn-tiong-tàu
+- head: khut¹
+  etym: (< log Sin [堀])
+  pos: mw
+- head: khut²
+  etym: (< log Sin [屈])
+  pos: v
+- head: khu̍t
+- head: khu̍t
+- head: khut-á
+- head: khut-ho̍k
+  etym: (< log Sin [屈服])
+  pos: v
+- head: ki¹
+  etym: (< log. Nip. [機])
+  pos: n
+  bound: true
+  1:
+    ex:
+      - tw: hip-siàng-~
+        en:
+      - tw: hoat-tiān-~
+        en:
+  2:
+    ex:
+      - tw: cheng-chhat-~
+        en:
+- head: ki²|ku|kṳ
+- head: ki³|ku|kṳ
+  etym: (< log Sin [車])
+  pos: n
+  mw: lia̍p
+- head: ki⁴
+- head: ki⁵
+- head: kî¹
+- head: kî²
+- head: kî³
+  etym: (< log Chi [期])
+  pos: mw
+- head: kî⁴
+- head: kí¹
+- head: kí²
+- head: kí³|kú|kṳ
+  etym: (< log Sin [舉])
+  pos: v
+  ex:
+    - tw: ~ chi̍t ê lē
+      en:
+- head: kì
+- head: kì

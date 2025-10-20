@@ -1,0 +1,3250 @@
+- head: i¹
+  page: 199
+  etym: < log Sin [醫]
+  defs:
+    - pos: n
+      1:
+        en:
+        etym: < log Nip < sem [醫科]
+        ex:
+          - tw: tha̍k ~
+            en:
+      2:
+        bound: true
+        en:
+        etym: < log Nip < sem 醫生
+        ex:
+          - tw: gōa-kho-~
+            en:
+    - pos: v
+      en:
+      ex:
+        - tw: ~-bē-hó
+          en:
+- head: i²
+  etym: < Sin [伊]
+  pos: pron
+- head: î
+  etym: < Sin [姨]
+  pos: n
+  bound: true
+  ex:
+    - tw: A-hōng-~
+      en:
+- head: í
+  etym: < log Sin [以]
+  pos: prep
+  1:
+    en:
+    ex:
+      - tw: ~ ko-phiò lo̍k-soán
+        en:
+  2:
+    en:
+    alt: [chāi²]
+    ex:
+      - tw: ~ góa khòaⁿ, tāi-chì m̄-sī án-ne.
+        en:
+- head: ì (khì² 4, qv)
+- head: ī
+  pos: v
+  ex:
+    - tw: ~ chu-á
+      en:
+    - tw: ~ kiû
+      en:
+    - tw: ~ pâi-á
+      en:
+- head: ĭ (ab a-ĭ)
+  pos: n
+- head: î-á
+  pos: n
+  mw: ê
+  en:
+- head: í-á
+  pos: n
+  mw: chiah
+  en:
+  drv:
+    - tw: ~-bīn
+      mw: tè
+      en:
+      alt: [í-bīn]
+    - tw: ~-chhiú
+      mw: ki
+      en:
+    - tw: ~-kha
+      a:
+        mw: ki
+        en:
+      b:
+        en:
+    - tw: ~-koaiⁿ
+      mw: ki
+      en:
+- head: í-āu
+  etym: < log Sin [以後]
+  pos: n
+- head: î-bîn
+  etym: < log Nip [移民]
+  defs:
+    - pos: n
+      mw: ê
+      en:
+    - pos: v
+      en:
+      ex:
+        - tw: ~ khì Pa-se
+          en:
+      drv:
+        - tw: ~-kio̍k/-ke̍k
+          etym: < log Chi [~局]
+          mw: keng
+          en:
+        - tw: ~-koaⁿ
+          mw: ê
+          en:
+- head: i-bū-sit/-sek
+  etym: < log Nip [醫務室]
+  pos: n
+  mw: keng
+  en:
+- head: í-chá
+  pos: n
+  alt: [éng-kòe, khah-chá]
+- head: í-chē-á
+  pos: n
+  1:
+    en:
+    mw: tè
+  2:
+    en:
+    mw: ê, ūi
+- head: í-chêng
+  etym: < log Sin [以前]
+  pos: n
+- head: ī-chhek|ū-|ṳ-
+  etym: < log Chi < Nip [豫測][預測]
+  pos: v
+- head: î-chhî|ûi-
+  etym: < log Nip < Sin [維持]
+  pos: v
+  ex:
+    - tw: ~ hiān-chōng
+      en:
+- head: ì-chì
+  etym: < log Nip [意志]
+  pos: n
+  mw: ê
+  en:
+- head: i-chí-báng
+  etym: < Nip ichibon
+  pos: adj
+- head: í-chū
+  pos: n
+  takes_a2: true
+  mw: tè
+  en:
+- head: ì-gī
+  etym: < log Nip [意義]
+  pos: n
+  mw: ê
+  en:
+- head: ī-gī
+  det: īⁿ-gī
+- head: ī-giân/-gân|ū-/ṳ-giân
+  etym: < log Nip [豫言][預言]
+  defs:
+    - pos: n
+      mw: ê
+      en:
+    - pos: v
+      en:
+      drv:
+        - tw: ~-ka
+          etym: < log Chi [~家]
+          mw: ê
+          en:
+- head: í-gōa
+  etym: < log Sin [以外]
+  pos: n
+- head: ì-gōa
+  etym: < log Sin [意外]
+  defs:
+    - pos: n
+      mw: ê
+      en:
+      ex:
+        - tw: hoat-seng
+          en:
+    - pos: adj
+      en:
+      ex:
+        - tw: chin ~ ê tāi-chì
+          en:
+- head: ì-goān
+  etym: < log Sin [意願]
+  pos: n
+  mw: ê
+  en:
+- head: í-hā¹
+  etym: < log Sin [以下]
+  pos: n
+  ex:
+    - tw: cha̍p-peh hòe ~ bián chò-peng
+      en:
+- head: í-hā²
+  etym: < log Nip [以下]
+  pos: n
+  ex:
+    - tw: chhiáⁿ khòaⁿ ~ ê lē
+      en:
+- head: i-ha̍k
+  etym: < log Nip [醫學]
+  pos: n
+  drv:
+    - tw: ~-īⁿ
+      etym: < log Chi [~院]
+      mw: keng
+      en:
+- head: ì-hiàng/-hiòng
+  etym: < log Sin [意向]
+  pos: n
+  mw: ê
+  en:
+- head: i-hō͘ jîn-oân/-goân
+  etym: < log Chi [醫護人員]
+  pos: n
+  mw: ê
+  en:
+- head: ī-hông|ū-|ṳ-
+  etym: < log Nip [豫防][預防]
+  pos: v
+  drv:
+    - tw: ~-siā ( cf Nip [豫防注射][~射])
+      mw: ki
+      en:
+- head: ĭ--ì¹
+  etym: < ĭ
+  pos: n
+- head: ĭ--ì²
+  pos: excl
+  cf: [ĭ-·ì]
+- head: ĭ-ĭ-ĭ-·ì (v ĭ-·ì²)
+  pos: excl
+- head: i-í-o-o
+  page: 200
+  pos: v
+- head: i-í-o̍͘h-o̍͘h
+  pos: v
+  1:
+    en:
+  2:
+    en:
+- head: i-īⁿ
+  etym: < log Chi < Nip [醫院]
+  pos: n
+  mw: keng
+  en:
+  alt: [pēⁿ-īⁿ]
+- head: ī-iak, ī-iok|ū-/ṳ-iok
+  etym: < log Nip [豫約][預約]
+  pos: [n, v]
+- head: i-io̍h-hùi
+  etym: < log Chi [醫藥費]
+  pos: n
+- head: ī-iok
+  det: ī-iak
+- head: ì-jîn/-gîn/-lîn|ìⁿ-
+  etym: < log Sin [薏仁]
+  pos: n
+  mw: châng, lia̍p
+  en:
+- head: ī-kám|ū-|ṳ-
+  etym: < log Chi < Nip [豫感][預感]
+  pos: n
+  mw: ê
+  en:
+- head: î-kau
+  etym: < log Chi [移交]
+  defs:
+    - pos: n
+      en:
+      ex:
+        - tw: pān~
+          en:
+    - pos: v
+      en:
+- head: í-keng
+  etym: < log Sin [已經]
+  pos: adv
+- head: i-khe
+  det: i-kho
+- head: í-khiu
+  etym: < En EQ < acr emotional quotient
+  pos: n
+- head: i-kho/-khe
+  etym: < log Nip [醫科]
+  pos: n
+- head: ì-kiàn
+  etym: < log Nip [意見]
+  pos: n
+  mw: ê
+  en:
+- head: ī-kò|ū-|ṳ-
+  etym: < log Nip [豫告][預告]
+  pos: v
+  drv:
+    - tw: ~-phìⁿ
+      etym: < log Chi [~片]
+      mw: tè
+      en:
+      alt: [kiàn-pún-phìⁿ]
+- head: i-koaⁿ
+  etym: < log Nip [醫官]
+  pos: n
+  mw: ê
+  en:
+- head: í-lâi
+  etym: < log Sin [以來]
+  pos: n
+- head: í-lāi
+  etym: < log Sin [以內]
+  pos: n
+- head: I-lák
+  etym: < Iraq
+  pos: n
+- head: í-lâm
+  etym: < log Chi [以南]
+  pos: n
+- head: I-lán
+  etym: < Iran
+  pos: v
+- head: í-liâu (í-tiâu, qv)
+- head: ì-liāu
+  etym: < log Chi [意料]
+  pos: v
+  ex:
+    - tw: ~ bē-/bōe-tio̍h
+      en:
+- head: ī-liāu|ū-|ṳ-
+  etym: < log Chi < Nip [豫料][預料]
+  pos: v
+- head: i-liâu siat-si
+  etym: < log Nip [醫療設施]
+  pos: n
+- head: I-lóng
+  etym: < log Chi < Iran [伊朗]
+  pos: n
+  alt: [I-lán]
+- head: í-mè-ò/-ò͘
+  etym: < En e-mail
+  pos: [n, v]
+- head: ì-mī
+  pos: n
+  mw: ut, tiâu
+  en:
+- head: í-mô͘-kiû|ú-|ṳ-
+  etym: < log Chi [羽毛球]
+  pos: n
+  mw: lia̍p, tiûⁿ
+  en:
+- head: í-pak
+  etym: < log Chi [以北]
+  pos: n
+- head: ī-pān|ū-|ṳ-p
+  pos: v
+  alt: [chhûn/chhūn-pān]
+  ex:
+    - tw: ~ sí
+      en:
+- head: i-pēⁿ/-pīⁿ
+  pos: v
+- head: ī-pī kun-koaⁿ|ū|ṳ-
+  etym: < log Chi [預備軍官]
+  pos: n
+  mw: ê
+  en:
+- head: i-pīⁿ
+  det: i-pēⁿ
+  pos: v
+- head: î-pô
+  pos: n
+  mw: ê
+  en:
+- head: ī-pò|ū-|ṳ-
+  etym: < log Chi < Nip [豫報][預報]
+  pos: n
+- head: í-pōe/-pòe
+  etym: < log Chi [倚背]
+  pos: n
+  mw: ê, tè
+  en:
+- head: í-sai
+  etym: < log Chi [以西]
+  pos: n
+- head: ī-sài|ū-|ṳ-
+  etym: < log Chi < tr En pre-liminary contest [預賽]
+  pos: n
+  mw: tiûⁿ, pái
+  en:
+- head: î-sán
+  det: ûi-sán
+- head: ī-sán-kî|ū-|ṳ
+  etym: < log Chi [預產期]
+  pos: n
+- head: î-sán-sòe/-sè/-sò̤
+  det: ûi-sán-sòe
+- head: ì-sek
+  etym: < log Nip [意識]
+  pos: n
+  drv:
+    - tw: ~ hêng-thāi/-thài
+      etym: < log Nip [~型態]
+      mw: ê
+      en:
+- head: Í-sek-lia̍t
+  etym: < log Sin Hel Israēl < Hebyisrā’ēl [以色列]
+  pos: n
+- head: i-seng
+  etym: < log Sin [醫生]
+  pos: n
+  mw: ê
+  en:
+- head: ī-sèng
+  det: īⁿ-sèng
+- head: î-si
+  det: ûi-su
+- head: í-siāng¹/í-siōng
+  etym: < log Sin [以上]
+  pos: n
+  1:
+    en:
+    alt: [bīn-téng]
+    ex:
+      - tw: ~ ê lē lóng sī góa ê.
+        en:
+  2:
+    en:
+    ex:
+      - tw: Cha̍p peh hòe ~ ài chp-peng.
+        en:
+- head: í-siāng²/í-siōng
+  pos: excl
+  alt: [án-ne]
+- head: í-siōng
+  det: í-siāng 1 2
+- head: ī-si̍p|ū-|ṳ-
+  etym: < log Chi < Nip [豫習][預算]
+  pos: v
+- head: ī-sǹg/-soàn|ū-sǹg|ṳ-sǹg (< log Nip [豫算][預算]
+  pos: n
+- head: i-su/-sṳ
+  page: 201
+  etym: < log Nip [醫師]
+  pos: n
+  mw: ê
+  en:
+- head: î-su
+  det: ûi-su
+- head: ì-sù/-sṳ
+  etym: < log Sin [意思]
+  pos: n
+  mw: ê
+  en:
+  drv:
+    - tw: ~-~
+      etym: < log Chi
+      en:
+- head: i-su̍t
+  etym: < log Nip [醫術]
+  pos: n
+- head: Í-tā-lì
+  etym: < En Italy < Italia
+  pos: n
+  alt: [I-tá-lih, Ì-tāi-lī]
+- head: í-tang
+  etym: < log Chi [以東]
+  pos: n
+- head: î-tē|û-tē|û-/ṳ-tōe
+  etym: < log Nip [餘地]
+  pos: n
+- head: ī-tēng|ū-|ṳ-
+  etym: < log Nip [豫定][預定]
+  pos: v
+  1:
+    en:
+    alt: [àn-sǹg, phah-sǹg]
+  2:
+    en:
+- head: í-thâu-á
+  pos: n
+  mw: lia̍p, chiah
+  en:
+- head: î-thoân
+  det: ûi-thoân
+- head: í-tiâu/-liâu
+  pos: n
+  mw: liau
+  en:
+- head: î-tiūⁿ
+  pos: n
+  mw: ê
+  en:
+- head: i ṳ⁵…
+  det: î…/û…
+- head: i ṳ⁷…
+  det: ī…/ū…
+- head: ĭrⁿ-·ìr
+  pos: excl
+  cf: [ĭ-·ì²]
+- head: îⁿ¹
+  etym: < Sin [圓]
+  defs:
+    - pos: n
+      etym: < log Nip < sem
+      mw: ê
+      en:
+      ex:
+        - tw: ōe chi̍t ê ~, ōe liáu bô îⁿ
+          en:
+        - tw: tn̂g-ko-~ qv
+          en:
+    - pos: adj
+      1:
+        en:
+        ex:
+          - tw: ōe chit ê îⁿ, ōe-liáu bô ~
+            en:
+      2:
+        en:
+        dup: true
+    - pos: adv
+      en:
+      dup: true
+      ex:
+        - tw: ~-~ kiâⁿ
+          en:
+- head: îⁿ²
+  etym: < log Nip [圓]
+  pos: mw
+  alt: [kho͘]
+- head: íⁿ
+  etym: < log Sin [穎]
+  pos: n
+  takes_a2: true
+- head: īⁿ/ìiⁿ
+  etym: < log Chi [院]
+  pos: n
+  mw: ê
+  en:
+  ex:
+    - tw: bûn-ha̍k-~
+      en:
+    - tw: gián-kiù-~
+      en:
+    - tw: hêng-chèng-~
+      en:
+- head: iⁿ-á
+  det: eⁿ-á
+- head: îⁿ-á
+  pos: n
+  mw: lia̍p
+  en:
+- head: ìⁿ-á
+  pos: n
+  mw: chiah
+  en:
+- head: îⁿ-á-hoe
+  pos: n
+  mw: châng, lúi
+  en:
+- head: îⁿ-chhài-thâu
+  pos: n
+  mw: châng, lia̍p
+  en:
+  alt: [kiat-thâu-chhài]
+- head: îⁿ-chui-thé
+  etym: < log Nip [圓錐體]
+  mw: ê
+- head: īⁿ-gī/ī-
+  etym: < log Nip [異議]
+  pos: n
+- head: īⁿ-hat-chhī
+  etym: < log Chi [院轄市]
+  pos: n
+  mw: ê
+  en:
+- head: îⁿ-hêng
+  etym: < log Nip [圓形]
+  pos: n
+  mw: ê
+  en:
+- head: iⁿ-iⁿ
+  etym: < ab iⁿ-íⁿ-khùn
+  cat: baby
+  pos: v
+  ex:
+    - tw: Lâi! ~! ~!
+      en:
+- head: iⁿ-íⁿ-khùn
+  etym: < dia *eⁿ-eⁿ khùn [iⁿ-íⁿ 睏]) (< [嬰嬰睏]
+  cat: baby
+  pos: v
+  1:
+    en:
+    ex:
+      - tw: Kín ~!
+        en:
+  2:
+    en:
+    ex:
+      - tw: teh
+        en:
+- head: iⁿ-íⁿ-n̍gh-n̍gh¹/-n̄g-n̄g
+  pos: v
+  1:
+    en:
+  2:
+    en:
+- head: iⁿ-íⁿ-n̍gh-n̍gh²
+  pos: v
+- head: iⁿ-íⁿ-òⁿ-òⁿ/-oⁿ-oⁿ/-o͘hⁿ-ohⁿ
+  pos: v
+- head: ìⁿ-ìⁿ-òⁿ-òⁿ
+  det: iⁿ-íⁿ-ò͘ⁿ-ò͘ⁿ
+- head: iⁿ-íⁿ-oaiⁿ-oaiⁿ
+  pos: v
+  1:
+    en:
+  2:
+    en:
+- head: iⁿ-íⁿ-oaihⁿ-oaihⁿ/-oa̍ihⁿ-oa̍ihⁿ
+  pos: v
+- head: iⁿ-íⁿ-o͘hⁿ-o͘hⁿ
+  det: iⁿ-iⁿ-ò͘ⁿ-ò͘ⁿ
+- head: îⁿ-îⁿ-se̍h
+  pos: v
+- head: ìⁿ-jîn/-gîn/-lîn
+  etym: < i-jîn, qv
+- head: îⁿ-ka̍h-la̍k-kō
+  pos: [v, adj]
+- head: îⁿ-kho͘-á
+  pos: n
+  mw: ê
+  en:
+- head: îⁿ-khoân
+  pos: n
+  takes_a2: true
+  mw: ê
+  en:
+  1:
+    en:
+  2:
+    en:
+- head: îⁿ-kō-lō-sō
+  pos: adj
+  alt: [īⁿ-ka̍h-la̍k-kō]
+- head: îⁿ-kui
+  etym: < log Chi [圓規]
+  pos: n
+  mw: ki
+  en:
+  alt: [khŏm-phá-suh]
+- head: îⁿ-liàn-liàn/-lìn-lìn
+  pos: adj
+- head: îⁿ-long-se̍h
+  pos: v
+- head: īⁿ-n̄g-kiò
+  page: 202
+  pos: v
+- head: íⁿ-ò͘ⁿ
+  pos: onom
+- head: ìⁿ-ò͘ⁿ
+  pos: onom
+  drv:
+    - tw: ~-á
+      mw: ê
+      en:
+    - tw: ~-/īⁿ-ō͘ⁿ-kiò
+      en:
+- head: īⁿ-ō͘ⁿ-kiò
+  det: ìⁿ-ò͘ⁿ-kiò
+- head: īⁿ-oăiⁿ/-oăihⁿ
+  pos: onom
+- head: iⁿ-oaiⁿ-kiò
+  pos: v
+- head: īⁿ-oāiⁿ-kiò
+  pos: v
+- head: īⁿ-oăih
+  det: īⁿ-oăiⁿ
+- head: īⁿ-sèng|ī-
+  etym: < log Nip < tr En hetero-serual [異性]
+  pos: n
+  mw: ê
+  en:
+- head: îⁿ-sim
+  etym: < log Nip [圓心]
+  pos: n
+  mw: lia̍p, tiám, ê
+  en:
+- head: īⁿ-sū|ìⁿ-
+  etym: < log Chi [院士]
+  pos: n
+  mw: ê
+  en:
+- head: îⁿ-thiāu
+  pos: n
+  takes_a2: true
+  mw: ki
+  en:
+- head: īⁿ-tiúⁿ|ìⁿ-
+  etym: < log Chi [院士]
+  pos: n
+  mw: ê
+  en:
+- head: îⁿ-toh
+  etym: < log Sin [圓桌]
+  pos: n
+  mw: chiah, tè
+  en:
+- head: iâ
+  pos: n
+  mw: châng
+  en:
+- head: iá¹
+  etym: < Sin [野]
+  pos: adj
+  1:
+    bound: true
+    en:
+    alt: [iá-seng]
+  2:
+    en:
+    alt: [iá-sèng]
+- head: iá²
+  etym: < Sin [冶]
+  pos: adj
+- head: iá³
+  etym: < iáu¹, qv
+  pos: adv
+- head: iá⁴
+  pos: conj
+  det: a̍h³
+- head: ià
+  etym: < Sin [厭]
+  pos: [v, adj]
+  ex:
+    - tw: thiaⁿ kà ~
+      en:
+- head: iā¹
+  pos: v
+  ex:
+    - tw: ~ pûi-liāu
+      en:
+- head: iā²|-ā
+  etym: < Sin [也]
+  pos: adv
+  alt: [mā²]
+- head: iă
+  etym: < contr ia̍h-á, qv
+- head: iá-bân
+  etym: < log Nip [野蠻]
+  pos: adj
+- head: iá-bōe/-bē/-bō̤
+  etym: < iáu-bōe, qv
+- head: iā-bông-chèng
+  etym: < log Nip [夜盲症]
+  pos: n
+  alt: [ke-/koe-á-ba̍k]
+- head: iā-chéng
+  pos: v
+- head: iá-chhan
+  etym: < log Chi < tr En picnic [野餐]
+  pos: [n, v]
+- head: iá-chháu
+  etym: < log Chi [野草]
+  pos: n
+  mw: châng
+  en:
+- head: iā-chhī
+  etym: < log Sin [夜市]
+  pos: n
+  takes_a2: true
+  mw: ê
+  en:
+- head: iâ-chí
+  etym: < log Sin [椰子]
+  pos: n
+  mw: lia̍p
+  en:
+  drv:
+    - tw: ~-khak
+      mw: tè, lia̍p
+      en:
+- head: iá-chiàn-ho̍k
+  etym: < log Chi [野戰服]
+  pos: n
+  mw: su
+  en:
+- head: iá-chiáu
+  pos: n
+  mw: chiah
+  en:
+- head: iā-chóng-hōe
+  etym: < log Chi < tr En nightclub [夜總會]
+  pos: n
+  mw: ê
+  en:
+- head: iá-gōa
+  etym: < log Sin [野外]
+  pos: n
+- head: iá-gû
+  etym: < log Chi [野牛]
+  pos: n
+  mw: chiah
+  en:
+- head: Iâ-hô-hoa
+  etym: < log Sin < Je-hovah < Heb YHWH [耶和華]
+  pos: n
+- head: iá-hoe
+  etym: < log Chi [野花]
+  pos: n
+  mw: châng, lúi
+  en:
+- head: iă-hoe
+  etym: < contr ia̍h-á-hoe qv
+- head: iā-kan-pō͘
+  etym: < log Nip [夜間部]
+  pos: n
+- head: iá-káu
+  etym: < log Chi [野狗]
+  pos: n
+  mw: chiah
+  en:
+- head: iá-ke/-koe
+  etym: < log Sin [野雞]
+  pos: n
+  1:
+    en:
+    alt: [thī-ke]
+  2:
+    en:
+    mw: ê
+  3:
+    en:
+    mw: tâi
+  drv:
+    - tw: ~-(á-)chhia
+      mw: tâi
+      en:
+- head: iā-kéng
+  etym: < log Sin [夜景]
+  pos: n
+  mw: ê
+  en:
+- head: iá-kiû
+  etym: < log Nip [野球]
+  pos: n
+  mw: lia̍p, tiûⁿ
+  en:
+- head: iá-koe
+  det: iá-ke
+- head: iá-koh
+  etym: < iáu-koh qv
+- head: Iâ-lō͘-sat-léng
+  etym: < log Sin < Jeru Sa-laam[耶路撒冷]
+  pos: n
+- head: iā-pan
+  etym: < log Chi [夜班]
+  pos: n
+  mw: pan
+  en:
+  ex:
+    - tw: tōa-~
+      en:
+- head: iā-pô
+  pos: n
+  mw: chiah
+  en:
+  1:
+    en:
+    alt: [bi̍t-pô]
+  2:
+    en:
+- head: iá-phì
+  det: iáp-pì
+- head: iá-seng-·ê
+  page: 203
+  etym: < log Nip [野生の] + tr[野生 ·ê]
+  pos: adj
+- head: iá-sèng
+  etym: < log Sin [野性]
+  pos: [n, adj]
+- head: iā-seng-oa̍h
+  etym: < log Chi < tr En nightlife; cf Nip[夜の生活][夜生活]
+  pos: n
+- head: iá-seng tōng-bu̍t
+  etym: < log Nip [野生動物]
+  pos: n
+- head: iá-sī¹
+  pos: adv
+  det: iáu-sī
+- head: iá-sī²
+  pos: conj
+  det: a̍h-sī²
+- head: iā-sī¹|ā-|ia̍h-|a̍h-
+  pos: adv
+  alt: [mā²]
+- head: iā-sī²
+  pos: adv
+  det: iáu-sī
+- head: iá-sim
+  etym: < log Sin [野心]
+  defs:
+    - pos: n
+      etym: < log Nip < sem
+      en:
+    - pos: adj
+      en:
+- head: iá-siù
+  etym: < log Sin [野獸]
+  pos: n
+  mw: chiah
+  en:
+- head: Ia-so͘|Iâ-
+  etym: < log Sin < Lat Iesus < Hel Iēsous < Heb yēshū’a [耶穌]
+  pos: n
+- head: iâⁿ¹
+  etym: < Sin [營]
+  pos: n
+  1:
+    en:
+    mw: ê
+  2:
+    bound: true
+    en:
+    ex:
+      - tw: chi̍p-tiong-~
+        en:
+      - tw: lān-bîn-~
+        en:
+      - tw: lān-bîn-~
+        en:
+  3:
+    bound: true
+    en:
+    ex:
+      - tw: hā-lēng-~
+        en:
+- head: iâⁿ²
+  etym: < Sin [贏]
+  defs:
+    - pos: v
+      1:
+        en:
+      2:
+        en:
+        cf: [. kiâⁿ]
+        ex:
+          - tw: mo͘h-bē-~
+            en:
+          - tw: the̍h-bē-~
+            en:
+    - pos: adj
+      en:
+      ex:
+        - tw: khah ~ qv
+          en:
+- head: iáⁿ
+  etym: < Sin [影]
+  defs:
+    - pos: n
+      1:
+        en:
+        ex:
+          - tw: cha̍h-tio̍h ~
+            en:
+          - tw: Tiong-tàu-sî ~ khah té.
+            en:
+      2:
+        en:
+        ex:
+          - tw: khòaⁿ-tio̍h in bó͘ ê ~
+            en:
+      3:
+        en:
+        ex:
+          - tw: cháu kà bô-khòaⁿ-tio̍h ~
+            en:
+    - pos: v
+      1:
+        en:
+        ex:
+          - tw: ~-·chi̍t-·ē tiō kòe/kè
+            en:
+      2:
+        en:
+        alt: [gán]
+        ex:
+          - tw: ~-·tio̍h
+            en:
+      3:
+        en:
+        ex:
+          - tw: Góa, che khǹg tòa chia, chhiáⁿ thè góa sió ~-·chi̍t-·ē.
+            en:
+- head: iāⁿ
+  pos: v
+  1:
+    en:
+    ex:
+      - tw: Kî-á teh ~.
+        en:
+  2:
+    en:
+    ex:
+      - tw: ~ kî-á
+        en:
+  3:
+    en:
+    ex:
+      - tw: kā chhn̄g-kin/-kun ~-~ ·le
+        en:
+  4:
+    en:
+- head: iáⁿ-chheⁿ/-chhiⁿ
+  etym: < log Chi < ab[電影明星] < tr En movie star [影星]
+  pos: n
+  mw: ê
+  en:
+- head: iāⁿ-iāⁿ-poe/-pe/-po̤
+  pos: v
+- head: iáⁿ-ìn
+  etym: < log Chi < sem Nip [影印]
+  pos: v
+  drv:
+    - tw: ~-ki
+      etym: < log Chi [~機]
+      mw: tâi
+      en:
+- head: iâⁿ-khu
+  etym: < log Chi [營區]
+  pos: n
+  mw: ê
+  en:
+- head: iâⁿ-pâng
+  etym: < log Sin [營房]
+  pos: n
+  mw: tòng, ê
+  en:
+- head: iáⁿ-phìⁿ
+  etym: < log Chi [影片]
+  pos: n
+  mw: tè, ki
+  en:
+- head: iáⁿ-pún
+  etym: < log Chi [影本]
+  pos: n
+  mw: hūn, tiuⁿ
+  en:
+- head: iâⁿ-tē/-tōe
+  etym: < log Sin [營地]
+  pos: n
+  mw: ê, tè
+  en:
+- head: iâⁿ-tiúⁿ
+  etym: < log Chi [營長]
+  pos: n
+  mw: ê, tè
+  en:
+- head: iâⁿ-tōe
+  det: iâⁿ-tē
+- head: iâⁿ-tūi
+  pos: n
+  mw: ê, tūi
+  en:
+- head: iah¹
+  pos: v
+  1:
+    en:
+    ex:
+      - tw: ~ ba̍k-chiu
+        en:
+  2:
+    en:
+  3:
+    en:
+  4:
+    en:
+    ex:
+      - tw: ~ lâng ê khang
+        en:
+- head: iah²|ah|á
+  pos: conj
+  1:
+    en:
+    ex:
+      - tw: I tah-èng ·a, ~ lí ·le?
+        en:
+  2:
+    en:
+    ex:
+      - tw: ~ án-ne boeh/beh án-·chóaⁿ?
+        en:
+- head: iah³|ah
+  pos: conj
+  ex:
+    - tw: Lí ē-sái-tit cháu, ~ tio̍h seng kā góa kóng.
+      en:
+  idm:
+    - tw: ~ m̄-kò
+      en:
+- head: iah⁴|ah
+  pos: gp
+  ex:
+    - tw: ~ hit-chūn góa bô-kàu chîⁿ, tiō khì ka chioh; ~ i kóng i mā teh khiàm chîⁿ.
+      en:
+- head: ia̍h¹|ia̍p
+  page: 204
+  pos: mw
+  alt: [phè-jì]
+- head: ia̍h²|a̍h
+  etym: < Sin [亦]
+  pos: adv
+  alt: [mā²]
+- head: ia̍h-á
+  pos: n
+  mw: chiah
+  en:
+  drv:
+    - tw: ~-hoe
+      mw: châng, ki, lúi
+      en:
+- head: iah-bô|ah-|á-
+  etym: < conj + conj [iah無]
+  pos: conj
+  alt: [bô¹]
+- head: ia̍h-hu-á
+  pos: n
+  mw: ê
+  en:
+- head: iah-kah|ah-|á-
+  etym: < conj + conj
+  pos: conj
+- head: iah-khang (v iah¹)
+  etym: < □[空]
+  pos: v
+  1:
+    en:
+  2:
+    en:
+- head: iah-koh
+  etym: < conj + adv
+  pos: conj
+- head: iah-nā|ah-
+  etym: < conj + conj; v iah² [iah若]
+  pos: conj
+  1:
+    en:
+  2:
+    en:
+- head: iah-sī
+  det: a̍h-sī
+- head: ia̍h-sī¹
+  pos: adv
+  det: iā-sī
+- head: ia̍h-sī²
+  pos: adv
+  det: iáu-sī
+- head: ia̍h-sī³
+  pos: conj
+  det: a̍h-sī²
+- head: iah-té/-tóe (v iah¹)
+  pos: v
+- head: iah-to|ah-|á-
+  etym: < part + conj; v iah³, to²
+  pos: conj
+  ex:
+    - tw: "A: Lí ná m̄ kín khì? B: ~ chún-pī iáu-bōe/-bē hó."
+      en:
+- head: iak|iok
+  etym: < log Sin [約]
+  pos: v
+  1:
+    en:
+    ex:
+      - tw: ~ āu-·ji̍t kìⁿ-bīn
+        en:
+  2:
+    en:
+    alt: [chio]
+    ex:
+      - tw: ~ i lâi chhù-·e chit-thô
+        en:
+  3:
+    en:
+    alt: [(sio-)chio]
+    ex:
+      - tw: nn̄g ê ~-·le khì thit-thô
+        en:
+- head: iak-hōe|iok-
+  etym: < log Chi [約會]
+  pos: n
+  mw: ê
+  en:
+- head: iak-sok|iok-
+  etym: < log Nip < sem Sin [約束]
+  pos: v
+- head: iak-tēng/-tiāⁿ|iok-
+  etym: < log Chi [約定]
+  pos: v
+- head: iam
+  etym: < log Sin [閹]
+  pos: v
+  1:
+    en:
+  2:
+    en:
+    ex:
+      - tw: thâi ke, ~ nn̄g
+        en:
+- head: iâm
+  etym: < log Sin [鹽]
+  pos: n
+- head: iám
+  etym: < sem log Sin [掩]
+  pos: v
+- head: iām¹
+  etym: < log Nip [炎]
+  pos: suf
+  ex:
+    - tw: náu-mo̍͘h-~
+      en:
+    - tw: tn̂g-á-~
+      en:
+- head: iām²
+  etym: < sem log Sin [炎]
+  pos: adj
+  alt: [mé]
+- head: iâm-chúi
+  pos: n
+  drv:
+    - tw: ~-siā
+      mw: ki
+      en:
+- head: iâm-ko̍k-ke,/-koe|am-
+  det: ng-ko̍k-ke
+- head: iám-sin-hoat
+  pos: n
+  mw: ê
+  en:
+- head: iâm-sng
+  etym: < log Nip [鹽酸]
+  pos: n
+- head: iâm-so͘-ke/-koe
+  pos: n
+  mw: tè
+  en:
+- head: iâm-tiâⁿ
+  pos: n
+  mw: ê
+  en:
+- head: ian¹
+  etym: < log Sin [煙]
+  pos: n
+  1:
+    en:
+  2:
+    en:
+    ex:
+      - tw: Chúi-chhiâng ē-kha chin chē/-chōe
+        en:
+- head: ian²
+  etym: < ab phon iân-tâu
+  cat: sl
+  pos: adj
+- head: iân¹
+  etym: < log Sin [緣]
+  pos: n
+- head: iân²
+  etym: < log Sin [鉛]
+  pos: n
+- head: iân³
+  pos: mw
+  1:
+    en:
+    ex:
+      - tw: pau chi̍t ~ chóa, koh pau chi̍t ~ sok-ka
+        en:
+  2:
+    en:
+- head: iân⁴
+  etym: < log Sin [延]
+  pos: v
+  ex:
+    - tw: Chok-gia̍p ~ kàu Pài-it chiah kau.
+      en:
+- head: iân⁵
+  etym: < log Sin [沿]
+  pos: prep
+  ex:
+    - tw: ~ thih-ki-á-lō͘ kiâⁿ
+      en:
+- head: ián¹
+  pos: v
+  ex:
+    - tw: sio-~
+      en:
+    - tw: -·khí-·lâi a. b.
+      en:
+    - tw: ~-tiāu
+      en:
+    - tw: ~-tó a.b.
+      en:
+- head: ián²
+  page: 205
+  etym: < log Sin [演]
+  pos: v
+  1:
+    en:
+  2:
+    en:
+    alt: [poaⁿ², chng³]
+- head: iàn
+  etym: < log Sin [燕]
+  pos: n
+- head: ian-bah
+  pos: n
+  mw: tè
+  en:
+  1:
+    en:
+  2:
+    en:
+- head: iàn-be̍h
+  etym: < log [燕麥]
+  pos: n
+  mw: châng, sūi, lia̍p
+  en:
+- head: ián-chàu
+  etym: < log Nip [演奏]
+  pos: v
+  drv:
+    - tw: ~-hōe
+      etym: < log Nip [~會]
+      mw: ê
+      en:
+- head: ian-chhiân
+  etym: < ian-chhiâng, qv
+- head: iân-chhiân
+  pos: v
+- head: ian-chhiâng/-chhiân
+  pos: n
+  mw: kōaⁿ, tiâu, tè
+  en:
+- head: ián-chhiùⁿ
+  etym: < log Sin [演唱]
+  pos: v
+  drv:
+    - tw: ~-hōe
+      etym: < log Chi [~會]
+      mw: ê
+      en:
+- head: ián-chhut
+  etym: < log Nip [演出]
+  pos: v
+- head: ian-chi
+  etym: < log Sin [胭脂]
+  pos: n
+  mw: ki
+  en:
+- head: ián-chìn
+  etym: < log Chi [演進]
+  pos: v
+- head: ián-gē-thiaⁿ
+  etym: < log Chi [演藝廳]
+  pos: n
+  mw: keng
+  en:
+- head: ián-goân
+  det: ián-oân
+- head: iân-hái
+  etym: < log [沿海]
+  pos: n
+- head: ian-hé/-hó̤
+  det: ian-hóe
+- head: ián-hòa
+  etym: < log Chi [演化]
+  pos: v
+- head: ian-hóe/-hé/-hó̤
+  etym: < log Sin [煙火]
+  pos: n
+  mw: lia̍p, pha
+  en:
+  ex:
+    - tw: pàng ~
+      en:
+- head: iàn-hōe
+  etym: < log Nip [宴會]
+  pos: n
+  mw: ê
+  en:
+- head: iân-hūn
+  etym: < log Sin [緣份]
+  pos: n
+  mw: ê
+  en:
+  alt: [iân¹]
+- head: iăn-jín
+  etym: < Nip enjin < En engine
+  pos: n
+  mw: lia̍p
+  en:
+- head: ián-káng
+  etym: < log Sin [演講]
+  pos: n
+  mw: tiûⁿ
+  en:
+  idm:
+    - tw: ~ pí-sài
+      mw: tiûⁿ
+      en:
+  drv:
+    - tw: ~-kó
+      mw: tiuⁿ, hūn
+      en:
+- head: iàn-khì
+  pos: adj
+  1:
+    en:
+  2:
+    en:
+  3:
+    en:
+  4:
+    en:
+  5:
+    en:
+- head: iân-kî
+  etym: < log [延期]
+  pos: v
+- head: iân-kò͘
+  etym: < log Sin [緣故]
+  pos: n
+  mw: ê
+  en:
+  1:
+    en:
+  2:
+    en:
+- head: iân-lō͘|iān-
+  etym: < log Sin [沿路]
+  defs:
+    - pos: n
+      en:
+      ex:
+        - tw: ~ ê hoe khui kà chin súi
+          en:
+    - pos: adv
+      en:
+      ex:
+        - tw: ~ khàu-·tńg-·khì
+          en:
+- head: iàn-o
+  etym: < log Sin [燕窩]
+  pos: n
+- head: ián-oân/-goân
+  etym: < log Chi [演員]
+  pos: n
+  mw: ê
+  en:
+- head: iân-phiáⁿ
+  pos: n
+  mw: tè
+  en:
+- head: ián-piàn
+  etym: < log Chi [演變]
+  pos: [n, v]
+- head: iân-pit
+  etym: < log Nip [鉛筆]
+  pos: n
+  mw: ki
+  en:
+  drv:
+    - tw: ~-iân
+      mw: ki
+      en:
+    - tw: ~-ōe/-ūi
+      mw: tiuⁿ
+      en:
+- head: ián-si̍p
+  etym: < log Nip [演習]
+  pos: [n, v]
+- head: iân-sòaⁿ
+  pos: n
+  mw: tiâu
+  en:
+- head: iân-sui, iân-suiⁿ
+  etym: < log Sin [芫荽]
+  pos: n
+  mw: châng, pé, me, ki, chhop
+  en:
+- head: ian-tâng
+  etym: < log Sin [煙筒]
+  pos: n
+  mw: ki
+  en:
+  drv:
+    - tw: ~-chhùi
+      en:
+- head: iân-tâu
+  pos: adj
+  drv:
+    - tw: ~-á-sàng
+      mw: ê
+      en:
+- head: iân-tháng
+  pos: n
+  mw: kha
+  en:
+- head: ian-thun
+  etym: < ian-chhun < iam-chhun < log Sin [鵪鶉]
+  pos: n
+  takes_a2: true
+  mw: chiah
+  en:
+  drv:
+    - tw: ~-á-nn̄g
+      mw: lia̍p
+      en:
+- head: iân-tiòng-to̍k
+  etym: < log Nip [鉛中毒]
+  pos: [n, v]
+- head: iân-tn̂g/-tiâng/-tiông
+  etym: < log Sin [延長]
+  pos: v
+  drv:
+    - tw: ~-sòaⁿ
+      etym: < log Nip [~線]
+      mw: tiâu
+      en:
+- head: ián-tó
+  pos: v
+  1:
+    en:
+    ex:
+      - tw: kā tùi-hong ê kî-á ~
+        en:
+  2:
+    en:
+    ex:
+      - tw: kā si̍t-bîn chèng-khoân/-koân ~
+        en:
+- head: iang
+  etym: < log Sin [央]
+  pos: v
+- head: iâng
+  etym: < Chi yang³
+  pos: n
+  alt: [sàng-sò]
+- head: iáng|ióng
+  page: 206
+  etym: < log Sin [養]
+  pos: v
+  ex:
+    - tw: ~ sin-thé
+      en:
+- head: iāng¹
+  pos: v
+  det: āiⁿ
+- head: iāng²
+  pos: adj
+- head: Iâng-bêng-san|Iông-
+  etym: < log Chi [陽明山]
+  pos: n
+  alt: [Chháu-soaⁿ]
+- head: iáng-bó|ióng-bú|iúⁿ-bó/-bú
+  etym: < log Nip < Sin [養母]
+  pos: n
+  mw: ê
+  en:
+- head: iâng-bô͘|iông-
+  etym: < log Chi [陽謀]
+  pos: n
+  mw: ê
+  en:
+- head: iáng-chú|ióng-
+  etym: < log Nip < Sin [養子]
+  pos: n
+  mw: ê
+  en:
+  alt: [iúⁿ-·ê]
+- head: iáng-hū|ióng-|iúⁿ-/iáng-/ióng-pē
+  etym: < log Nip < Sin[養父]
+  pos: n
+  mw: ê
+  en:
+- head: iâng-kan|iông-
+  etym: < log Sin [陽間]
+  pos: n
+  alt: [sè-kan]
+- head: iâng-ke̍k|iông-
+  etym: < log Nip [陽極]
+  pos: n
+  alt: [phu-lá-suh]
+- head: iâng-khì|iông-
+  pos: adj
+  alt: [iāng²]
+- head: iâng-le̍k|iông-
+  etym: < log Sin [陽曆]
+  pos: n
+  alt: [sin-le̍k]
+- head: iáng-lí|ióng-lú/-lṳ
+  etym: < log Nip < Sin[養女]
+  pos: n
+  mw: ê
+  en:
+- head: iáng-ló|ióng-ló/-nó͘
+  etym: < log Sin [養老]
+  pos: v
+  drv:
+    - tw: ~-īⁿ
+      etym: < log Nip [~院]
+      mw: ê
+      en:
+    - tw: ~-kim
+      etym: < log Nip [~金]
+      mw: pit
+      en:
+- head: iáng-pē
+  det: ióng-hū
+- head: iáng-pēⁿ|ióng-pīⁿ
+  etym: < log Sin [養病]
+  pos: n
+- head: iâng-sèng, iông-sèng
+  etym: < log Nip [陽性]
+  pos: [n, adj]
+  ex:
+    - tw: ~ hoán-èng
+      en:
+- head: iáng-seng|ióng-
+  etym: < log Nip < Sin [養生]
+  pos: v
+- head: iáng-sêng|ióng-
+  etym: < log Sin [養成]
+  pos: v
+  ex:
+    - tw: ~ si̍p-koàn
+      en:
+- head: iâng-tâi|iông-
+  etym: < log Chi [陽台]
+  pos: n
+  mw: ê
+  en:
+  alt: [be-làn-là]
+- head: iap
+  pos: v
+  1:
+    en:
+    ex:
+      - tw: ~-tiâu-tiâu
+        en:
+  2:
+    en:
+- head: ia̍p
+  etym: < sem Sin [葉]
+  defs:
+    - pos: n
+      mw: tè
+      en:
+      ex:
+        - tw: hong-kó͘-~
+          en:
+    - pos: mw
+      1:
+        en:
+      2:
+        en:
+        etym: "> ia̍h, qv"
+- head: iap-āu
+  pos: v
+  ex:
+    - tw: chhiú ~
+      en:
+- head: iap-bóe/-bé/-bó̤
+  pos: v
+  drv:
+    - tw: ~-káu
+      mw: chiah
+      a:
+        en:
+      b:
+        en:
+      c:
+        en:
+- head: ia̍p-ia̍p-sih
+  pos: v
+- head: ia̍p-le̍k-sò͘
+  etym: < log Nip < tr Fr chloro-phylle [葉綠素]
+  pos: n
+- head: iáp-pì|iá-phì
+  etym: < En yappie
+  pos: n
+  mw: ê
+  en:
+- head: ia̍t
+  pos: v
+  1:
+    en:
+    ex:
+      - tw: Hóe ~ ho͘ mé.
+        en:
+  2:
+    en:
+  3:
+    en:
+  4:
+    en:
+- head: ia̍t-chhiú
+  pos: v
+- head: ia̍t-hóe/-hé/-hó̤
+  pos: v
+- head: ia̍t-hong
+  pos: v
+- head: ia̍t-peng
+  etym: < log Nip [閱兵]
+  pos: v
+  drv:
+    - tw: ~-tâi
+      etym: < log Chi [~台]
+      mw: ê
+      en:
+- head: ia̍t-si̍t
+  pos: v
+  cf: [phia̍t-si̍t]
+- head: iau¹
+  etym: < log Sin [妖]
+  pos: n
+  ex:
+    - tw: lia̍h ~
+      en:
+- head: iau²
+  etym: < sem Sin [枵]
+  pos: [v, adj]
+  ex:
+    - tw: ~-sí-·khì
+      en:
+  idm:
+    - tw: ~ kà tōa-tn̂g kò sió-tn̂g #siò *sió
+      en:
+- head: iáu¹|iá|á
+  pos: adv
+  1:
+    en:
+    cf: [iû⁴]
+    ex:
+      - tw: kàu taⁿ ~ bē-/-bōe-hiáu
+        en:
+  2:
+    en:
+    alt: [iáu-koh]
+    ex:
+      - tw: chia ~ ū cha̍p kho͘
+        en:
+      - tw: ~ ài koh tán
+        en:
+  3:
+    en:
+    ex:
+      - tw: Lí ~ hó, i tiō bē/bōe-sái-·tit.
+        en:
+- head: iáu²
+  etym: < contr iáu¹ ū) (< [□有]
+  pos: v
+  ex:
+    - tw: À, ~ chi̍t hāng tāi-chò bē-/bōe-kì-·tit kā lí kóng.
+      en:
+  idm:
+    - tw: ~ ·bô?
+      en:
+- head: iáu-bōe/-bē/-bō̤|iá-|á-
+  page: 207
+  pos: adv
+- head: iau-chhiáⁿ
+  etym: < log Chi [邀請]
+  pos: v
+- head: iau-chiaⁿ/-chiⁿ
+  etym: < log Sin [妖精]
+  pos: n
+  mw: ê, chiah
+  en:
+- head: iáu-·ê
+  defs:
+    - pos: pron
+      en:
+      ex:
+        - tw: ~ cháu tài?
+          en:
+    - pos: dem
+      en:
+      ex:
+        - tw: ~ lâng cháu tài?
+          en:
+- head: iâu-giân
+  etym: < log Sin [謠言]
+  pos: n
+- head: iau-kiau
+  pos: adj
+- head: iàu-kín
+  etym: < log Sin [要緊]
+  pos: adj
+- head: iau-kiû|iàu-
+  etym: < log Nip [要求]
+  pos: [n, v]
+- head: iau-koài
+  etym: < log Sin [妖怪]
+  pos: n
+  mw: chiah
+  en:
+- head: iáu-koh/-kú|iá-|á-
+  pos: adv
+  1:
+    en:
+    ex:
+      - tw: ~ teh khùn
+        en:
+  2:
+    en:
+    ex:
+      - tw: Chit ki pit ~ ē-/ōe-iōng-·tit.
+        en:
+- head: iau-kúi
+  etym: < [枵鬼]
+  cat: vulg
+  pos: adj
+  alt: [iau-sâi, sâi(-chia̍h)]
+- head: iàu-léng
+  det: iàu-niá
+- head: iau-lô (v lô-hàn)
+  etym: < [枵羅]
+  pos: n
+  mw: ê
+  en:
+- head: iau-mô͘
+  etym: < log Sin [妖魔]
+  pos: n
+  mw: ê
+  en:
+  drv:
+    - tw: ~-hòa
+      etym: < log Chi < tr En demo-nize [~化]
+      en:
+    - tw: ~-kúi-kòai
+      etym: < log Chi [~鬼怪]
+      en:
+- head: iau-mo͘h-mo͘h
+  pos: adj
+- head: iàu-niá/-léng
+  etym: < col log Nip < AC [要領]
+  pos: n
+  mw: ê
+  en:
+- head: iau-pá-chhá
+  pos: v
+- head: iau-pak-tó͘
+  etym: < [枵腹肚]
+  pos: v
+- head: iau-sâi
+  pos: adj
+- head: iáu-sī|iá-|á-|iah-|ah-|ia̍h-|a̍h-|iā-|ā-
+  pos: adv
+  ex:
+    - tw: ~ góa lâi-khì kā i kóng khah-khoài.
+      en:
+    - tw: ~ mài khì, hó.
+      en:
+- head: iáu-siū
+  etym: < log Sin [夭壽]
+  cat: vulg
+  defs:
+    - pos: adj
+      1:
+        en:
+        drv:
+          - tw: ~-á
+            mw: ê
+            en:
+      2:
+        en:
+        etym: < sem
+        ex:
+          - tw: A,~!
+            en:
+      3:
+        en:
+        etym: < sem
+        drv:
+          - tw: ~-kut!
+            a:
+              en:
+            b:
+              mw: ê
+              en:
+    - pos: adv
+      en:
+      ex:
+        - tw: ~ hó
+          en:
+    - pos: excl
+      en:
+      ex:
+        - tw: ~, ná ē án-ne!?
+          en:
+- head: iàu-sò͘
+  etym: < log Nip [要素]
+  pos: n
+  mw: ê
+  en:
+- head: iau-su̍t
+  etym: < log Sin [妖術]
+  pos: n
+  mw: ê
+  en:
+- head: iàu-tiám
+  etym: < log Nip [要點]
+  pos: n
+  mw: ê
+  en:
+- head: iauⁿ
+  pos: onom
+- head: iāuⁿ
+  cat: baby
+  pos: excl
+  cf: [chiă²]
+- head: iāuⁿ-chiă
+  cat: baby
+  pos: excl
+  cf: [chiă²]
+- head: ih
+  etym: < tit¹, qv
+- head: ĭh
+  det: ńgh¹
+- head: ihⁿ
+  pos: [onom, v]
+  ex:
+    - tw: ~-·chi̍t-·ē, ~ -·chi̍t-·ē
+      en:
+- head: ĭhⁿ
+  det: ńgh¹
+- head: ihⁿ-ihⁿ
+  pos: adv
+  ex:
+    - tw: ~ tán
+      en:
+- head: i̍hⁿ-i̍hⁿ-kiò -n̍gh-
+  pos: v
+  ex:
+    - tw: mo͘h kà ~
+      en:
+- head: i̍hⁿ-oa̍ihⁿ-kiò/ihⁿ-oaihⁿ-kiò
+  pos: v
+- head: im
+  etym: < Sin [淹]
+  pos: v
+  ex:
+    - tw: chhù hō͘ chúi ~-·khì
+      en:
+    - tw: chúi ~ kàu chhù-téng
+      en:
+    - tw: ~-chhân qv
+      en:
+- head: ìm
+  page: 208
+  etym: < sem log Sin [蔭]
+  pos: v
+  1:
+    en:
+  2:
+    en:
+  3:
+    en:
+- head: im-bô͘
+  etym: < log Nip [陰謀]
+  pos: n
+  mw: ê
+  en:
+- head: im-chhân
+  pos: v
+- head: im-chat/-chiat
+  etym: < col log Nip [音節]
+  pos: n
+  mw: ê
+  en:
+- head: im-chúi
+  pos: v
+  1:
+    en:
+  2:
+    en:
+  3:
+    en:
+    etym: ant thè-chúi
+- head: im-ga̍k
+  etym: < log Nip [音樂]
+  pos: n
+  drv:
+    - tw: ~-a̍p-á
+      etym: < tr En music box
+      mw: ê
+      en:
+    - tw: ~-hōe
+      etym: < log Nip [~會]
+      mw: ê
+      en:
+    - tw: ~-ka
+      etym: < log Nip [~家]
+      mw: ê
+      en:
+    - tw: ~-thiaⁿ
+      en:
+      etym: < log Chi [~廳]
+      mw: keng
+- head: im-hiám
+  etym: < log Chi [陰險]
+  pos: adj
+  alt: [im-thim, kan-hiám]
+- head: im-hiáng/-hióng
+  etym: < log Nip [音響]
+  pos: n
+  1:
+    en:
+    idm:
+      - tw: ~ hāu-kó
+        en:
+  2:
+    en:
+    etym: < log Chi < sem
+    mw: tâi, cho͘
+- head: im-hû
+  etym: < log Nip [音符]
+  pos: n
+  mw: ê
+  en:
+- head: im-iâng/-iông
+  etym: < log Sin [陰陽]
+  pos: n
+- head: im-kan
+  etym: < log Sin [陰間]
+  pos: n
+- head: im-ke̍k
+  etym: < log Nip [陰極]
+  pos: n
+  alt: [măi-ná-suh]
+- head: ìm-koe
+  pos: n
+  takes_a2: true
+  mw: tiâu, tè
+  en:
+- head: im-le̍k
+  etym: < log [陰曆]
+  pos: n
+  alt: [kū-le̍k]
+- head: ím-liāu
+  etym: < log Nip [飲料]
+  pos: n
+- head: ìm-ńg
+  defs:
+    - pos: v
+      en:
+    - pos: adj
+      en:
+      ex:
+        - tw: ~ ê só͘-chāi
+          en:
+- head: im-phiau
+  etym: < log Nip [音標]
+  pos: n
+  mw: thò, ê
+  en:
+  ex:
+    - tw: kok-chè ~
+      en:
+- head: im-pho
+  etym: < log Nip [音波]
+  pos: n
+  alt: [siaⁿ-pho]
+- head: im-pō͘
+  etym: < log Nip [陰部]
+  pos: n
+- head: im-sèng
+  etym: < log Nip [陰性]
+  pos: [n, adj]
+  ex:
+    - tw: ~ hoán-èng
+      en:
+- head: ìm-sīⁿ
+  pos: n
+  takes_a2: true
+  mw: la̍p
+  en:
+- head: im-tek
+  etym: < log Sin [陰德]
+  pos: n
+- head: in¹
+  pos: [pron, dem]
+  ex:
+    - tw: ~ pâ
+      en:
+  idm:
+    - tw: ~ niâ lè!
+      cat: vulg
+      en:
+    - tw: ~ tau ê tāi-chì
+      en:
+- head: in²
+  pos: v
+  ex:
+    - tw: ~ chháu
+      en:
+    - tw: ~ chháu-in
+      en:
+    - tw: ~ sòaⁿ
+      en:
+- head: ín¹|ún
+  etym: < sem Sin [允]
+  pos: v
+  1:
+    en:
+  2:
+    en:
+    ex:
+      - tw: Hit ê thâu-lō͘ hō͘ i ~-·khì.
+        en:
+  3:
+    en:
+    ex:
+      - tw: ~-bô thâu-lō͘
+        en:
+- head: ín²
+  etym: < log Sin [引]
+  pos: v
+  alt: [ín-iōng]
+  ex:
+    - tw: ~ pa̍t-lâng ê ōe
+      en:
+- head: ín³
+  etym: < En in
+  pos: adj
+  alt: [ín-sái]
+  ex:
+    - tw: ~ a̍h áu?
+      en:
+- head: ìn¹
+  etym: < log Sin [印]
+  pos: v
+  ex:
+    - tw: Pháiⁿ-siau ê chheh ài ka-tī ~.
+      en:
+- head: ìn²
+  etym: < Sin [應]
+  pos: v
+  ex:
+    - tw: kiò bē-~
+      en:
+- head: īn
+  pos: v
+- head: ìn-á
+  pos: n
+  mw: lia̍p
+  en:
+- head: in-chêng|un-|ṳn-
+  etym: < log Sin [恩情]
+  pos: n
+  mw: ê
+  en:
+  ex:
+    - tw: bô ~
+      en:
+- head: ìn-chì
+  etym: < Nip inchi < En inch
+  pos: mw
+- head: ín-chìn
+  etym: < log Chi [引進]
+  pos: v
+  ex:
+    - tw: ùi gōa-kok ~
+      en:
+- head: ín-chún|ún-
+  pos: v
+- head: ín-iōng/-ēng
+  etym: < log Chi [引用]
+  pos: v
+- head: in-jîn/-gîn|un-jîn/-lîn|ṳn-lîn
+  etym: < log Sin [恩人]
+  pos: n
+  mw: ê
+  en:
+- head: ìn-kàm
+  page: 209
+  etym: < log Nip [印鑑]
+  pos: n
+  mw: lia̍p, ê
+  en:
+  drv:
+    - tw: ~ chèng-bêng
+      etym: < log [~證明]
+      mw: hūn, tiuⁿ
+      en:
+- head: ín-khí
+  etym: < log [引起]
+  pos: v
+- head: in-kó koan-hē
+  etym: < log Nip [因果關係]
+  pos: n
+- head: Ìn-nî
+  etym: < log Chi < ab [印度尼西亞] < En Indonesia [印尼]
+  pos: n
+- head: in-oàn|un-|ṳn-
+  etym: < log [恩怨]
+  pos: n
+- head: ín-phut
+  etym: < En input; ant áu-phut
+  pos: v
+- head: ìn-sek(< log Sin [印色])
+  pos: n
+  mw: a̍p
+  en:
+  1:
+    en:
+    alt: [ìn-bah]
+  2:
+    en:
+- head: ín-sèng|ún-
+  etym: < log Chi [隱性]
+  pos: adj
+  ex:
+    - tw: ~ ê ûi-/î-thoân
+      en:
+- head: ìn-siaⁿ
+  pos: [n, v]
+  1:
+    en:
+  2:
+    en:
+    alt: [īn-siaⁿ]
+- head: ìn-siāng/-siōng/-chhiāng
+  etym: < log Nip [印象]
+  pos: n
+  mw: ê
+  en:
+  drv:
+    - tw: ~-phài
+      etym: < log Nip [~派]
+      mw: phài, ê
+      en:
+- head: ìn-sìn
+  pos: adv
+  cf: [ti̍t-ti̍t]
+  ex:
+    - tw: khùn siuⁿ òaⁿ, ~ boăi khì
+      en:
+    - tw: khùn siuⁿ òaⁿ, ~ mài khì
+      en:
+- head: ìn-siōng
+  det: ìn-siāng
+- head: in-sò͘
+  etym: < log Chi < ab Nip [要因]+Nip[要素][因素]
+  pos: n
+  mw: ê
+  en:
+- head: ìn-soat
+  etym: < log Nip [印刷]
+  pos: [n, v]
+  drv:
+    - tw: ~-chhiáng
+      etym: < log Chi [~廠]
+      mw: keng
+      en:
+    - tw: ~-phín
+      etym: < log Nip [~品]
+      en:
+- head: ín-su-khoân/-koân|ún-
+  etym: < log Chi < tr En privacy [隱私權]
+  pos: n
+- head: Ìn-tē-an-lâng
+  etym: < log Chi < En in-dian [印地安人]
+  pos: n
+  mw: ê
+  en:
+- head: ín-tō͘
+  etym: < log Nip [引渡]
+  pos: v
+- head: Ìn-tō͘
+  etym: < log < Indos [印度]
+  pos: n
+  drv:
+    - tw: ~-iûⁿ
+      etym: < log Nip [~洋]
+      en:
+- head: in-ūi
+  etym: < log Sin [因為]
+  pos: conj
+  idm:
+    - tw: ~ án-ne
+      en:
+- head: io¹
+  etym: < Sin [腰]
+  defs:
+    - pos: n
+      en:
+      ex:
+        - tw: siang-tio̍h ~, lâng soah ku-ku
+          en:
+    - pos: mw
+      en:
+      ex:
+        - tw: saⁿ-cha̍p-jī ~
+          en:
+- head: io²
+  etym: < Sin [么]
+  pos: num
+- head: io³
+  etym: < Sin [要]
+  pos: v
+  1:
+    en:
+    alt: [ió²]
+  2:
+    en:
+    ex:
+      - tw: ~ gín-á
+        en:
+- head: iô
+  etym: < Sin [搖]
+  pos: [v, adj]
+  ex:
+    - tw: Chit tiâu tiàu-kiô siuⁿ ~.
+      en:
+- head: ió¹
+  det: iúⁿ²
+- head: ió²
+  etym: < ió͘ⁿ = iúⁿ³ [養]
+  pos: v
+  alt: [io³]
+- head: ió³
+  pos: adj
+  alt: [ám]
+- head: ió⁴|ió͘
+  etym: < ChiD you⁴ [有]
+  pos: excl
+- head: iŏ
+  etym: < iô
+  cat: baby
+  pos: v
+  ex:
+    - tw: iô-ā-~, iô kàu Sam-pán-kiŏ.
+      en:
+- head: ió-bih|ió͘-|iú-
+  etym: < Nip yobi
+  pos: [n, v]
+- head: io-chhioh
+  pos: n
+  mw: tiâu, ê
+  en:
+- head: iô-chhiú
+  etym: < log Sin [搖手]
+  pos: v
+- head: io-chí
+  etym: < log Sin [腰子]
+  pos: n
+  1:
+    en:
+    mw: lia̍p
+    ex:
+      - tw: sé/-sóe
+        en:
+  2:
+    en:
+    mw: tè
+    ex:
+      - tw: ~ sng
+        en:
+- head: io-chiah-kut
+  pos: n
+  mw: ki
+  en:
+- head: io-·ê (v io³)
+  pos: n
+  mw: ê
+  en:
+- head: ió-gà/-gah|ió͘-
+  etym: < En < Sans yoga
+  pos: n
+- head: ió-gò̤/-gò|ió͘-gò̤
+  etym: < En yogurt < Turki yōghurt
+  pos: n
+  cf: [io-gú-lú-toh]
+- head: io-gú-lú-toh|io͘-…-to͘h
+  etym: < Nip yō-guruto < Turki yōghurt
+  pos: n
+- head: iô-í
+  pos: n
+  mw: chiah
+  en:
+- head: iŏ-káng|iŏ͘-
+  page: 210
+  etym: < Nip yōkan
+  pos: n
+  mw: tè
+  en:
+- head: io-kiáⁿ-koa
+  pos: n
+  mw: tiâu
+  en:
+  alt: [iô-nâ-koa]
+- head: io-kó
+  etym: < log Chi < tr; cf En cashew [腰果]
+  pos: n
+  mw: châng, lia̍p
+  en:
+  #台語在來講腰果豆
+- head: iô-kô
+  pos: n
+  mw: ê
+  en:
+  alt: [iô-nâ]
+- head: io-ló-chìn-khì|io͘-ló͘-
+  etym: < Nip yōdo-chinki < Ger Jodtinktur
+    n名
+- head: io-ló-sí-khuh|io͘-ló͘-
+  etym: < Nip yoroshi-ku
+  pos: v
+- head: iô-nâ
+  etym: < log Nip [搖籃]
+  pos: n
+  mw: ê
+  en:
+  drv:
+    - tw: ~-koa
+      mw: tiâu
+      en:
+- head: iŏ-·ò
+  etym: < ab āi-iŏ-·ò¹²³, qv
+- head: io-ûi
+  etym: < log Chi [腰圍]
+  pos: n
+  cf: [io¹]
+- head: ió͘
+  det: ió⁴
+- head: ió͘-bih
+  det: ió-bih
+- head: ió͘-gà/-gah
+  det: ió-gà
+- head: ió͘-gò̤
+  det: ió-gò̤
+- head: io͘-gú-lú-to͘h
+  det: io-gú-lú-toh
+- head: iŏ͘-káng
+  det: iŏ-káng
+- head: io͘-ló͘-chìn-khì
+  etym: < Nip
+  pos: n
+- head: io-ló-sí-khuh
+  etym: < Nip
+  pos: v
+- head: ió͘-mó͘
+  det: iú-mó͘
+- head: iŏ͘--ò͘
+  etym: < ab āi- iŏ͘-·ò͘ qv
+- head: ioh
+  pos: v
+  ex:
+    - tw: ~-bē-chhut
+      en:
+    - tw: ~-bô do.
+      en:
+    - tw: ~-·tio̍h
+      en:
+- head: io̍h
+  etym: < Sin [藥]
+  pos: n
+  alt: [io̍h-á]
+  ex:
+    - tw: bô ~ thang i
+      en:
+    - tw: an-bîn-~
+      en:
+- head: io̍h-á
+  pos: n
+  mw: thiap, koàn, pau, lia̍p
+  en:
+  ex:
+    - tw: boah ê ~
+      en:
+    - tw: chia̍h ê ~
+      en:
+- head: ioh-bī
+  pos: v
+- head: io̍h-châi
+  etym: < log Sin [藥材]
+  pos: n
+- head: io̍h-che
+  etym: < sem log Sin [藥渣]
+  pos: n
+  cf: [io̍h-thâu]
+- head: io̍h-che-su -chè-
+  etym: < log Nip [藥劑]
+  pos: n
+  mw: ê
+  en:
+- head: io̍h-chháu
+  etym: < log Sin [藥草]
+  pos: n
+  mw: châng
+  en:
+- head: io̍h-chiú
+  etym: < log Sin [藥酒]
+  pos: n
+- head: io̍h-chúi
+  etym: < log Nip [藥水]
+  pos: n
+  drv:
+    - tw: ~-pò͘
+      mw: khûn, tiâu, tè
+      en:
+      cf: [hŏ-tái]
+- head: io̍h-hng
+  etym: < log Sin [藥方]
+  pos: n
+- head: io̍h-hún
+  etym: < log [藥粉]
+  pos: n
+  takes_a2: true
+- head: io̍h-kio̍k
+  etym: < log Nip [藥局]
+  pos: n
+  mw: keng
+  en:
+  drv:
+    - tw: ~-seng
+      etym: < log Nip [~生]
+      mw: ê
+      en:
+- head: io̍h-ko
+  pos: n
+  mw: tiâu
+  en:
+- head: io̍h-koàn
+  pos: n
+  takes_a2: true
+  mw: ê
+  en:
+- head: io̍h-lia̍p
+  pos: n
+  takes_a2: true
+  mw: lia̍p
+  en:
+- head: io̍h-oân
+  etym: < log Sin [藥丸]
+  pos: n
+  takes_a2: true
+  mw: lia̍p
+  en:
+- head: io̍h-pâng
+  etym: < log Sin [藥房]
+  pos: n
+  mw: kang
+  en:
+  alt: [io̍h-(á)-tiàm]
+- head: io̍h-pau
+  pos: n
+  mw: pau
+  en:
+- head: io̍h-phìⁿ
+  etym: < log Sin [藥片]
+  pos: n
+  mw: tè
+  en:
+  alt: [io̍h-piáⁿ]
+- head: io̍h-phín
+  etym: < log Chi [藥品]
+  pos: n
+- head: io̍h-pò͘
+  pos: n
+  mw: tè
+  en:
+- head: io̍h-siān
+  etym: < log Chi [藥膳]
+  pos: n
+- head: io̍h-siuⁿ
+  etym: < log Sin [藥箱]
+  pos: n
+  mw: kha
+  en:
+- head: io̍h-thâu
+  pos: n
+  takes_a2: true
+  cf: [io̍h-che]
+- head: io̍h-tiàm
+  pos: n
+  mw: keng
+  en:
+  alt: [io̍h-á-tiàm, io̍h-pâng]
+- head: io̍h-toaⁿ
+  pos: n
+  mw: tiuⁿ
+  en:
+- head: iok
+  det: iak
+- head: iok-hōe
+  det: iak-hōe
+- head: iok-sok
+  det: iak-sok
+- head: Iok-tàn
+  etym: < log Sin < Jordan [約旦]
+  pos: n
+- head: iok-tēng/-tiāⁿ
+  det: iak-tēng
+- head: iong
+  etym: < iōng², qv
+- head: ióng¹|iông
+  etym: < log Chi [氧]
+  det: iâng
+- head: ióng²
+  det: iáng
+- head: ióng³|éng
+  etym: < Sin [勇]
+  pos: adj
+  1:
+    en:
+  2:
+    en:
+  3:
+    en:
+    etym: < sem
+    idm:
+      - tw: ~ kà ná gû
+        en:
+  4:
+    en:
+    etym: < sem
+- head: iòng
+  etym: < iōng² + chhòng
+  defs:
+    - pos: v
+      en:
+  alt: [chò/chòe, chhòng]
+  ex:
+    - tw: ~ bē-bōe hó-sè
+      en:
+    - pos: prep
+      en:
+      alt: [iong/iōng²]
+- head: iōng¹|ēng
+  page: 211
+  etym: < Sin [用]
+  pos: n
+  alt: [lō͘-iōng]
+  ex:
+    - tw: He ā bô sáⁿ-mí ~. v
+  1:
+    en:
+    idm:
+      - tw: Chit ki tî-thâu gia̍h-khì ~.
+        en:
+  2:
+    en:
+    idm:
+      - tw: ~ chîⁿ kà-ná teh ~ chúi a. b.
+        en:
+      - tw: ~ chîⁿ khah-kín ~ chúi
+        en:
+  3:
+    en:
+    ex:
+      - tw: Chhài ngeh-khí-lâi ~ ·la!
+        en:
+  4:
+    en:
+    ex:
+      - tw: Khí ki-lí-hō͘, bô ~ mā tio̍h-ài chîⁿ.
+        en:
+  5:
+    en:
+    etym: "> iòng"
+    ex:
+      - tw: Góa ~.
+        en:
+- head: iōng²|ēng
+  etym: < sem iōng¹ ; > iòng; > iong [用]
+  pos: prep
+  ex:
+    - tw: ~ chhiám-á chia̍h
+      en:
+  idm:
+    - tw: ~ kha-thâu-u siūⁿ mā chai
+      en:
+- head: iōng...-ê|ēng...-ê
+  pos: v
+  alt: [kō͘ … ê]
+  ex:
+    - tw: iōng- kiâⁿ-·ê khì
+      en:
+    - tw: Mài jiáng/jióng; iōng kóng-·ê.
+      en:
+- head: Iông-bêng-san
+  det: iâng-bêng-san
+- head: iông-bô͘
+  det: iâng-bô͘
+- head: ióng-bú
+  det: iáng-bô͘
+- head: ióng-chú
+  det: iáng-chú
+- head: iōng-gí/-gú/-gṳ
+  etym: < log Nip [用語]
+  pos: n
+  mw: ê
+  en:
+  ex:
+    - tw: ha̍k-su̍t ~
+      en:
+- head: iông-ha̍p
+  etym: < log [融合]
+  pos: v
+- head: ióng-hō͘|iòng-|èng-
+  etym: < log Nip [擁護]
+  pos: v
+  alt: [thīn]
+- head: iōng-hō͘
+  pos: n
+  mw: ê
+  en:
+- head: iōng-hoat|ēng-
+  etym: < log Nip [用法]
+  pos: n
+  mw: ê
+  en:
+- head: ióng-hū
+  det: iáng-hū
+- head: ióng-ia̍k/-io̍k
+  etym: < log Chi [踴躍]
+  pos: adj
+- head: iōng-jī/-gī/-lī
+  etym: < log Nip [用字]
+  defs:
+    - pos: n
+      mw: jī
+      en:
+    - pos: v
+      en:
+- head: iông-ji̍p/-gi̍p/-li̍p
+  etym: < log Chi [融入]
+  pos: v
+  ex:
+    - tw: ~ pún-tē ê siā-hōe
+      en:
+- head: ióng-kám
+  etym: < log Sin [勇敢]
+  pos: adj
+- head: iông-kan
+  det: iâng-kan
+- head: iông-ke̍k
+  det: iâng-ke̍k
+- head: ióng-khì
+  etym: < log Sin [勇氣]
+  pos: n
+- head: ióng-kiāⁿ
+  etym: < sem log Sin [勇健]
+  pos: adj
+- head: iông-le̍k
+  det: iâng-le̍k
+- head: ióng-ló
+  det: iáng-ló
+- head: ióng-lú
+  det: iáng-lí
+- head: ióng-nó͘
+  det: iáng-ló
+- head: ióng-pē
+  det: iáng-hū
+- head: ióng-pēⁿ
+  det: iáng-pēⁿ
+- head: iông-peng
+  etym: < log Nip [傭兵]
+  pos: n
+  mw: ê, tīn, tūi
+  en:
+- head: iōng-phín
+  etym: < log Nip [用品]
+  pos: n
+  ex:
+    - tw: ka-têng ~
+      en:
+- head: ióng-pīⁿ
+  det: iáng-pēⁿ
+- head: iông-sèng
+  det: iâng-sèng
+- head: ióng-seng
+  det: iáng-seng
+- head: ióng-sêng
+  det: iáng-sêng
+- head: iōng-sim|ēng-
+  etym: < log Sin [用心]
+  pos: v
+- head: iōng-sû
+  etym: < log Chi [用詞]
+  defs:
+    - pos: n
+      mw: ê
+      en:
+    - pos: v
+      en:
+- head: iông-tâi
+  det: iâng-tâi
+- head: iōng-tiān-liāng/-liōng
+  etym: < log Chi [用電量]
+  pos: n
+- head: iông-ún
+  pos: v
+- head: ĭp
+  pos: excl
+  cf: [ĭt]
+- head: it¹
+  etym: < log Sin [乙]
+  pos: [n, adj]
+- head: it²
+  page: 212
+  etym: < log Sin [一]
+  pos: num
+- head: ĭt
+- head: it-chhè
+  etym: < log Sin [一切]
+  pos: n
+- head: It--goe̍h, It--ge̍h/It-ge̍h/It-go̤̍h
+- head: it-hiàng/-hiòng
+  etym: < log Sin [一向]
+  pos: adv
+- head: it-iâng hòa-thòaⁿ -iông-
+  etym: < log Chi [一氧化碳]
+  pos: n
+- head: it-jī-cha̍p, it-gī-cha̍p/it-lī-cha̍p
+- head: it-jia̍p, it-gia̍p/it-lia̍p
+- head: it-koàn
+  etym: < log Nip [一貫] < sem Sin
+  pos: adj
+  drv:
+    - tw: ~-tō
+      etym: < log Chi [~道]
+      en:
+- head: it-liû
+  etym: < log Chi [一流]
+  pos: adj
+- head: it-lu̍t
+  etym: < log Nip [一律] < sem Sin
+  pos: adv
+- head: it-nî-á
+- head: it-poaⁿ
+  etym: < log Nip [一般] < Sin
+  pos: adj
+  drv:
+    - tw: ~-lâng
+      etym: < log Nip [~人]
+      en:
+- head: it-seng
+  etym: < log Sin [一生]
+  pos: n
+  alt: [chi̍t-sì-lâng]
+- head: it-sîn-kàu
+  etym: < log Nip [一神教] < tr ; cf En monotheism ; ant to-sîn-kàu
+  pos: n
+- head: ĭt-siò, ĭt-sió--kài/ĭt-siò͘
+- head: it-tàn
+  etym: < log Sin [一旦]
+  pos: adv
+- head: it-tēng
+  etym: < log Sin [一定]
+  pos: [adj, adv]
+- head: it-téng-it--ê
+- head: it-téng kok-bîn
+  etym: < log [一等國民]
+  pos: n
+  mw: ê
+  en:
+- head: it-téng-peng
+  etym: < log Chi [一等兵] ; cf Nip [一等卒]
+  mw: ê
+- head: it-thai-hòa
+  etym: < log Chi [一胎化]
+  pos: v
+- head: it-tì
+  etym: < log Nip [一致] < Sin
+  pos: adj
+- head: it-ti̍t
+  etym: < sem log Sin [一直]
+  pos: adv
+- head: it-tó, it-tó͘
+- head: it-tò--kài, it-tō͘-kài
+- head: it-tó-thâu, it-tó͘-thâu
+- head: ĭt-tō͘-kài
+- head: it-tó͘-thâu
+- head: iu
+- head: iû
+- head: iû²
+  etym: < log Sin [遊]
+  pos: v
+- head: iû³
+  page: 213
+  etym: < log Sin [由]
+  pos: prep
+- head: iû
+- head: iù¹
+  etym: < sem log Sin [幼]
+  pos: adj
+- head: iù
+- head: iū
+  etym: < log Sin [又]
+  pos: adv
+- head: iù-á
+- head: iū-á
+- head: iû-ba̍k
+  etym: < log [油墨]
+  pos: n
+- head: iû-bîn
+  etym: < log Nip [遊民] < sem Sin
+  pos: n
+  mw: ê
+  en:
+- head: iù-boa̍h-boa̍h, iù-boah-boah
+- head: iû-bo̍k bîn-cho̍k
+  etym: < log Chi [游牧民族] ; cf Nip [游牧(の)民]
+  pos: n
+  mw: ê, cho̍k
+  en:
+- head: iù-but-á
+- head: iù-but-but
+- head: iû-chāi
+- head: iû-chéⁿ/-chíⁿ
+  etym: < log Nip [油井]
+  pos: n
+  mw: ê, kháu
+  en:
+- head: iû-chhai
+  etym: < log Chi [郵差]
+  pos: n
+  mw: ê
+  en:
+- head: iû-chhài
+  etym: < log Sin [油菜]
+  pos: n
+  mw: châng
+  en:
+- head: iû-chhang-so͘
+- head: iû-chhat
+  etym: < log Sin [油漆]
+  pos: [n, v]
+- head: iû-chíⁿ
+- head: iû-chia̍h-kóe, iû-chia̍h-ké/iû-chia̍h-kó̤
+- head: iú--ê
+- head: iû-éng-i
+  etym: < log Chi [游泳衣]
+  pos: n
+  mw: niá
+  en:
+  alt: [siû-chúi-saⁿ]
+- head: iû-éng-khò͘
+  etym: < log Chi [游泳褲]
+  pos: n
+  mw: niá
+  en:
+  alt: [siû-chúi-khò͘]
+- head: iû-éng-kiàⁿ
+- head: Iú-èng-kong
+- head: iû-éng-tî
+  etym: < log Chi [游泳池]
+  pos: n
+  mw: ê
+  en:
+  alt: [siû-chúi-tî]
+- head: iû-goân|i-
+  etym: < i-goân < log Sin [依原]
+  pos: adv
+- head: iú-hān
+- head: iú-hān²
+  etym: < log Sin [有限]
+  pos: adj
+- head: iú-hàu, iúⁿ-hàu
+- head: iû-hêng
+  etym: < log Nip [遊行]
+  defs:
+    - pos: n
+      mw: ê, pái
+      en:
+    - pos: v
+      en:
+      cf: [se̍h-ke]
+- head: iû-hì
+  etym: < log Nip [遊戲] < Sin
+  pos: n
+  mw: ê
+  en:
+  ex:
+    - tw: ~ kui-chek
+      etym: < log Chi [~規則]
+      mw: ê
+      en:
+- head: iú-hó kok-ka
+  page: 214
+  etym: < log Chi [友好國家]
+  pos: n
+  mw: ê, kok
+  en:
+- head: iû-hùi
+  etym: < log Sin [油費]
+  pos: n
+- head: iû-ian
+  etym: < log Sin [油煙]
+  pos: n
+- head: iû-ìn
+  etym: < log Chi [油印] < tr En mimeograph
+  pos: v
+- head: iu-iu-á
+- head: iu-ká-lih, iu-khá-lih
+- head: iù-kang
+- head: iu-kat-kat
+- head: iû-káu
+  etym: < log Sin [油垢]
+  pos: n
+- head: iû-kek-chiàn
+  etym: < log Nip [游擊戰]
+  pos: n
+- head: iû-kek-tūi
+  etym: < log Nip [游擊隊]
+  pos: n
+  mw: tūi
+  en:
+- head: iu-khá-lih
+- head: iû-kheh
+  etym: < log Chi [遊客]
+  pos: n
+  mw: ê
+  en:
+- head: iù-khí
+- head: iû-khò͘
+  etym: < log Chi [油庫]
+  pos: n
+  mw: ê
+  en:
+- head: iu-khó͘-khó͘
+- head: iû-kî
+  etym: < log Chi [尤其]
+  pos: adv
+- head: iû-kì
+  etym: < log Chi [遊記]
+  pos: n
+  mw: phiⁿ, pún
+  en:
+- head: iù-ki
+- head: iú-ki so͘-chhài(< log Chi [有機蔬菜] < tr En organic vegetables)
+  pos: n
+- head: iú-kî tô͘-hêng
+  etym: < log Nip [有期徒刑]
+  pos: n
+- head: iû-kiāⁿ
+  etym: < log Sin [郵件]
+  pos: n
+- head: iû-kio̍k/-ke̍k
+  etym: < log Chi [郵局] < ab < [局] + Nip [郵政] ; cf Nip[郵便局]
+  pos: n
+  mw: keng
+  en:
+- head: iú-koan
+  etym: < log Chi [有關]
+  pos: prep
+- head: iû-koàn-chhia
+- head: iû-koh, iū-koh
+- head: iū-koh
+- head: iū-koh
+- head: iú-kun
+  etym: < log Nip [友軍]
+  pos: n
+- head: iû-lám-chhia
+  etym: < log Chi [遊覽車] ; cf Nip (< log Nip [遊覽バス]), En tourist coach
+  pos: n
+  mw: tâi
+  en:
+- head: iû-lap-lap, iû-la̍p-la̍p
+- head: iû-lāu-á
+- head: iû-leh-leh, iû-teh-teh
+- head: iu-lêng jîn-kháu
+  etym: < log Nip [幽靈人口]
+  pos: n
+- head: iú-lī
+  etym: < log Sin [有利]
+  pos: adj
+- head: iû-lî hūn-chú(< log Chi [游離份子])
+  mw: ê
+- head: iû-lî-phiò
+- head: iù-lia̍p-mi̍h, iù-lia̍p-mn̍gh
+- head: iû-lo̍k tiûⁿ-só͘
+  etym: < log Chi [遊樂場所]
+  pos: n
+  mw: ê
+  en:
+- head: iû-lop-lop, iû-lap-lap/iu-la̍p-la̍p
+- head: iû-lûn
+  etym: < log Chi [郵輪]
+  pos: n
+  mw: tâi
+  en:
+- head: iû-mn̂g, iû-mûi
+- head: iú-mó͘, ió͘-mó͘
+  page: 215
+- head: iu-oa̍t-kám
+  etym: < log Nip [優越感]
+  pos: n
+  mw: ê
+  en:
+- head: iû-ōe/-ūi
+  etym: < log Nip [油畫]
+  pos: n
+  mw: tiuⁿ
+  en:
+- head: iú-pang
+  etym: < log Nip [友邦]
+  pos: n
+  mw: ê
+  en:
+- head: iû-pau
+  etym: < log Chi [郵包] ; cf Nip [郵便小包]
+  pos: n
+  mw: pau
+  en:
+- head: iū-phài
+  etym: < log Nip [右派] ; ant chó-phài
+  defs:
+    - pos: n
+      mw: ê,phài
+      en:
+    - pos: adj
+      en:
+- head: iû-phiò(< log Chi [郵票])
+  pos: n
+  mw: tiuⁿ
+  en:
+- head: iû-pn̄g
+- head: iu-sè
+  etym: < log Nip [優勢]
+  pos: n
+- head: iû-sé-sé
+- head: iû-seh, iû-so̤h
+- head: iu-seng-ha̍k
+  etym: < log Nip [優生學]
+  pos: n
+- head: iû-sī
+- head: iu-sian
+  etym: < log Nip [優先]
+  pos: n
+  drv:
+    - tw: ~-khoân/-koân
+      etym: < log Nip [~權]
+      en:
+- head: iu-siù
+  etym: < log [優秀]
+  pos: adj
+- head: iù-siù
+- head: iû-siuⁿ
+- head: iû-soeh, iû-sòe/iû-seh/iû-so̤h/iû-soat
+- head: iù-sop-sop, iù-sap-sap
+- head: iû-tâng
+  etym: < log Sin [油桐]
+  pos: n
+  mw: châng
+  en:
+- head: iû-tē-khu-hō -tōe-
+  etym: < log Chi [郵遞區號]
+  pos: n
+- head: iu-téng
+  etym: < log Nip [優等]
+  pos: n
+- head: iû-teng
+  etym: < log Sin [油燈]
+  pos: n
+  mw: ki
+  en:
+- head: iu-thāi
+  etym: < log Nip [優待] < Sin
+  pos: [n, v]
+- head: Iû-thài-kàu
+  etym: < log [猶太教] < Hel Ioudaios
+  pos: n
+- head: iu-thāi-koàn
+  etym: < log Nip [優待劵]
+  pos: n
+  mw: tiuⁿ
+  en:
+- head: Iû-thài-lâng
+  etym: < log [猶太人] < Hel Ioudaios
+  pos: n
+- head: iu-thâu-kat-bīn
+- head: iù-tī
+  etym: < log Nip [幼稚]
+  pos: adj
+  drv:
+    - tw: ~-hn̂g/-oân
+      etym: < log Nip [~園] < tr Ger Kindergarten
+      mw: keng
+      en:
+- head: iu-tiám
+  etym: < log Chi [優點]
+  pos: n
+  mw: ê, tiám
+  en:
+- head: iû-tiâu
+  etym: < log Chi [油條]
+  pos: adj
+- head: iû-ūi
+- head: iûⁿ
+- head: iûⁿ
+- head: iúⁿ
+- head: iúⁿ
+- head: iúⁿ
+- head: iūⁿ
+- head: iûⁿ-á
+- head: iûⁿ-bó, iûⁿ-bú
+- head: iûⁿ-chhang
+- head: iûⁿ-chî
+- head: iûⁿ-chiú
+- head: iûⁿ-hîn
+- head: iûⁿ-káng
+- head: iûⁿ-mé-á
+- head: iûⁿ-môa
+  page: 216
+- head: iûⁿ-pâi
+  etym: < log Chi [羊排] < tr En mutton chop
+  pos: n
+  mw: tè
+  en:
+- head: iūⁿ-phín
+  etym: < log Chi [樣品]
+  pos: n
+  mw: ê
+  en:
+  alt: [kiàn-pún, săm-pú-luh]
+- head: iūⁿ-pún
+  etym: < log Chi [樣本]
+  pos: n
+  mw: ê
+  en:
+- head: iûⁿ-som/-sam/-sim
+  etym: < log Sin [洋蔘]
+  pos: n
+  mw: châng, tiâu
+  en:
+  alt: [se-iûⁿ-som]
+- head: iûⁿ-thô/-tô
+  etym: < log Sin [羊桃]
+  pos: n
+  mw: châng, lia̍p
+  en:
+- head: iûⁿ-tiâu
+- head: iûⁿ-tô

@@ -1,0 +1,114 @@
+- head: kiáⁿ-sài
+  etym: (< log Sin + tr [kiáⁿ婿])
+  pos: n
+  mw: ê
+- head: kiaⁿ-sí
+- head: kiaⁿ-siâⁿ
+  etym: (< log Sin [京城])
+  pos: n
+- head: kiáⁿ-sun
+  etym: (< log Sin + tr [kiáⁿ孫])
+  pos: n
+  takes_a2: true
+  mw: ê
+- head: kiàⁿ-tâi
+- head: kiâⁿ-tāng
+  etym: (< log Chi [行動])
+  pos: v
+  cf: [hêng-tōng]
+- head: kiaⁿ--tio̍h
+- head: Kiaⁿ-to͘
+  etym: (< log Nip [京都])
+  pos: n
+  alt: [Khiò-tò]
+- head: kiâⁿ-tōa-lé
+- head: kiâⁿ-ut-táu
+- head: kiah
+- head: kia̍h
+- head: kia̍k-kia̍k-kiò
+- head: kiam
+  etym: (< log Sin [兼])
+  pos: v
+  1:
+    ex:
+      - tw: hāu-tiúⁿ ~ kòng-cheng qv
+        en:
+      - tw: īⁿ-tiúⁿ ~ hē-chú-jīm
+        en:
+  2:
+    ex:
+      - tw: ~ kúi-nā/-ā keng ha̍k-hāu
+        en:
+- head: kiâm
+- head: kiám¹
+- head: kiám²
+- head: kiàm
+- head: kiâm-bah
+- head: kiâm-bê, kiâm-bô̤
+- head: kiám-bián
+  etym: (< log Nip [減免])
+  pos: v
+- head: kiám-cha
+  etym: (< log Nip [檢查])
+  defs:
+    - pos: n
+      mw: pái
+    - pos: v
+- head: kiâm-chàng
+- head: kiâm-chhài
+- head: kiám-chhái
+- head: kiám-chhat-koaⁿ
+  etym: (< log Nip [檢察官])
+  pos: n
+  mw: ê
+- head: kiâm-chháu
+- head: kiâm-chiáⁿ
+- head: kiám-chió
+  etym: (< log Sin [減少])
+  pos: v
+- head: kiam-chit
+  etym: (< log Chi [兼職])
+  pos: v
+- head: kiâm-chúi
+- head: kiám-e̍k
+  etym: (< log Nip [檢疫])
+  pos: v
+- head: kiám-giām
+  etym: (< log Sin [檢驗])
+  pos: v
+- head: kiám-hêng
+  etym: (< log Nip [減刑])
+  pos: v
+- head: kiâm-hî
+  etym: (< Sin [])
+- head: kiám-hō
+  etym: (< log Nip [減號])
+  pos: n
+  mw: ê
+  alt: [măi-ná-suh]
+- head: kiám-hoat
+  etym: (< log [減法])
+  pos: n
+- head: kiam-jīm/-gīm/-līm
+  etym: (< log Nip [兼任])
+  pos: v
+- head: kiám-kè
+  etym: (< log Sin [減價])
+  pos: v
+  alt: [siah-kè]
+- head: kiám-khin
+  etym: (< log Sin [減輕])
+  pos: v
+- head: kiám-kí/-kú/-kṳ
+  etym: (< log Nip [檢舉])
+  pos: v
+- head: kiàm-kong
+  etym: (< sem log Sin [劍光])
+  pos: n
+  ex:
+    - tw: pàng ~
+      en:
+    - tw: thó͘ ~ do.
+      en:
+- head: kiám-kú
+- head: kiâm-moâi, kiâm-môe/kiâm-bê/kiâm-bô̤

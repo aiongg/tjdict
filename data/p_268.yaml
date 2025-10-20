@@ -1,0 +1,121 @@
+- head: khò¹
+  etym: (< log Nip [課])
+  pos: n
+- head: khò²
+  etym: (< log Nip [課])
+  pos: n
+  mw: ê
+- head: khò
+- head: khò
+- head: kho-á-lah, kho-óa-lah/kho͘-á-lah
+- head: khó-ài
+  etym: (< log Sin [可愛])
+  pos: adj
+- head: kho-ba̍k, kho-bo̍k/khe-ba̍k
+  etym: (< col log Nip [科目])
+  pos: n
+  mw: ê
+- head: khò-bûn
+  etym: (< log Chi [課文])
+  pos: n
+  mw: phiⁿ
+- head: khó-chek
+  etym: (< log Chi [考績])
+  pos: n
+- head: khó-chèng
+  etym: (< log Chi [考證])
+  pos: [n, v]
+- head: khó-chhat
+  etym: (< log Nip [考察])
+  pos: v
+- head: khó-chhì
+  etym: (< log Sin [考試])
+  defs:
+    - pos: n
+      mw: pái, tiûⁿ
+    - pos: v
+- head: khó-giām
+  etym: (< log Chi [考驗])
+  pos: [n, v]
+  mw: pái, ê
+- head: khò-gōa
+  etym: (< log Nip [課外])
+  pos: n
+  drv:
+    - tw: ~-chheh
+      etym: (< log Chi [~冊])
+      mw: pún
+      en:
+    - tw: ~ oa̍h-/hoa̍t-tāng/-tōng
+      etym: (< log Nip [~活動])
+      mw: ê, hāng
+      en:
+    - tw: ~ tho̍k-bu̍t
+      etym: (< log Nip [課外の讀物] + tr)
+      mw: pún, phiⁿ
+      en:
+- head: kho-ha̍k
+  etym: (< log Nip [科學])
+  pos: n
+  drv:
+    - tw: ~ hn̂g-/oân-khu
+      etym: (< log Chi [~園區])
+      mw: ê
+      en:
+    - tw: ~-ka
+      etym: (< log Chi [~家])
+      mw: ê
+      en:
+    - tw: ~-koán
+      etym: (< log Chi [~館] < ab Nip [科學博物館])
+      mw: kéng
+      en:
+- head: khó-hêng-sèng
+  etym: (< log Chi [可行性])
+  pos: n
+- head: kho-khá-ín, kho͘-khá-ín
+- head: Khó-khá-khò-là, Khó͘-khá-khò͘-là
+- head: kho-khìn-gù, kho-khìng-gù/kho͘-khìng-gù
+- head: khó-khò
+  etym: (< log Chi [可靠])
+  pos: adj
+- head: kho-khó-ah, kho͘-khó͘-ah
+- head: kho-ki
+  etym: (< log Chi [科技])
+  pos: n
+- head: khó-kiàn
+  etym: (< log Sin [可見])
+  pos: adv
+- head: khó-kǹg, khó-koàn(< col log Sin [考卷])
+  pos: n
+  mw: hūn, tiuⁿ
+- head: khó-kó͘-ha̍k
+  etym: (< log Nip [考古學])
+  pos: n
+- head: khó-koàn
+- head: khó-kùi
+  etym: (< log Chi [可貴])
+  pos: adj
+- head: khò-là, khò͘-là
+- head: khò-lāi
+  etym: (< log [課內])
+  pos: n
+- head: kho-lé-lah, kho͘-leh-lah/kho͘-lé-lah
+- head: kho-lé-sṳ-tō-lò, kho͘-lé-sṳ-tō͘-lò͘
+- head: khó-lêng|khó͘-|khóⁿ-
+  etym: (< log Nip [可能])
+  defs:
+    - pos: [n, adj]
+      drv:
+        - tw: ~-sèng
+          etym: (< log Nip [~性])
+          mw: ê
+          en:
+    - pos: adv
+- head: khó-lī/-lū/-lṳ
+  etym: (< log [考慮])
+  pos: [n, v]
+- head: khó-liân/-lîn|khó͘-
+  etym: (< log Sin [可憐])
+  pos: v
+- head: khó-lū

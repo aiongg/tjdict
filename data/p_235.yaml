@@ -1,0 +1,114 @@
+- head: kang-kū/-khū
+  etym: (< log Nip [工具])
+  pos: n
+  alt: [ke-si-thâu-á]
+- head: kang-lâng
+  etym: (< log Chi [工人])
+  pos: n
+  mw: ê
+  alt: [kang-á]
+- head: kang-liâu
+- head: kàng-lo̍h
+  etym: (< log Sin [降落])
+  pos: v
+  drv:
+    - tw: ~-sòaⁿ
+      etym: (< log Chi [~傘])
+      mw: niá
+      en:
+      alt: [lo̍h-ha-sòaⁿ]
+- head: káng-oân/-goân
+  etym: (< log Chi [講員])
+  pos: n
+  mw: ê
+- head: Káng-pè
+  etym: (< log Chi [港幣])
+  pos: n
+  mw: tiuⁿ, lia̍p
+- head: kang-peng
+  etym: (< log Nip [工兵])
+  pos: n
+  mw: ê
+- head: kàng-pòaⁿ-kî
+  etym: (< log Chi < tr; cf En lower a flag to half-mast [降半旗])
+  pos: v
+- head: kang-pún-hùi
+- head: kang-san
+  etym: (< log Sin [江山])
+  pos: n
+- head: kang-siang koán-lí|-siong…
+  etym: (< log Chi [工商管理])
+  pos: n
+- head: káng-si̍p-pan
+  etym: (< log Chi [講習班])
+  pos: n
+  mw: ê
+- head: káng-su(< log Nip [講師])
+  pos: n
+  mw: ê
+- head: káng-tâi
+  etym: (< log Sin [講台])
+  pos: n
+  mw: ê
+- head: kang-tē,/-tōe
+  etym: (< log Chi [工地])
+  pos: n
+- head: kang-têng/-thêng/-tiâⁿ
+  etym: (< log Chi < sem Nip[工程])
+  pos: n
+  mw: ê
+  drv:
+    - tw: ~-su
+      etym: (< log Chi [~師])
+      mw: ê
+      en:
+- head: kang-thâu
+- head: kang-thêng
+  det: kang-têng
+- head: kang-tho̍k
+  etym: (< log Chi [工讀])
+  pos: v
+  drv:
+    - tw: ~-seng
+      etym: (< log Chi [~生])
+      mw: ê
+      en:
+- head: kang-tiâⁿ
+  det: kang-têng
+- head: kang-tiûⁿ
+  etym: (< log Nip [工場])
+  pos: n
+  1:
+    mw: ê, keng
+  2:
+    mw: keng
+    alt: [kang-chhiáng]
+    ex:
+      - tw: khui ~
+        en:
+- head: káng-tō|kóng-
+  etym: (< log Sin [講道])
+  pos: v
+  alt: [kóng tō-lí]
+- head: kang-tōe
+- head: kap¹
+  etym: (< log Sin [合])
+  pos: v
+  1:
+    idm:
+      - tw: ~ io̍h-á
+        en:
+  2:
+    ex:
+      - tw: kā káng-sī ~-·khí-·lâi.
+        en:
+- head: kap²
+- head: ka̍p
+- head: kap-á
+- head: kap-chōa
+- head: kap-koai, kap-koe
+- head: kap-phāng
+- head: kat
+- head: kát
+- head: kat-thâu
+- head: kau¹

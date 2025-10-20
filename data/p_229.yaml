@@ -1,0 +1,181 @@
+- head: kàⁿ
+  etym: (< Sin)
+  pos: n
+  alt: [hoat-kàⁿ]
+- head: kaⁿ-ga̍k/-ge̍k
+  etym: (< log Nip [監獄])
+  pos: n
+  mw: keng
+  alt: [kaⁿ-lô]
+- head: kaⁿ-lô
+  etym: (< log Sin [監牢])
+  pos: n
+  mw: ê, keng
+  alt: [kaⁿ-ga̍k]
+- head: kâⁿ-lún-sún
+  det: ka-lún-sún
+- head: kaⁿ-ná
+  etym: (< log Sin [橄欖])
+  pos: n
+  mw: châng, lia̍p
+- head: káⁿ-ná
+  det: ká-ná
+- head: kaⁿ-ná-iû
+  etym: (< log Sin [橄欖油])
+  pos: n
+- head: kaⁿ-ná-kiû
+  etym: (< log Chi < tr En rugby [橄欖球])
+  pos: n
+  mw: lia̍p, tiûⁿ
+- head: kaⁿ-pâng
+  etym: (< log Nip [監房])
+  pos: n
+  mw: keng
+- head: káⁿ-sí
+  pos: adj
+  1:
+    en:
+  2:
+    en:
+- head: káⁿ-sī
+  etym: (< Sin)
+  defs: 
+  - pos: adj
+    en:
+  - pos: adv
+    en:
+    ex:
+    - tw: He ~ i.
+      en: 
+- head: kah¹
+  etym: (< Sin)
+  defs:
+  - pos: n
+    en:
+  - pos: adj
+    en:
+- head: kah²
+  etym: < ab Neth akker
+  mw: 
+  en:
+- head: kah³
+  pos: v
+  en:
+  ex:
+  - tw: ~ kóe-/ké-chiuⁿ
+    en:
+- head: kah⁴
+  pos: v 
+  1:
+    en:
+    ex:
+    - tw: Chi̍t a̍p ka-pi, ~ chi̍t tè au-á.
+      en:
+    - tw: ~ kè-chng
+      en:
+    - tw: ~ lêng-kiāⁿ
+      en:
+  2:
+    en:
+    ex:
+    - tw: Chheⁿ saⁿ ~ pe̍h kûn, chin hó-khòaⁿ.
+      en:
+  3:
+  en:
+- head: kah⁵
+  etym: 
+  defs:
+  - pos: prep
+    en:
+    alt : [kiau², hâm²]
+    ex: 
+    - tw: Góa ~ i khì khòaⁿ.
+      en:
+    - tw: Góa ~ i oan-ke.
+      en:
+    - tw: Che ~ he bô-kāng.
+      en:
+  - pos: conj
+    en: 
+    alt : [kiau², hâm², chhām]
+    ex: 
+    - tw: Hî ~ hê long sī chúi-sán.
+      en:
+
+- head: kah⁶
+  etym: < kà3, q.v.
+  pos: [prep, gp]
+- head: kah⁷
+  etym: < kà5, q.v.
+  pos: conj
+- head: káh
+  etym: < kah6 … < kà3 …
+  pos: gp
+- head: kah-á
+  pos: n
+  mw: niá
+- head: kah-ha̍h
+  pos: n
+  mw: ha̍h, tè
+- head: kah-ì
+  etym: < log Sin [kah意]
+    (< [合意])
+- head: kah-kip lô͘-môa
+  etym: < log Chi + tr [甲級鱸鰻]
+  pos: n
+  mw: ê
+- head: kah-nā
+  etym: < kà-nā, q.v.
+- head: kah-pán
+  etym: < log [甲板]
+  pos: n
+- head: kah-phōe/-phē/-phō̤
+  pos: v
+- head: kah-sàng
+  etym: < []
+  pos: v
+- head: kai¹
+  etym: (< log Nip [階])
+  pos: mw
+  alt: [chàn, lâu¹]
+- head: kai²
+  etym: < contr kā2 i2
+  pos: prep
+  alt: [ka3]
+- head: kái¹‖kài
+  etym: < TW pái1 + Nip kai
+  pos: mw
+  alt: [pái, mái]
+- head: kái²
+  etym: (< log Sin [改])
+  pos: v
+  1:
+  2:
+    ex:
+      - tw: ~ hun, ~ chiú
+        en:
+  3:
+    alt: [ōaⁿ]
+    ex:
+      - tw: kin-chio bô chèng, ~ chèng pin-nn̂g
+        en:
+- head: kài¹
+  etym: (< log Nip [界])
+  pos: suf
+  ex:
+    - tw: hū-lí-~
+      en:
+    - tw: kàu-io̍k-~
+      en:
+    - tw: Tâi-gí-~
+      en:
+- head: kài²
+  etym: (< log Chi [屆])
+  pos: mw
+  ex:
+    - tw: tē-it ~ pit-gia̍p-seng
+      en:
+- head: kài³
+  pos: mw
+  det: kái¹
+- head: kài⁴

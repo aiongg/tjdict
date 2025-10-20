@@ -1,0 +1,169 @@
+- head: ki-khì
+- head: kî-khó
+  etym: (< log Chi [期考])
+  pos: n
+  mw: pái
+- head: ki-ki-háu
+- head: kì-kì-háu
+- head: ki-kí-kia̍k-kia̍k
+- head: ki-ki-kiò
+- head: ki-kí-kiu̍h-kiu̍h
+- head: kî-kî-koài-koài
+  etym: (< log Sin [奇奇怪怪])
+  pos: adj
+- head: ki-kí-ku̍h-ku̍h/-kū-kū
+- head: ki-kim
+  etym: (< log Nip [基金])
+  pos: n
+  mw: pit, ê
+  drv:
+    - tw: -~hōe
+      etym: (< log Chi [~會])
+      mw: ê
+      en:
+- head: kì-kò
+  etym: (< log Chi [記過])
+  pos: v
+- head: kî-koaⁿ
+  etym: (< log Sin [旗竿])
+  pos: n
+  mw: ki
+  cf: [kî-khoáiⁿ]
+- head: kî-koài
+  etym: (< log Sin [奇怪])
+  pos: adj
+- head: kî-koáiⁿ
+- head: ki-koan¹
+  etym: (< log Nip [機關])
+  pos: n
+  mw: ê
+  ex:
+    - tw: chèng-hú ~
+      en:
+- head: ki-koan²
+  etym: (< log Sin [機關])
+  pos: n
+  mw: ê
+  drv:
+    - tw: ~-chhèng
+      etym: (< log Nip [~銃])
+      mw: ki
+      en:
+- head: kì-kong
+  etym: (< log Chi [記功])
+  pos: v
+- head: kī-kū-kiò
+- head: ki-kut
+- head: kí-lē|kú-|kṳ-
+  etym: (< log [舉例])
+  pos: v
+- head: kì-lē, kù-lōe/kṳ-lōe/kṳ-lòe
+- head: kì-le̍k
+- head: ki-lêng
+  etym: (< log Nip [機能])
+  pos: n
+  ex:
+    - tw: ~ thè-hòa
+      en:
+- head: ki-lí/-lú/-lṳ
+  etym: (< log Sin [妓女])
+  pos: n
+  mw: ê
+- head: kí-li
+- head: kì-liām
+  etym: (< log Nip < Sin [記念])
+  pos: n
+  drv:
+    - tw: ~-chheh
+      etym: (< log [~冊])
+      mw: pún
+      en:
+      ex:
+        - tw: pit-gia̍p ~-chheh
+          en:
+    - tw: ~-hōe
+      etym: (< log Nip [~會])
+      mw: ê
+      en:
+    - tw: ~-ji̍t/-gi̍t/-li̍t
+      etym: (< log Nip [~會])
+      mw: ê
+      en:
+    - tw: ~-phín
+      etym: (< log Nip [~品])
+      mw: ê
+      en:
+    - tw: ~-pi
+      etym: (< log Nip [~埤])
+      mw: tè, ki
+      en:
+    - tw: ~-tn̂g
+      etym: (< à la [記念] <log Chi [~堂])
+      mw: keng
+      en:
+- head: kî-lîn-lo̍k
+- head: kì-lio̍k/-le̍k/-lo̍k
+  etym: (< log Nip < Sin [記錄])
+  defs:
+    - pos: n
+      1:
+        mw: ê, hūn
+        ex:
+          - tw: hōe-gī ~
+            en:
+      2:
+        mw: ê
+    - pos: v
+  drv:
+    - tw: -~phìⁿ
+      etym: (< log Chi [~片])
+      mw: phìⁿ, tè
+      en:
+- head: ki-liû-chèng|ku-|kṳ-
+  etym: (< log Chi [居留證])
+  pos: n
+  mw: tiuⁿ
+- head: ki-liû-khoân/-koân/ku-|kṳ-
+  etym: (< log Chi [居留權])
+  pos: n
+- head: kì-lō͘
+- head: kì-lo̍k
+- head: ki-lú
+- head: ki-lu̍t
+  etym: (< log Chi [機率])
+  pos: n
+- head: kì-miâ tâu-phiò
+  etym: (< log Nip [記名投票])
+  defs:
+    - pos: n
+      mw: pái
+    - pos: v
+- head: kí-pān|kú-|kṳ-
+  etym: (< log Chi [舉辦])
+  pos: v
+- head: kî-phàu
+  etym: (< log Chi [旗袍])
+  pos: n
+  mw: niá
+- head: ki-phiò
+  etym: (< log Chi [機票])
+  pos: n
+  mw: tiuⁿ
+- head: kî-pôaⁿ
+  etym: (< log Sin [棋盤])
+  pos: n
+  mw: ê
+- head: ki-pún
+  etym: (< log Nip < Sin [基本])
+  pos: [n, adj]
+  drv:
+    - tw: ~-kàu-gī
+      en:
+      etym: (< log Chi [~教義])
+    - tw: ~-kàu-gī-phài
+      en:
+      etym: (< log Chi [~教義派])
+    - tw: ~-pôaⁿ
+      en:
+    - tw: ~-siāng/-siōng
+      en:

@@ -1,0 +1,138 @@
+- head: kì, kù/kṳ
+- head: kì, kìⁿ/kù/kṳ
+- head: kî-á
+- head: kì-á
+- head: ki-á-peng
+- head: kî-bé, kî-bô̤
+- head: ki-bi̍t
+  etym: (< log Sin [機密])
+  pos: [n, adj]
+- head: kî-bóe, kî-bé/kî-bó̤
+- head: kì-chài
+  etym: (< log [記載])
+  pos: v
+- head: kì-chāi, kìⁿ-chāi/kù-chāi/kṳ-chāi
+- head: kí-cháiⁿ
+- head: ki-chân
+  etym: (< log [基層])
+  pos: n
+  alt: [ki-chàn]
+- head: ki-chè
+  etym: (< log Nip < tr En mecha-nism[機制])
+  pos: n
+  mw: ê
+- head: kî-chek/-jiah/-giah/-liah
+  etym: (< log Nip [奇跡])
+  pos: n
+  mw: ê
+- head: ki-chhia-hâng
+- head: kí-chhiú-lé|kú-|kṳ-|kia̍h-|gia̍h-|giâ-
+  etym: (< ab log Nip [舉手の禮][舉手禮])
+  pos: n
+  mw: ê
+- head: ki-chhó͘
+  etym: (< log Nip [基礎])
+  pos: n
+  mw: ê
+- head: kì-chiá
+  etym: (< log Nip < Sin [記者])
+  pos: n
+  mw: ê
+  ex:
+    - tw: sin-bûn ~
+      en:
+  drv:
+    - tw: -~hōe
+      etym: (< log Chi < Nip [記者會見] < tr En press/news confer-ence [~會])
+      mw: ê
+      en:
+- head: kī-choa̍t|kū-|kṳ-
+  etym: (< log Nip < Sin [拒絕])
+  pos: v
+- head: kì-ek
+  etym: (< log Nip [記憶])
+  pos: n
+  ex:
+    - tw: sit-khì ~
+      en:
+- head: kí-goân-chêng
+  etym: (< log Nip [紀元前])
+  pos: n
+  alt: [Bí-si]
+- head: ki-hâi
+  etym: (< log Nip < Sin [機械])
+  pos: n
+  alt: [ke-/ki-khì]
+  drv:
+    - tw: -~hòa
+      etym: (< log Nip < tr En mech-anize [~化])
+      en:
+    - tw: -~sèng
+      etym: (< log Chi < tr En mechanical [~性])
+      en:
+  ex:
+    - tw: ~-sèng ê tōng-chok
+      en:
+- head: kî-hān
+  etym: (< log Nip [期限])
+  pos: n
+  mw: ê
+- head: kí-hêng|kú-|kṳ-
+  etym: (< log Nip < Sin [舉行])
+  pos: v
+- head: kî-hî
+- head: ki-hng
+  etym: (< log Sin [飢荒])
+  pos: [n, v]
+- head: ki-hô|kí-
+  etym: (< log Nip < EChi tr Lat geometria [幾何])
+  pos: n
+- head: kì-hō
+  etym: (< log Sin [記號])
+  pos: n
+  mw: ê
+- head: ki-hōe
+  etym: (< log Nip < Sin [機會])
+  pos: n
+  mw: ê, pái
+  drv:
+    - tw: ~-chú-gī
+      etym: (< log Chi [~主義])
+      en:
+    - tw: ~-chú-gī-chiá
+      etym: (< log Chi [~主義者])
+      mw: ê
+      en:
+    - tw: ~-~ ;
+      alt: [chhiàng-sù-chhiàng-sù]
+      en:
+    - tw: -~lu̍t
+      etym: (< log Chi [~率])
+      en:
+- head: kĭ--ì
+- head: ki-iàu pì-si/-su/-sṳ
+  etym: (< log Chi [機要秘書])
+  pos: n
+  mw: ê
+- head: ki-in
+  etym: (< log Chi < En gene [基因])
+  pos: n
+- head: kî-jí/-gí
+  etym: (< *kî-chí  < log Sin [棋子][棋jí])
+  pos: n
+  takes_a2: true
+  mw: lia̍p, jí
+- head: kì-jiân/-giân/-liân
+  etym: (< log Sin [既然])
+  pos: conj
+- head: kī-kā-kiŭ
+- head: kî-kan
+  etym: (< log Nip [其間])
+  pos: n
+  mw: ê
+- head: kî-khá
+- head: kî-khan
+  etym: (< log Chi; cf Nip [定期刊行物] < tr En periodical [期刊])
+  pos: n
+  mw: ê, hūn, kî, pún
+  

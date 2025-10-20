@@ -1,0 +1,193 @@
+- head: ká-ná|káⁿ-|kà-
+  etym: < [假若]
+  defs:
+    - pos: v
+      en:
+      ex:
+        - tw: ~ kâu ·lè
+          en:
+    - pos: adv
+      en:
+      ex:
+        - tw: ~ m̄-sī án-ne
+          en:
+- head: kà-ná
+  etym: < …kà³ ná1 + ká-ná, q.v.
+- head: kà-nā‖kah-
+  etym: < conj + conj
+  pos: conj
+  en: 
+  ex:
+    - tw: ~ án-ne, lán tiō mài.
+    - en:
+- head: Ka-ná-tāi
+  etym: (< log Chi < Canada [加拿大])
+  pos: n
+- head: ka-pan
+  etym: (< log Chi [加班])
+  pos: v
+- head: ka-pan-chhia
+  etym: (< log Chi [加班車])
+  pos: n
+  mw: tâi, chōa, pang
+- head: ka-pan-hùi
+  etym: (< log Chi [加班費])
+  pos: n
+- head: ka-pe̍h-sún
+- head: kà-pháiⁿ‖-phái
+  pos: v
+  idm: 
+    - tw: ~ gín-á-tōa-sè
+    - en: 
+- head: ka-pi
+  etym: cf Mul kopi, Esp café, Turki
+  pos: n
+  drv:
+    - tw: ~-sek
+      en:
+      etym: (< log Chi [] + tr)
+    - tw: ~-thiaⁿ
+      en:
+      etym: (< log Chi [] + tr)
+    - tw: ~-toh
+      en:
+      etym: (< log Chi [] + tr < En coffee table)
+      mw: chiah, tè
+- head: ka-pò͘
+  pos: n 
+  mw: khûn, tè
+- head: ka-pōe/-pē/-pō̤ 
+  etym: (< log Sin [加倍])
+  pos: [v, adv]
+  alt: [têng-pōe]
+- head: ka-pu-chí-nò͘‖kha-
+  etym: < It cappuccino
+  pos: n
+- head: ka-sán
+  etym: (< log Sin [家產])
+  pos: n
+  alt: [ke-gia̍p]
+- head: kà-sàng‖khà-
+  etym: < Nip kāsan < ab o-kāsan 
+  pos: n
+  mw: ê
+- head: kà-sī¹
+  etym: (< log Sin [教示])
+  pos: v
+  1:
+    ex:
+      - tw: bô ~
+        en:
+  2:
+- head: kà-sī²
+  pos: conj 
+  alt: [kà-nā]
+- head: ká-siat
+  etym: (< log Nip [假設])
+  defs:
+    - pos: n
+      mw: ê
+    - pos: v
+- head: ka-sin
+  etym: (< log Chi [加薪])
+  pos: v
+- head: ka-sio̍k
+  etym: (< log Sin [家屬])
+  pos: n
+  mw: ê
+- head: ka-sok
+  etym: (< log Nip [加速])
+  pos: v
+- head: ká-sú|khá-
+  etym: (< log Sin [假使])
+  pos: conj
+  alt: [nā]
+- head: kà-sú chip-chiàu
+  etym: (< log Chi [駕駛執照])
+  pos: n
+  mw: tiuⁿ
+- head: ka-tang
+  pos: n
+  mw: châng
+- head: ka-têng‖ke-
+  etym: (< log Nip < Sin [家庭])
+  pos: n
+  mw: ê
+- head: ká-tēng
+  etym: (< log Nip [假定])
+  pos: n
+  mw: ê
+- head: ká-thiàⁿ
+  etym: (< log Chi [絞痛])
+  pos: v
+  alt: [kiù-ká-thiàⁿ]
+  ex:
+    - tw: sim ~
+      en:
+- head: ka-tī/-kī/-lī‖kai-kī
+  pos: pron
+- head: ka-tiúⁿ/ke-
+  etym: (< log Nip [家長])
+  pos: n
+  mw: ê
+- head: ka-to
+  pos: n
+  mw: ki
+- head: Ka-va-lán -ba-
+  etym: < Kav Kavalan
+  pos: n
+  1:
+    mw: cho̍k, ê 
+    alt: [Kap-má-lân]
+  2:
+    mw: ê
+  3:
+    mw: kù
+- head: kaⁿ
+  etym: (< Sin [])
+  pos: n 
+  ex:
+   - tw: tī ~-lāi
+     en:
+   - tw: tī ~-·ni
+     en:
+- head: kâⁿ
+  pos: v
+  1:
+    ex:
+    - tw: chi̍t ê cha-bó͘-lâng ~ gō͘ ê gín-á, î-bîn khì gōa-kok chò-/chòe-seng-lí
+      en:
+    - tw: ~ siuⁿ chē, ~ kà lauh-lauh-seh
+      en:
+  2:
+    ex:
+    - tw: thì-thâu ~ bē sé-thâu-mo͘-chúi
+    - en:
+  3:
+    ex:
+    - tw: Thâm ū ~ hoeh/huih.
+    - en:
+  4:
+    ex:
+    - tw: ~-~-chòe-hóe, hun-bē-chheng-chhó
+    - en:
+- head: káⁿ¹
+  etym: (< Sin [])
+  defs:
+   - pos: aux 
+     ex:
+      - tw: Kiò lí khì sí, lí kám ~?
+      - en:
+     idm: 
+      - tw: ~ chò/chòe, ~ tam-tng
+      - en:
+   - pos: adj
+     ex: 
+      - tw: Lí chin ~.
+      - en:
+- head: káⁿ²
+  etym:
+  pos: adv
+  ex: 
+    - tw: Sū-si̍t ~ m̄-sī án-ne ·o͘.
+    - en: 

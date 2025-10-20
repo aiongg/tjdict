@@ -1,0 +1,852 @@
+- head: jê
+  det: jôe
+- head: jé-lih/-lì
+  etym: < Nip zerī < jelly
+  pos: n
+- head: jô̤
+  det: jôe
+- head: jek¹
+  pos: v
+  det: jiok
+- head: jek²
+  etym: < chek³, qv
+- head: je̍k
+  det: jio̍k¹
+- head: jém
+  etym: < En jam
+  pos: n
+  alt: [jiám¹, jiá-muh]
+- head: jéng
+  det: jiông¹²³
+- head: jî|gî|jû|lû|lṳ
+  defs:
+    - pos: v
+      1:
+        en:
+        ex:
+          - tw: sòaⁿ ~-·khì
+            en:
+          - tw: Lín sio-cheⁿ kóng, góa thiaⁿ kà lóng ~-·khì.
+            en:
+      2:
+        en:
+        alt: [lu]
+        ex:
+          - tw: LÍ mài lâi chia ~.
+            en:
+    - pos: adj
+      1:
+        en:
+        ex:
+          - tw: Tāi-chì chin ~.
+            en:
+      2:
+        en:
+        alt: [lu]
+        ex:
+          - tw: Chit ê gín-á chin ~.
+            en:
+- head: jí|gí|lí
+  etym: < chí¹ < Sin [籽]
+  defs:
+    - pos: n
+      1:
+        en:
+        ex:
+          - tw: kî-~
+            en:
+      2:
+        en:
+        ex:
+          - tw: khîm-~
+            en:
+          - tw: o͘-~
+            en:
+    - pos: mw
+      1:
+        en:
+      2:
+        en:
+      3:
+        en:
+- head: jī¹|gī|lī
+  etym: < *chī < Sin [字]
+  defs:
+    - pos: n
+      mw: ê
+      en:
+    - pos: mw
+      en:
+- head: jī²|gī|lī
+  etym: < Sin [餌]
+  pos: n
+  alt: [hî-jī, tiò-jī]
+- head: jī³|gī|lī
+  etym: < Sin [二]
+  pos: num
+  1:
+    en:
+    cf: [nn̄g]
+    ex:
+      - tw: it-~ ~-~ nî
+        en:
+      - tw: Kiú-~-it tōa tē-tāng
+        en:
+  2:
+    en:
+    ex:
+      - tw: bān-~
+        en:
+      - tw: chheng-~
+        en:
+      - tw: pah-~
+        en:
+      - tw: chi̍t-pah khòng ~
+        en:
+      - tw: cha̍p-~
+        en:
+      - tw: jī-~
+        en:
+  3:
+    en:
+    ex:
+      - tw: ~-it
+        en:
+      - tw: ~-jī
+        en:
+      - tw: ~-saⁿ
+        en:
+  4:
+    en:
+    ex:
+      - tw: ~-goe̍h Chhe-~
+        en:
+      - tw: ~ hō
+        en:
+      - tw: ~-hō-á
+        en:
+      - tw: ~ miâ
+        en:
+      - tw: ~-peh
+        en:
+- head: jī-bīn/gī-/lī-
+  etym: < log Nip [字面]
+  pos: n
+- head: jī-bó/-bú|gī-|lī-
+  etym: < log Sin [字母]
+  pos: n
+  mw: ê
+  en:
+- head: jī-bō͘|gī-|lī-
+  etym: < log Nip [字幕]
+  pos: n
+- head: jī-bú
+  det: jī-bó
+- head: jī-cháiⁿ|gī-|lī-
+  etym: < [二指]
+  pos: n
+  mw: ki, cháiⁿ
+  en:
+  alt: [kí-cháiⁿ]
+- head: jī-cha̍p|gī-|lī-
+  etym: < Sin [二十]
+  pos: num
+- head: jî-chháng-chháng|gî-|lî-|jû-|lû-
+  pos: adj
+- head: jî-chhè-chhè/-chhé-chhé|gî-|lî-
+  pos: adj
+- head: jī-chhiú|gī-|lī-
+  etym: < log Chi [二手] < tr En secondhand
+  pos: adj
+  drv:
+    - tw: ~-chhia
+      etym: < log Chi [~車] < tr En secondhand car
+      mw: tâi
+      en:
+    - tw: ~-hòe/-hè
+      etym: < log Chi [~貨]
+      en:
+    - tw: ~-hun
+      etym: < tr + log Chi [~煙] + tr En secondhand smoke
+      en:
+- head: jî-chhú-jî-chhú, gî-chhú-gî-chhú/lî-chhú-lî-chhú/jû-chhú-jû-chhú/lû-chhú-lû-chhú/jṳ-chhṳ-jṳ-chhṳ/lṳ-chhṳ-lṳ-chhṳ
+  page: 217
+- head: jī-chóa-láng, gī-chóa-láng/lī-chóa-láng
+- head: Jī--goe̍h, Jī--ge̍h/Jī-ge̍h/Gī--goe̍h/Lī-ge̍h/Lī-go̤̍h
+- head: jī-hêng, gī-hêng/lī-hêng
+- head: jĭ--ì
+- head: jī-iâng hòa-thòaⁿ|gī-|jī-|lī-iông …
+  etym: < log Chi [一氧化碳] < tr carbon dioxide
+  pos: n
+  alt: [Sí-ó-thú]
+- head: jī-im|gī-|lī-
+  etym: < log Sin [字音]
+  pos: n
+  mw: ê
+  en:
+- head: Jī-jī-pat|Gī-gī-|Lī-lī-
+  pos: n
+- head: jî-kà-kà, jû-kà-kà
+- head: Jī-káu-mê, Jī-káu-mî/Gī-káu-mê/Lī-káu-mî
+- head: jī-kun|gī-|lī-
+  etym: < sem log Nip [二軍]
+  pos: n
+- head: Jî-lâi|Gî-|Lî-|Jû-|Lû-|Lṳ-|Jṳ-
+  etym: < log Chi [如來] < MC tr Sans Tathagata
+  pos: n
+  drv:
+    - tw: ~-hu̍t
+      etym: < log Sin [~佛]
+      en:
+- head: jī-lûn, gī-lûn/lī-lûn
+- head: jī-nái, gī-nái/lī-nái
+- head: jī-oe̍h, jī-u̍ih/gī-oe̍h/lī-u̍ih
+- head: jî-pê
+- head: jì-pù, jì-puh/jì-phù
+- head: jī-sím|gī-|lī-
+  etym: < log Nip [二審]
+  pos: [n, v]
+- head: jī-téng|gī-|lī-
+  etym: < log [二等]
+  pos: n
+  drv:
+    - tw: ~ kok-bîn
+      etym: < log Chi [~國民] < tr En second-class citizen
+      mw: ê
+      en:
+    - tw: ~-peng
+      etym: < log Nip [~兵]
+      mw: ê
+      en:
+- head: jī-thé|gī-|lī-
+  etym: < log Sin [字體]
+  pos: n
+  mw: ê, khoán
+  en:
+- head: jī-tián|gī-|lī-
+  etym: < log Sin [字典]
+  pos: n
+- head: jī-tō͘ siang-hāi|gī-|ji-|lī-…siong-
+  etym: < log Chi [二度傷害]
+  pos: n
+- head: jî-tông-chiat|gī-|lī-
+  etym: < log Chi [兒童節] < tr En Children’s Day
+  pos: n
+- head: jî-tông lo̍k-hn̂g|gî-|lî-
+  etym: < log Sin [兒童樂園]
+  pos: n
+  mw: ê
+  en:
+- head: jia, gia/lia
+- head: jiá, giá/liá
+- head: jia-ji̍t, jia-li̍t/chia-li̍t/gia-gi̍t/lia-li̍t
+  page: 218
+- head: jia-ji̍t-thâu-pang, gia-gi̍t-thâu-pang/chia-ji̍t-thâu-pang/lia-li̍t-thâu-pang
+- head: Jia-kat-tà
+- head: jiá-muh
+- head: jiá-sū|giá-|liá-
+  etym: < log Sin [惹事]
+  pos: v
+  alt: [jiá-tāi-chì]
+- head: jiah, giah/liah
+- head: jia̍k|gia̍k|jio̍k|lio̍k|jio̍h
+  etym: < log Sin [弱]
+  pos: adj
+- head: jiák-khih
+- head: jiák-khuh
+- head: jia̍k-sè|jio̍k-
+  etym: < log Chi [弱勢]
+  pos: adj
+  drv:
+    - tw: ~-chiá
+      en:
+      etym: < log Chi [~者]
+      mw: ê
+    - tw: ~ cho̍k-kûn
+      mw: ê
+      en:
+    - tw: ~ thoân-thé
+      en:
+      etym: < log Chi [~團體]
+      mw: ê
+- head: jia̍k-tiám|jio̍k-
+  etym: < log Nip [弱點]
+- head: jiám
+- head: jiám²|giám|liám
+  etym: < log Sin [染]
+  pos: v
+- head: jiàm-bà
+- head: jiám-tio̍h, giám-tio̍h/liám-tio̍h
+- head: jiân-āu|giân-|liân-
+  etym: < log Sin [然後]
+  pos: conj
+  alt: [liáu-āu]
+- head: jiân-liāu-sòe/-sè|giân-…-sòe|liân-…-sè/-sò̤
+  etym: < log Chi [燃料稅]
+  pos: n
+- head: jiáng, giáng/jióng/lióng
+- head: jiāng, giāng
+- head: jiăng-kián, jiang-gian/chiang-kín
+- head: jia̍p, gia̍p/lia̍p
+- head: jia̍t|gia̍t|lia̍t
+  etym: < log Sin [熱]
+  pos: n
+- head: jia̍t-chêng-|gia̍t-|lia̍t-
+  etym: < log Nip [熱情]
+  pos: [n, adj]
+- head: jia̍t-chúi-khì|gia̍t-|lia̍t-
+  etym: < log Nip [熱水器]
+  pos: [n, adj]
+- head: jia̍t-ho-ho
+- head: jia̍t-lêng|gia̍t-|lia̍t-
+  etym: < log Chi [熱能]
+  pos: n
+- head: jia̍t-liāng|jia̍t-|gia̍t-|lia̍t-
+  etym: < log Nip [熱量]
+  pos: n
+- head: jia̍t-lia̍t, gia̍t-lia̍t/lia̍t-lia̍t(< log Nip [熱烈])
+  pos: n
+- head: jia̍t-liōng
+- head: jia̍t-mn̂g/-mûi|gia̍t-/lia̍t-mn̂g
+  page: 219
+  etym: < log Chi [熱門]
+  pos: n
+  drv:
+    - tw: ~ im-ga̍k
+      etym: < log Chi [~音樂]
+      en:
+- head: jia̍t-phut-phut, gia̍t-phut-phut/lia̍t-phut-phut
+- head: jia̍t-sim|gia̍t-|lia̍t-
+  etym: < log Nip [熱心]
+  pos: adj
+- head: jia̍t-sòaⁿ|gia̍t-|lia̍t-
+  etym: < log Chi [熱線] < tr En hot line
+  pos: n
+  mw: tiâu
+  en:
+  drv:
+    - tw: ~ tiān-oe
+      etym: < log Chi [~電話]
+      mw: ki
+      en:
+- head: jia̍t-tài|gia̍t-|lia̍t-
+  etym: < log Nip [熱帶] < LC tr
+- head: jia̍t-tō͘|gia̍t-|lia̍t-
+  etym: < log Nip [熱度]
+  pos: n
+- head: jiâu, giâu/liâu
+- head: jiáu, giáu/liáu
+- head: jiàu, giàu/liàu
+- head: jiàu-á, giàu-á/liàu-á
+- head: jiàu-chiūⁿ, giàu-chiūⁿ/liàu-chiūⁿ
+- head: jiâu-hûn, giâu-hûn/liâu-hûn
+- head: jiáu-kéng, giáu-kéng/liáu-kéng
+- head: jiáu-loān, giáu-loān/liáu-loān
+- head: jiàu-pê-á, giàu-pê-á/liàu-pê-á
+- head: jiâu-phé-phé, jiâu-phè-phè/jiâu-phì-phè/giâu-phé-phé/liâu-phé-phé
+- head: ji̍h, gi̍h/chhi̍h
+- head: jîm, gîm/lîm
+- head: jím|gím|lím
+  etym: < lit log Sin [忍]
+  pos: v
+  alt: [lún, q.v.]
+- head: jīm|gīm|līm
+  etym: < log Sin [任]
+  pos: mw
+- head: jīm-bēng|gīm-|līm-
+  etym: < log Nip [任命]
+  pos: v
+- head: jīm-bū|gīm-|līm-
+  etym: < log Nip [任務]
+  pos: n
+  mw: ê
+  en:
+- head: jīm-kî|gīm-|līm-
+  etym: < log Nip [任期]
+  pos: n
+  mw: kî
+  en:
+- head: jīm-lāi,|gīm-|līm-
+  etym: < log Sin [任內]
+  pos: n
+- head: jím-nāi|gím-|lím-
+  etym: < log Sin [忍耐]
+  pos: v
+- head: jím-sim|gím-|lím-
+  etym: < log Sin [忍心]
+  pos: [v, adv]
+- head: jím-siū|gím-|lím-
+  etym: < log Sin [忍受]
+  pos: v
+- head: jīm-tēng
+- head: jīm-ti, gīm-ti/līm-ti
+- head: jīm-tông, gīm-tông/līm-tông
+- head: jīm-ûi, gīm-ûi/līm-ûi
+- head: jîn|gîn|lîn
+  etym: < log Sin [仁]
+  pos: n
+- head: jīn|gīn|līn
+  page: 220
+  etym: < log Sin [認]
+  pos: v
+- head: jîn-bîn|gîn-|lîn-
+  etym: < log Sin [人民]
+  pos: n
+  mw: ê
+  en:
+- head: jîn-bûn|gîn-|lîn-
+  etym: < log Nip [人文] tr ; cf En humanity
+  pos: n
+  drv:
+    - tw: ~ ha̍k-kho
+      etym: < log Chi [~學科]
+      en:
+- head: jîn-bu̍t|gîn-|lîn-
+  etym: < log Sin [人物]
+  pos: n
+  mw: ê
+  en:
+- head: jîn-châi|gîn-|lîn-
+  etym: < log Sin [人才]
+  pos: n
+  mw: ê
+  en:
+- head: jîn-chè koan-hē|gîn-|lîn-
+  etym: < log Chi [人際關係] < tr En human relations
+  pos: n
+- head: jîn-chêng|gîn-|lîn-
+  etym: < log Sin [人情]
+  pos: n
+- head: jîn-chéng
+- head: jîn-chèng|gîn-|lîn-
+  etym: < log Nip [人證]
+  pos: n
+  mw: ê
+  en:
+- head: jīn-chèng|gîn-|lîn-
+  etym: < log Nip [認證]
+  pos: v
+- head: jîn-chêng-bī|gîn-|lîn-
+  etym: < log Nip [人情味]
+  pos: n
+- head: jīn-chin|gīn-|līn-
+  etym: < log Sin [認真]
+  pos: v
+- head: jîn-chióng/-chéng|gîn-|lîn-
+  etym: < log Nip [人種]
+  pos: n
+- head: jîn-chit|gîn-|lîn-
+  etym: < log Nip [人質]
+  pos: n
+  mw: ê
+  en:
+- head: jîn-chō ōe-chheⁿ/-chhiⁿ/gîn-…-chheⁿ|lîn-…-chhiⁿ
+  etym: < log Chi [人造衛星]
+  pos: n
+  mw: lia̍p
+  en:
+- head: jīn-chōe|gīn-|līn-
+  etym: < log Sin [認罪]
+  pos: v
+- head: jīn--ê, gīn--ê/līn--ê
+- head: jîn-goân
+- head: jîn-hêng-tō|gîn-|lîn-
+  etym: < log Chi [人行道] < tr ; cf En sidewalk
+  pos: n
+  mw: tiâu
+  en:
+- head: jīn-hūn|gīn-|līn-
+- head: jīn-jī, gīn-gī/līn-lī
+- head: jîn-kan|gîn-|lîn-
+  etym: < log Sin [人間]
+  pos: n
+  alt: [jîn-sè-kan]
+- head: jîn-kang ho͘-khip, gîn-|lîn-
+  etym: < log Nip [人工呼吸]
+  pos: [n, v]
+- head: jîn-ke-chhù, gîn-ke-chhù/lîn-ke-chhù
+- head: jîn-keh|gîn-|lîn-
+  etym: < log Nip [人格]
+  pos: n
+  drv:
+    - tw: ~-chiá
+      etym: < log Nip [~者]
+      mw: ê
+      en:
+- head: jîn-kháu|gîn-|lîn-
+  etym: < log Sin [人口]
+  pos: n
+- head: jîn-khì|gîn-|lîn-
+  etym: < log Nip [人氣]
+  pos: n
+- head: jîn-khoân/-koân|gîn-|lîn-
+  etym: < log Nip [人權]
+  pos: n
+- head: jîn-le̍k-chhia|gîn-|lîn-
+  etym: < log Nip [人力車]
+  mw: tâi
+- head: jīn-lō͘|gīn-|līn-
+- head: jîn-lūi|gîn-|lîn-
+  etym: < log Nip [人類] < Sin
+  pos: n
+  drv:
+    - tw: ~-ha̍k
+      etym: < log Nip [~學] < tr ; cf En
+      en:
+- head: jîn-má
+  page: 221
+- head: jīn-miā|gīn-|līn-
+  etym: < log Sin [認命]
+  pos: v
+- head: jîn-oân, jîn-goân|gîn-|lîn-
+  etym: < log Nip [人員]
+  pos: n
+  mw: ê
+  en:
+- head: jīn-sek|gīn-|līn-|jīm-|gīm-|līm-
+  etym: < log Nip [認識]
+  pos: n
+- head: jîn-seng|gîn-|lîn-
+  etym: < log Sin [人生]
+  pos: n
+- head: jîn-sèng|gîn-|lîn-
+  etym: < log Chi [人性]
+  pos: n
+- head: jîn-seng-koan|gîn-|lîn-
+  etym: < log Nip [人生觀]
+  pos: n
+- head: jîn-sin ê kong-kek|gîn-|lîn-
+  etym: < log Nip [人身攻擊] + tr
+  pos: [n, v]
+- head: jîn-siū pó-hiám|gîn-|lîn-
+  etym: < log Chi [人壽保險]
+  pos: n
+- head: jîn-sò͘|gîn-|lîn-|lâng-
+  etym: < log Sin [人數]
+  pos: n
+- head: jîn-soán, gîn-soán/lîn-soán
+  etym: < log [人選]
+  pos: n
+  mw: ê
+  en:
+- head: jîn-som/-sam/-sim|gîn-|lîn-
+  etym: < log Sin [人蔘]
+  pos: n
+  mw: châng, tiâu
+  en:
+- head: jîn-sū¹|gîn-|lîn-
+  etym: < log [人事人士]
+  pos: n
+- head: jîn-sū²|gîn-|lîn-
+  etym: < log Chi [人士]
+  pos: n
+  mw: ê
+  en:
+- head: jīn-su, gīn-su/līn-sū
+- head: jîn-sū pōe-kéng|gîn-|lîn-
+  etym: < log Chi [人事背景]
+  pos: n
+- head: jîn-sū-sek/-sit
+  etym: < log Chi [人事室]
+  pos: n
+  mw: keng
+  en:
+- head: jīn-tēng/-tiāⁿ|gīn-/līn-|jīm-/gīm-/līm-tēng
+  etym: < log Nip [認定]
+  pos: v
+- head: jīn-ti|gīn-|līn-|jīm-|gīm-|līm-
+  etym: < log Nip [認知]
+  pos: [n, v]
+- head: jīn-tiāⁿ
+- head: jîn-tō|gîn-|lîn-
+  etym: < log Nip [人道] < sem Sin
+  pos: n
+  drv:
+    - tw: ~-chú-gī
+      etym: < log Nip [~主義] < tr ; cf En humanitarianism
+      en:
+    - tw: ~-chú-gī-chiá
+      etym: < log Nip [~主義者] < tr ; cf En humanitarian
+      en:
+- head: jīn-tông|gīn-|līn-|jīm-|gīm-|līm-
+  etym: < log Chi [認同] < tr En identity ; cf Nip [同屬と認める]
+  pos: n
+  drv:
+    - tw: ~-kám
+      etym: < log Chi [~感]
+      en:
+- head: jīn-ûi|gīn-|līn-|jīm-|gīm-|līm-
+  etym: < log [認為]
+  pos: v
+- head: jiō, giō/liō
+- head: jiō-chū, giō-chū/liō-chū
+- head: jio-jiŏ
+- head: jiō-kóng, giō-kóng/liō-kóng
+- head: jiō-kûn-á
+- head: jiō-sng|giō-|liō-
+  etym: < log Nip [尿酸]
+  pos: n
+- head: jiō-tē|giō-|liō-
+  etym: < log Nip [尿袋]
+  pos: n
+  takes_a2: true
+  mw: ê
+  en:
+- head: jió-toh, gió-toh
+- head: jiok, giok/jip/jek/liok
+- head: jio̍k¹, chhio̍k/gio̍k/je̍k
+- head: jio̍k²
+  page: 222
+- head: jio̍k-á, gio̍k-á/lio̍k-á
+- head: jiok-chîⁿ, giok-chîⁿ/jip-chîⁿ/jek-chîⁿ/liok-chîⁿ
+- head: jio̍k-chiá
+- head: jiok-hòe, jiok-hè/giok-hòe/jip-hòe/jek-hòe/liok-hè/liok-hò̤
+- head: jio̍k-kùi, gio̍k-kùi/lio̍k-kùi
+- head: jiok-lâng, giok-lâng/jip-lâng/jek-lâng/liok-lâng
+- head: jio̍k-sè
+- head: jio̍k-thé|gio̍k-|lio̍k-|bah-
+  etym: < log Nip [肉體]
+  pos: n
+  drv:
+    - tw: ~ koan-hē
+      etym: < log Nip [~關係]
+      en:
+- head: jio̍k-tiám
+- head: jiông¹|jêng|giông|liông|lêng
+  etym: < log Sin [絨]
+  pos: n
+  mw: tè
+  en:
+  alt: [jiông-á]
+- head: jiông, jêng/giông/liông/lêng
+- head: jiông³|jêng|giông|liông|lêng
+  etym: < log Sin [茸]
+  pos: n
+  mw: tè
+  en:
+- head: jióng
+- head: jiông-á-pò͘, jêng-á-pò͘/giông-á-pò͘/liông-á-pò͘/lêng-á-pò͘
+- head: jip
+- head: ji̍p|gi̍p|li̍p
+  etym: < log Sin [入]
+  pos: v
+- head: ji̍p-bì, gi̍p-bì/li̍p-bì
+- head: ji̍p-che̍k|gi̍p-|li̍p-
+  etym: < log Nip [入籍]
+  pos: v
+- head: ji̍p-chhiau|gi̍p-|li̍p-
+  etym: < log Nip [入超]
+  pos: [n, v]
+- head: ji̍p-chhiú, gi̍p-chhiú/li̍p-chhiú
+- head: ji̍p-chhù, gi̍p-chhù/li̍p-chhù
+- head: ji̍p-ha̍k
+- head: ji̍p-hè
+- head: ji̍p-hōe/-hè|gi̍p-hòe|li̍p-hè/-hò̤
+  etym: < log Nip [入會]
+  pos: v
+- head: ji̍p-hōe, gi̍p-hōe/li̍p-hōe
+- head: ji̍p-ì, gi̍p-ì/li̍p-ì
+- head: ji̍p-īⁿ|gi̍p-|li̍p-
+  etym: < log Nip [入院]
+  pos: v
+- head: ji̍p-iâⁿ|gi̍p-|li̍p-
+  etym: < log Nip [入營]
+  pos: v
+- head: ji̍p-kaⁿ|gi̍p-|li̍p-
+  etym: < log Sin [入監]
+  pos: v
+- head: ji̍p-káng|gi̍p-|li̍p-
+  etym: < log Sin [入港]
+  pos: v
+- head: ji̍p-kéng|gi̍p-|li̍p-
+  etym: < log Sin [入境]
+  pos: v
+  drv:
+    - tw: ~-chèng
+      etym: < log Chi [~證]
+      en:
+- head: ji̍p-kháu|gi̍p-|li̍p-
+  etym: < log Nip [入口]
+  pos: n
+  mw: ê
+  en:
+- head: ji̍p-khì|gi̍p-|li̍p-
+- head: ji̍p-koh|gi̍p-|li̍p-
+  etym: < log Nip [入閣]
+- head: ji̍p-lâi¹|gi̍p-|li̍p-
+- head: ji̍p-lâi²|gi̍p-|li̍p-
+  page: 223
+- head: ji̍p-lăi|gi̍p-|li̍p-
+- head: ji̍p-lâi-khì|gi̍p-|li̍p-
+- head: ji̍p-liām/-liám/-liàm|gi̍p-|li̍p-
+  etym: < log Sin [入殮]
+  pos: v
+  en:
+- head: ji̍p-mn̂g¹/-mûi/-bûn|gi̍p-|li̍p-mn̂g/-bûn
+  etym: < col log [入門] < sem ji̍p-mn̂g²
+  defs:
+    - pos: n
+      alt: [ji̍p-bûn]
+      en:
+    - pos: v
+      en:
+- head: ji̍p-mn̂g²/-mûi|gi̍p-/li̍p-mn̂g
+- head: ji̍p-o̍h, ji̍p-ha̍k/gi̍p-o̍h/li̍p-o̍h
+  etym: < col log [入學]
+  pos: v
+  en:
+- head: ji̍p-pâng|gi̍p-|li̍p-
+- head: ji̍p-siaⁿ|gi̍p-|li̍p-
+  etym: < log Sin [入聲]
+  pos: n
+  mw: ê
+  en:
+- head: ji̍p-soán|gi̍p-|li̍p-
+  etym: < log Sin [入選]
+  pos: v
+- head: ji̍p-tiûⁿ|gi̍p-|li̍p-
+  etym: < log Nip [入場]
+  pos: v
+  en:
+  drv:
+    - tw: ~-koàn/kǹg
+      etym: < log Nip [~劵]
+      mw: tiuⁿ
+      en:
+- head: ji̍t|gi̍t|li̍t
+  etym: < log Sin [日]
+  pos: n
+  en:
+- head: ji̍t-āu|gi̍t-|li̍t-
+  etym: < log Sin [日後]
+  pos: n
+  en:
+- head: Ji̍t-bûn|Gi̍t-|Li̍t-
+  etym: < log Chi [日文]
+  pos: n
+  en:
+  drv:
+    - tw: ~-sû
+      etym: < log Chi [~詞]
+      mw: ê
+      en:
+- head: Ji̍t-gí|Gi̍t-|Li̍t-
+  etym: < log Nip [日語]
+  pos: n
+  en:
+- head: ji̍t-chí|gi̍t-|li̍t-
+  etym: < log Sin [日子]
+  pos: n
+  en:
+- head: ji̍t-ēng-phín
+- head: Ji̍t-gí/-gú|Gi̍t-gí|Li̍t-gú/-gṳ́#
+  etym: < log Chi [日語]
+  pos: n
+- head: Ji̍t-goa̍t-thâm|Gi̍t-|Li̍t-
+- head: Ji̍t-gú
+- head: ji̍t-iōng-phín|ji̍t-|gi̍t-|li̍t-
+  etym: < log Nip [日用品]
+  pos: n
+- head: ji̍t-kî|gi̍t-|li̍t-
+  etym: < log Sin [日期]
+  pos: n
+- head: ji̍t-kì|gi̍t-|li̍t-
+  etym: < log Nip [日記]
+  pos: n
+  mw: pún
+  en:
+  drv:
+    - tw: ~-phō͘
+      etym: < log Nip [~簿] < Sin
+      mw: pún
+      en:
+- head: ji̍t-kong-e̍k|gi̍t-|li̍t-
+  etym: < log Nip [日光浴]
+  pos: n
+- head: ji̍t-kong-teng|gi̍t-|li̍t-
+  page: 224
+  etym: < log Chi [日光燈]
+  pos: n
+  mw: ki
+  en:
+- head: ji̍t-pan|gi̍t-|li̍t-
+  etym: < log Chi [日班]
+  pos: n
+  mw: pan
+  en:
+- head: Ji̍t-phiò, Gi̍t-phiò/Li̍t-phiò
+  etym: < ana gîn-phiò < log Chi [日票]
+  pos: n
+  mw: tiuⁿ
+  en:
+- head: ji̍t-pò|gi̍t-|li̍t-
+  etym: < log Nip [日報] < EChi tr
+  pos: n
+  mw: hūn, tiuⁿ
+  en:
+- head: Ji̍t-pún|Gi̍t-|Li̍t-
+  etym: < log Nip [日本]
+  pos: n
+- head: ji̍t--sî, gi̍t--sî/li̍t--sî
+- head: ji̍t-siâng seng-oa̍h|gi̍t-siâng…|ji̍t-/li̍t-siông
+  etym: < log Nip [日常生活]
+  pos: n
+- head: ji̍t-thâu|gi̍t-|li̍t-
+  etym: < log Sin [日頭]
+  pos: n
+  mw: lia̍p
+  en:
+- head: jiû, giû/liû
+- head: jiû-hî, giû-hî/liû-hî
+- head: jiû-n̂g
+- head: jiù-sù, jiù-sṳ
+- head: jiû-tō|giû-|liû-
+  etym: < log Nip [柔道]
+- head: jōa, gōa/lōa
+- head: jŏa, gŏa/lŏa
+- head: jōa-chē, jōa-chōe/gōa-chē/lōa-chē
+- head: jōa-chiâⁿ, gōa-chiâⁿ/lōa-chiâⁿ/jŏa-chiâⁿ/gŏa-chiâⁿ/lŏa-chiâⁿ
+- head: jōa-chōe
+- head: jŏa-nī, gŏa-nī/lŏa-nī
+- head: joa̍h, loa̍h
+- head: joa̍h-hip-hip, loa̍h-hip-hip
+- head: joa̍h--lâng
+- head: joa̍h-piàng-piàng
+- head: joa̍h-tak-tak
+- head: joa̍h-thiⁿ, loa̍h-thiⁿ
+- head: joa̍h--tio̍h, loa̍h--tio̍h
+- head: joán, loán
+- head: jôe, jê/jô̤/lôe/lê
+- head: jû
+  page: 225
+- head: jú|lú
+  etym: < log Sin [愈]
+  pos: adv
+- head: jú…jú…|lú…lú…
+  etym: < log Sin [愈…愈…]
+  pos: conj
+- head: jû-chháng-chháng
+- head: Jû-ka|Lû-
+  etym: < log Sin [儒家]
+  pos: n
+  mw: ê
+  en:
+- head: jû-kà-kà
+- head: Jû-lâi
+- head: jú-lâi jú..., lú-lâi lú...
+- head: jūn¹|lūn
+  etym: < log Sin [閏]
+  pos: v
+- head: jūn²|lūn
+  etym: < log Sin [韌]
+  pos: adj
+- head: jūn-goe̍h/-ge̍h|lūn-
+  etym: < log Sin [閏月]
+  pos: n
+- head: jūn-kiù-kiù, jūn-kiuh-kiuh
+- head: jūn-miā, lūn-miā
+- head: jūn-nî|lūn-
+  etym: < log Sin [閏年]
+  pos: n
+- head: jūn-piáⁿ, lūn-piáⁿ
+- head: jūn-pò͘-pò͘

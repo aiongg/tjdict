@@ -1,0 +1,116 @@
+- head: kāng
+- head: kāng
+- head: kang-á
+- head: káng-á-chhùi
+- head: kang-chhiáng, kang-chhiúⁿ
+- head: kang-chîⁿ
+- head: kāng-chi̍t...
+- head: kang-chok
+  etym: (< log Chi [工作])
+  defs:
+    - pos: n
+      cf: [khang-khòe, thâu-lō͘]
+      ex:
+        - tw: tē-hā ~
+          en:
+    - pos: v
+      drv:
+        - tw: ~-chiá
+          mw: ê
+          ex:
+            - tw: Tâi-gí/-gú ~-chiá
+              en:
+          en:
+        - tw: ~-ji̍t/-gi̍t/-li̍t
+          en:
+          etym: (< tr + log Chi < tr En workday [~日])
+          mw: ê
+- head: kang--ê
+- head: kang-gē
+  etym: (< log Sin [工藝])
+  pos: n
+  drv:
+    - tw: ~-phín
+      etym: (< log Nip [~品])
+      en:
+- head: káng-gī
+  etym: (< log Chi < sem Nip [講義])
+  pos: n
+  mw: hūn, tiuⁿ, pún
+- head: kang-gia̍p
+  etym: (< log Nip [工業])
+  pos: n
+  drv:
+    - tw: ~-hòa(< log Nip [~化])
+      en:
+    - tw: ~-khu(< log Chi [~區])
+      mw: ê,khu
+      en:
+- head: kang-goân
+  det: káng-oân
+- head: káng-ha̍k
+  etym: (< log [講學])
+  pos: v
+- head: kang-ha̍k-īⁿ
+  etym: (< log Chi [工學院])
+  pos: n
+  mw: keng
+- head: kang-hōe
+  etym: (< log Nip [工會])
+  mw: nê
+- head: kang-hu
+  etym: (< log Sin [工夫])
+  defs:
+    - pos: n
+      1:
+        ex:
+          - tw: ~ chin chhim
+            en:
+      2:
+        ex:
+          - tw: liān ~
+            en:
+    - pos: adj
+      1:
+        ex:
+          - tw: kiám-cha kà chin ~
+            en:
+      2:
+        ex:
+          - tw: Lí ná chiah ~!? Lâi tiō hó ·a, koh the̍h kà chiah chē mi̍h-kiāⁿ
+            en:
+- head: kang-iú
+  etym: (< log Chi [工友])
+  pos: n
+  mw: ê
+- head: káng-kái
+  etym: (< log Sin [講解])
+  pos: v
+- head: kàng-kē
+  etym: (< log Chi + tr [降kē])
+  pos: v
+  ex:
+    - tw: ~ sêng-pún
+      en:
+- head: káng-kháu
+  etym: (< log Sin [港口])
+  pos: n
+- head: kang-kho/-khe/-kho̤
+  etym: (< log Nip [工科])
+  pos: n
+  mw: kho
+- head: káng-khò
+  det: kóng-khò
+- head: kāng-khoán
+- head: káng-khoe, kang-khoe
+- head: kang-khū
+- head: kàng-kî
+  etym: (< log Chi [降旗])
+  pos: v
+- head: kàng-kip
+  etym: (< log Sin [降級])
+  pos: v
+- head: káng-kiù
+  etym: (< log Sin [講究])
+  pos: [v, adj]
+- head: kāng-kok

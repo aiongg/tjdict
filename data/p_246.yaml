@@ -1,0 +1,163 @@
+- head: keng⁶
+  etym: (< log Sin [莖])
+  pos: mw
+- head: keng⁷
+  etym: (< log Sin [供])
+  pos: v
+- head: keng⁸|kiong
+  pos: v
+  1:
+    ex:
+      - tw: iōng chhă kā pò͘-tē-chhùi ~-·leh
+        en:
+  2:
+    ex:
+      - tw: ~ phòng-í
+        en:
+- head: kéng¹
+  etym: (< log Sin [景])
+  pos: n
+  1:
+    mw: ê
+  2:
+    mw: tè
+- head: kéng²
+- head: kéng³
+- head: kèng¹
+  etym: (< log Sin [敬])
+  pos: v
+  1:
+    ex:
+      - tw: Góa ~ ·lí ·chi̍t ·poe.
+        en:
+  2:
+    ex:
+      - tw: ~ Siāng-tè
+        en:
+- head: kèng²
+- head: kēng
+- head: keng-á¹
+- head: keng-á²
+- head: kèng-ài
+  etym: (< log Sin [敬愛])
+  pos: v
+  alt: [kèng-thiàⁿ]
+- head: kéng-bū-chhù
+  etym: (< log Chi [警務處])
+  pos: n
+- head: keng-chè
+  etym: (< log Nip [經濟])
+  pos: n
+  1:
+    drv:
+      - tw: -~ha̍k
+        en:
+        etym: (< log Nip [~學])
+      - tw: -~hoān-chōe
+        en:
+        etym: (< log Nip [~犯罪])
+      - tw: -~ khéng-/khióng-hông
+        en:
+        etym: (< log Nip [~恐慌])
+        mw: pái
+      - tw: -~pō͘
+        en:
+        etym: (< log Chi [~部])
+      - tw: -~pō͘-tiúⁿ
+        en:
+        etym: (< log Chi [~部長])
+        mw: ê
+  2:
+- head: kēng-cheng|kèng-
+  etym: (< log Nip [競爭])
+  pos: [n, v]
+  drv:
+    - tw: ~-chiá
+      etym: (< log Nip [~者])
+      mw: ê
+      en:
+    - tw: ~-le̍k
+      etym: (< log Nip [~力])
+      en:
+- head: kéng-chèng-sú
+  etym: (< log Chi [警政署])
+  pos: n
+- head: kèng-chhat|kéng-
+  etym: (< ana [敬] log Nip [警察])
+  pos: n
+  mw: ê
+  drv:
+    - tw: -~chhia
+      mw: tâi
+      en:
+    - tw: -~kio̍k
+      etym: (< log Chi [~局])
+      mw: keng
+      en:
+    - tw: -~kio̍k-tiúⁿ
+      etym: (< log Chi [~長])
+      mw: ê
+      en:
+- head: keng-chhiú
+  etym: (< log Sin [經手])
+  pos: v
+- head: keng-chìⁿ
+- head: kéng-chia̍h
+- head: keng-chio
+- head: kèng-chiú
+  etym: (< log Sin [敬酒])
+  pos: v
+- head: keng-êng
+  etym: (< log Sin [經營])
+  pos: v
+- head: keng-giām
+  etym: (< log Nip < Sin [經驗])
+  defs:
+    - pos: n
+      mw: ê
+    - pos: v
+- head: keng-hùi
+  etym: (< log Nip [經費])
+  pos: n
+- head: kèng-jiân
+  etym: (< log Sin [竟然])
+  pos: adv
+  alt: [kóng³]
+- head: keng-kah-thâu
+  etym: (< log Sin [肩胛] + thâu [肩胛頭])
+  pos: n
+- head: kéng-kài
+  etym: (< log Sin [警戒])
+  pos: [n, v]
+  drv:
+    - tw: ~-sòaⁿ
+      etym: (< log Nip [~線])
+      mw: tiâu
+      en:
+- head: kéng-kak
+  etym: (< log Chi [警覺])
+  pos: v
+  drv:
+    - tw: ~-sèng
+      etym: (< log Chi [~性])
+      en:
+- head: keng-kè/-kò̤
+- head: keng-keh|kaiⁿ-
+- head: kéng-khì
+  etym: (< log Nip [景氣])
+  pos: n
+  alt: [sî-ki]
+  ex:
+    - tw: put-~ qv
+      en:
+- head: kéng-kò
+  etym: (< log Nip [警告])
+  pos: v
+- head: kèng-koaⁿ|kéng-
+  etym: (< log Nip [警官])
+  pos: n
+  mw: ê
+- head: keng-kòe/-kè/-kò̤
+  etym: (< log Sin [經過])
+  pos: [n, v]
+- head: kéng-lâng

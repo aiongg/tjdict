@@ -1,0 +1,2569 @@
+- head: gâ (ant gám)
+  pos: n
+  mw: ê
+  en:
+- head: gà-jè/-jeh
+  etym: < Nip gazē  < Fr gaze
+  pos: v
+  en:
+- head: gá-suh
+  etym: < Nip gasu < gas
+  pos: n
+  en:
+  drv:
+    - tw: ~-kóng
+      mw: tiâu
+      en:
+    - tw: ~-lô͘
+      mw: ê
+      en:
+- head: gāi
+  etym: < Sin [礙]
+  pos: v
+  en:
+  ex:
+    - tw: ūn-tōng-tiâⁿ cháu cha̍p liàn, lóng bô ~ -·tio̍h
+      en:
+- head: gāi-ba̍k
+  pos: v
+  en:
+- head: gāi-gio̍h|ngāi-
+  pos: adj
+  1:
+    en:
+  2:
+    en:
+- head: gài-lò/-lò͘
+  etym: < Nî-iā-pn̄g gaido < En guide
+  pos: n
+  mw: ê
+  en:
+- head: ga̍k-khì
+  etym: < log Sin [樂器]
+  pos: n
+  mw: hāng
+  en:
+- head: ga̍k-phó͘
+  etym: < log Sin [樂譜]
+  pos: n
+  mw: pún, tiuⁿ
+  en:
+- head: ga̍k-thoân
+  etym: < log Nip [樂團]
+  pos: n
+  mw: ê
+  en:
+- head: ga̍k-tūi
+  etym: < log Nip [樂隊]
+  pos: n
+  mw: tîn,tūi
+  en:
+- head: gâm
+  etym: < log Nip [癌]
+  pos: n
+  en:
+- head: gám|khám
+  defs:
+    - pos: n
+      1:
+        en:
+      2:
+        en:
+      3:
+        etym: ant gâ
+        en:
+        ex:
+          - tw: lo̍h-~
+            en:
+    - pos: mw
+      1:
+        en:
+      2:
+        en:
+- head: gām
+  page: 140
+  pos: adj
+  en:
+- head: gám-á|khám-á (v gám)
+  pos: n
+  en:
+  mw: ê, gám
+- head: gām-bīn (v gām)
+  pos: adj
+  en:
+- head: gām-táⁿ
+  pos: adj
+  en:
+- head: gán
+  etym: < log Sin [眼]
+  defs:
+    - pos: n
+      en:
+    - pos: mw
+      en:
+    - pos: v
+      1:
+        en:
+        ex:
+          - tw: khih hôa ~ -·tio̍h
+            en:
+      2:
+        etym: < sem
+        en:
+- head: gàn
+  defs:
+    - pos: v
+      1:
+        en:
+        ex:
+          - tw: ~-kǹg
+            en:
+      2:
+        en:
+        ex:
+          - tw: ~ thâu-khak
+            en:
+    - pos: adj
+      1:
+        en:
+      2:
+        en:
+- head: gān-chiáu (cf Siam gaan ‘鵝’ [雁鳥])
+  pos: n
+  en:
+  mw: chiah
+  alt: [chúi-ah-á]
+- head: gān-gí/-gú/#-gṳ²
+  etym: < log Sin [諺語]
+  pos: n
+  en:
+  mw: kù
+- head: gán-kho/-khe/-kho̤
+  etym: < log Nip < Sin [眼科]
+  pos: n
+  en:
+  mw: kho
+- head: gán-kong
+  etym: < log Sin [眼光]
+  pos: n
+  en:
+- head: gán-lāi
+  etym: < log Chi [眼裡] + tr [眼內]
+  pos: n
+  en:
+  alt: [gán-té]
+  ex:
+    - tw: bô khòaⁿ tī ~
+      en:
+- head: gán-tiong-teng
+  etym: < log Sin [眼中釘]
+  pos: n
+  en:
+  mw: ê
+- head: gāng
+  defs:
+    - pos: v
+      en:
+      ex:
+        - tw: ~-·khì do.
+          en:
+    - pos: adj
+      en:
+      dup: true
+      ex:
+        - tw: ~-~
+          en:
+- head: gap|gop
+  pos: v
+  1:
+    en:
+    ex:
+      - tw: Hî-á, chhùi ~-·chi̍t-·ē, ~-·chi̍t-·ē.
+        en:
+  2:
+    en:
+    cf: [ap²]
+    ex:
+      - tw: chéng-thâu-á hō͘ mn̂g ~-·tio̍h
+        en:
+- head: gap-chhùi
+  pos: v
+  en:
+- head: gap-chúi
+  pos: v
+  en:
+- head: gâu
+  defs:
+    - pos: adj
+      1:
+        en:
+        ex:
+          - tw: ké-~
+            en:
+      2:
+        etym: ant
+        en:
+        ex:
+          - tw: Góa ná hiah ~, kā thn̂g tòng-chò/-chòe iâm!?
+            en:
+    - pos: adv
+      1:
+        en:
+        ex:
+          - tw: ~chia̍h
+            en:
+          - tw: ~ kóng-ōe
+            en:
+        idm:
+          - tw: ~ chò-/chòe-lâng
+            en:
+      2:
+        en:
+        cf: [tiāⁿ-tiāⁿ²]
+        ex:
+          - tw: ~ chia̍h-chhò͘
+            en:
+          - tw: ~ lo̍h-hō͘
+            en:
+          - tw: ~ tōa-hàn
+            en:
+- head: gâu-chá
+  defs:
+    - pos: adj
+      en:
+      ex:
+        - tw: Lí ná chiah ~!
+          en:
+    - pos: excl
+- head: gâu-lâng
+  pos: n
+  en:
+  mw: ê
+- head: ge
+  pos: v
+  en:
+- head: gê¹
+  etym: < Sin [牙]
+  pos: n
+  mw: ki
+  1:
+    en:
+    ex:
+      - tw: ti-kong-~ a. b.
+        en:
+  2:
+    en:
+    ex:
+      - tw: ~ chò/chòe ê phoa̍h-liān
+        en:
+- head: gê²
+  etym: < Sin [芽]
+  pos: n
+  en:
+  cf: [íⁿ]
+- head: gê³
+  pos: mw
+  en:
+  det: ê³
+- head: gê⁴|gô̤
+  pos: v
+  en:
+- head: gê⁵
+  pos: gp
+  en:
+  det: ê⁴
+- head: gè|khè|khòe
+  etym: < khè¹ < Sin
+  pos: v
+  en:
+- head: gê-chô
+  etym: < log Sin [牙槽]
+  pos: n
+  1:
+    mw: ê
+    en:
+    alt: [khí-chô]
+  2:
+    en:
+- head: gē-jîn
+  etym: < log Nip [藝人]
+  pos: n
+  en:
+  mw: ê
+- head: gē-miâ
+  etym: < log [藝名]
+  pos: n
+  en:
+  mw: ê
+- head: gê-mn̂g
+  etym: < log Sin [衙門]
+  pos: n
+  en:
+  mw: keng
+- head: gè-mù|gé-muh
+  page: 141
+  defs:
+    - pos: n
+      etym: < Nip gēmu < En game
+      mw: ê
+      en:
+      alt: [gè-m̀]
+      ex:
+        - tw: tiān-tōng ~
+          en:
+          alt: [tiān-tōng-á]
+    - pos: v
+      1:
+        etym: < En game < ab En game and set
+        en:
+        alt: [ge-mú-siát-toh]
+      2:
+        etym: < sem
+        cat: sl
+        en:
+- head: gê-siâu (v gê⁴)
+  cat: vulg
+  defs:
+    - pos: v
+      en:
+    - pos: adj
+      en:
+- head: gē-su̍t
+  etym: < log Nip [藝術]
+  defs:
+    - pos: n
+      en:
+      drv:
+        - tw: ~-ka
+          etym: < log Nip [~家]
+          mw: ê
+          en:
+        - tw: ~-koán
+          etym: < [~館]
+          mw: keng
+          en:
+        - tw: ~-phín
+          etym: < log Nip [~品]
+          mw: ê
+          en:
+    - pos: adj
+- head: gô̤
+  det: gê⁴
+- head: ge̍h
+  det: goe̍h¹
+- head: ge̍h-bé
+  det: goe̍h-bóe
+- head: go̤̍h
+  det: goe̍h¹
+- head: go̤̍h-bó̤
+  det: goe̍h-bóe
+- head: ge̍k-á|gio̍k-
+  pos: n
+  mw: tè
+  en:
+  ex:
+    - tw: ~ chhiú-khoân ;
+      alt: [ge̍k-chhiú-khoân]
+      en:
+- head: ge̍k-lân
+  det: gio̍k-lân
+- head: Ge̍k-san
+  det: Gio̍k-san
+- head: Ge̍k-tè
+  det: Gio̍k-tè
+- head: gêng¹
+  defs:
+    - pos: adj
+      etym: < log Sin [凝]
+      en:
+    - pos: v
+      en:
+- head: gêng²
+  pos: adj
+  en:
+  ex:
+    - tw: Su-·khì, sim-koaⁿ chin ~.
+      en:
+- head: géng|ngái|ngúi
+  etym: < Sin [迎]
+  pos: v
+  1:
+    en:
+    ex:
+      - tw: chhiú khih-hō͘ lián-á ~-·tio̍h
+        en:
+  2:
+    en:
+    cf: [bôa]
+    ex:
+      - tw: ~ thô͘-tāu-hu
+        en:
+  3:
+    en:
+    ex:
+      - tw: ~ chúi-kiáu-phôe/-phê
+        en:
+      - tw: ~ mī-hún
+        en:
+  4:
+    en:
+    alt: [loán]
+- head: gêng-chiap|ngiâ-chih
+  etym: < lit log Sin [迎接]
+  pos: v
+  en:
+- head: gêng-géng
+  etym: < lêng-géng, q.v.
+  en:
+- head: gêng-hoeh/-huih
+  pos: v
+  en:
+- head: gêng-sim (v gêng²)
+  pos: v
+  1:
+    en:
+  2:
+    en:
+- head: gêng-sin-hōe
+  etym: < log Chi [迎新會]
+  pos: n
+  mw: ê, pái
+  en:
+- head: géng-thûi
+  pos: n
+  mw: ki
+  1:
+    en:
+  2:
+    en:
+- head: gî
+  etym: < î < sem Sin [飴]
+  pos: n
+  en:
+- head: gí
+  etym: < log Sin [擬]
+  pos: v
+  en:
+  ex:
+    - tw: Boeh/Beh ~ sím-mih chōe?
+      en:
+    - tw: ~ chi̍t tiuⁿ kó
+      en:
+- head: gí-á
+  etym: < Nip gia/giya < En gear
+  pos: n
+  en:
+  mw: ê
+- head: gī-àn
+  etym: < log Nip [議案]
+  pos: n
+  en:
+  mw: ê
+- head: gī-bē, gī-bōe(< log Chi [義賣])
+  defs:
+    - pos: n
+      mw: pái
+    - pos: v
+- head: gī-bū
+  etym: < log Nip [義務]
+  pos: n
+  en:
+  mw: hāng
+  drv:
+    - tw: ~ kàu-io̍k
+      etym: < log Nip [~教育]
+      en:
+- head: gî-būn
+  etym: < log Nip [疑問]
+  pos: n
+  mw: ê
+  en:
+- head: gí-bûn|gú-|gṳ-
+  etym: < [語文]
+  pos: n
+  en:
+- head: gî-būn-hō
+  etym: < log Chi [疑問號]
+  pos: n
+  mw: ê
+  en:
+- head: gî-būn-kù
+  etym: < log Chi [疑問句]
+  pos: n
+  en:
+- head: gī-chín
+  etym: < [義診]
+  defs:
+    - pos: n
+      mw: pái
+      en:
+    - pos: v
+      en:
+- head: gí-cho̍k|gú-|gṳ-
+  etym: < log Nip [語族]
+  pos: n
+  mw: ê
+  en:
+- head: gí-gah/-gà
+  etym: < ab gí-gá bài-tò/-tò͘ < En giga bites < Hel gias + En bites
+  pos: n
+  en:
+- head: gī-gī-á-chhiò
+  pos: v
+  en:
+  cf: [gi̍h-gi̍h-chhiò]
+- head: gī-gī-chhiò
+  det: gi̍h-gi̍h-chhiò
+- head: gī-gī-chhoah
+  det: gi̍h-gi̍h-chhoah
+- head: gī-gī-chun/-chùn
+  det: gi̍h-gi̍h-chun
+- head: gi-gí-gu̍h-gu̍h (v gĭh, gu̍h)
+  pos: v
+  en:
+  alt: [gi̍h-gu̍h-kiò]
+- head: Gī-gī-pat
+  en:
+  det: Jī-jī-pat
+- head: gí-giân/-gân|gú-/gṳ-giân
+  etym: < log Chi [語言]
+  pos: n
+  mw: ê
+  en:
+  idm:
+    - tw: ~ bia̍t-cho̍k
+      en:
+      etym: < tr En linguistic genocide
+  drv:
+    - tw: ~-ha̍k
+      etym: < log Chi [~學]
+      en:
+- head: gí-goân|gú-|gṳ-
+  page: 142
+  etym: < log Nip [語源]
+- head: gī-goân
+  det: gī-oân
+  pos: n
+  mw: ê
+  en:
+- head: gī-gū-kiò
+  det: gi̍h-gu̍h-kiò
+- head: gí-hoat|gú-|gṳ-
+  etym: < log Nip [語法]
+  pos: n
+  mw: thò
+  en:
+- head: gī-hōe
+  etym: < log Nip [議會]
+  pos: n
+  mw: keng
+  en:
+- head: Gī-ián(< log Chi [義演])
+  pos: n
+  mw: pái
+  en:
+- head: gí-im|gú-|gṳ-
+  etym: < log Chi [語音]
+  pos: n
+  mw: ê
+  en:
+- head: gí-kám|gú-|gṳ-
+  etym: < log Chi [語感] <tr En language intuition
+  pos: n
+  mw: ê
+  en:
+- head: gī-kang
+  etym: < log Chi [義工]
+  pos: n
+  mw: ê
+  en:
+- head: gî-khì
+  etym: < log Chi [儀器]
+  pos: n
+  mw: cho͘, ê
+  en:
+- head: gí-khì|gú-|gṳ-
+  etym: < log Nip [語氣]
+  pos: n
+  mw: ê
+  en:
+- head: gī-khì
+  etym: < log Sin [義氣]
+  pos: n
+  en:
+- head: gí-kó
+  etym: < log Chi [擬稿]
+  pos: v
+- head: Gî-lân
+  etym: < log Sin [宜蘭] < [噶瑪蘭] < Kap-má-lân < [蛤仔難] < Kav Kavalan
+  pos: n
+  en:
+- head: gí-liāu-khò͘|gú-|gṳ-
+  etym: < log Chi [語料庫]
+  pos: n
+  mw: ê
+  en:
+- head: gí-lūi|gú-|gṳ-
+  etym: < log Chi [語彙]
+  pos: n
+  en:
+- head: gī-oân/-goân
+  etym: < log Nip [議員]
+  pos: n
+  mw: ê
+  en:
+- head: gî-pê
+  etym: < pî-pê², q.v.
+  en:
+- head: gî-sek
+  etym: < log Nip [儀式]
+  pos: n
+  mw: ê
+  en:
+- head: gí-sû|gú-|gṳ-
+  etym: < log Chi [語詞] < tr; cf En word, Fr mot
+  pos: n
+  mw: ê
+  en:
+- head: gi-tá|gì-tà
+  etym: < En guitar < fr guitare
+  pos: n
+  mw: ki
+  en:
+- head: gī-tê/-tôe
+  etym: < log Nip [議題]
+  pos: n
+  mw: ê
+  en:
+- head: gī-têng/-thêng
+  etym: < log Chi [議程] < ab Nip [議事日程]
+  pos: n
+  mw: ê
+  en:
+- head: gí-thé-bûn|gú-|gṳ-
+  etym: < log Chi [語體文]
+  pos: n
+  mw: phiⁿ
+  en:
+- head: gī-thêng
+  det: gī-têng
+- head: gî-tiám
+  etym: < log Nip [疑點]
+  pos: n
+  mw: ê
+  en:
+- head: gī-tiúⁿ
+  etym: < log Nip [議長]
+  pos: n
+  mw: ê
+  en:
+- head: gī-tôe
+  det: gī-tê
+- head: gî-tūi
+  etym: < log Chi [儀隊] < ab Nip [儀仗隊] < [隊] + Sin [儀仗]
+  pos: n
+  mw: tīn, túi
+  en:
+- head: gṳ¹
+  pos: [onom, excl]
+  en:
+  alt: [áng-gī]
+- head: gṳ²
+  det: gū
+- head: giâ¹
+  det: gô¹
+- head: giâ²
+  pos: v
+  1:
+    en:
+    ex:
+      - tw: ~ chio̍h-lián
+        en:
+      - tw: ~ koân-kè
+        en:
+  2:
+    etym: < hyp < *giā… < gia̍h²…, q.v.
+    en:
+  3:
+    en:
+  4:
+    en:
+- head: giâ³
+  etym: < ana giâ² < ngiâ, q.v.
+  pos: v
+  en:
+- head: giâ-chhiú
+  etym: < gia̍h-chhiú, q.v.
+  en:
+- head: giâ-éng
+  pos: v
+  en:
+- head: giâ-kang
+  etym: < Sin [蜈蚣]
+  pos: n
+  mw: chiah
+  en:
+- head: giâ-kê
+  pos: v
+  1:
+    en:
+  2:
+    en:
+- head: giâ-koân
+  etym: < gia̍h-koân, q.v.
+  en:
+- head: giâ-thâu
+  etym: < gia̍h-thâu, q.v.
+  en:
+- head: giâ-tōng-khēng (cf Mul tongkeng)
+  pos: v
+  en:
+- head: giah|kiah
+  pos: v
+  en:
+  alt: [giáu]
+- head: gia̍h¹
+  pos: n
+  1:
+    en:
+    ex:
+      - tw: Che lí ê ~.
+        en:
+  2:
+    en:
+    ex:
+      - tw: ~ bô-kàu
+        en:
+- head: gia̍h²
+  etym: < kia̍h < Sin [揭] ; > giâ
+  defs:
+    - pos: v
+      1:
+        en:
+        ex:
+          - tw: ~ pit
+            en:
+          - tw: ~ tī/tū
+            en:
+      2:
+        en:
+        idm:
+          - tw: ~ pe̍h-kî
+            en:
+      3:
+        en:
+        ex:
+          - tw: chhiú ~ khah koân/kôiⁿ ·le
+            en:
+    - pos: adj
+      en:
+      ex:
+        - tw: hīⁿ-á ~-~
+          en:
+- head: gia̍h-ba̍k|giâ-
+  page: 143
+  pos: v
+  en:
+- head: gia̍h-chhiú|giâ-
+  pos: v
+  en:
+  drv:
+    - tw: ~-lé
+      en:
+      det: kí-chhiú-lé
+- head: gia̍h-koân/-koâiⁿ|giâ-
+  pos: v
+  en:
+- head: gia̍h-thâu|giâ-
+  pos: v
+  en:
+- head: giak-siak|gia̍k-
+  pos: v
+  en:
+- head: giâm
+  etym: < log Sin [嚴]
+  pos: adj
+  en:
+  ex:
+    - tw: sêng-chek phah chin ~
+      en:
+- head: giám¹ mw;
+  det: gím
+- head: giám²
+  defs:
+    - pos: v
+      en:
+    - pos: adj
+      en:
+- head: giām
+  etym: < log Sin [驗]
+  pos: v
+  1:
+    en:
+    ex:
+      - tw: ~ ba̍k-chiu
+        en:
+      - tw: ~ tāi-piān
+        en:
+  2:
+    en:
+    ex:
+      - tw: ~ hêng-lí
+        en:
+- head: giām-chhia
+  etym: < log Chi [驗車]
+  pos: v
+  en:
+- head: giām-hoeh/-huih
+  etym: < log Chi [驗血] < Nip [檢血]
+  pos: v
+  en:
+- head: giām-jiō/-giō/g-liō
+  etym: < log Chi [驗尿] < Nip [檢尿]
+  pos: v
+  en:
+- head: giâm-keh
+  etym: < log Nip [嚴格]
+  defs:
+    - pos: adj
+      en:
+      alt: [giâm]
+    - pos: adv
+      en:
+      ex:
+        - tw: ~ chip-hêng
+          en:
+- head: giâm-kìm
+  etym: < log Sin [嚴禁]
+  pos: v
+  en:
+- head: giām-kng
+  etym: < log Chi [驗光] < back Nip [驗光器]
+  pos: v
+  en:
+- head: Giâm-lô-ông
+  etym: < *Iâm-lô-ông < log Sin [閻羅王] < Sans Yama-raya + [王]
+  pos: n
+  en:
+- head: giâm-pān
+  etym: < log Sin [嚴辦]
+  pos: v
+  en:
+- head: giām-phiò
+  etym: < log Chi [驗票]
+  pos: v
+  en:
+- head: giām-si
+  etym: < log [驗屍] ; cf Nip kenshi [檢屍]
+  pos: v
+  en:
+- head: giām-siang/-siong
+  etym: < log Sin [驗傷]
+  pos: v
+  en:
+- head: giám-siâu (v giám²)
+  cat: vulg
+  defs:
+    - pos: v
+      en:
+    - pos: adj
+      en:
+- head: giâm-siok
+  etym: < log Sin [嚴肅]
+  defs:
+    - pos: adj
+      en:
+    - pos: adv
+      en:
+- head: giām-siong
+  det: giām-siang
+- head: giām-siu
+  etym: < log Chi [驗收]
+  pos: v
+  en:
+- head: giâm-tiōng
+  etym: < log Sin [嚴重]
+  pos: adj
+  en:
+- head: giàn
+  pos: v
+  en:
+  ex:
+    - tw: ~ chiú
+      en:
+    - tw: ~ hun
+      en:
+    - tw: ~ phah-kiû
+      en:
+- head: giăn-káng/-kháng
+  etym: < Nip genkan
+  pos: n
+  en:
+- head: gián-kiù
+  etym: < log Nip [研究]
+  defs:
+    - pos: n
+      mw: ê,hāng
+      en:
+      ex:
+        - tw: chò/chòe ~
+          en:
+    - pos: v
+      1:
+        en:
+        drv:
+          - tw: ~-goân
+            en:
+            det: ~-oân
+          - tw: ~-hùi
+            etym: < log Nip [~費]
+            mw: pit
+            en:
+          - tw: ~-oân/-goân
+            en:
+            etym: < log Nip [~員]
+            mw: ê
+          - tw: ~-sek
+            en:
+            det: ~-sit
+          - tw: ~-seng
+            en:
+            etym: < log Chi [~生] < sem Nip
+            mw: ê
+          - tw: ~-sit/-sek
+            en:
+            etym: < log Nip [~式]
+            mw: keng
+          - tw: ~-só͘
+            en:
+            etym: < log Nip [~所]
+            mw: keng
+            a:
+              en:
+            b:
+              en:
+              etym: < log Chi < sem
+      2:
+        en:
+        ex:
+          - tw: Góa tùi chit hāng tāi-chì bô ~.
+            en:
+- head: giân-lūn chū-iû(< log Nip [言論自由])
+  pos: n
+  en:
+- head: giàn-sian
+  pos: n
+  mw: ê
+  en:
+- head: giàn-thâu
+  defs:
+    - pos: n
+      mw: ê
+      en:
+    - pos: adj
+      en:
+      ex:
+        - tw: Lí mài ~.
+          en:
+- head: gián-thó-hōe
+  etym: < log Chi [研討會]
+  pos: n
+  mw: pái
+  en:
+- head: giang¹
+  defs:
+    - pos: onom
+      en:
+      alt: [liang]
+    - pos: v
+      1:
+        en:
+        alt: [liang]
+      2:
+        en:
+        ex:
+          - tw: chhiáⁿ sai-kong lâi ~-~-·le
+            en:
+- head: giang²
+  cat: sl
+  pos: adj
+  en:
+  ex:
+    - tw: khí-/khì-mo͘ ~
+      en:
+    - tw: bē/bōe ~
+      en:
+- head: giàng
+  pos: v
+  1:
+    en:
+  2:
+    en:
+- head: giāng
+  etym: < hyp jiāng
+  pos: v
+  en:
+- head: giang-á
+  pos: n
+  mw: ê, ki
+  en:
+  alt: [liang-á]
+- head: giàng-gê
+  page: 144
+  defs:
+    - pos: n
+      en:
+    - pos: v
+      en:
+- head: giap/gia̍p
+  pos: v
+  en:
+  ex:
+    - tw: hō͘ mô͘-hē ~-·tio̍h
+      en:
+- head: gia̍p
+  etym: < [夾]
+  pos: v
+  1:
+    en:
+    det: giap
+  2:
+    en:
+  3:
+    en:
+- head: giap-á|gia̍p-
+  pos: n
+  mw: ki
+  1:
+    en:
+    ex:
+      - tw: sin-bûn ~
+        en:
+      - tw: thâu-mo͘ ~
+        en:
+  2:
+    en:
+    alt: [phĭn-siát-toh]
+- head: gia̍p-bū
+  etym: < log Nip [業務]
+  pos: n
+  en:
+- head: gia̍p-chek
+  etym: < log Nip [業績]
+  pos: n
+  en:
+- head: gia̍p-miā
+  pos: adj
+  en:
+- head: giat
+  etym: < ab giat-láu
+  cat: sl
+  pos: v
+  en:
+  alt: [chok-gia̍t]
+- head: gia̍t¹
+  etym: < sem log Sin [孽]
+  pos: adj
+  en:
+- head: gia̍t²
+  det: jia̍t
+- head: giat-á
+  pos: n
+  mw: chiah
+  en:
+  drv:
+    - tw: ~-thâng do.
+      en:
+- head: giat-láu
+  etym: < En get out
+  pos: v
+  1:
+    en:
+  2:
+    en:
+    ex:
+      - tw: hông ~
+        en:
+- head: gia̍t-siâu
+  cat: vulg
+  pos: adj
+  en:
+  alt: [gia̍t¹, chok-gia̍t]
+- head: giáu|ngiáu|giauh|giah
+  pos: v
+  1:
+    en:
+    ex:
+      - tw: ~ chhoaⁿ
+        en:
+  2:
+    en:
+    ex:
+      - tw: ~ hīⁿ-sái
+        en:
+- head: giauh¹
+  pos: v
+  en:
+  det: ngiauh¹
+- head: giauh²
+  pos: v
+  en:
+  det: giáu
+- head: gih
+  en:
+  det: kih
+- head: gĭh
+  pos: onom
+  en:
+- head: gi̍h-gi̍h-chhiò|gī-gī-
+  pos: v
+  en:
+  cf: [gī-gī-á-chhiò]
+- head: gi̍h-gi̍h-chhoah|gī-gī-
+  pos: v
+  en:
+  alt: [gi̍h-gi̍h-chun, q.v.]
+- head: gi̍h-gi̍h-chun/-chùn|gī-gī-
+  pos: v
+  en:
+  alt: [khū-khū-chun, gi̍h-gi̍h-/phī-phī-chhoah]
+- head: gi̍h-gu̍h-kiò|gī-gū- (v gĭh, gu̍h)
+  pos: v
+  en:
+  alt: [gi-gí-gu̍h-gu̍h]
+- head: gîm¹
+  pos: v
+  en:
+  ex:
+    - tw: ~ chi̍t siú si
+      en:
+- head: gîm²
+  pos: v
+  en:
+  det: jîm
+- head: gím|giám
+  pos: v
+  en:
+  det: jîm
+- head: gīm
+  pos: v
+  1:
+    en:
+    alt: [gīm-chhiú, tēⁿ]
+  2:
+    en:
+    alt: [tēⁿ]
+- head: gîm-á
+  pos: n
+  mw: ê, chàn
+  en:
+- head: gîm-chîⁿ(< [□簷])
+  pos: n
+  mw: ê
+  en:
+  drv:
+    - tw: ~-kha
+      en:
+- head: gîm-kîⁿ
+  pos: n
+  1:
+    alt: [gîm-chîⁿ, nî-chîⁿ q.v.]
+  2:
+    takes_a2: true
+    en:
+    mw: ê ;
+    alt: [gîm-á]
+- head: gîm-si
+  etym: < log Sin [吟詩]
+  pos: v
+  en:
+- head: gîn¹|gûn|gṳn̂
+  etym: < Sin [銀]
+  1:
+    en:
+  2:
+    en:
+- head: gîn²|gûn
+  pos: v
+  en:
+- head: gín-á
+  pos: n
+  mw: ê
+  en:
+  idm:
+    - tw: ~-lâng kha-chhng saⁿ táu hóe/hé
+      en:
+    - tw: ~-lâng ū hīⁿ, bô chhùi (v ~-lâng)
+      en:
+    - tw: ~ teh/leh khùn
+      en:
+      ex:
+        - tw: Òe, ~ teh khùn!
+          en:
+  drv:
+    - tw: ~-hiaⁿ
+      mw: ê
+      en:
+    - tw: ~-kang
+      mw: ê
+      en:
+    - tw: ~-kiáⁿ
+      mw: ê
+      en:
+    - tw: ~-lâng
+      mw: ê
+      en:
+    - tw: ~-phí
+      mw: ê
+      en:
+    - tw: ~-phōaⁿ
+      mw: ê
+      en:
+    - tw: ~-sèng
+      en:
+    - tw: ~-thâu-ông
+      mw: ê
+      en:
+    - tw: ~-the
+      mw: ê
+      en:
+    - tw: ~-tōa-sè/-sòe
+      en:
+- head: gîn-bō͘|gûn-|gṳn̂-
+  page: 145
+  etym: < log Nip [銀幕]
+  pos: n
+  mw: tè, ê
+  en:
+- head: gîn-chóa|gûn-|gṳn̂-
+  pos: n
+  mw: chí, tiuⁿ
+  en:
+- head: gîn-hâng|gûn-|gîn-
+  etym: < log Nip [銀行]
+  pos: n
+  mw: keng
+  en:
+- head: gîn-hēng|gûn-|gṳn̂-
+  etym: < log Sin [銀杏]
+  pos: n
+  mw: châng
+  en:
+- head: gîn-hô|gûn-|gṳn̂-
+  etym: < log Sin [銀河]
+  pos: n
+  mw: tiâu
+  en:
+  alt: [thian-hô]
+- head: gîn-hun|gûn-|gṳn̂-
+  etym: < log Nip [銀婚] < tr ; cf En silver wedding
+  pos: n
+  en:
+- head: gîn-hún|gûn-|gṳn̂-
+  etym: < log Nip [銀粉]
+  pos: n
+  en:
+- head: gîn-kak-á|gûn-|gṳn̂-
+  etym: < sem log Sin [銀角] +á
+  pos: n
+  mw: lia̍p
+  en:
+- head: gîn-khì|gûn-|gṳn̂-
+  etym: < log Sin [銀器]
+  pos: n
+- head: gîn-lâu|gûn-|gṳn̂-
+  etym: < log Sin [銀樓]
+  pos: n
+  mw: keng
+  en:
+  alt: [kim-á-tiàm]
+- head: gîn-pâi|gûn-|gṳn̂-
+  etym: < log Chi [銀牌] < tr En silver medal
+  pos: n
+  mw: tè
+  en:
+- head: gîn-pè|gûn-|gṳn̂-
+  etym: < log Chi [銀幣]
+  pos: n
+  mw: tè, lia̍p
+  en:
+- head: gîn-phiò|gûn-|gṳn̂-
+  etym: < log Sin [銀票]
+  pos: n
+  mw: tiuⁿ
+  en:
+  ex:
+    - tw: ké ~
+      en:
+- head: gîn-poe|gûn-|gṳn̂-
+  etym: < log Sin [銀杯]
+  pos: n
+  mw: ê
+  en:
+- head: gîn-sek
+  etym: < log Sin [銀色]
+  pos: n
+  en:
+- head: gṳn̂
+  det: gîn¹
+- head: gió¹
+  pos: v
+  1:
+    en:
+  2:
+    en:
+- head: gió²
+  pos: v
+  en:
+  det: ngiú
+- head: gió³
+  etym: < sem < ab gió-toh < jió-toh, q.v.
+  pos: adj
+  en:
+- head: giô-á
+  pos: n
+  mw: lia̍p
+  en:
+  ex:
+    - tw: hún-~
+      en:
+- head: giô--ê
+  pos: n
+  mw: ê
+  en:
+  ex:
+    - tw: in ~
+      en:
+    - tw: In nn̄g ê ~
+      en:
+- head: gió-toh
+  etym: < phon jió-toh, q.v.
+  en:
+- head: gio̍k-á
+  det: ge̍k-á
+- head: gio̍k-kùi
+  det: jio̍k-kùi
+- head: gio̍k-lân|ge̍k-
+  pos: n
+  mw: chêng, lúi
+  en:
+- head: Gio̍k-san|Ge̍k-
+  etym: < log Sin [玉山]
+  pos: n
+  en:
+- head: Gio̍k-tè|Ge̍k-
+  etym: < ab Gio̍k-hông Tāi-tè < log Sin [玉皇大帝]
+  pos: n
+  mw: ê
+  en:
+- head: giōng-(giōng-)boeh/-beh|kiōng-(kiōng-)/kiông-(kiông-)beh
+  pos: adv
+  en:
+  ex:
+    - tw: khiā-bē-tiâu, ~ tó-·khì
+      en:
+- head: giú|khiú
+  pos: v
+  en:
+  ex:
+    - tw: ka ~-·leh, m̄ ho͘ cháu
+      en:
+    - tw: kâng ~-ji̍p-khì chē
+      en:
+    - tw: soh-á ~-tn̄g-·khì
+      en:
+- head: giú-āu-kha|khiú-
+  pos: v
+  en:
+- head: giú-koan-hē|khiú-
+  pos: v
+  en:
+  alt: [khan koan-hē]
+- head: giú-lâng-kheh|khiú-
+  pos: v
+  en:
+- head: giú-piò
+  pos: v
+  en:
+- head: giú-(tōa-)soh
+  pos: v
+  en:
+- head: gô¹|giâ
+  pos: n
+  mw: chiah
+  en:
+  idm:
+    - tw: (~,) ~ khah tōa-chiah ah.
+      en:
+- head: gô²
+  pos: v
+  alt: [tńg]
+  1:
+    en:
+  2:
+    en:
+- head: gō
+  page: 146
+  etym: < log Sin [餓]
+  pos: v
+  1:
+    en:
+  2:
+    en:
+- head: gô-á
+  pos: n
+  mw: chiah
+  en:
+  drv:
+    - tw: ~-chhài
+      etym: < pop o-/e-á-chhài
+      mw: châng, pé
+      en:
+      alt: [oe-á-chhài]
+- head: go-bó
+  det: go͘-bó͘
+- head: gô-bó|giâ-bú
+  pos: n
+  mw: chiah
+  en:
+- head: Gô-bûn|Ngô͘-
+  etym: < log Chi [俄文]
+  pos: n
+- head: Gô-gí/-gú/-gṳ|Ngô͘-
+  etym: < log Chi [俄語]
+  pos: n
+  en:
+- head: gô-kang|giâ-
+  pos: n
+  mw: chiah
+  en:
+- head: Gô-kok|Ngô͘-
+  etym: < log Chi [俄國]
+  pos: n
+  en:
+  alt: [Gô-lô-su]
+- head: gō-kúi
+  pos: n
+  mw: ê, chiah
+  en:
+  cf: [iau-kúi]
+- head: Gô-lô-su|Ngô͘-
+  etym: < log Sin [俄羅斯] < Eluosi
+  pos: n
+  en:
+- head: Gô-loân-pī|-phīⁿ
+  pos: n
+  en:
+- head: go-lú-huh|go͘-
+  etym: < Nip gorufu < En golf
+  pos: n
+  mw: lia̍p, tiûⁿ
+  en:
+- head: gô-mo͘-phōe/-phē|giâ-mn̂g-phē
+  pos: n
+  mw: niá
+  en:
+- head: gō͘1
+  etym: < Sin [五]
+  pos: num
+  1:
+    en:
+    cf: [ngó͘]
+    ex:
+      - tw: cha̍p-~
+        en:
+      - tw: jī-~
+        en:
+      - tw: ~-bān
+        en:
+  2:
+    en:
+    ex:
+      - tw: bān-~
+        en:
+      - tw: chheng-~
+        en:
+      - tw: pah-~
+        en:
+  3:
+    en:
+    ex:
+      - tw: ~-it
+        en:
+      - tw: ~-jī
+        en:
+      - tw: ~-saⁿ
+        en:
+  4:
+    en:
+    ex:
+      - tw: Góa tio̍h ~ miâ.
+        en:
+      - tw: ~-goe̍h Chhe-~
+        en:
+      - tw: ~ hō
+        en:
+- head: gō͘2
+  etym: < log Sin [誤]
+  pos: v
+  en:
+  ex:
+    - tw: Tāi-chì hō͘ i ~-·khì
+      en:
+    - tw: ~ lâng chi̍t-sì-lâng
+      en:
+- head: go͘-bó͘|gŏ͘-|go-bó
+  etym: < Nip gobō
+  pos: n
+  mw: châng, tiâu
+  en:
+- head: gō͘-chheⁿ siāng-chiàng/…siōng-chiòng -chhiⁿ-
+  etym: < log Chi [五星上將]
+  pos: n
+  mw: ê
+  en:
+  alt: [gō͘-lia̍p-chheⁿ]
+- head: Gō͘--goe̍h/-·ge̍h/-ge̍h/-go̤̍h
+  etym: < log Sin [五月]
+  pos: n
+  en:
+  drv:
+    - tw: ~-cheh
+      etym: < Sin [~節]
+      alt: [Gō͘-ji̍t-cheh]
+      en:
+- head: gō͘-hōe
+  etym: < log Sin [誤會]
+  defs:
+    - pos: n
+      mw: pái, ê
+      en:
+    - pos: v
+      en:
+- head: gō͘-hoe-cha̍p-sek
+  pos: n
+  1:
+    en:
+  2:
+    en:
+- head: Gō͘-ji̍t-cheh -gi̍t-|Gō͘-ji̍t-choeh -li̍t-
+  pos: n
+  en:
+  alt: [Gō͘-goe̍h-cheh]
+  drv:
+    - tw: ~-chàng
+      mw: lia̍p
+      en:
+- head: gō͘-kái
+  etym: < log Nip [誤解]
+  defs:
+    - pos: n
+      mw: ê
+      en:
+    - pos: v
+      en:
+- head: gō͘-kak-hêng
+  etym: < log Nip [五角形]
+  pos: n
+  mw: ê
+  en:
+- head: gô͘-keh-hî
+  det: gô͘-koeh-hî
+- head: gô͘-khî|ngô͘-
+  pos: n
+  mw: bóe
+  en:
+- head: gô͘-koeh-hî -keh-
+  pos: n
+  mw: bóe
+  en:
+- head: gô͘-lo̍k
+  etym: < ana [吳] + Nip goraku < log Sin [娛樂]
+  pos: n
+  en:
+  alt: [gû-lo̍k]
+- head: go͘-lú-huh
+  det: go-lú-huh
+- head: gō͘-sì-saⁿ
+  pos: n
+  en:
+- head: gō͘-sòaⁿ-phó͘
+  etym: < log Nip [五線譜]
+  pos: n
+  en:
+- head: gō͘-tō
+  etym: < log Chi [誤導] < Nip [誤り導く]
+  pos: v
+  en:
+- head: gô͘-tông|ngô͘-
+  etym: < log Sin [梧桐]
+  pos: n
+  en:
+- head: góa
+  etym: < Sin [我]
+  pos: pron
+  en:
+  idm:
+    - tw: ~ khah sit-lé, lí khah m̄-tio̍h.
+      en:
+    - tw: ~ khòaⁿ lí phú-phú, lí khòaⁿ ~ bū-bū
+      en:
+- head: gōa¹
+  etym: < Sin [外] ; ant lāi¹
+  defs:
+    - pos: pref
+      1:
+        en:
+        ex:
+          - tw: ~-hāu
+            en:
+          - tw: ~-kok
+            en:
+      2:
+        en:
+        ex:
+          - tw: ~-hái
+            en:
+          - tw: ~-thài-khong
+            en:
+    - pos: n
+      bound: true
+      en:
+      ex:
+        - tw: chhiûⁿ-á-~
+          en:
+- head: gōa²
+  page: 147
+  etym: < SEY
+  pos: num
+  en:
+  ex:
+    - tw: nn̄g-chheng-~ ê
+      en:
+    - tw: tán kàu jī-cha̍p-~
+      en:
+- head: gōa³
+  pos: adv
+  en:
+  det: jōa
+- head: gŏa
+  det: jŏa
+- head: gōa-bīn
+  etym: < log Sin [外面]
+  pos: n
+  en:
+  alt: [gōa-kháu]
+- head: gōa-bū-oân/-goân
+  pos: n
+  mw: ê
+  en:
+- head: gōa-chē/-chōe
+  det: jōa-chē
+- head: gōa-che̍k lô-kang
+  etym: < log Chi [外籍勞工]
+  pos: n
+  mw: ê
+  en:
+- head: gōa-che̍k sin-niû
+  etym: < log Chi [外籍新娘]
+  pos: n
+  mw: ê
+  en:
+- head: gōa-chheⁿ-lâng -chhiⁿ-
+  etym: < log Chi [外星人] < tr En extra-terrestrial
+  pos: n
+  mw: ê
+  en:
+- head: gōa-chiâⁿ|gŏa-
+  det: jōa-chiâⁿ
+- head: gōa-chōe
+  det: jōa-chē
+- head: gōa-gōa
+  pos: adj
+  1:
+    en:
+    ex:
+      - tw: kek ~
+        en:
+      - tw: pàng ~
+        en:
+  2:
+    en:
+- head: gŏa-gōa
+  etym: < gōa² + gōa²
+  pos: num
+  ex:
+    - tw: sì-cha̍p ~
+      en:
+- head: gōa-hái
+  etym: < log Sin [外海]
+  pos: n
+- head: gōa-hâng
+  etym: < log Sin [外行]
+  defs:
+    - pos: n
+      ex:
+        - tw: ~ léng-tō lāi-hâng
+          en:
+    - pos: adj
+  drv:
+    - tw: ~-lâng
+      mw: ê
+      en:
+- head: gōa-hêng
+  etym: < log Nip [外形]
+  pos: n
+- head: gōa-hōe chûn-khoán
+  etym: < log Chi [外匯存款]
+  pos: n
+- head: gōa-káng
+  etym: < log Nip [外港]
+  pos: n
+- head: gōa-kau
+  etym: < log Nip [外交]
+  pos: n
+  drv:
+    - tw: ~-koaⁿ
+      en:
+      etym: < log Nip [~官]
+      mw: ê
+    - tw: ~-pō͘
+      en:
+      etym: < log Chi [~部]
+      mw: ê
+    - tw: ~-pō͘-tiúⁿ
+      etym: < log Chi [~部長]
+      mw: ê
+      en:
+- head: gōa-ke
+  etym: < SEY
+  pos: n
+- head: gōa-kháu
+  defs:
+    - pos: n
+      ex:
+        - tw: cha-po͘ pêng-iú tī ~ teh lán
+          en:
+        - tw: chia̍h ~ q.v.
+          en:
+    - pos: adj
+      ex:
+        - tw: khiā tī ~-~
+          en:
+      drv:
+        - tw: ~-saⁿ
+          mw: niá
+          en:
+- head: gōa-kho/-khe/-kho̤
+  etym: < log Nip [外科]
+  pos: n
+  mw: kho
+  en:
+- head: Gōa-kiâu(< log Chi [外僑])
+  pos: n
+  mw: ê
+  en:
+- head: gōa-ko
+  etym: < log Chi [外鍋]
+  pos: n
+  mw: ê
+  en:
+- head: gōa-koān-chhī
+  etym: < log Chi [外縣市]
+  pos: n
+- head: gōa-kok
+  etym: < log Sin [外國]
+  pos: n
+  drv:
+    - tw: ~-lâng
+      en:
+      etym: < log Sin [~人]
+      mw: ê
+    - tw: ~-ōe
+      en:
+      etym: < log Sin [~話]
+- head: gōa-kong
+  etym: < log Sin [外公]
+  pos: n
+  mw: ê
+  en:
+- head: gōa-lâi chèng-khoân/-koân
+  etym: < log Chi [外來政權]
+  pos: n
+  mw: ê
+  en:
+- head: gōa-lâi-gí/-gú/-gṳ
+  etym: < log Nip [外來語]
+  pos: n
+  mw: ê
+  en:
+- head: gōa-lâng
+  etym: < log Sin [外人] + tr
+  pos: n
+  1:
+    en:
+  2:
+    en:
+  3:
+    en:
+  4:
+    en:
+    alt: [pa̍t-lâng(2)]
+- head: gōa-leng/-ni
+  pos: n
+  1:
+    mw: lián, lia̍p
+    en:
+  2:
+    en:
+    mw: tiâu, lián
+- head: gōa-lô
+  etym: < log Chi [外勞]
+  pos: n
+  takes_a2: true
+  mw: ê
+  en:
+- head: gōa-lō͘
+  pos: n
+  takes_a2: true
+  drv:
+    - tw: ~-(á-)chîⁿ do.
+      en:
+- head: gōa-má
+  pos: n
+  mw: ê
+  en:
+- head: gōa-ni
+  det: gōa-leng
+- head: gōa-nī(-chiâⁿ)
+  det: jŏa-nī
+- head: gōa-phôe/-phê/-phô̤
+  etym: < [外皮]
+  pos: n
+  mw: têng
+  en:
+- head: gōa-piáu
+  etym: < log Chi [外表]
+  pos: n
+- head: Gōa-séng
+  etym: < log Chi [外省]
+  pos: n
+  drv:
+    - tw: ~-lâng
+      en:
+      etym: < log Chi [~人]
+      mw: ê
+- head: gōa-siang/-siong
+  etym: < log Nip [外商]
+  pos: n
+  mw: ūi
+  en:
+- head: gōa-siàng/-siòng|gōe-
+  page: 148
+  etym: < log Nip [外相]
+  pos: n
+  mw: ê
+  en:
+- head: gōa-siau
+  pos: v
+- head: gōa-siàu
+  etym: < [外賬]
+  pos: n
+  mw: ê, pún
+  en:
+- head: gōa-siong
+  det: gōa-siang
+- head: gōa-siòng
+  det: gōa-siàng
+- head: gōa-sòaⁿ
+  etym: < log Nip [外線]
+  pos: n
+  mw: tiâu
+  en:
+- head: gōa-sun
+  etym: < log Sin [外孫]
+  pos: n
+  mw: ê
+  en:
+- head: gōa-tē/-tōe
+  etym: < log Sin [外地]
+  pos: n
+  drv:
+    - tw: ~-lâng
+      mw: ê ;
+      en:
+      alt: [gōa-ūi-á-lâng]
+- head: gōa-thài-khong
+  etym: < log Chi [外太空] < tr En outer space
+  pos: n
+- head: gōa-thò
+  etym: < log Nip [外套] < sem Sin
+  pos: n
+  mw: niá
+  en:
+- head: gōa-tó/-tó͘
+  etym: < log Chi [外島]
+  pos: n
+  mw: lia̍p
+  en:
+- head: gōa-tōe
+  det: gōa-tē
+- head: gōa-ûi
+  etym: < log Sin [外圍]
+  pos: n
+  alt: [gōa-kháu-liàn]
+- head: gōa-ūi-á
+  pos: n
+  drv:
+    - tw: ~-lâng
+      mw: ê
+      en:
+- head: goân|gún
+  1:
+    en:
+    cf: [lán¹]
+  2:
+    en:
+    ex:
+      - tw: Lâng ~ bô!
+        en:
+  pos: dem
+  cf: [lán¹]
+  ex:
+    - tw: ~ tau
+      en:
+    - tw: ~ thài-thài
+      en:
+- head: goân-àn
+  etym: < log Nip [原案]
+  pos: n
+  ex:
+    - tw: î-chhî ~
+      en:
+- head: goān-bāng/-bōng
+  etym: < col log Nip [願望]
+  pos: n
+  mw: ê
+  en:
+- head: goân-bīn
+- head: goān-bōng
+  det: goān-bāng
+- head: goân-bûn
+  etym: < log Nip [原文]
+  pos: n
+- head: goân-chāi
+  pos: v
+- head: goân-chek
+  etym: < log Nip [原則]
+  pos: n
+  mw: ê
+  en:
+- head: goân-chiap
+  etym: < log Chi [原汁]
+  pos: n
+- head: goân-chng
+  det: goân-chong
+- head: goân-choân
+  pos: v
+- head: goân-chōe
+  etym: < log [原罪]
+  pos: n
+- head: goân-chok
+  etym: < log Nip [原作]
+  pos: n
+- head: goân-chok-chiá
+  etym: < log Nip [原作者]
+  pos: n
+  mw: ê
+  en:
+- head: goân-chong/-chng
+  etym: < lit log [原裝]
+  pos: n
+  ex:
+    - tw: ~ chìn-kháu
+      en:
+- head: goân-chú
+  etym: < log Nip [原子]
+  pos: n
+  mw: lia̍p
+  en:
+- head: goân-chū-bîn
+  etym: < log Nip [原住民]
+  pos: n
+  mw: ê
+  en:
+- head: goân-chú-lêng
+  etym: < log Chi [原子能]
+  pos: n
+- head: goân-chú-pit
+  etym: < log Chi [原子筆] < commTWChi ian²tsu¹pi³ < Chi [] < tr En ball pen
+  pos: n
+  mw: ki
+  en:
+- head: goân-chú-tân, goân-chú-tôaⁿ
+  etym: < log Chi [原子彈]
+  pos: n
+  mw: lia̍p
+  en:
+- head: goân-hêng
+  etym: < log Chi [原形]
+  pos: n
+- head: goān-ì
+  etym: < log Sin [願意]
+  pos: n
+- head: goân-in
+  etym: < log Nip [原因]
+  pos: n
+  mw: ê
+  en:
+- head: goân-iû
+  etym: < log Nip [原油]
+  pos: n
+- head: goân-kè
+  etym: < log Sin [原價]
+  pos: n
+- head: goân-khì
+  etym: < log Sin [元氣]
+  defs:
+    - pos: n
+      ex:
+        - tw: bô ~
+          en:
+    - pos: adj
+      etym: < log Nip [元氣] < sem
+- head: goân-kó
+  etym: < log Nip [原稿]
+  pos: n
+  mw: hūn, tiuⁿ
+  en:
+- head: goân-kò
+  etym: < log Nip [原告] < Sin
+  pos: n
+  mw: ê
+  en:
+- head: goán-kok
+  pos: n
+  cf: [lán-kok]
+- head: goân-lâi
+  etym: < log Sin [原來]
+  defs:
+    - pos: adj
+      alt: [pún-lâi]
+      ex:
+        - tw: ~ ê chú-láng
+          en:
+    - pos: adv
+      1:
+        en:
+        alt: [pún-lâi, goân-pún]
+        ex:
+          - tw: ~ chia bô chhù.
+            en:
+      2:
+        en:
+        ex:
+          - tw: Góa kioh-sī chiâ ; ~ sī lí!
+            en:
+- head: goân-lí
+  etym: < log Nip [原理]
+  pos: n
+  mw: ê
+  en:
+- head: goân-liāng/-liōng
+  page: 149
+  etym: < log Sin [原諒]
+  pos: v
+- head: goân-liāu
+  etym: < log Nip [原料]
+  pos: n
+- head: goân-liōng
+  det: goân-liāng
+- head: goân-ló/-nó͘
+  etym: < log Nip [元老]
+  pos: n
+  ex:
+    - tw: khai-kok ~ q.v.
+      en:
+- head: goân-lō͘
+  etym: < log Sin [原路]
+  pos: n
+  mw: tiâu
+  en:
+  ex:
+    - tw: koh tùi ~ tńg-·khì
+      en:
+- head: goân-nó͘
+  det: goân-ló
+- head: goân-pán
+  etym: < log Nip [原版]
+  pos: n
+- head: goân-pún
+  etym: < log Sin []
+  pos: adv
+  alt: [pún-lâi, goân-lâi]
+  ex:
+    - tw: ~ chia bô chhù.
+      en:
+- head: goân-sí sî-tāi -sú sì- -sṳ-
+  etym: < log Nip [原始時代]
+  pos: n
+- head: Goân-siau
+  etym: < log Sin [元宵]
+  pos: n
+- head: goân-siú
+  etym: < log Sin [元首]
+  mw: ê
+- head: goân-sò͘
+  etym: < log Nip [元素]
+  pos: n
+  mw: ê
+  en:
+  ex:
+    - tw: hòa-ha̍k ~
+      en:
+- head: goân-sòe
+  etym: < log Sin [元帥]
+  pos: n
+  mw: ê
+  en:
+- head: goân-sú
+  det: goân-sí
+- head: goân-tàn
+  etym: < log Sin [元旦]
+  pos: n
+- head: goân-thâu
+  etym: < log Sin [源頭]
+  pos: n
+  mw: ê
+  en:
+- head: goân-tiāu
+  etym: < log Chi [原調] ; ant piàn-tiāu
+  pos: n
+  mw: ê
+  en:
+- head: Goân-tōng-le̍k(< log Nip [原動力])
+  pos: n
+  mw: ê
+  en:
+- head: goân-ūi
+  etym: < log Sin [原位]
+  pos: n
+- head: goa̍t-tâi
+  det: goe̍h-tâi
+- head: gōe-seng
+  etym: < log Sin [外甥]
+  pos: n
+  takes_a2: true
+  mw: ê
+  en:
+- head: gōe-seng-lí/-lú/-lṳ
+  etym: < log Sin [外甥女]
+  pos: n
+  mw: ê
+  en:
+- head: goeh
+  det: ngeh¹²
+- head: goe̍h¹|ge̍h|go̤̍h
+  etym: < Sin [月]
+  pos: n
+  1:
+    en:
+    mw: lia̍p
+  2:
+    en:
+    ex:
+      - tw: Jī-~ chh(o)e-it
+        en:
+- head: goe̍h²|goeh
+  pos: v
+  det: nge̍h
+- head: goe̍h-bâi|ge̍h-|go̤̍h-
+  pos: n
+  mw: ê
+  en:
+- head: goe̍h-bóe|ge̍h-bé|go̤̍h-bó̤
+  etym: < Sin [月尾]
+    b
+- head: goe̍h-chhe|ge̍h-/go̤̍h-chhoe
+  etym: < Sin [月初]
+  pos: n
+- head: goe̍h-hūn|ge̍h-|go̤̍h-
+  etym: < log Chi [月份]
+  pos: n
+- head: goe̍h-îⁿ|ge̍h-|go̤̍h-
+  etym: < Sin [月圓]
+  pos: v
+- head: goe̍h-ji̍t/-gi̍t/-li̍t|ge̍h-/go̤̍h-ji̍t/-li̍t
+  etym: < cl + nom
+  pos: mw
+  alt: [kò-goe̍h]
+  ex:
+    - tw: chi̍t ~
+      en:
+- head: goe̍h-keng|ge̍h-|go̤̍h-
+  etym: < log Sin [月經]
+  pos: n
+- head: goe̍h-khan|ge̍h-|go̤̍h-
+  etym: < log Nip [月刊]
+  pos: n
+  mw: ê, hūn, kî, pún
+  en:
+- head: goe̍h-khó|ge̍h-|go̤̍h-
+  etym: < log Chi [月考]
+  pos: n
+  mw: pái
+  en:
+- head: goe̍h-kiû|ge̍h-|go̤̍h-
+  etym: < log Nip [月球]
+  pos: n
+  mw: lia̍p
+  en:
+- head: goe̍h-kng|ge̍h-|go̤̍h-
+  etym: < log Sin [月光]
+  pos: n
+  drv:
+    - tw: ~-ē
+      en:
+    - tw: ~-mê
+      mw: ê
+      en:
+- head: goe̍h-lāi|ge̍h-|go̤̍h-
+  pos: n
+  ex:
+    - tw: chò/-chòe ~
+      en:
+- head: goe̍h-niû|ge̍h-|go̤̍h-
+  pos: n
+  mw: lia̍p
+  en:
+- head: goe̍h-phiò|ge̍h-|go̤̍h-
+  pos: n
+  mw: tiuⁿ
+  en:
+- head: goe̍h-piáⁿ|ge̍h-|go̤̍h-
+  etym: < log Sin [月餅]
+  pos: n
+  mw: tè
+  en:
+  alt: [tiong-chhiu-piáⁿ]
+- head: goe̍h-tâi|ge̍h-|go̤̍h-|goa̍t-
+  etym: < col log [月台]
+  pos: n
+  mw: ê
+  en:
+  drv:
+    - tw: ~-phiò
+      etym: < log Chi [~票]
+      mw: tiuⁿ
+      en:
+- head: goe̍h-té|ge̍h-/go̤̍h-tóe
+  etym: < log Chi [月底]
+  pos: n
+- head: goe̍h-thâu
+  etym: < Sin [月頭]
+  pos: n
+- head: goe̍h-tiong|ge̍h-|go̤̍h-
+  etym: < Sin [月中]
+  pos: n
+- head: go̍k-bé|ko̍k-
+  pos: n
+  mw: chiah
+  en:
+- head: go̍k-hî|kho̍k-
+  page: 150
+  etym: < log Sin [鱷魚]
+  pos: n
+  mw: chiah
+  en:
+- head: gông
+  defs:
+    - pos: v
+      ex:
+        - tw: ~-·khì do.
+          en:
+    - pos: adj
+- head: gōng
+  pos: adj
+  idm:
+    - tw: ~ kà bē/bōe pê-chiūⁿ
+      en:
+- head: gông-chhia-chhia
+  pos: adj
+  alt: [gông-lin-lin]
+- head: gōng-chîⁿ
+  pos: n
+  ex:
+    - tw: liáu ~
+      en:
+- head: gōng-giàn-thâu (v giàn-thâu)
+  pos: n
+  mw: ê
+  en:
+- head: gōng-gōng-á
+  pos: adv
+  ex:
+    - tw: ~ chē
+      en:
+    - tw: ~ chò/chòe
+      en:
+    - tw: ~ khùn
+      en:
+    - tw: ~ siūⁿ
+      en:
+- head: gōng-lâng
+  pos: n
+  mw: ê
+  en:
+- head: gōng-la̍t
+  pos: n
+  ex:
+    - tw: liáu ~
+      en:
+- head: gông-lin-lin
+  det: gông-chhia-chhia
+- head: gōng-ōe
+  pos: n
+  mw: kù
+  en:
+  ex:
+    - tw: kóng ~
+      en:
+- head: gōng-sîn¹
+  pos: [n, adj]
+  en:
+  dup: true
+- head: gōng-sîn²
+  pos: adj
+  en:
+  dup: true
+- head: gōng-siūⁿ
+  pos: v
+  ex:
+    - tw: Lí bián ~!
+      en:
+    - tw: Lí mài ~ ·a ·la.
+      en:
+- head: gōng-soa-soa
+  pos: adj
+  alt: [gōng-tuh-tuh]
+- head: gōng-táⁿ
+  defs:
+    - pos: n
+      mw: ê
+    - pos: adj
+- head: gōng-tai
+  defs:
+    - pos: n
+      mw: ê
+    - pos: adj
+- head: gōng-thâu
+  defs:
+    - pos: n
+      mw: ê
+    - pos: adj
+- head: gōng-thûi
+  defs:
+    - pos: n
+      mw: ê
+    - pos: adj
+- head: gōng-ti̍t
+  pos: adj
+- head: gōng-tōa-tai
+  pos: n
+  mw: ê
+  en:
+- head: gōng-tuh-tuh/-thu̍h-thu̍h
+  pos: adj
+  alt: [gōng-soa-soa]
+- head: gop
+  det: gap
+- head: gû
+  etym: < Sin [牛]
+  pos: n
+  mw: chiah
+  en:
+  1:
+    en:
+    idm:
+      - tw: ~ khan kàu Pak-kiaⁿ iáu-sī ~.
+        en:
+      - tw: ~ tiō-sī ~
+        en: do.
+  2:
+    en:
+- head: gù
+  pos: onom
+- head: gū|gṳ|bū
+  etym: < log Sin [遇]
+  pos: v
+  alt: [tú², tn̄g⁴]
+- head: gû-á¹
+  pos: n
+  mw: chiah
+  en:
+- head: gû-á²
+  etym: < tr + log Chi [牛仔] < tr En cowboy
+  pos: n
+  mw: ê
+  en:
+  drv:
+    - tw: ~-khò͘
+      en:
+      etym: < tr + log Chi [牛仔褲] < tr En jeans
+      mw: niá
+      alt: [phah-thih-á-khò͘]
+- head: gû-á-kiáⁿ
+  pos: n
+  mw: chiah
+  en:
+- head: gû-ām-sê
+  pos: n
+  mw: niá, ê
+  en:
+- head: gû-bah
+  etym: < Sin [牛肉]
+  pos: n
+  mw: tè
+  en:
+  drv:
+    - tw: ~-koaⁿ
+      en:
+      etym: < log Chi [~干]
+      mw: tè
+    - tw: ~-mī
+      en:
+      etym: < log Chi [~麵]
+      mw: óaⁿ
+- head: gû-bó/-bú
+  pos: n
+  mw: chiah
+  en:
+- head: gú-bûn
+  det: gí-bûn
+- head: gû-chhia
+  pos: n
+  mw: tâi
+  en:
+- head: gú-giân
+  det: gí-giân
+- head: gū-giân
+  etym: < log Sin [語言]
+  pos: n
+  mw: ê
+  en:
+- head: gú-goân
+  det: gí-goân
+- head: gú-hoat
+  det: gí-hoat
+- head: gú-im
+  det: gí-im
+- head: gû-kak
+  pos: n
+  mw: ki
+  en:
+  ex:
+    - tw: báng-á tèng ~
+      en:
+- head: gú-kám
+  det: gí-kám
+- head: gû-kang
+  pos: n
+  mw: chiah
+  en:
+  cf: [gû-káng]
+- head: gû-káng
+  pos: n
+  takes_a2: true
+  mw: chiah
+  en:
+  cf: [gû-kang]
+- head: gû-káng-oaihⁿ
+  pos: n
+  mw: chiah
+  en:
+- head: gú-khì
+  det: gí-khì
+- head: gu-lám
+  etym: < En gram < Fr gramme
+  pos: mw
+- head: gû-leng/-lin/-ne/-ni
+  pos: n
+  drv:
+    - tw: ~-cheng
+      en:
+      etym: < tr Chi [~精] < tr En cream
+      alt: [khu-lì-mù]
+    - tw: ~-thn̂g
+      mw: lia̍p
+      en:
+- head: gú-liāu-khò͘
+  page: 151
+  det: gí-liāu-khò͘
+- head: gû-lin
+  det: gû-leng
+- head: gú-lūi
+  det: gí-lūi
+- head: gû-ne/-ni
+  det: gû-leng
+- head: Gû-nn̂g
+  etym: < log Sin [牛郎] ; ant Chit-lí-/lú
+  pos: n
+- head: gû-pâi
+  etym: < log Chi [牛排] < tr En beefsteak
+  pos: n
+  mw: tè
+  en:
+- head: gû-po͘
+  pos: n
+  mw: ê
+  en:
+- head: gú-sû
+  det: gí-sû
+- head: gû-thâu-bé-bīn
+  etym: < sem log Sin [牛頭馬面]
+  defs:
+    - pos: n
+      mw: ê
+    - pos: adj
+- head: gú-thé-bûn
+  det: gí-thé-bûn
+- head: gû-tiâu
+  pos: n
+  mw: ê, keng
+  en:
+  idm:
+    - tw: ~-lāi tak gû-bó
+      en:
+- head: gu̍h
+  pos: [onom, v]
+- head: gŭh
+  pos: onom
+- head: gu̍h-gu̍h-kiò|ku̍h-ku̍h-
+  pos: v
+  alt: [gi-gí-gu̍h-gu̍h]
+- head: gūi-chō bûn-su
+  etym: < log Chi [偽造文書] ; cf Nip [文書偽造]
+  pos: v
+- head: gûi-ki
+  etym: < log Sin [危機]
+  pos: n
+  mw: ê, pái
+  en:
+  ex:
+    - tw: ~ chhú-lí
+      en:
+  drv:
+    - tw: ~ ì-sek
+      en:
+      etym: < log Chi [~意識]
+    - tw: ~-kám
+      en:
+      etym: < log Chi [~感]
+      mw: ê
+- head: gûi-kip
+  etym: < log Sin [危急]
+  pos: adj
+- head: gûn
+  det: gîn¹
+- head: gún
+  det: goán

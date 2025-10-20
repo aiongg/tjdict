@@ -1,0 +1,97 @@
+- head: kàn-kiāu
+- head: kan-lo̍k
+- head: kan-na
+- head: kan-na
+- head: kan-ná
+- head: kan-ná
+- head: kan-nā
+- head: kán-phó͘
+  etym: (< log Chi [簡譜])
+  pos: n
+- head: Kán-phó͘-chē
+  etym: (< log Chi < Kampu-chea [柬浦寨])
+  pos: n
+- head: kàn-pō͘
+  etym: (< log Nip [幹部])
+  pos: n
+  mw: ê
+- head: kan-poe
+  etym: (< log Sin [乾杯])
+  pos: v
+- head: kan-pòe
+- head: kàn-sè-pau
+  etym: (< log Chi < Nip < tr En stem cell[幹細胞])
+  pos: n
+  mw: lia̍p
+- head: kán-séng
+  etym: (< log Sin [簡省])
+  pos: v
+- head: kán-siá
+  etym: (< log Sin [簡寫])
+  pos: v
+  alt: [kán-tan-siá]
+- head: kan-sia̍p(< log Chi [干涉])
+  pos: v
+- head: kan-sîn(< log Sin [奸臣])
+  defs:
+    - pos: n
+      takes_a2: true
+      mw: ê
+    - pos: adj
+      alt: [kan¹]
+- head: kán-sìn
+  etym: (< log Chi < tr En tert mes-sage [簡訊])
+  pos: n
+  mw: ê
+- head: kan-sîn-á-chhiò
+- head: kàn-sòaⁿ
+  etym: (< log Nip [幹線])
+  pos: n
+  mw: tiâu
+- head: kàn-sū
+  etym: (< log Nip [幹事])
+  pos: n
+  takes_a2: true
+  mw: ê
+- head: kan-ta/-taⁿ
+  det: kan-na²
+- head: kán-tan
+  etym: (< log Nip [簡單])
+  defs:
+    - pos: adj
+      drv:
+        - tw: ~-kóng
+          en:
+        - tw: ~-siá
+          en:
+    - pos: adv
+      ex:
+        - tw: ~ chhēng
+          en:
+        - tw: ~chia̍h
+          en:
+        - tw: ~ kóng-kóng-·le
+          en:
+- head: kán-thé-jī/-gī/-lī
+  etym: (< log Chi [簡體字])
+  pos: n
+  mw: jī
+- head: kàn-tia̍p|kan-
+  etym: (< log Nip [間諜])
+  pos: n
+  mw: ê
+- head: kang¹
+- head: kang²
+- head: kâng
+- head: kâng
+- head: káng¹(< log Sin [港])
+  pos: n
+  mw: ê
+- head: káng²
+- head: kàng¹
+  etym: (< log Sin [降])
+  pos: v
+  ex:
+    - tw: ~ khah kē
+      en:
+- head: kàng²

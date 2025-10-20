@@ -1,0 +1,146 @@
+- head: kiám-pûi
+  etym: (< log Chi [減肥])
+  pos: v
+- head: kiám-sè, kiám-sò̤
+- head: kiâm-sí-sí
+- head: kiâm-siap
+- head: kiâm-sng-khó͘-chiáⁿ
+- head: kiâm-sng-tiⁿ
+- head: kiám-sòe/-sè/-sò̤
+  etym: (< log Chi [減稅])
+  pos: v
+- head: kiàm-su̍t
+  etym: (< log Nip < Sin[劍術])
+  pos: n
+- head: kiám-tāng
+- head: kiám-tēng
+  etym: (< log Nip [檢定])
+  pos: v
+  drv:
+    - tw: ~ khó-chhì
+      etym: (< log Chi [~考試])
+      mw: ê, pái
+      en:
+- head: kiám-thó
+  etym: (< log Nip [檢討])
+  pos: v
+- head: kiám-tiau tan-ūi, kiám-tiàu tan-ūi
+- head: kiâm-tih-tok
+- head: kiàm-tō
+  etym: (< log Nip [劍道])
+  pos: n
+- head: kiâm-tok-tok, kiâm-tih-tok
+- head: kiám-tāng
+- head: kian
+- head: kián
+- head: kiàn, kìⁿ
+- head: kiān
+- head: kiàn...kiàn...
+- head: kiàn-chèng
+  etym: (< log Chi [見證])
+  pos: [n, v]
+  alt: [chò/-chòe kan-chèng]
+- head: kian-chhî
+  etym: (< log [堅持])
+  pos: v
+- head: kiān-choân
+  etym: (< log Nip [健全])
+  pos: adj
+- head: kiàn-gī
+  etym: (< log Sin [建議])
+  pos: n
+  mw: ê
+- head: kiàn-kái
+  etym: (< log Nip [見解])
+  pos: n
+- head: kiàn-kau
+  etym: (< log Chi [建交])
+  pos: v
+- head: kiān-khong|khiān-
+  etym: (< log Nip [健康])
+  pos: [n, adj]
+- head: kian-kian
+- head: kian-kiâng/-kiông
+  etym: (< log Chi [堅強])
+  pos: adj
+  ex:
+    - tw: ì-chì ~
+      en:
+- head: kiàn-kó͘
+- head: kian-koat
+  etym: (< log Chi [堅決])
+  pos: adj
+- head: kiàn-kok
+  etym: (< log Sin [建國])
+  pos: v
+- head: kiàn-li̍p
+  etym: (< log Nip < sem Sin [建立])
+  pos: v
+- head: kiàn-nā
+- head: kiàn-pái, kìⁿ-pái
+- head: kian-phí
+- head: kiān-pó
+  etym: (< log Chi [健保])
+  pos: n
+  drv:
+    - tw: ~-hhùi
+      etym: (< log Chi [~費])
+      en:
+    - tw: ~-khah/-khá
+      etym: (< log Chi [~卡])
+      mw: tiuⁿ
+      en:
+    - tw: ~-kio̍k(< log Chi [~局])
+      en:
+- head: kiàn-pún
+  etym: (< log Nip [見本])
+  pos: n
+  mw: ê
+  drv:
+    - tw: ~-chhù
+      mw: keng
+      en:
+    - tw: ~-phìⁿ
+      mw: tè
+      en:
+    - tw: ~-tû
+      mw: ê
+      en:
+- head: kiàn-sek
+  etym: (< log Sin [見識])
+  pos: [n, v]
+- head: kiàn-siat
+  etym: (< sem log Sin [建設])
+  pos: v
+- head: kiàn-siàu
+  etym: (< sem log Sin [見笑])
+  defs:
+    - pos: v
+      1:
+        idm:
+          - tw: ~ tńg siūⁿ-/siū-khì
+            en:
+      2:
+        ex:
+          - tw: ~ kà bih-ji̍p-khì lāi-té
+            en:
+        drv:
+          - tw: ~-chháu
+            mw: châng
+            en:
+          - tw: ~-hoe
+            en: do.
+    - pos: adj
+      drv:
+        - tw: ~-tāi
+          en:
+- head: kian-sim
+  etym: (< log Chi [堅心])
+  pos: adv
+- head: kiān-sin-chhau
+  etym: (< log Chi [健身操])
+  pos: n
+  mw: ê, thò
+- head: kiàn-si̍p
+  etym: (< log Nip [見習])
+  pos: v

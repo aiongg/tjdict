@@ -1,0 +1,192 @@
+- head: kà²
+  etym: < Sin [校]
+  pos: v
+  1:
+    en:
+    ex:
+      - tw: ~-chhia
+        en:
+      - tw: ~ sî-cheng
+        en:
+  2:
+    en:
+- head: kà³
+  etym: < kàu³
+  defs:
+    - pos: v
+      en:
+    - pos: prep
+      etym: "> kah⁶"
+      en:
+      ex:
+        - tw: tùi chia ~ hia
+          en:
+        - tw: tán ~ cha̍p tiám chiah cháu
+          en:
+      idm:
+        - tw: ~ hit-pêng khì
+          en:
+          ex:
+            - tw: sio̍k ~ hit pêng khì
+              en:
+    - pos: gp
+      etym: "> kah⁶ > à² > á⁸"
+      en:
+      ex:
+        - tw: bô-·ê kóng ~ ū
+          en:
+      idm:
+        - tw: ~ (boeh/beh) …-·khì
+          en:
+          ex:
+            - tw: chhōe ~ (boeh) siáu-·khì
+              en:
+            - tw: tán ~ (boeh) gōng-·khì
+              en:
+        - tw: ~ boeh/beh lâi
+          en:
+          alt: kà boeh/beh sí
+        - tw: ~ boeh/beh iáu-siū
+          cat: vulg
+          en: do.
+        - tw: ~ boeh/beh sí
+          en:
+          ex:
+            - tw: khì-~ boeh/beh sí-·khì
+              en:
+        - tw: ~ ná sàⁿ (·le)
+          en:
+          ex:
+            - tw: sio̍k ~ ná sàⁿ (·le)
+              en:
+- head: kà⁴
+  etym: < Sin; ant khó³; ant ki̍t
+  pos: adj
+  en:
+  alt: [ám, chúi¹]
+- head: kà⁵
+  etym: "> kah⁷"
+  pos: conj
+  en:
+  alt: nā-kà
+  ex:
+    - tw: ~ lí í-keng chai, góa tiō bián kóng ·a.
+      en:
+- head: kā¹
+  etym: < Sin 咬
+  pos: v
+  1:
+    en:
+  2:
+    en:
+  3:
+    etym: < sem
+    en:
+  4:
+    etym: < sem
+    en:
+    ex:
+      - tw: hō͘ sian ~-tiâu-·leh
+        en:
+- head: kā²
+  pos: prep
+  1:
+    en:
+    ex:
+      - tw: ~ gín-á chhēng saⁿ
+        en:
+  2:
+    en:
+    ex:
+      - tw: khì ~ hit keng tiàm sia
+        en:
+    idm:
+      - tw: ~…kóng
+        en:
+        ex:
+          - tw: sì-kè khì kā lâng kóng
+            en:
+      - tw: ~ lí kóng lè!
+        en:
+      - tw: ~ thiⁿ chioh táⁿ
+        en:
+  3:
+    en:
+    ex:
+      - tw: ~ lâng phah
+        en:
+      - tw: Chhiáⁿ ~ che the̍h-cháu.
+- head: kă¹|kâ
+  etym: < contr kā² góa
+  pos: prep
+  1:
+    en:
+  2:
+    en:
+  3:
+    en:
+- head: kă²
+  etym: < ·ka, q.v.
+  pos: mp
+  en:
+- head: ká--à
+  pos: onom
+  en:
+- head: Ka-ba-lán
+  det: Ka-va-lán
+- head: ká-bah
+  pos: n
+  en:
+- head: ka-boa̍h-chhài
+  etym: < kāu-boa̍h-chhài
+  pos: n
+  mw: châng, hio̍h, pé
+  en:
+  alt: kāu-boa̍h-á
+- head: ka-chài, kai-chài
+  defs:
+    - pos: adj
+      en:
+    - pos: adv
+      en:
+      ex:
+        - tw: ~ bô hō͘ i khòaⁿ-·tio̍h
+- head: ka-cháu
+  pos: n
+  mw: chiah
+  en:
+- head: ka-chè
+  etym: ant kong-chè³
+  pos: [n, v]
+  en:
+- head: ka-chē/-chōe
+  pos: v
+  en:
+  ex:
+    - tw: khùn-~
+      en:
+- head: ka-chhài
+  etym: < log Chi [加菜]
+  pos: v
+  en:
+- head: kà-chheh
+  etym: < log Sin + tr [教冊]
+  pos: v
+  en:
+- head: kà-chhia
+  etym: <
+  pos: v
+  1:
+    en:
+  2:
+    en:
+    cat: sl
+  alt: phe-chhia
+- head: kā-chhùi
+  pos: v
+  en:
+- head: ka-chì/-chù/-chṳ
+  pos: n
+  takes_a2: true
+  mw: kha
+  en:
