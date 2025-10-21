@@ -3,11 +3,11 @@ import { useAuth } from '../hooks/useAuth';
 import { StatusSelect } from './StatusSelect';
 import { Timeline } from './Timeline';
 
-interface EntryReview {
+interface EntryStatus {
 	id: number;
 	entry_id: number;
 	user_id: number;
-	status: 'approved' | 'needs_work';
+	status: 'draft' | 'submitted' | 'needs_work' | 'approved';
 	reviewed_at: string;
 	user_email: string;
 	user_nickname: string | null;
@@ -29,10 +29,10 @@ interface ReviewPanelProps {
 
 export function ReviewPanel({ entryId }: ReviewPanelProps) {
 	const { user } = useAuth();
-	const [reviews, setReviews] = useState<EntryReview[]>([]);
-	const [allReviews, setAllReviews] = useState<EntryReview[]>([]);
+	const [statuses, setStatuses] = useState<EntryStatus[]>([]);
+	const [allStatuses, setAllStatuses] = useState<EntryStatus[]>([]);
 	const [comments, setComments] = useState<EntryComment[]>([]);
-	const [myReview, setMyReview] = useState<EntryReview | null>(null);
+	const [myStatus, setMyStatus] = useState<EntryStatus | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
 
@@ -44,18 +44,18 @@ export function ReviewPanel({ entryId }: ReviewPanelProps) {
 			}
 			const data = await response.json();
 			
-			// Get latest reviews per user (for current status section)
-			setReviews(data.reviews || []);
+			// Get latest statuses per user (for current status section)
+			setStatuses(data.statuses || []);
 			
-			// Get all reviews (for timeline)
-			setAllReviews(data.all_reviews || []);
+			// Get all statuses (for timeline)
+			setAllStatuses(data.all_statuses || []);
 			
 			// Get comments
 			setComments(data.comments || []);
 			
-			// Find current user's review
-			const userReview = (data.reviews || []).find((r: EntryReview) => r.user_id === user?.id);
-			setMyReview(userReview || null);
+			// Find current user's status
+			const userStatus = (data.statuses || []).find((s: EntryStatus) => s.user_id === user?.id);
+			setMyStatus(userStatus || null);
 		} catch (err) {
 			setError(err instanceof Error ? err.message : 'Failed to load data');
 		} finally {
@@ -68,7 +68,7 @@ export function ReviewPanel({ entryId }: ReviewPanelProps) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [entryId]);
 
-	const handleReviewStatusChange = async (status: 'approved' | 'needs_work') => {
+	const handleReviewStatusChange = async (status: 'draft' | 'submitted' | 'needs_work' | 'approved') => {
 		setError('');
 
 		try {
@@ -86,8 +86,8 @@ export function ReviewPanel({ entryId }: ReviewPanelProps) {
 			// Refresh data
 			await fetchData();
 		} catch (err) {
-			setError(err instanceof Error ? err.message : 'Failed to submit review');
-			throw err; // Re-throw so ReviewBadge can handle it
+			setError(err instanceof Error ? err.message : 'Failed to submit status');
+			throw err; // Re-throw so StatusSelect can handle it
 		}
 	};
 
@@ -104,9 +104,11 @@ export function ReviewPanel({ entryId }: ReviewPanelProps) {
 		);
 	}
 
-	// Group current reviews by status
-	const approvedReviews = reviews.filter(r => r.status === 'approved');
-	const needsWorkReviews = reviews.filter(r => r.status === 'needs_work');
+	// Group current statuses by status type
+	const draftStatuses = statuses.filter(s => s.status === 'draft');
+	const submittedStatuses = statuses.filter(s => s.status === 'submitted');
+	const needsWorkStatuses = statuses.filter(s => s.status === 'needs_work');
+	const approvedStatuses = statuses.filter(s => s.status === 'approved');
 
 	return (
 		<div className="review-panel">
@@ -119,36 +121,62 @@ export function ReviewPanel({ entryId }: ReviewPanelProps) {
 				<div className="review-status-header">
 					<h3>Current Review Status</h3>
 					<StatusSelect
-						currentStatus={myReview?.status || null}
+						currentStatus={myStatus?.status || null}
 						onStatusChange={handleReviewStatusChange}
 					/>
 				</div>
 
 				<div className="review-status-summary">
-					{reviews.length === 0 ? (
-						<p className="text-muted">No reviews yet</p>
+					{statuses.length === 0 ? (
+						<p className="text-muted">No statuses yet</p>
 					) : (
 						<>
-							{approvedReviews.length > 0 && (
-								<div className="review-status-group review-status-group--approved">
-									<h4>✓ Approved ({approvedReviews.length})</h4>
+							{draftStatuses.length > 0 && (
+								<div className="review-status-group review-status-group--draft">
+									<h4>◯ Draft ({draftStatuses.length})</h4>
 									<ul className="reviewer-list">
-										{approvedReviews.map(review => (
-											<li key={review.id}>
-												{getUserDisplay(review.user_nickname, review.user_email)}
+										{draftStatuses.map(status => (
+											<li key={status.id}>
+												{getUserDisplay(status.user_nickname, status.user_email)}
 											</li>
 										))}
 									</ul>
 								</div>
 							)}
 
-							{needsWorkReviews.length > 0 && (
-								<div className="review-status-group review-status-group--needs-work">
-									<h4>✗ Needs Work ({needsWorkReviews.length})</h4>
+							{submittedStatuses.length > 0 && (
+								<div className="review-status-group review-status-group--submitted">
+									<h4>→ Submitted ({submittedStatuses.length})</h4>
 									<ul className="reviewer-list">
-										{needsWorkReviews.map(review => (
-											<li key={review.id}>
-												{getUserDisplay(review.user_nickname, review.user_email)}
+										{submittedStatuses.map(status => (
+											<li key={status.id}>
+												{getUserDisplay(status.user_nickname, status.user_email)}
+											</li>
+										))}
+									</ul>
+								</div>
+							)}
+
+							{needsWorkStatuses.length > 0 && (
+								<div className="review-status-group review-status-group--needs-work">
+									<h4>✗ Needs Work ({needsWorkStatuses.length})</h4>
+									<ul className="reviewer-list">
+										{needsWorkStatuses.map(status => (
+											<li key={status.id}>
+												{getUserDisplay(status.user_nickname, status.user_email)}
+											</li>
+										))}
+									</ul>
+								</div>
+							)}
+
+							{approvedStatuses.length > 0 && (
+								<div className="review-status-group review-status-group--approved">
+									<h4>✓ Approved ({approvedStatuses.length})</h4>
+									<ul className="reviewer-list">
+										{approvedStatuses.map(status => (
+											<li key={status.id}>
+												{getUserDisplay(status.user_nickname, status.user_email)}
 											</li>
 										))}
 									</ul>
@@ -163,7 +191,7 @@ export function ReviewPanel({ entryId }: ReviewPanelProps) {
 			<Timeline
 				entryId={entryId}
 				comments={comments}
-				reviews={allReviews}
+				statuses={allStatuses}
 				currentUserId={user?.id}
 				onCommentAdded={fetchData}
 				onCommentDeleted={fetchData}

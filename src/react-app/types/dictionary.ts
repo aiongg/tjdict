@@ -15,7 +15,6 @@ export interface Entry {
 	head: string;
 	sort_key: string;
 	entry_data: string;
-	is_complete: number;
 	source_file: string | null;
 	created_at: string;
 	updated_at: string;
@@ -23,11 +22,11 @@ export interface Entry {
 	updated_by: number | null;
 }
 
-export interface EntryReview {
+export interface EntryStatus {
 	id: number;
 	entry_id: number;
 	user_id: number;
-	status: 'approved' | 'needs_work';
+	status: 'draft' | 'submitted' | 'needs_work' | 'approved';
 	reviewed_at: string;
 	user_email: string;
 	user_nickname: string | null;
@@ -44,9 +43,10 @@ export interface EntryComment {
 }
 
 export interface EntryWithReviews extends Entry {
-	reviews: EntryReview[];
-	all_reviews: EntryReview[];
+	current_status: 'draft' | 'submitted' | 'needs_work' | 'approved';
+	statuses: EntryStatus[];
+	all_statuses: EntryStatus[];
 	comments: EntryComment[];
-	my_review?: EntryReview;
+	my_status?: EntryStatus;
 }
 

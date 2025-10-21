@@ -4,50 +4,37 @@ import { StatusSelect } from '../StatusSelect';
 
 interface EntryHeaderFieldsProps {
 	entryData: EntryData;
-	isComplete: boolean;
 	canEdit: boolean;
 	onEntryDataChange: (updates: Partial<EntryData>) => void;
-	onIsCompleteChange: (value: boolean) => void;
 	callbacks: EditorCallbacks;
 	isNewEntry: boolean;
-	myReviewStatus: 'approved' | 'needs_work' | null;
-	onReviewStatusChange: (status: 'approved' | 'needs_work') => Promise<void>;
-	isSubmittingReview: boolean;
+	myStatus: 'draft' | 'submitted' | 'needs_work' | 'approved' | null;
+	onStatusChange: (status: 'draft' | 'submitted' | 'needs_work' | 'approved') => Promise<void>;
+	isSubmittingStatus: boolean;
 }
 
 export function EntryHeaderFields({
 	entryData,
-	isComplete,
 	canEdit,
 	onEntryDataChange,
-	onIsCompleteChange,
 	callbacks,
 	isNewEntry,
-	myReviewStatus,
-	onReviewStatusChange,
-	isSubmittingReview,
+	myStatus,
+	onStatusChange,
+	isSubmittingStatus,
 }: EntryHeaderFieldsProps) {
 	const { isFieldVisible, onToggleField, getAvailableFields } = callbacks;
 
 	return (
 		<div className="entry-header-compact">
-			{/* Complete checkbox and review badge on same line, right-aligned */}
+			{/* Status badge on right */}
 			<div className="entry-header-top-row">
 				<div className="entry-header-badges">
-					<label className="complete-badge">
-						<input
-							type="checkbox"
-							checked={isComplete}
-							onChange={(e) => canEdit && onIsCompleteChange(e.target.checked)}
-							disabled={!canEdit}
-						/>
-						<span>Ready for Review</span>
-					</label>
 					{!isNewEntry && (
 						<StatusSelect
-							currentStatus={myReviewStatus}
-							onStatusChange={onReviewStatusChange}
-							disabled={isSubmittingReview}
+							currentStatus={myStatus}
+							onStatusChange={onStatusChange}
+							disabled={isSubmittingStatus}
 						/>
 					)}
 				</div>

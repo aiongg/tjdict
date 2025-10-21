@@ -41,11 +41,10 @@ export default function EntryEditorPage() {
 			defs: [{ en: '' }]
 		}]
 	});
-	const [isComplete, setIsComplete] = useState(false);
 	const [activeTab, setActiveTab] = useState<'edit' | 'reviews'>('edit');
 	
-	// Extract data from query result (keep reviews/comments as is for counts)
-	const reviews = fetchedEntry?.reviews || [];
+	// Extract data from query result (keep statuses/comments as is for counts)
+	const statuses = fetchedEntry?.statuses || [];
 	const comments = fetchedEntry?.comments || [];
 	const error = queryError ? (queryError as Error).message : '';
 	
@@ -62,7 +61,6 @@ export default function EntryEditorPage() {
 	useEffect(() => {
 		if (fetchedEntry && !isNewEntry) {
 			setEntryData(JSON.parse(fetchedEntry.entry_data));
-			setIsComplete(fetchedEntry.is_complete === 1);
 		}
 	}, [fetchedEntry, isNewEntry]);
 
@@ -89,7 +87,6 @@ export default function EntryEditorPage() {
 				head: entryData.head,
 				head_number: entryData.head_number || undefined,
 				entry_data: processedEntryData,
-				is_complete: isComplete,
 			});
 
 			if (isNewEntry) {
@@ -105,7 +102,7 @@ export default function EntryEditorPage() {
 		}
 	};
 
-	const handleReviewStatusChange = async (status: 'approved' | 'needs_work') => {
+	const handleStatusChange = async (status: 'draft' | 'submitted' | 'needs_work' | 'approved') => {
 		if (!id || isNewEntry) return;
 
 		// Use the mutation with optimistic updates
@@ -367,11 +364,11 @@ export default function EntryEditorPage() {
 				<div className="editor-review-summary">
 					<span className="review-stat">
 						<Check size={16} className="icon-success" />
-						<span>{reviews.filter(r => r.status === 'approved').length}</span>
+						<span>{statuses.filter(s => s.status === 'approved').length}</span>
 					</span>
 					<span className="review-stat">
 						<X size={16} className="icon-danger" />
-						<span>{reviews.filter(r => r.status === 'needs_work').length}</span>
+						<span>{statuses.filter(s => s.status === 'needs_work').length}</span>
 					</span>
 					<span className="review-stat">
 						<MessageSquare size={16} className="icon-muted" />
@@ -384,15 +381,13 @@ export default function EntryEditorPage() {
 					<div className="compact-form">
 						<EntryHeaderFields
 							entryData={entryData}
-							isComplete={isComplete}
 							canEdit={canEdit}
 							onEntryDataChange={(updates) => setEntryData({ ...entryData, ...updates })}
-							onIsCompleteChange={setIsComplete}
 							callbacks={editorCallbacks}
 							isNewEntry={isNewEntry}
-							myReviewStatus={fetchedEntry?.my_review?.status || null}
-							onReviewStatusChange={handleReviewStatusChange}
-							isSubmittingReview={submitReviewMutation.isPending}
+							myStatus={fetchedEntry?.my_status?.status || null}
+							onStatusChange={handleStatusChange}
+							isSubmittingStatus={submitReviewMutation.isPending}
 						/>
 
 						{/* POS Definitions */}

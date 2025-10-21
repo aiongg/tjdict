@@ -573,6 +573,24 @@ label {
 	background: #dc2626;
 }
 
+.review-badge--submitted {
+	background: #3b82f6;
+	color: white;
+}
+
+.review-badge--submitted:hover:not(:disabled) {
+	background: #2563eb;
+}
+
+.review-badge--draft {
+	background: #6b7280;
+	color: white;
+}
+
+.review-badge--draft:hover:not(:disabled) {
+	background: #4b5563;
+}
+
 .review-badge:disabled {
 	opacity: 0.6;
 	cursor: not-allowed;
@@ -678,6 +696,14 @@ label {
 	color: #ef4444;
 }
 
+.timeline-action--submitted {
+	color: #3b82f6;
+}
+
+.timeline-action--draft {
+	color: #6b7280;
+}
+
 .timeline-date {
 	color: var(--color-text-secondary);
 	font-size: 0.875rem;
@@ -756,6 +782,14 @@ label {
 
 .review-status-group--needs-work h4 {
 	color: #ef4444;
+}
+
+.review-status-group--submitted h4 {
+	color: #3b82f6;
+}
+
+.review-status-group--draft h4 {
+	color: #6b7280;
 }
 
 .reviewer-list {

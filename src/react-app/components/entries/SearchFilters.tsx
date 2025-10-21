@@ -1,12 +1,12 @@
-import { ArrowDownAZ, CalendarArrowDown } from 'lucide-react';
+import { ArrowDownAZ, CalendarArrowDown, Filter } from 'lucide-react';
+
+export type StatusFilter = 'all' | 'draft' | 'submitted' | 'needs_work' | 'approved';
 
 interface SearchFiltersProps {
 	searchInput: string;
 	onSearchInputChange: (value: string) => void;
-	showIncompleteOnly: boolean;
-	onShowIncompleteOnlyChange: (value: boolean) => void;
-	showNeedingReview: boolean;
-	onShowNeedingReviewChange: (value: boolean) => void;
+	statusFilter: StatusFilter;
+	onStatusFilterChange: (value: StatusFilter) => void;
 	sortBy: 'sort_key' | 'updated_at';
 	onSortByChange: (value: 'sort_key' | 'updated_at') => void;
 	sortOrder: 'asc' | 'desc';
@@ -16,10 +16,8 @@ interface SearchFiltersProps {
 export function SearchFilters({
 	searchInput,
 	onSearchInputChange,
-	showIncompleteOnly,
-	onShowIncompleteOnlyChange,
-	showNeedingReview,
-	onShowNeedingReviewChange,
+	statusFilter,
+	onStatusFilterChange,
 	sortBy,
 	onSortByChange,
 	onSortOrderChange,
@@ -45,23 +43,20 @@ export function SearchFilters({
 			/>
 
 			<div className="search-filters">
-				<label className="checkbox-label">
-					<input
-						type="checkbox"
-						checked={showIncompleteOnly}
-						onChange={(e) => onShowIncompleteOnlyChange(e.target.checked)}
-					/>
-					Incomplete
-				</label>
-
-				<label className="checkbox-label">
-					<input
-						type="checkbox"
-						checked={showNeedingReview}
-						onChange={(e) => onShowNeedingReviewChange(e.target.checked)}
-					/>
-					Needs review
-				</label>
+				<div className="sort-select-wrapper">
+					<Filter size={16} className="sort-icon" />
+					<select
+						value={statusFilter}
+						onChange={(e) => onStatusFilterChange(e.target.value as StatusFilter)}
+						className="sort-select"
+					>
+						<option value="all">All</option>
+						<option value="draft">Draft</option>
+						<option value="submitted">Submitted</option>
+						<option value="needs_work">Needs work</option>
+						<option value="approved">Approved</option>
+					</select>
+				</div>
 
 				<div className="sort-select-wrapper">
 					{sortBy === 'sort_key' ? (

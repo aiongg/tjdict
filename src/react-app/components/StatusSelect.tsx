@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 
 interface ReviewBadgeProps {
-	currentStatus?: 'approved' | 'needs_work' | null;
-	onStatusChange: (status: 'approved' | 'needs_work') => Promise<void>;
+	currentStatus?: 'draft' | 'submitted' | 'needs_work' | 'approved' | null;
+	onStatusChange: (status: 'draft' | 'submitted' | 'needs_work' | 'approved') => Promise<void>;
 	compact?: boolean;
 	disabled?: boolean;
 	onDropdownOpenChange?: (isOpen: boolean) => void;
@@ -32,7 +32,7 @@ export function StatusSelect({ currentStatus, onStatusChange, compact = false, d
 		}
 	}, [isOpen]);
 
-	const handleStatusClick = async (status: 'approved' | 'needs_work') => {
+	const handleStatusClick = async (status: 'draft' | 'submitted' | 'needs_work' | 'approved') => {
 		if (isSubmitting) return;
 		
 		setIsSubmitting(true);
@@ -50,19 +50,25 @@ export function StatusSelect({ currentStatus, onStatusChange, compact = false, d
 		const baseClass = compact ? 'review-badge review-badge--compact' : 'review-badge';
 		if (currentStatus === 'approved') return `${baseClass} review-badge--approved`;
 		if (currentStatus === 'needs_work') return `${baseClass} review-badge--needs-work`;
+		if (currentStatus === 'submitted') return `${baseClass} review-badge--submitted`;
+		if (currentStatus === 'draft') return `${baseClass} review-badge--draft`;
 		return `${baseClass} review-badge--default`;
 	};
 
 	const getBadgeText = () => {
 		if (currentStatus === 'approved') return '✓ Approved';
 		if (currentStatus === 'needs_work') return '✗ Needs work';
-		return 'Review';
+		if (currentStatus === 'submitted') return '→ Submitted';
+		if (currentStatus === 'draft') return '◯ Draft';
+		return 'Set status';
 	};
 
 	const getCompactBadgeText = () => {
 		if (currentStatus === 'approved') return '✓';
 		if (currentStatus === 'needs_work') return '✗';
-		return '○'; // Empty circle for no review
+		if (currentStatus === 'submitted') return '→';
+		if (currentStatus === 'draft') return '◯';
+		return '○'; // Empty circle for no status
 	};
 
 	return (
@@ -79,12 +85,20 @@ export function StatusSelect({ currentStatus, onStatusChange, compact = false, d
 			{isOpen && (
 				<div className="review-badge-dropdown">
 					<button
-						className="review-badge-dropdown-item review-badge-dropdown-item--approve"
-						onClick={() => handleStatusClick('approved')}
+						className="review-badge-dropdown-item review-badge-dropdown-item--draft"
+						onClick={() => handleStatusClick('draft')}
 						disabled={isSubmitting}
 						type="button"
 					>
-						✓ Approve
+						◯ Draft
+					</button>
+					<button
+						className="review-badge-dropdown-item review-badge-dropdown-item--submitted"
+						onClick={() => handleStatusClick('submitted')}
+						disabled={isSubmitting}
+						type="button"
+					>
+						→ Submitted
 					</button>
 					<button
 						className="review-badge-dropdown-item review-badge-dropdown-item--needs-work"
@@ -93,6 +107,14 @@ export function StatusSelect({ currentStatus, onStatusChange, compact = false, d
 						type="button"
 					>
 						✗ Needs work
+					</button>
+					<button
+						className="review-badge-dropdown-item review-badge-dropdown-item--approve"
+						onClick={() => handleStatusClick('approved')}
+						disabled={isSubmitting}
+						type="button"
+					>
+						✓ Approved
 					</button>
 				</div>
 			)}

@@ -177,7 +177,6 @@ export interface Entry {
 	page: number | null;
 	sort_key: string;
 	entry_data: string;
-	is_complete: number;
 	source_file: string | null;
 	created_at: string;
 	updated_at: string;
@@ -185,11 +184,11 @@ export interface Entry {
 	updated_by: number | null;
 }
 
-export interface EntryReview {
+export interface EntryStatus {
 	id: number;
 	entry_id: number;
 	user_id: number;
-	status: 'approved' | 'needs_work';
+	status: 'draft' | 'submitted' | 'needs_work' | 'approved';
 	reviewed_at: string;
 }
 
@@ -210,13 +209,14 @@ export interface EntryListResponse {
 }
 
 export interface EntryWithReviews extends Entry {
-	reviews: EntryReviewWithUser[];
-	all_reviews: EntryReviewWithUser[];
+	current_status: 'draft' | 'submitted' | 'needs_work' | 'approved';
+	statuses: EntryStatusWithUser[];
+	all_statuses: EntryStatusWithUser[];
 	comments: EntryCommentWithUser[];
-	my_review?: EntryReview;
+	my_status?: EntryStatus;
 }
 
-export interface EntryReviewWithUser extends EntryReview {
+export interface EntryStatusWithUser extends EntryStatus {
 	user_email: string;
 	user_nickname: string | null;
 }
@@ -228,8 +228,7 @@ export interface EntryCommentWithUser extends EntryComment {
 
 export interface EntrySearchParams {
 	q?: string;  // Search query - supports key:value syntax (head:, en:, tw:, etym:)
-	complete?: boolean;
-	needsReview?: boolean;
+	status?: ('draft' | 'submitted' | 'needs_work' | 'approved')[];
 	page?: number;
 	pageSize?: number;
 	sortBy?: 'head' | 'updated_at' | 'sort_key';
@@ -238,11 +237,10 @@ export interface EntrySearchParams {
 
 export interface UpdateEntryRequest {
 	entry_data: EntryData;
-	is_complete?: boolean;
 }
 
-export interface CreateReviewRequest {
-	status: 'approved' | 'needs_work';
+export interface CreateStatusRequest {
+	status: 'draft' | 'submitted' | 'needs_work' | 'approved';
 }
 
 export interface CreateCommentRequest {

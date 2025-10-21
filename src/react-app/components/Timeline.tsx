@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-interface Review {
+interface Status {
 	id: number;
 	user_id: number;
-	status: 'approved' | 'needs_work';
+	status: 'draft' | 'submitted' | 'needs_work' | 'approved';
 	reviewed_at: string;
 	user_email: string;
 	user_nickname: string | null;
@@ -19,19 +19,19 @@ interface Comment {
 }
 
 type TimelineItem = 
-	| { type: 'review'; data: Review }
+	| { type: 'status'; data: Status }
 	| { type: 'comment'; data: Comment };
 
 interface TimelineProps {
 	entryId: number;
 	comments: Comment[];
-	reviews: Review[];
+	statuses: Status[];
 	currentUserId: number | undefined;
 	onCommentAdded: () => void;
 	onCommentDeleted: (commentId: number) => void;
 }
 
-export function Timeline({ entryId, comments, reviews, currentUserId, onCommentAdded, onCommentDeleted }: TimelineProps) {
+export function Timeline({ entryId, comments, statuses, currentUserId, onCommentAdded, onCommentDeleted }: TimelineProps) {
 	const [newComment, setNewComment] = useState('');
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [error, setError] = useState('');
@@ -39,7 +39,7 @@ export function Timeline({ entryId, comments, reviews, currentUserId, onCommentA
 	// Combine and sort timeline items
 	const timelineItems: TimelineItem[] = [
 		...comments.map(c => ({ type: 'comment' as const, data: c })),
-		...reviews.map(r => ({ type: 'review' as const, data: r }))
+		...statuses.map(s => ({ type: 'status' as const, data: s }))
 	].sort((a, b) => {
 		const timeA = a.type === 'comment' ? new Date(a.data.created_at).getTime() : new Date(a.data.reviewed_at).getTime();
 		const timeB = b.type === 'comment' ? new Date(b.data.created_at).getTime() : new Date(b.data.reviewed_at).getTime();
@@ -113,13 +113,17 @@ export function Timeline({ entryId, comments, reviews, currentUserId, onCommentA
 				) : (
 					timelineItems.map((item, index) => (
 						<div key={`${item.type}-${item.data.id}-${index}`} className={`timeline-item timeline-item--${item.type}`}>
-							{item.type === 'review' ? (
-								<div className="timeline-review">
+							{item.type === 'status' ? (
+								<div className="timeline-status">
 									<span className="timeline-user">{getUserDisplay(item.data.user_nickname, item.data.user_email)}</span>
 									{item.data.status === 'approved' ? (
 										<span className="timeline-action timeline-action--approved"> approved this entry</span>
-									) : (
+									) : item.data.status === 'needs_work' ? (
 										<span className="timeline-action timeline-action--needs-work"> marked this as needs work</span>
+									) : item.data.status === 'submitted' ? (
+										<span className="timeline-action timeline-action--submitted"> submitted this entry</span>
+									) : (
+										<span className="timeline-action timeline-action--draft"> marked this as draft</span>
 									)}
 									<span className="timeline-date">{formatDate(item.data.reviewed_at)}</span>
 								</div>

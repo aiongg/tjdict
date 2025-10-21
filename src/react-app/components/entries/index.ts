@@ -7,5 +7,5 @@ export { Headword } from './Headword';
 
 // Entry list components
 export { EntryListItem } from './EntryListItem';
-export { SearchFilters } from './SearchFilters';
+export { SearchFilters, type StatusFilter } from './SearchFilters';
 

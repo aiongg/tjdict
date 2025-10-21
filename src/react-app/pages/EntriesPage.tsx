@@ -7,7 +7,7 @@ import { useEntriesList, useSubmitReview } from '../hooks/useEntriesQuery';
 import { Navigation } from '../components/Navigation';
 import { PaginationControls } from '../components/PaginationControls';
 import { PageImageViewer } from '../components/PageImageViewer';
-import { SearchFilters, EntryListItem } from '../components/entries';
+import { SearchFilters, EntryListItem, type StatusFilter } from '../components/entries';
 
 export default function EntriesPage() {
 	const { user } = useAuth();
@@ -19,11 +19,6 @@ export default function EntriesPage() {
 		return searchParams.get(key) || defaultValue;
 	};
 	
-	const getBoolParam = (key: string, defaultValue: boolean = false): boolean => {
-		const value = searchParams.get(key);
-		return value === 'true' ? true : value === 'false' ? false : defaultValue;
-	};
-	
 	const getNumberParam = (key: string, defaultValue: number): number => {
 		const value = searchParams.get(key);
 		return value ? parseInt(value, 10) || defaultValue : defaultValue;
@@ -32,8 +27,9 @@ export default function EntriesPage() {
 	// Search and filter state from URL
 	const [searchQuery, setSearchQuery] = useState(getParam('q'));
 	const [searchInput, setSearchInput] = useState(getParam('q'));
-	const [showIncompleteOnly, setShowIncompleteOnly] = useState(getBoolParam('incomplete'));
-	const [showNeedingReview, setShowNeedingReview] = useState(getBoolParam('needsReview'));
+	const [statusFilter, setStatusFilter] = useState<StatusFilter>(
+		(getParam('status') as StatusFilter) || 'all'
+	);
 	const [sortBy, setSortBy] = useState<'sort_key' | 'updated_at'>(
 		(getParam('sort') as 'sort_key' | 'updated_at') || 'sort_key'
 	);
@@ -47,7 +43,7 @@ export default function EntriesPage() {
 	const [openReviewDropdown, setOpenReviewDropdown] = useState<number | null>(null);
 	
 	// Check if any filters are active
-	const hasFilters = searchQuery || showIncompleteOnly || showNeedingReview;
+	const hasFilters = searchQuery || statusFilter !== 'all';
 	
 	// Build filter object for React Query
 	const filters = {
@@ -55,8 +51,7 @@ export default function EntriesPage() {
 		dictPage: hasFilters ? undefined : dictPage,
 		pageSize: 50,
 		q: searchQuery || undefined,
-		incomplete: showIncompleteOnly || undefined,
-		needsReview: showNeedingReview || undefined,
+		status: statusFilter !== 'all' ? [statusFilter] : undefined,
 		sortBy,
 		sortOrder,
 	};
@@ -95,14 +90,13 @@ export default function EntriesPage() {
 		// Add parameters only if they differ from defaults
 		if (dictPage !== 1) params.set('page', dictPage.toString());
 		if (searchQuery) params.set('q', searchQuery);
-		if (showIncompleteOnly) params.set('incomplete', 'true');
-		if (showNeedingReview) params.set('needsReview', 'true');
+		if (statusFilter !== 'all') params.set('status', statusFilter);
 		if (sortBy !== 'sort_key') params.set('sort', sortBy);
 		if (sortOrder !== 'asc') params.set('order', sortOrder);
 		
 		// Update URL without causing navigation
 		setSearchParams(params, { replace: true });
-	}, [dictPage, searchQuery, showIncompleteOnly, showNeedingReview, sortBy, sortOrder, setSearchParams]);
+	}, [dictPage, searchQuery, statusFilter, sortBy, sortOrder, setSearchParams]);
 	
 	// Save scroll position before navigating away
 	useEffect(() => {
@@ -209,7 +203,7 @@ export default function EntriesPage() {
 		closeViewer();
 	};
 
-	const handleReviewStatusChange = async (entryId: number, status: 'approved' | 'needs_work') => {
+	const handleReviewStatusChange = async (entryId: number, status: 'draft' | 'submitted' | 'needs_work' | 'approved') => {
 		// Use the mutation with optimistic updates
 		await submitReviewMutation.mutateAsync({ entryId, status });
 	};
@@ -241,15 +235,9 @@ export default function EntriesPage() {
 			<SearchFilters
 				searchInput={searchInput}
 				onSearchInputChange={(value) => setSearchInput(value)}
-				showIncompleteOnly={showIncompleteOnly}
-				onShowIncompleteOnlyChange={(checked) => {
-					setShowIncompleteOnly(checked);
-					setDictPage(1);
-					setPageInputValue('1');
-				}}
-				showNeedingReview={showNeedingReview}
-				onShowNeedingReviewChange={(checked) => {
-					setShowNeedingReview(checked);
+				statusFilter={statusFilter}
+				onStatusFilterChange={(value) => {
+					setStatusFilter(value);
 					setDictPage(1);
 					setPageInputValue('1');
 				}}

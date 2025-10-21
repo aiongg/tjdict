@@ -2,11 +2,11 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '../lib/queryClient';
 import type { EntryData } from '../components/editor/types';
 
-interface EntryReview {
+interface EntryStatus {
 	id: number;
 	entry_id: number;
 	user_id: number;
-	status: 'approved' | 'needs_work';
+	status: 'draft' | 'submitted' | 'needs_work' | 'approved';
 	reviewed_at: string;
 	user_email: string;
 	user_nickname: string | null;
@@ -27,7 +27,6 @@ interface Entry {
 	head: string;
 	sort_key: string;
 	entry_data: string;
-	is_complete: number;
 	source_file: string | null;
 	created_at: string;
 	updated_at: string;
@@ -36,18 +35,18 @@ interface Entry {
 }
 
 interface EntryWithReviews extends Entry {
-	reviews: EntryReview[];
-	all_reviews: EntryReview[];
+	current_status: 'draft' | 'submitted' | 'needs_work' | 'approved';
+	statuses: EntryStatus[];
+	all_statuses: EntryStatus[];
 	comments: EntryComment[];
-	my_review?: EntryReview;
+	my_status?: EntryStatus;
 }
 
 interface EntriesListFilters extends Record<string, unknown> {
 	page: number;
 	pageSize?: number;
 	q?: string;  // Search query - supports key:value syntax (head:, en:, tw:, etym:)
-	incomplete?: boolean;
-	needsReview?: boolean;
+	status?: ('draft' | 'submitted' | 'needs_work' | 'approved')[];
 	sortBy?: 'sort_key' | 'updated_at';
 	sortOrder?: 'asc' | 'desc';
 	dictPage?: number; // For dictionary page-based navigation
@@ -66,7 +65,7 @@ interface EntriesListResponse {
 
 // Hook to fetch paginated entries list
 export function useEntriesList(filters: EntriesListFilters) {
-	const hasFilters = filters.q || filters.incomplete || filters.needsReview;
+	const hasFilters = filters.q || filters.status;
 	const useOffsetPagination = hasFilters || filters.sortBy === 'updated_at';
 
 	return useQuery({
@@ -85,8 +84,9 @@ export function useEntriesList(filters: EntriesListFilters) {
 				params.set('sortOrder', filters.sortOrder || 'asc');
 
 				if (filters.q) params.set('q', filters.q);
-				if (filters.incomplete) params.set('complete', 'false');
-				if (filters.needsReview) params.set('needsReview', 'true');
+				if (filters.status && filters.status.length > 0) {
+					filters.status.forEach(s => params.append('status', s));
+				}
 			} else {
 				// Use dictionary page-based endpoint (for alphabetical sorting)
 				url = `/api/entries/by-page/${filters.dictPage || filters.page}`;
@@ -138,7 +138,6 @@ export function useUpdateEntry(id?: string) {
 			head: string;
 			head_number?: number;
 			entry_data: EntryData;
-			is_complete: boolean;
 		}) => {
 			const url = isNew ? '/api/entries' : `/api/entries/${id}`;
 			const method = isNew ? 'POST' : 'PUT';
@@ -169,12 +168,12 @@ export function useUpdateEntry(id?: string) {
 	});
 }
 
-// Mutation to submit a review with optimistic updates
+// Mutation to submit a status with optimistic updates
 export function useSubmitReview() {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: async (data: { entryId: number | string; status: 'approved' | 'needs_work' }) => {
+		mutationFn: async (data: { entryId: number | string; status: 'draft' | 'submitted' | 'needs_work' | 'approved' }) => {
 			const response = await fetch(`/api/entries/${data.entryId}/reviews`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -215,7 +214,8 @@ export function useSubmitReview() {
 							if (entry.id === entryIdNum) {
 								return {
 									...entry,
-									my_review: {
+									current_status: status,
+									my_status: {
 										id: 0, // Temporary ID
 										entry_id: entryIdNum,
 										user_id: 0, // Will be filled by server
@@ -240,7 +240,8 @@ export function useSubmitReview() {
 
 					return {
 						...old,
-						my_review: {
+						current_status: status,
+						my_status: {
 							id: 0,
 							entry_id: entryIdNum,
 							user_id: 0,

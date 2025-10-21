@@ -3,13 +3,13 @@ import { requireAuth, requireEditor, requireAdmin } from "../middleware/auth";
 import type {
 	Entry,
 	EntryData,
-	EntryReview,
+	EntryStatus,
 	EntryWithReviews,
-	EntryReviewWithUser,
+	EntryStatusWithUser,
 	EntryCommentWithUser,
 	EntryListResponse,
 	UpdateEntryRequest,
-	CreateReviewRequest,
+	CreateStatusRequest,
 	CreateCommentRequest,
 	JWTPayload,
 } from "../types";
@@ -178,20 +178,21 @@ entriesRouter.get("/", async (c) => {
 		}
 	}
 
-	// Completeness filter
-	if (query.complete !== undefined) {
-		conditions.push("is_complete = ?");
-		params.push(query.complete === "true" ? 1 : 0);
-	}
-
-	// Needs review filter (entries not reviewed by current user)
-	if (query.needsReview === "true") {
-		conditions.push(`NOT EXISTS (
-			SELECT 1 FROM entry_reviews 
-			WHERE entry_reviews.entry_id = entries.id 
-			AND entry_reviews.user_id = ?
-		)`);
-		params.push(payload.userId);
+	// Status filter
+	if (query.status) {
+		const statuses = Array.isArray(query.status) ? query.status : [query.status];
+		if (statuses.length > 0) {
+			// Subquery to get most recent status for each entry
+			const statusPlaceholders = statuses.map(() => "?").join(",");
+			conditions.push(`(
+				SELECT status 
+				FROM entry_statuses 
+				WHERE entry_statuses.entry_id = entries.id 
+				ORDER BY reviewed_at DESC 
+				LIMIT 1
+			) IN (${statusPlaceholders})`);
+			params.push(...statuses);
+		}
 	}
 
 	const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
@@ -216,12 +217,13 @@ entriesRouter.get("/", async (c) => {
 		.bind(...params, pageSize, offset)
 		.all();
 
-	// Get reviews and comments for these entries
+	// Get statuses and comments for these entries
 	const entryIds = (entries as unknown as Entry[]).map(e => e.id);
-	const reviewsData: { [key: number]: EntryReviewWithUser[] } = {};
-	const allReviewsData: { [key: number]: EntryReviewWithUser[] } = {};
+	const statusesData: { [key: number]: EntryStatusWithUser[] } = {};
+	const allStatusesData: { [key: number]: EntryStatusWithUser[] } = {};
 	const commentsData: { [key: number]: EntryCommentWithUser[] } = {};
-	const myReviews: { [key: number]: EntryReview } = {};
+	const myStatuses: { [key: number]: EntryStatus } = {};
+	const currentStatuses: { [key: number]: 'draft' | 'submitted' | 'needs_work' | 'approved' } = {};
 
 	if (entryIds.length > 0) {
 		// SQLite has a limit of 999 variables per query, so we need to batch
@@ -232,42 +234,47 @@ entriesRouter.get("/", async (c) => {
 			batches.push(entryIds.slice(i, i + BATCH_SIZE));
 		}
 
-		// Fetch reviews in batches
+		// Fetch statuses in batches
 		for (const batch of batches) {
 			const placeholders = batch.map(() => "?").join(",");
-			const reviewsQuery = `
-				SELECT er.*, u.email as user_email, u.nickname as user_nickname
-				FROM entry_reviews er
-				JOIN users u ON er.user_id = u.id
-				WHERE er.entry_id IN (${placeholders})
-				ORDER BY er.reviewed_at DESC
+			const statusesQuery = `
+				SELECT es.*, u.email as user_email, u.nickname as user_nickname
+				FROM entry_statuses es
+				JOIN users u ON es.user_id = u.id
+				WHERE es.entry_id IN (${placeholders})
+				ORDER BY es.reviewed_at DESC
 			`;
-			const { results: reviews } = await c.env.prod_tjdict
-				.prepare(reviewsQuery)
+			const { results: statuses } = await c.env.prod_tjdict
+				.prepare(statusesQuery)
 				.bind(...batch)
 				.all();
 
-			// Group reviews by entry and get latest per user
-			for (const review of reviews as unknown as EntryReviewWithUser[]) {
-				// Store all reviews for timeline
-				if (!allReviewsData[review.entry_id]) {
-					allReviewsData[review.entry_id] = [];
+			// Group statuses by entry and get latest per user
+			for (const status of statuses as unknown as EntryStatusWithUser[]) {
+				// Store all statuses for timeline
+				if (!allStatusesData[status.entry_id]) {
+					allStatusesData[status.entry_id] = [];
 				}
-				allReviewsData[review.entry_id].push(review);
+				allStatusesData[status.entry_id].push(status);
 
-				// Store only latest review per user for current status
-				if (!reviewsData[review.entry_id]) {
-					reviewsData[review.entry_id] = [];
+				// Store only latest status per user for current status section
+				if (!statusesData[status.entry_id]) {
+					statusesData[status.entry_id] = [];
 				}
-				// Check if we already have a review from this user
-				const existingIndex = reviewsData[review.entry_id].findIndex(r => r.user_id === review.user_id);
+				// Check if we already have a status from this user
+				const existingIndex = statusesData[status.entry_id].findIndex(s => s.user_id === status.user_id);
 				if (existingIndex === -1) {
-					reviewsData[review.entry_id].push(review);
+					statusesData[status.entry_id].push(status);
 				}
 
-				// Track current user's latest review
-				if (review.user_id === payload.userId && !myReviews[review.entry_id]) {
-					myReviews[review.entry_id] = review;
+				// Track current user's latest status
+				if (status.user_id === payload.userId && !myStatuses[status.entry_id]) {
+					myStatuses[status.entry_id] = status;
+				}
+
+				// Track most recent status overall for this entry
+				if (!currentStatuses[status.entry_id]) {
+					currentStatuses[status.entry_id] = status.status;
 				}
 			}
 		}
@@ -296,13 +303,14 @@ entriesRouter.get("/", async (c) => {
 		}
 	}
 
-	// Combine entries with reviews and comments
+	// Combine entries with statuses and comments
 	const entriesWithReviews: EntryWithReviews[] = (entries as unknown as Entry[]).map(entry => ({
 		...entry,
-		reviews: reviewsData[entry.id] || [],
-		all_reviews: allReviewsData[entry.id] || [],
+		current_status: currentStatuses[entry.id] || 'draft',
+		statuses: statusesData[entry.id] || [],
+		all_statuses: allStatusesData[entry.id] || [],
 		comments: commentsData[entry.id] || [],
-		my_review: myReviews[entry.id]
+		my_status: myStatuses[entry.id]
 	}));
 
 	const response: EntryListResponse = {
@@ -331,26 +339,29 @@ entriesRouter.get("/:id", async (c) => {
 		return c.json({ error: "Entry not found" }, 404);
 	}
 
-	// Get all reviews for this entry (for timeline) and latest review per user
-	// Using a window function to efficiently get latest review per user
-	const { results: allReviews } = await c.env.prod_tjdict
+	// Get all statuses for this entry (for timeline) and latest status per user
+	// Using a window function to efficiently get latest status per user
+	const { results: allStatuses } = await c.env.prod_tjdict
 		.prepare(`
-			SELECT er.*, u.email as user_email, u.nickname as user_nickname,
-				ROW_NUMBER() OVER (PARTITION BY er.user_id ORDER BY er.reviewed_at DESC) as rn
-			FROM entry_reviews er
-			JOIN users u ON er.user_id = u.id
-			WHERE er.entry_id = ?
-			ORDER BY er.reviewed_at DESC
+			SELECT es.*, u.email as user_email, u.nickname as user_nickname,
+				ROW_NUMBER() OVER (PARTITION BY es.user_id ORDER BY es.reviewed_at DESC) as rn
+			FROM entry_statuses es
+			JOIN users u ON es.user_id = u.id
+			WHERE es.entry_id = ?
+			ORDER BY es.reviewed_at DESC
 		`)
 		.bind(id)
 		.all();
 
-	const allReviewsList = allReviews as unknown as (EntryReviewWithUser & { rn: number })[];
+	const allStatusesList = allStatuses as unknown as (EntryStatusWithUser & { rn: number })[];
 	
-	// Get latest review per user (rn = 1)
+	// Get latest status per user (rn = 1)
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const reviewsList = allReviewsList.filter(r => r.rn === 1).map(({ rn, ...review }) => review);
-	const myReview = reviewsList.find(r => r.user_id === payload.userId);
+	const statusesList = allStatusesList.filter(s => s.rn === 1).map(({ rn, ...status }) => status);
+	const myStatus = statusesList.find(s => s.user_id === payload.userId);
+	
+	// Get most recent status overall (from any user)
+	const currentStatus = allStatusesList.length > 0 ? allStatusesList[0].status : 'draft';
 
 	// Get all comments for this entry
 	const { results: comments } = await c.env.prod_tjdict
@@ -368,10 +379,11 @@ entriesRouter.get("/:id", async (c) => {
 
 	const entryWithReviews: EntryWithReviews = {
 		...entry,
-		reviews: reviewsList,
-		all_reviews: allReviewsList,
+		current_status: currentStatus,
+		statuses: statusesList,
+		all_statuses: allStatusesList,
 		comments: commentsList,
-		my_review: myReview
+		my_status: myStatus
 	};
 
 	return c.json(entryWithReviews);
@@ -380,7 +392,7 @@ entriesRouter.get("/:id", async (c) => {
 // POST /api/entries - Create new entry (editor/admin only)
 entriesRouter.post("/", requireEditor, async (c) => {
 	const payload = c.get("user");
-	const body = await c.req.json<{ entry_data: EntryData; is_complete?: boolean }>();
+	const body = await c.req.json<{ entry_data: EntryData }>();
 
 	if (!body.entry_data || !body.entry_data.head || !body.entry_data.defs) {
 		return c.json({ error: "Invalid entry data: head and defs are required" }, 400);
@@ -389,15 +401,14 @@ entriesRouter.post("/", requireEditor, async (c) => {
 	// Generate sort key
 	const sortKey = generateSortKey(body.entry_data.head);
 
-	const isComplete = body.is_complete !== undefined ? (body.is_complete ? 1 : 0) : 0;
 	const entryDataJson = JSON.stringify(body.entry_data);
 	const headNumber = body.entry_data.head_number || null;
 	const pageNumber = body.entry_data.page || null;
 
 	const result = await c.env.prod_tjdict
 		.prepare(`
-			INSERT INTO entries (head, head_number, page, sort_key, entry_data, is_complete, created_by, updated_by)
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+			INSERT INTO entries (head, head_number, page, sort_key, entry_data, created_by, updated_by)
+			VALUES (?, ?, ?, ?, ?, ?, ?)
 		`)
 		.bind(
 			body.entry_data.head,
@@ -405,7 +416,6 @@ entriesRouter.post("/", requireEditor, async (c) => {
 			pageNumber,
 			sortKey,
 			entryDataJson,
-			isComplete,
 			payload.userId,
 			payload.userId
 		)
@@ -442,7 +452,6 @@ entriesRouter.put("/:id", requireEditor, async (c) => {
 	const sortKey = generateSortKey(body.entry_data.head);
 
 	const entryDataJson = JSON.stringify(body.entry_data);
-	const isComplete = body.is_complete !== undefined ? (body.is_complete ? 1 : 0) : undefined;
 	const headNumber = body.entry_data.head_number || null;
 	const pageNumber = body.entry_data.page || null;
 
@@ -461,15 +470,9 @@ entriesRouter.put("/:id", requireEditor, async (c) => {
 		pageNumber,
 		sortKey,
 		entryDataJson,
-		payload.userId
+		payload.userId,
+		id
 	];
-
-	if (isComplete !== undefined) {
-		updateFields.push("is_complete = ?");
-		updateParams.push(isComplete);
-	}
-
-	updateParams.push(id);
 
 	const result = await c.env.prod_tjdict
 		.prepare(`UPDATE entries SET ${updateFields.join(", ")} WHERE id = ?`)
@@ -499,32 +502,32 @@ entriesRouter.delete("/:id", requireAdmin, async (c) => {
 	return c.json({ success: true });
 });
 
-// GET /api/entries/:id/reviews - Get all reviews for entry
+// GET /api/entries/:id/reviews - Get all statuses for entry
 entriesRouter.get("/:id/reviews", async (c) => {
 	const id = parseInt(c.req.param("id"));
 
 	const { results } = await c.env.prod_tjdict
 		.prepare(`
-			SELECT er.*, u.email as user_email, u.nickname as user_nickname
-			FROM entry_reviews er
-			JOIN users u ON er.user_id = u.id
-			WHERE er.entry_id = ?
-			ORDER BY er.reviewed_at DESC
+			SELECT es.*, u.email as user_email, u.nickname as user_nickname
+			FROM entry_statuses es
+			JOIN users u ON es.user_id = u.id
+			WHERE es.entry_id = ?
+			ORDER BY es.reviewed_at DESC
 		`)
 		.bind(id)
 		.all();
 
-	return c.json(results as unknown as EntryReviewWithUser[]);
+	return c.json(results as unknown as EntryStatusWithUser[]);
 });
 
-// POST /api/entries/:id/reviews - Create new review
+// POST /api/entries/:id/reviews - Create new status
 entriesRouter.post("/:id/reviews", async (c) => {
 	const id = parseInt(c.req.param("id"));
 	const payload = c.get("user");
-	const body = await c.req.json<CreateReviewRequest>();
+	const body = await c.req.json<CreateStatusRequest>();
 
-	if (!body.status || !["approved", "needs_work"].includes(body.status)) {
-		return c.json({ error: "Invalid status. Must be 'approved' or 'needs_work'" }, 400);
+	if (!body.status || !["draft", "submitted", "needs_work", "approved"].includes(body.status)) {
+		return c.json({ error: "Invalid status. Must be 'draft', 'submitted', 'needs_work', or 'approved'" }, 400);
 	}
 
 	// Check if entry exists
@@ -537,17 +540,17 @@ entriesRouter.post("/:id/reviews", async (c) => {
 		return c.json({ error: "Entry not found" }, 404);
 	}
 
-	// Insert new review (always creates a new record)
+	// Insert new status (always creates a new record)
 	const result = await c.env.prod_tjdict
 		.prepare(`
-			INSERT INTO entry_reviews (entry_id, user_id, status)
+			INSERT INTO entry_statuses (entry_id, user_id, status)
 			VALUES (?, ?, ?)
 		`)
 		.bind(id, payload.userId, body.status)
 		.run();
 
 	if (!result.success) {
-		return c.json({ error: "Failed to save review" }, 500);
+		return c.json({ error: "Failed to save status" }, 500);
 	}
 
 	return c.json({ success: true });
@@ -636,7 +639,7 @@ entriesRouter.get("/by-page/:pageNum", async (c) => {
 
 	// Get all entries for this dictionary page
 	const sql = `
-		SELECT id, head, head_number, page, sort_key, entry_data, is_complete, updated_at
+		SELECT id, head, head_number, page, sort_key, entry_data, updated_at
 		FROM entries
 		WHERE page = ?
 		ORDER BY ${sortBy} ${sortOrder}
@@ -644,50 +647,56 @@ entriesRouter.get("/by-page/:pageNum", async (c) => {
 
 	const { results: entries } = await c.env.prod_tjdict.prepare(sql).bind(pageNum).all();
 
-	// Get reviews and comments for these entries
+	// Get statuses and comments for these entries
 	const entryIds = (entries as unknown as Entry[]).map((e: Entry) => e.id);
-	const reviewsData: { [key: number]: EntryReviewWithUser[] } = {};
-	const allReviewsData: { [key: number]: EntryReviewWithUser[] } = {};
+	const statusesData: { [key: number]: EntryStatusWithUser[] } = {};
+	const allStatusesData: { [key: number]: EntryStatusWithUser[] } = {};
 	const commentsData: { [key: number]: EntryCommentWithUser[] } = {};
-	const myReviews: { [key: number]: EntryReview } = {};
+	const myStatuses: { [key: number]: EntryStatus } = {};
+	const currentStatuses: { [key: number]: 'draft' | 'submitted' | 'needs_work' | 'approved' } = {};
 	const payload = c.get("user");
 
 	if (entryIds.length > 0) {
 		const placeholders = entryIds.map(() => "?").join(",");
 		
-		// Fetch reviews
-		const reviewsQuery = `
-			SELECT er.*, u.email as user_email, u.nickname as user_nickname
-			FROM entry_reviews er
-			JOIN users u ON er.user_id = u.id
-			WHERE er.entry_id IN (${placeholders})
-			ORDER BY er.reviewed_at DESC
+		// Fetch statuses
+		const statusesQuery = `
+			SELECT es.*, u.email as user_email, u.nickname as user_nickname
+			FROM entry_statuses es
+			JOIN users u ON es.user_id = u.id
+			WHERE es.entry_id IN (${placeholders})
+			ORDER BY es.reviewed_at DESC
 		`;
-		const { results: reviews } = await c.env.prod_tjdict
-			.prepare(reviewsQuery)
+		const { results: statuses } = await c.env.prod_tjdict
+			.prepare(statusesQuery)
 			.bind(...entryIds)
 			.all();
 
-		// Group reviews by entry and get latest per user
-		for (const review of reviews as unknown as EntryReviewWithUser[]) {
-			// Store all reviews for timeline
-			if (!allReviewsData[review.entry_id]) {
-				allReviewsData[review.entry_id] = [];
+		// Group statuses by entry and get latest per user
+		for (const status of statuses as unknown as EntryStatusWithUser[]) {
+			// Store all statuses for timeline
+			if (!allStatusesData[status.entry_id]) {
+				allStatusesData[status.entry_id] = [];
 			}
-			allReviewsData[review.entry_id].push(review);
+			allStatusesData[status.entry_id].push(status);
 
-			// Store only latest review per user for current status
-			if (!reviewsData[review.entry_id]) {
-				reviewsData[review.entry_id] = [];
+			// Store only latest status per user for current status section
+			if (!statusesData[status.entry_id]) {
+				statusesData[status.entry_id] = [];
 			}
-			const existingIndex = reviewsData[review.entry_id].findIndex(r => r.user_id === review.user_id);
+			const existingIndex = statusesData[status.entry_id].findIndex(s => s.user_id === status.user_id);
 			if (existingIndex === -1) {
-				reviewsData[review.entry_id].push(review);
+				statusesData[status.entry_id].push(status);
 			}
 
-			// Track current user's latest review
-			if (review.user_id === payload.userId && !myReviews[review.entry_id]) {
-				myReviews[review.entry_id] = review;
+			// Track current user's latest status
+			if (status.user_id === payload.userId && !myStatuses[status.entry_id]) {
+				myStatuses[status.entry_id] = status;
+			}
+
+			// Track most recent status overall for this entry
+			if (!currentStatuses[status.entry_id]) {
+				currentStatuses[status.entry_id] = status.status;
 			}
 		}
 
@@ -712,13 +721,14 @@ entriesRouter.get("/by-page/:pageNum", async (c) => {
 		}
 	}
 
-	// Combine entries with reviews and comments
+	// Combine entries with statuses and comments
 	const entriesWithReviews: EntryWithReviews[] = (entries as unknown as Entry[]).map((entry: Entry) => ({
 		...entry,
-		reviews: reviewsData[entry.id] || [],
-		all_reviews: allReviewsData[entry.id] || [],
+		current_status: currentStatuses[entry.id] || 'draft',
+		statuses: statusesData[entry.id] || [],
+		all_statuses: allStatusesData[entry.id] || [],
 		comments: commentsData[entry.id] || [],
-		my_review: myReviews[entry.id]
+		my_status: myStatuses[entry.id]
 	}));
 
 	// Get min and max page numbers for navigation

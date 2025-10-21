@@ -9,7 +9,7 @@ interface EntryListItemProps {
 	isReviewDropdownOpen: boolean;
 	onEntryClick: (id: number) => void;
 	onPageClick: (pageNum: number | undefined) => void;
-	onReviewStatusChange: (entryId: number, status: 'approved' | 'needs_work') => Promise<void>;
+	onReviewStatusChange: (entryId: number, status: 'draft' | 'submitted' | 'needs_work' | 'approved') => Promise<void>;
 	onDropdownOpenChange: (isOpen: boolean) => void;
 }
 
@@ -24,8 +24,8 @@ export function EntryListItem({
 	const entryData: EntryData = JSON.parse(entry.entry_data);
 	
 	const getReviewCounts = () => {
-		const approved = entry.reviews.filter(r => r.status === 'approved').length;
-		const needsWork = entry.reviews.filter(r => r.status === 'needs_work').length;
+		const approved = entry.statuses.filter(s => s.status === 'approved').length;
+		const needsWork = entry.statuses.filter(s => s.status === 'needs_work').length;
 		const commentCount = entry.comments.length;
 
 		return { approved, needsWork, commentCount };
@@ -45,9 +45,6 @@ export function EntryListItem({
 				/>
 			)}
 			<div className="entry-meta-badges">
-				{!entry.is_complete && (
-					<span className="badge badge-incomplete">Incomplete</span>
-				)}
 				<span className="entry-meta-text entry-meta-icons">
 					<span className="meta-icon-group">
 						<Check size={14} className="icon-success" />
@@ -73,7 +70,7 @@ export function EntryListItem({
 				onClick={(e) => e.stopPropagation()}
 			>
 				<StatusSelect
-					currentStatus={entry.my_review?.status || null}
+					currentStatus={entry.current_status}
 					onStatusChange={(status) => onReviewStatusChange(entry.id, status)}
 					compact={true}
 					onDropdownOpenChange={onDropdownOpenChange}
