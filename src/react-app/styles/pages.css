@@ -283,12 +283,12 @@
 	gap: 0.25rem;
 }
 
-.icon-success {
-	color: var(--color-success);
+.icon-approved {
+	color: var(--status-approved);
 }
 
-.icon-danger {
-	color: var(--color-danger);
+.icon-needs-work {
+	color: var(--status-needs-work);
 }
 
 .icon-muted {

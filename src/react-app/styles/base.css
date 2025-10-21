@@ -28,8 +28,8 @@
 	
 	/* Status colors - consistent across light/dark modes */
 	--status-draft: #6B7280;
-	--status-submitted: #3B82F6;
-	--status-needs-work: #D97706;
+	--status-submitted: #CA8A04;
+	--status-needs-work: #DC2626;
 	--status-approved: #16A34A;
 }
 

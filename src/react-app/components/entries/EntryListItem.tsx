@@ -1,4 +1,4 @@
-import { Check, X, MessageSquare } from 'lucide-react';
+import { TriangleAlert, CheckCircle, MessageSquare } from 'lucide-react';
 import { EntryWithReviews, EntryData } from '../../types/dictionary';
 import { EntryDisplay } from './EntryDisplay';
 import { StatusSelect } from '../StatusSelect';
@@ -47,11 +47,11 @@ export function EntryListItem({
 			<div className="entry-meta-badges">
 				<span className="entry-meta-text entry-meta-icons">
 					<span className="meta-icon-group">
-						<Check size={14} className="icon-success" />
+						<CheckCircle size={14} className="icon-approved" />
 						<span>{getReviewCounts().approved}</span>
 					</span>
 					<span className="meta-icon-group">
-						<X size={14} className="icon-danger" />
+						<TriangleAlert size={14} className="icon-needs-work" />
 						<span>{getReviewCounts().needsWork}</span>
 					</span>
 					<span className="meta-icon-group">
