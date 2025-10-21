@@ -7,7 +7,7 @@ interface EntryListItemProps {
 	isReviewDropdownOpen: boolean;
 	onEntryClick: (id: number) => void;
 	onPageClick: (pageNum: number | undefined) => void;
-	onReviewStatusChange: (entryId: number, status: 'approved' | 'needs_work') => void;
+	onReviewStatusChange: (entryId: number, status: 'approved' | 'needs_work') => Promise<void>;
 	onDropdownOpenChange: (isOpen: boolean) => void;
 }
 

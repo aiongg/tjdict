@@ -5,7 +5,7 @@ interface EditorTabsProps {
 	activeTab: 'edit' | 'reviews';
 	onTabChange: (tab: 'edit' | 'reviews') => void;
 	myReviewStatus: 'approved' | 'needs_work' | null;
-	onReviewStatusChange: (status: 'approved' | 'needs_work') => void;
+	onReviewStatusChange: (status: 'approved' | 'needs_work') => Promise<void>;
 	isSubmittingReview: boolean;
 }
 
