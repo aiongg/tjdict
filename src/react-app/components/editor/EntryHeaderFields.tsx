@@ -1,6 +1,6 @@
 import { EntryData, EditorCallbacks } from './types';
 import { FieldVisibilityMenu } from './FieldVisibilityMenu';
-import { ReviewBadge } from '../ReviewBadge';
+import { StatusSelect } from '../StatusSelect';
 
 interface EntryHeaderFieldsProps {
 	entryData: EntryData;
@@ -44,7 +44,7 @@ export function EntryHeaderFields({
 						<span>Ready for Review</span>
 					</label>
 					{!isNewEntry && (
-						<ReviewBadge
+						<StatusSelect
 							currentStatus={myReviewStatus}
 							onStatusChange={onReviewStatusChange}
 							disabled={isSubmittingReview}

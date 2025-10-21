@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { ReviewBadge } from './ReviewBadge';
+import { StatusSelect } from './StatusSelect';
 import { Timeline } from './Timeline';
 
 interface EntryReview {
@@ -118,7 +118,7 @@ export function ReviewPanel({ entryId }: ReviewPanelProps) {
 			<div className="review-status-section">
 				<div className="review-status-header">
 					<h3>Current Review Status</h3>
-					<ReviewBadge
+					<StatusSelect
 						currentStatus={myReview?.status || null}
 						onStatusChange={handleReviewStatusChange}
 					/>

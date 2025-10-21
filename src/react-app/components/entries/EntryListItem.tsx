@@ -1,7 +1,7 @@
 import { Check, X, MessageSquare } from 'lucide-react';
 import { EntryWithReviews, EntryData } from '../../types/dictionary';
 import { EntryDisplay } from './EntryDisplay';
-import { ReviewBadge } from '../ReviewBadge';
+import { StatusSelect } from '../StatusSelect';
 import { PageButton } from '../PageButton';
 
 interface EntryListItemProps {
@@ -72,7 +72,7 @@ export function EntryListItem({
 				className="entry-review-badge"
 				onClick={(e) => e.stopPropagation()}
 			>
-				<ReviewBadge
+				<StatusSelect
 					currentStatus={entry.my_review?.status || null}
 					onStatusChange={(status) => onReviewStatusChange(entry.id, status)}
 					compact={true}

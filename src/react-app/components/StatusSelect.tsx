@@ -8,7 +8,7 @@ interface ReviewBadgeProps {
 	onDropdownOpenChange?: (isOpen: boolean) => void;
 }
 
-export function ReviewBadge({ currentStatus, onStatusChange, compact = false, disabled = false, onDropdownOpenChange }: ReviewBadgeProps) {
+export function StatusSelect({ currentStatus, onStatusChange, compact = false, disabled = false, onDropdownOpenChange }: ReviewBadgeProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
