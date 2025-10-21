@@ -182,14 +182,17 @@ entriesRouter.get("/", async (c) => {
 	if (query.status) {
 		const statuses = Array.isArray(query.status) ? query.status : [query.status];
 		if (statuses.length > 0) {
-			// Subquery to get most recent status for each entry
+			// Subquery to get most recent status for each entry, defaulting to 'draft' if no status exists
 			const statusPlaceholders = statuses.map(() => "?").join(",");
-			conditions.push(`(
-				SELECT status 
-				FROM entry_statuses 
-				WHERE entry_statuses.entry_id = entries.id 
-				ORDER BY reviewed_at DESC 
-				LIMIT 1
+			conditions.push(`COALESCE(
+				(
+					SELECT status 
+					FROM entry_statuses 
+					WHERE entry_statuses.entry_id = entries.id 
+					ORDER BY reviewed_at DESC 
+					LIMIT 1
+				),
+				'draft'
 			) IN (${statusPlaceholders})`);
 			params.push(...statuses);
 		}
