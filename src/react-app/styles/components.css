@@ -521,82 +521,71 @@ label {
 }
 
 /* Review Badge Styles */
-.review-badge-container {
+.status-select-container {
 	position: relative;
 	display: inline-block;
 }
 
-.review-badge {
-	padding: 0.5rem 1rem;
-	border-radius: 8px;
+.status-select {
+	padding: 0.25rem 0.75rem;
+	height: 28px;
+	border-radius: 6px;
 	border: none;
 	font-size: 0.875rem;
 	font-weight: 500;
 	cursor: pointer;
 	transition: all 0.2s;
 	white-space: nowrap;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
 }
 
-.review-badge--compact {
-	padding: 0.25rem 0.75rem;
+.status-select--compact {
+	padding: 0.25rem 0.5rem;
+	height: 24px;
 	font-size: 0.75rem;
-	min-width: 32px;
+	min-width: 28px;
 	text-align: center;
 }
 
-.review-badge--default {
+.status-select--default {
 	background: var(--color-card-bg);
 	color: var(--color-text);
 	border: 1px solid var(--color-border);
 }
 
-.review-badge--default:hover:not(:disabled) {
+.status-select--default:hover:not(:disabled) {
 	border-color: var(--color-primary);
 	background: var(--color-bg);
 }
 
-.review-badge--approved {
-	background: #10b981;
+.status-select--approved {
+	background: var(--status-approved);
 	color: white;
 }
 
-.review-badge--approved:hover:not(:disabled) {
-	background: #059669;
-}
-
-.review-badge--needs-work {
-	background: #ef4444;
+.status-select--needs-work {
+	background: var(--status-needs-work);
 	color: white;
 }
 
-.review-badge--needs-work:hover:not(:disabled) {
-	background: #dc2626;
-}
-
-.review-badge--submitted {
-	background: #3b82f6;
+.status-select--submitted {
+	background: var(--status-submitted);
 	color: white;
 }
 
-.review-badge--submitted:hover:not(:disabled) {
-	background: #2563eb;
-}
-
-.review-badge--draft {
-	background: #6b7280;
+.status-select--draft {
+	background: var(--status-draft);
 	color: white;
 }
 
-.review-badge--draft:hover:not(:disabled) {
-	background: #4b5563;
-}
-
-.review-badge:disabled {
+.status-select:disabled {
 	opacity: 0.6;
 	cursor: not-allowed;
 }
 
-.review-badge-dropdown {
+.status-select-dropdown {
 	position: absolute;
 	top: 100%;
 	right: 0;
@@ -606,38 +595,61 @@ label {
 	border-radius: 8px;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 	z-index: 10;
-	min-width: 140px;
-	overflow: hidden;
+	min-width: 150px;
+	padding: 0.25rem;
 }
 
-.review-badge-dropdown-item {
-	display: block;
+.status-select-dropdown-item {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
 	width: 100%;
-	padding: 0.75rem 1rem;
+	padding: 0.25rem 0.75rem;
+	height: 28px;
 	border: none;
-	background: var(--color-card-bg);
-	color: var(--color-text);
+	border-radius: 6px;
+	margin: 0.25rem;
+	color: white;
 	text-align: left;
 	cursor: pointer;
-	transition: background 0.15s;
+	transition: all 0.15s;
 	font-size: 0.875rem;
+	font-weight: 500;
 }
 
-.review-badge-dropdown-item:hover:not(:disabled) {
-	background: var(--color-bg);
+.status-select-dropdown-item--draft {
+	background: var(--status-draft);
 }
 
-.review-badge-dropdown-item--approve:hover:not(:disabled) {
-	background: rgba(16, 185, 129, 0.15);
-	color: #10b981;
+.status-select-dropdown-item--draft:hover:not(:disabled) {
+	opacity: 0.9;
 }
 
-.review-badge-dropdown-item--needs-work:hover:not(:disabled) {
-	background: rgba(239, 68, 68, 0.15);
-	color: #ef4444;
+.status-select-dropdown-item--submitted {
+	background: var(--status-submitted);
 }
 
-.review-badge-dropdown-item:disabled {
+.status-select-dropdown-item--submitted:hover:not(:disabled) {
+	opacity: 0.9;
+}
+
+.status-select-dropdown-item--needs-work {
+	background: var(--status-needs-work);
+}
+
+.status-select-dropdown-item--needs-work:hover:not(:disabled) {
+	opacity: 0.9;
+}
+
+.status-select-dropdown-item--approve {
+	background: var(--status-approved);
+}
+
+.status-select-dropdown-item--approve:hover:not(:disabled) {
+	opacity: 0.9;
+}
+
+.status-select-dropdown-item:disabled {
 	opacity: 0.5;
 	cursor: not-allowed;
 }
@@ -689,19 +701,19 @@ label {
 }
 
 .timeline-action--approved {
-	color: #10b981;
+	color: var(--status-approved);
 }
 
 .timeline-action--needs-work {
-	color: #ef4444;
+	color: var(--status-needs-work);
 }
 
 .timeline-action--submitted {
-	color: #3b82f6;
+	color: var(--status-submitted);
 }
 
 .timeline-action--draft {
-	color: #6b7280;
+	color: var(--status-draft);
 }
 
 .timeline-date {
@@ -777,19 +789,19 @@ label {
 }
 
 .review-status-group--approved h4 {
-	color: #10b981;
+	color: var(--status-approved);
 }
 
 .review-status-group--needs-work h4 {
-	color: #ef4444;
+	color: var(--status-needs-work);
 }
 
 .review-status-group--submitted h4 {
-	color: #3b82f6;
+	color: var(--status-submitted);
 }
 
 .review-status-group--draft h4 {
-	color: #6b7280;
+	color: var(--status-draft);
 }
 
 .reviewer-list {
@@ -809,7 +821,7 @@ label {
 }
 
 /* Entry Card Review Badge Positioning */
-.entry-review-badge {
+.entry-status-select {
 	position: absolute;
 	bottom: 1rem;
 	right: 1rem;
@@ -830,7 +842,7 @@ label {
 	gap: 0.5rem;
 }
 
-.editor-review-badge {
+.editor-status-select {
 	flex-shrink: 0;
 }
 

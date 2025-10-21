@@ -1,27 +1,7 @@
-import { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import { useEntry, useSubmitReview } from '../hooks/useEntriesQuery';
 import { StatusSelect } from './StatusSelect';
 import { Timeline } from './Timeline';
-
-interface EntryStatus {
-	id: number;
-	entry_id: number;
-	user_id: number;
-	status: 'draft' | 'submitted' | 'needs_work' | 'approved';
-	reviewed_at: string;
-	user_email: string;
-	user_nickname: string | null;
-}
-
-interface EntryComment {
-	id: number;
-	entry_id: number;
-	user_id: number;
-	comment: string;
-	created_at: string;
-	user_email: string;
-	user_nickname: string | null;
-}
 
 interface ReviewPanelProps {
 	entryId: number;
@@ -29,73 +9,21 @@ interface ReviewPanelProps {
 
 export function ReviewPanel({ entryId }: ReviewPanelProps) {
 	const { user } = useAuth();
-	const [statuses, setStatuses] = useState<EntryStatus[]>([]);
-	const [allStatuses, setAllStatuses] = useState<EntryStatus[]>([]);
-	const [comments, setComments] = useState<EntryComment[]>([]);
-	const [myStatus, setMyStatus] = useState<EntryStatus | null>(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState('');
-
-	const fetchData = async () => {
-		try {
-			const response = await fetch(`/api/entries/${entryId}`);
-			if (!response.ok) {
-				throw new Error('Failed to fetch entry data');
-			}
-			const data = await response.json();
-			
-			// Get latest statuses per user (for current status section)
-			setStatuses(data.statuses || []);
-			
-			// Get all statuses (for timeline)
-			setAllStatuses(data.all_statuses || []);
-			
-			// Get comments
-			setComments(data.comments || []);
-			
-			// Find current user's status
-			const userStatus = (data.statuses || []).find((s: EntryStatus) => s.user_id === user?.id);
-			setMyStatus(userStatus || null);
-		} catch (err) {
-			setError(err instanceof Error ? err.message : 'Failed to load data');
-		} finally {
-			setLoading(false);
-		}
-	};
-
-	useEffect(() => {
-		fetchData();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [entryId]);
+	
+	// Use React Query to fetch entry data (shares cache with EntryEditorPage)
+	const { data: entry, isLoading, error: queryError } = useEntry(entryId);
+	const submitReviewMutation = useSubmitReview();
 
 	const handleReviewStatusChange = async (status: 'draft' | 'submitted' | 'needs_work' | 'approved') => {
-		setError('');
-
-		try {
-			const response = await fetch(`/api/entries/${entryId}/reviews`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ status })
-			});
-
-			if (!response.ok) {
-				const errorData = await response.json();
-				throw new Error(errorData.error || 'Failed to submit review');
-			}
-
-			// Refresh data
-			await fetchData();
-		} catch (err) {
-			setError(err instanceof Error ? err.message : 'Failed to submit status');
-			throw err; // Re-throw so StatusSelect can handle it
-		}
+		// Use the mutation with optimistic updates
+		await submitReviewMutation.mutateAsync({ entryId, status });
 	};
 
 	const getUserDisplay = (nickname: string | null, email: string) => {
 		return nickname || email.split('@')[0];
 	};
 
-	if (loading) {
+	if (isLoading) {
 		return (
 			<div className="review-panel">
 				<h2>Reviews & Comments</h2>
@@ -103,6 +31,24 @@ export function ReviewPanel({ entryId }: ReviewPanelProps) {
 			</div>
 		);
 	}
+
+	if (queryError) {
+		return (
+			<div className="review-panel">
+				<h2>Reviews & Comments</h2>
+				<div className="error-message">{(queryError as Error).message}</div>
+			</div>
+		);
+	}
+
+	if (!entry) {
+		return null;
+	}
+
+	const statuses = entry.statuses || [];
+	const allStatuses = entry.all_statuses || [];
+	const comments = entry.comments || [];
+	const myStatus = entry.my_status;
 
 	// Group current statuses by status type
 	const draftStatuses = statuses.filter(s => s.status === 'draft');
@@ -114,7 +60,11 @@ export function ReviewPanel({ entryId }: ReviewPanelProps) {
 		<div className="review-panel">
 			<h2>Reviews & Comments</h2>
 
-			{error && <div className="error-message">{error}</div>}
+			{submitReviewMutation.isError && (
+				<div className="error-message">
+					{(submitReviewMutation.error as Error)?.message || 'Failed to submit status'}
+				</div>
+			)}
 
 			{/* Current Review Status Section */}
 			<div className="review-status-section">
@@ -123,6 +73,7 @@ export function ReviewPanel({ entryId }: ReviewPanelProps) {
 					<StatusSelect
 						currentStatus={myStatus?.status || null}
 						onStatusChange={handleReviewStatusChange}
+						disabled={submitReviewMutation.isPending}
 					/>
 				</div>
 
@@ -193,8 +144,6 @@ export function ReviewPanel({ entryId }: ReviewPanelProps) {
 				comments={comments}
 				statuses={allStatuses}
 				currentUserId={user?.id}
-				onCommentAdded={fetchData}
-				onCommentDeleted={fetchData}
 			/>
 		</div>
 	);

@@ -23,7 +23,7 @@ export function EditorTabs({
 						className={`tab-button ${activeTab === 'reviews' ? 'active' : ''}`}
 						onClick={() => onTabChange('reviews')}
 					>
-						Reviews
+						Comments
 					</button>
 				)}
 			</div>

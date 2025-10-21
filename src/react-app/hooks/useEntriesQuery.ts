@@ -129,7 +129,7 @@ export function useEntry(id: string | number | undefined) {
 }
 
 // Mutation to create or update an entry
-export function useUpdateEntry(id?: string) {
+export function useUpdateEntry(id?: string | number) {
 	const queryClient = useQueryClient();
 	const isNew = !id || id === 'new';
 
@@ -232,27 +232,40 @@ export function useSubmitReview() {
 				});
 			});
 
-			// Optimistically update detail cache (use original entryId to match cache key)
-			queryClient.setQueryData(
-				queryKeys.entries.detail(entryId),
-				(old: EntryWithReviews | undefined) => {
-					if (!old) return old;
+		// Optimistically update detail cache (use original entryId to match cache key)
+		queryClient.setQueryData(
+			queryKeys.entries.detail(entryId),
+			(old: EntryWithReviews | undefined) => {
+				if (!old) return old;
 
-					return {
-						...old,
-						current_status: status,
-						my_status: {
-							id: 0,
-							entry_id: entryIdNum,
-							user_id: 0,
-							status,
-							reviewed_at: new Date().toISOString(),
-							user_email: '',
-							user_nickname: null,
-						},
-					};
-				}
-			);
+				const newMyStatus = {
+					id: 0,
+					entry_id: entryIdNum,
+					user_id: old.my_status?.user_id || 0,
+					status,
+					reviewed_at: new Date().toISOString(),
+					user_email: old.my_status?.user_email || '',
+					user_nickname: old.my_status?.user_nickname || null,
+				};
+
+				// Update the statuses array (latest per user)
+				// If the current user already has a status in the array, update it
+				// Otherwise, add a new one
+				const currentUserId = old.my_status?.user_id;
+				const updatedStatuses = currentUserId
+					? old.statuses.some(s => s.user_id === currentUserId)
+						? old.statuses.map(s => s.user_id === currentUserId ? newMyStatus : s)
+						: [...old.statuses, newMyStatus]
+					: old.statuses;
+
+				return {
+					...old,
+					current_status: status,
+					my_status: newMyStatus,
+					statuses: updatedStatuses,
+				};
+			}
+		);
 
 			return { previousLists, previousDetail };
 		},

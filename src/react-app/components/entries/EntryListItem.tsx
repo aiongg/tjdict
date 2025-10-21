@@ -66,7 +66,7 @@ export function EntryListItem({
 			<EntryDisplay entryData={entryData} />
 			
 			<div
-				className="entry-review-badge"
+				className="entry-status-select"
 				onClick={(e) => e.stopPropagation()}
 			>
 				<StatusSelect

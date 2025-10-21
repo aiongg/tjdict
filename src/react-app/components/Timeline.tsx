@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useAddComment, useDeleteComment } from '../hooks/useEntriesQuery';
 
 interface Status {
 	id: number;
@@ -27,14 +28,14 @@ interface TimelineProps {
 	comments: Comment[];
 	statuses: Status[];
 	currentUserId: number | undefined;
-	onCommentAdded: () => void;
-	onCommentDeleted: (commentId: number) => void;
 }
 
-export function Timeline({ entryId, comments, statuses, currentUserId, onCommentAdded, onCommentDeleted }: TimelineProps) {
+export function Timeline({ entryId, comments, statuses, currentUserId }: TimelineProps) {
 	const [newComment, setNewComment] = useState('');
-	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [error, setError] = useState('');
+	
+	const addCommentMutation = useAddComment();
+	const deleteCommentMutation = useDeleteComment();
 
 	// Combine and sort timeline items
 	const timelineItems: TimelineItem[] = [
@@ -48,45 +49,28 @@ export function Timeline({ entryId, comments, statuses, currentUserId, onComment
 
 	const handleSubmitComment = async (e: React.FormEvent) => {
 		e.preventDefault();
-		if (!newComment.trim() || isSubmitting) return;
+		if (!newComment.trim() || addCommentMutation.isPending) return;
 
-		setIsSubmitting(true);
 		setError('');
 
 		try {
-			const response = await fetch(`/api/entries/${entryId}/comments`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ comment: newComment.trim() })
+			await addCommentMutation.mutateAsync({
+				entryId,
+				comment: newComment.trim()
 			});
-
-			if (!response.ok) {
-				const errorData = await response.json();
-				throw new Error(errorData.error || 'Failed to post comment');
-			}
-
 			setNewComment('');
-			onCommentAdded();
 		} catch (err) {
 			setError(err instanceof Error ? err.message : 'Failed to post comment');
-		} finally {
-			setIsSubmitting(false);
 		}
 	};
 
 	const handleDeleteComment = async (commentId: number) => {
 		if (!confirm('Are you sure you want to delete this comment?')) return;
 
+		setError('');
+
 		try {
-			const response = await fetch(`/api/entries/${entryId}/comments/${commentId}`, {
-				method: 'DELETE'
-			});
-
-			if (!response.ok) {
-				throw new Error('Failed to delete comment');
-			}
-
-			onCommentDeleted(commentId);
+			await deleteCommentMutation.mutateAsync({ entryId, commentId });
 		} catch (err) {
 			setError(err instanceof Error ? err.message : 'Failed to delete comment');
 		}
@@ -157,14 +141,14 @@ export function Timeline({ entryId, comments, statuses, currentUserId, onComment
 					onChange={(e) => setNewComment(e.target.value)}
 					placeholder="Add a comment..."
 					rows={3}
-					disabled={isSubmitting}
+					disabled={addCommentMutation.isPending}
 				/>
 				<button
 					type="submit"
-					disabled={isSubmitting || !newComment.trim()}
+					disabled={addCommentMutation.isPending || !newComment.trim()}
 					className="btn-primary"
 				>
-					{isSubmitting ? 'Posting...' : 'Post Comment'}
+					{addCommentMutation.isPending ? 'Posting...' : 'Post Comment'}
 				</button>
 			</form>
 		</div>

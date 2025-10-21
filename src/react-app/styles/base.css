@@ -25,6 +25,12 @@
 	--color-warning: #f59e0b;
 	--color-nav-bg: #ffffff;
 	--color-shadow: rgba(0, 0, 0, 0.1);
+	
+	/* Status colors - consistent across light/dark modes */
+	--status-draft: #6B7280;
+	--status-submitted: #3B82F6;
+	--status-needs-work: #D97706;
+	--status-approved: #16A34A;
 }
 
 /* System preference dark mode (applies unless manually overridden to light) */
@@ -43,6 +49,7 @@
 		--color-warning: #f59e0b;
 		--color-nav-bg: #2a2a2a;
 		--color-shadow: rgba(0, 0, 0, 0.3);
+		/* Status colors inherited from :root */
 	}
 }
 

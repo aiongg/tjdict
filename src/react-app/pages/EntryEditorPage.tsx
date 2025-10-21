@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { Check, X, MessageSquare } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { useImageViewer } from '../contexts/ImageViewerContext';
 import { useEntry, useUpdateEntry, useSubmitReview } from '../hooks/useEntriesQuery';
 import { Navigation } from '../components/Navigation';
 import { ReviewPanel } from '../components/ReviewPanel.tsx';
+import { ReviewSummary } from '../components/ReviewSummary';
 import { PageImageViewer } from '../components/PageImageViewer';
 import { 
 	PosDefinitionEditor,
@@ -20,13 +20,16 @@ import {
 import { processEntryDataForSave } from '../utils/superscript';
 
 export default function EntryEditorPage() {
-	const { id } = useParams<{ id: string }>();
+	const { id: idParam } = useParams<{ id: string }>();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { user } = useAuth();
 	
-	const isNewEntry = id === 'new';
+	const isNewEntry = idParam === 'new';
 	const canEdit = user?.role === 'editor' || user?.role === 'admin';
+	
+	// Parse ID to number for consistent cache keys across all components
+	const id = isNewEntry ? 'new' : parseInt(idParam!);
 	
 	// Use React Query to fetch entry
 	const { data: fetchedEntry, isLoading: loading, error: queryError } = useEntry(id);
@@ -43,9 +46,6 @@ export default function EntryEditorPage() {
 	});
 	const [activeTab, setActiveTab] = useState<'edit' | 'reviews'>('edit');
 	
-	// Extract data from query result (keep statuses/comments as is for counts)
-	const statuses = fetchedEntry?.statuses || [];
-	const comments = fetchedEntry?.comments || [];
 	const error = queryError ? (queryError as Error).message : '';
 	
 	// Image viewer state
@@ -360,22 +360,12 @@ export default function EntryEditorPage() {
 				onTabChange={setActiveTab}
 			/>
 
-			{!isNewEntry && (
-				<div className="editor-review-summary">
-					<span className="review-stat">
-						<Check size={16} className="icon-success" />
-						<span>{statuses.filter(s => s.status === 'approved').length}</span>
-					</span>
-					<span className="review-stat">
-						<X size={16} className="icon-danger" />
-						<span>{statuses.filter(s => s.status === 'needs_work').length}</span>
-					</span>
-					<span className="review-stat">
-						<MessageSquare size={16} className="icon-muted" />
-						<span>{comments.length}</span>
-					</span>
-				</div>
-			)}
+		{!isNewEntry && fetchedEntry && (
+			<ReviewSummary
+				statuses={fetchedEntry.statuses || []}
+				comments={fetchedEntry.comments || []}
+			/>
+		)}
 
 				{activeTab === 'edit' ? (
 					<div className="compact-form">
@@ -414,7 +404,7 @@ export default function EntryEditorPage() {
 					</div>
 				) : (
 					<div className="reviews-tab-content">
-						<ReviewPanel entryId={parseInt(id!)} />
+						<ReviewPanel entryId={id as number} />
 					</div>
 				)}
 			</div>

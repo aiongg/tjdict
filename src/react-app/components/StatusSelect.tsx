@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { PenLine, Upload, TriangleAlert, CheckCircle } from 'lucide-react';
 
 interface ReviewBadgeProps {
 	currentStatus?: 'draft' | 'submitted' | 'needs_work' | 'approved' | null;
@@ -47,74 +48,81 @@ export function StatusSelect({ currentStatus, onStatusChange, compact = false, d
 	};
 
 	const getBadgeClass = () => {
-		const baseClass = compact ? 'review-badge review-badge--compact' : 'review-badge';
-		if (currentStatus === 'approved') return `${baseClass} review-badge--approved`;
-		if (currentStatus === 'needs_work') return `${baseClass} review-badge--needs-work`;
-		if (currentStatus === 'submitted') return `${baseClass} review-badge--submitted`;
-		if (currentStatus === 'draft') return `${baseClass} review-badge--draft`;
-		return `${baseClass} review-badge--default`;
+		const baseClass = compact ? 'status-select status-select--compact' : 'status-select';
+		if (currentStatus === 'approved') return `${baseClass} status-select--approved`;
+		if (currentStatus === 'needs_work') return `${baseClass} status-select--needs-work`;
+		if (currentStatus === 'submitted') return `${baseClass} status-select--submitted`;
+		if (currentStatus === 'draft') return `${baseClass} status-select--draft`;
+		return `${baseClass} status-select--default`;
 	};
 
-	const getBadgeText = () => {
-		if (currentStatus === 'approved') return '✓ Approved';
-		if (currentStatus === 'needs_work') return '✗ Needs work';
-		if (currentStatus === 'submitted') return '→ Submitted';
-		if (currentStatus === 'draft') return '◯ Draft';
-		return 'Set status';
+	const getBadgeContent = () => {
+		if (currentStatus === 'approved') return { icon: <CheckCircle size={16} />, text: 'Approved' };
+		if (currentStatus === 'needs_work') return { icon: <TriangleAlert size={16} />, text: 'Needs work' };
+		if (currentStatus === 'submitted') return { icon: <Upload size={16} />, text: 'Submitted' };
+		if (currentStatus === 'draft') return { icon: <PenLine size={16} />, text: 'Draft' };
+		return { icon: null, text: 'Set status' };
 	};
 
-	const getCompactBadgeText = () => {
-		if (currentStatus === 'approved') return '✓';
-		if (currentStatus === 'needs_work') return '✗';
-		if (currentStatus === 'submitted') return '→';
-		if (currentStatus === 'draft') return '◯';
-		return '○'; // Empty circle for no status
+	const getCompactBadgeContent = () => {
+		if (currentStatus === 'approved') return <CheckCircle size={14} />;
+		if (currentStatus === 'needs_work') return <TriangleAlert size={14} />;
+		if (currentStatus === 'submitted') return <Upload size={14} />;
+		if (currentStatus === 'draft') return <PenLine size={14} />;
+		return <PenLine size={14} />; // Default to pen icon
 	};
 
+	const badgeContent = getBadgeContent();
+	
 	return (
-		<div className="review-badge-container" ref={dropdownRef}>
+		<div className="status-select-container" ref={dropdownRef}>
 			<button
 				className={getBadgeClass()}
 				onClick={() => !disabled && setIsOpen(!isOpen)}
 				disabled={disabled || isSubmitting}
 				type="button"
 			>
-				{compact ? getCompactBadgeText() : getBadgeText()}
+				{compact ? getCompactBadgeContent() : (
+					<>
+						{badgeContent.icon}
+						{badgeContent.text}
+					</>
+				)}
 			</button>
 
 			{isOpen && (
-				<div className="review-badge-dropdown">
+				<div className="status-select-dropdown">
 					<button
-						className="review-badge-dropdown-item review-badge-dropdown-item--draft"
+						className="status-select-dropdown-item status-select-dropdown-item--draft"
 						onClick={() => handleStatusClick('draft')}
 						disabled={isSubmitting}
 						type="button"
 					>
-						◯ Draft
+						<PenLine size={16} /> Draft
 					</button>
 					<button
-						className="review-badge-dropdown-item review-badge-dropdown-item--submitted"
+						className="status-select-dropdown-item status-select-dropdown-item--submitted"
 						onClick={() => handleStatusClick('submitted')}
 						disabled={isSubmitting}
 						type="button"
 					>
-						→ Submitted
+						<Upload size={16} /> Submitted
 					</button>
 					<button
-						className="review-badge-dropdown-item review-badge-dropdown-item--needs-work"
+						className="status-select-dropdown-item status-select-dropdown-item--needs-work"
 						onClick={() => handleStatusClick('needs_work')}
 						disabled={isSubmitting}
 						type="button"
 					>
-						✗ Needs work
+						<TriangleAlert size={16} /> Needs work
 					</button>
 					<button
-						className="review-badge-dropdown-item review-badge-dropdown-item--approve"
+						className="status-select-dropdown-item status-select-dropdown-item--approve"
 						onClick={() => handleStatusClick('approved')}
 						disabled={isSubmitting}
 						type="button"
 					>
-						✓ Approved
+						<CheckCircle size={16} /> Approved
 					</button>
 				</div>
 			)}
