@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { Moon, Sun } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 
 export function Navigation() {
@@ -79,10 +80,10 @@ export function Navigation() {
 											Users
 										</Link>
 									)}
-									<button onClick={toggleTheme} className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-										<span>{theme === 'light' ? '🌙' : '☀️'}</span>
-										<span>{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
-									</button>
+								<button onClick={toggleTheme} className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+									{theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+									<span>{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
+								</button>
 									<div style={{ padding: '0.75rem 1rem', borderTop: '1px solid var(--color-border)', marginTop: '0.5rem' }}>
 										<div style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>
 											{user?.email}
@@ -118,7 +119,7 @@ export function Navigation() {
 
 						<div className="nav-user">
 							<button onClick={toggleTheme} className="btn-theme" title="Toggle theme">
-								{theme === 'light' ? '🌙' : '☀️'}
+								{theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
 							</button>
 							<div className="nav-user-info">
 								<span className="nav-email">{user?.email}</span>

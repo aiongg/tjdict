@@ -1,5 +1,6 @@
 import { EntryData, EditorCallbacks } from './types';
 import { FieldVisibilityMenu } from './FieldVisibilityMenu';
+import { ReviewBadge } from '../ReviewBadge';
 
 interface EntryHeaderFieldsProps {
 	entryData: EntryData;
@@ -8,6 +9,10 @@ interface EntryHeaderFieldsProps {
 	onEntryDataChange: (updates: Partial<EntryData>) => void;
 	onIsCompleteChange: (value: boolean) => void;
 	callbacks: EditorCallbacks;
+	isNewEntry: boolean;
+	myReviewStatus: 'approved' | 'needs_work' | null;
+	onReviewStatusChange: (status: 'approved' | 'needs_work') => Promise<void>;
+	isSubmittingReview: boolean;
 }
 
 export function EntryHeaderFields({
@@ -17,21 +22,36 @@ export function EntryHeaderFields({
 	onEntryDataChange,
 	onIsCompleteChange,
 	callbacks,
+	isNewEntry,
+	myReviewStatus,
+	onReviewStatusChange,
+	isSubmittingReview,
 }: EntryHeaderFieldsProps) {
 	const { isFieldVisible, onToggleField, getAvailableFields } = callbacks;
 
 	return (
 		<div className="entry-header-compact">
-			{/* Complete checkbox above everything */}
-			<label className="checkbox-field" style={{ marginBottom: '1rem' }}>
-				<input
-					type="checkbox"
-					checked={isComplete}
-					onChange={(e) => canEdit && onIsCompleteChange(e.target.checked)}
-					disabled={!canEdit}
-				/>
-				<span>Mark complete</span>
-			</label>
+			{/* Complete checkbox and review badge on same line, right-aligned */}
+			<div className="entry-header-top-row">
+				<div className="entry-header-badges">
+					<label className="complete-badge">
+						<input
+							type="checkbox"
+							checked={isComplete}
+							onChange={(e) => canEdit && onIsCompleteChange(e.target.checked)}
+							disabled={!canEdit}
+						/>
+						<span>Ready for Review</span>
+					</label>
+					{!isNewEntry && (
+						<ReviewBadge
+							currentStatus={myReviewStatus}
+							onStatusChange={onReviewStatusChange}
+							disabled={isSubmittingReview}
+						/>
+					)}
+				</div>
+			</div>
 			
 			{/* Head field with menu */}
 			<div className="compact-header">

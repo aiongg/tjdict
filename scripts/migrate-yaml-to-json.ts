@@ -316,8 +316,14 @@ function normalizeFieldsToArrays(obj: unknown): unknown {
 				// Already an array, just ensure strings and recurse
 				newObj[key] = value.map(v => String(v));
 			} else {
-				// Single value - convert to array
-				newObj[key] = [String(value)];
+				// Single value - convert to array, splitting on commas if present
+				const stringValue = String(value);
+				if (stringValue.includes(',')) {
+					// Split on commas and trim whitespace
+					newObj[key] = stringValue.split(',').map(v => v.trim());
+				} else {
+					newObj[key] = [stringValue];
+				}
 			}
 		} else if (arrayFields.includes(key) && value !== undefined && value !== null && !Array.isArray(value)) {
 			// Wrap single value in array

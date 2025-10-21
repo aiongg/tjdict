@@ -1,21 +1,13 @@
-import { ReviewBadge } from '../ReviewBadge';
-
 interface EditorTabsProps {
 	isNewEntry: boolean;
 	activeTab: 'edit' | 'reviews';
 	onTabChange: (tab: 'edit' | 'reviews') => void;
-	myReviewStatus: 'approved' | 'needs_work' | null;
-	onReviewStatusChange: (status: 'approved' | 'needs_work') => Promise<void>;
-	isSubmittingReview: boolean;
 }
 
 export function EditorTabs({
 	isNewEntry,
 	activeTab,
 	onTabChange,
-	myReviewStatus,
-	onReviewStatusChange,
-	isSubmittingReview,
 }: EditorTabsProps) {
 	return (
 		<div className="editor-tabs-container">
@@ -35,15 +27,6 @@ export function EditorTabs({
 					</button>
 				)}
 			</div>
-			{!isNewEntry && (
-				<div className="editor-review-badge">
-					<ReviewBadge
-						currentStatus={myReviewStatus}
-						onStatusChange={onReviewStatusChange}
-						disabled={isSubmittingReview}
-					/>
-				</div>
-			)}
 		</div>
 	);
 }

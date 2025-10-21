@@ -1,3 +1,5 @@
+import { ArrowDownAZ, CalendarArrowDown } from 'lucide-react';
+
 interface SearchFiltersProps {
 	searchInput: string;
 	onSearchInputChange: (value: string) => void;
@@ -20,9 +22,18 @@ export function SearchFilters({
 	onShowNeedingReviewChange,
 	sortBy,
 	onSortByChange,
-	sortOrder,
 	onSortOrderChange,
 }: SearchFiltersProps) {
+	const handleSortChange = (value: 'sort_key' | 'updated_at') => {
+		if (value === 'sort_key') {
+			onSortByChange('sort_key');
+			onSortOrderChange('asc');
+		} else {
+			onSortByChange('updated_at');
+			onSortOrderChange('desc');
+		}
+	};
+
 	return (
 		<div className="search-bar">
 			<input
@@ -40,7 +51,7 @@ export function SearchFilters({
 						checked={showIncompleteOnly}
 						onChange={(e) => onShowIncompleteOnlyChange(e.target.checked)}
 					/>
-					Incomplete entries only
+					Incomplete
 				</label>
 
 				<label className="checkbox-label">
@@ -52,25 +63,19 @@ export function SearchFilters({
 					Needs review
 				</label>
 
-				<div className="filter-group">
-					<label>Sort By:</label>
+				<div className="sort-select-wrapper">
+					{sortBy === 'sort_key' ? (
+						<ArrowDownAZ size={16} className="sort-icon" />
+					) : (
+						<CalendarArrowDown size={16} className="sort-icon" />
+					)}
 					<select
 						value={sortBy}
-						onChange={(e) => onSortByChange(e.target.value as 'sort_key' | 'updated_at')}
+						onChange={(e) => handleSortChange(e.target.value as 'sort_key' | 'updated_at')}
+						className="sort-select"
 					>
-						<option value="sort_key">Alphabetical</option>
-						<option value="updated_at">Recently Updated</option>
-					</select>
-				</div>
-
-				<div className="filter-group">
-					<label>Order:</label>
-					<select
-						value={sortOrder}
-						onChange={(e) => onSortOrderChange(e.target.value as 'asc' | 'desc')}
-					>
-						<option value="asc">Ascending</option>
-						<option value="desc">Descending</option>
+						<option value="sort_key">ABC</option>
+						<option value="updated_at">Modified</option>
 					</select>
 				</div>
 			</div>

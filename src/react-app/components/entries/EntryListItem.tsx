@@ -1,6 +1,8 @@
+import { Check, X, MessageSquare } from 'lucide-react';
 import { EntryWithReviews, EntryData } from '../../types/dictionary';
 import { EntryDisplay } from './EntryDisplay';
 import { ReviewBadge } from '../ReviewBadge';
+import { PageButton } from '../PageButton';
 
 interface EntryListItemProps {
 	entry: EntryWithReviews;
@@ -21,17 +23,12 @@ export function EntryListItem({
 }: EntryListItemProps) {
 	const entryData: EntryData = JSON.parse(entry.entry_data);
 	
-	const getReviewSummary = (): string => {
+	const getReviewCounts = () => {
 		const approved = entry.reviews.filter(r => r.status === 'approved').length;
 		const needsWork = entry.reviews.filter(r => r.status === 'needs_work').length;
 		const commentCount = entry.comments.length;
 
-		const parts = [];
-		parts.push(`${approved} ✓`);
-		parts.push(`${needsWork} ✗`);
-		parts.push(`${commentCount} 💬`);
-
-		return parts.join(' • ');
+		return { approved, needsWork, commentCount };
 	};
 
 	return (
@@ -41,22 +38,31 @@ export function EntryListItem({
 			onClick={() => onEntryClick(entry.id)}
 		>
 			{entryData.page && (
-				<span 
-					className="page-link"
-					onClick={(e) => {
-						e.stopPropagation();
-						onPageClick(entryData.page);
-					}}
-				>
-					p. {entryData.page}
-				</span>
+				<PageButton
+					pageNumber={entryData.page}
+					onClick={onPageClick}
+					variant="list"
+				/>
 			)}
 			<div className="entry-meta-badges">
 				{!entry.is_complete && (
 					<span className="badge badge-incomplete">Incomplete</span>
 				)}
-				<span className="entry-meta-text">
-					{getReviewSummary()} • Updated: {new Date(entry.updated_at).toLocaleDateString()}
+				<span className="entry-meta-text entry-meta-icons">
+					<span className="meta-icon-group">
+						<Check size={14} className="icon-success" />
+						<span>{getReviewCounts().approved}</span>
+					</span>
+					<span className="meta-icon-group">
+						<X size={14} className="icon-danger" />
+						<span>{getReviewCounts().needsWork}</span>
+					</span>
+					<span className="meta-icon-group">
+						<MessageSquare size={14} className="icon-muted" />
+						<span>{getReviewCounts().commentCount}</span>
+					</span>
+					<span>•</span>
+					<span>Updated: {new Date(entry.updated_at).toLocaleDateString()}</span>
 				</span>
 			</div>
 			

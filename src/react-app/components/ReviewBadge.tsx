@@ -54,7 +54,7 @@ export function ReviewBadge({ currentStatus, onStatusChange, compact = false, di
 	};
 
 	const getBadgeText = () => {
-		if (currentStatus === 'approved') return '✓ Approve';
+		if (currentStatus === 'approved') return '✓ Approved';
 		if (currentStatus === 'needs_work') return '✗ Needs work';
 		return 'Review';
 	};

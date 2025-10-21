@@ -63,14 +63,14 @@
 .search-bar {
 	max-width: 900px;
 	margin: 0 auto;
-	padding: 1.5rem;
+	padding: 1rem 1.5rem;
 	background: var(--color-card-bg);
 	border-bottom: 1px solid var(--color-border);
 }
 
 .search-input {
 	width: 100%;
-	margin-bottom: 1rem;
+	margin-bottom: 0.75rem;
 }
 
 .search-filters {
@@ -78,6 +78,42 @@
 	gap: 1rem;
 	flex-wrap: wrap;
 	align-items: center;
+}
+
+.sort-select-wrapper {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.sort-icon {
+	position: absolute;
+	left: 0.625rem;
+	pointer-events: none;
+	color: var(--color-text-secondary);
+}
+
+.sort-select {
+	padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+	border: 1px solid var(--color-border);
+	border-radius: 4px;
+	background: var(--color-bg);
+	color: var(--color-text);
+	cursor: pointer;
+	font-size: 0.875rem;
+	min-height: 36px;
+	transition: all 0.2s;
+	width: auto;
+}
+
+.sort-select:hover {
+	border-color: var(--color-primary);
+}
+
+.sort-select:focus {
+	outline: none;
+	border-color: var(--color-primary);
+	box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
 .advanced-filters {
@@ -113,7 +149,7 @@
 .pagination-container {
 	max-width: 900px;
 	margin: 0 auto;
-	padding: 1rem 1.5rem;
+	padding: 0.75rem 1.5rem;
 	background: var(--color-card-bg);
 	border-bottom: 1px solid var(--color-border);
 }
@@ -234,22 +270,61 @@
 	color: var(--color-text-secondary);
 }
 
-/* Page link in top-right corner of entry card */
-.page-link {
+.entry-meta-icons {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	flex-wrap: wrap;
+}
+
+.meta-icon-group {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.icon-success {
+	color: var(--color-success);
+}
+
+.icon-danger {
+	color: var(--color-danger);
+}
+
+.icon-muted {
+	color: var(--color-text-secondary);
+}
+
+/* Page button in top-right corner of entry card */
+.page-link-button {
 	position: absolute;
 	top: 1rem;
 	right: 1rem;
-	font-size: 0.875rem;
-	color: var(--color-primary);
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	padding: 0.25rem 0.5rem;
+	font-size: 0.75rem;
+	color: var(--color-text-secondary);
+	background: transparent;
+	border: 1px solid var(--color-border);
+	border-radius: 4px;
 	cursor: pointer;
-	text-decoration: none;
 	z-index: 1;
 	transition: all 0.2s;
 }
 
-.page-link:hover {
-	text-decoration: underline;
-	color: var(--color-primary-dark);
+.page-link-button:hover {
+	color: var(--color-primary);
+	border-color: var(--color-primary);
+	background: var(--color-card-bg);
+}
+
+/* Page button for editor header */
+.btn-page {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
 }
 
 /* Layout adjustment for desktop with image viewer */

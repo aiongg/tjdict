@@ -1,3 +1,5 @@
+import { PageButton } from '../PageButton';
+
 interface EditorHeaderProps {
 	isNewEntry: boolean;
 	canEdit: boolean;
@@ -21,15 +23,6 @@ export function EditorHeader({
 		<div className="editor-header">
 			<h1>{isNewEntry ? 'New Entry' : 'Edit Entry'}</h1>
 			<div className="editor-actions">
-				{pageNumber && (
-					<button 
-						onClick={() => onPageClick(pageNumber)} 
-						className="btn-secondary"
-						title="View dictionary page"
-					>
-						📖 p. {pageNumber}
-					</button>
-				)}
 				<button 
 					onClick={onCancel} 
 					className="btn-secondary"
@@ -46,6 +39,15 @@ export function EditorHeader({
 					</button>
 				)}
 			</div>
+			{pageNumber && (
+				<div className="editor-page-link">
+					<PageButton
+						pageNumber={pageNumber}
+						onClick={onPageClick}
+						variant="editor"
+					/>
+				</div>
+			)}
 		</div>
 	);
 }

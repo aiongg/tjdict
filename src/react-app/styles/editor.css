@@ -25,6 +25,10 @@
 	font-size: 1.5rem;
 }
 
+.editor-page-link {
+	margin-left: auto;
+}
+
 .editor-tabs {
 	display: flex;
 	gap: 0.5rem;
@@ -386,6 +390,58 @@
 	padding: 0 !important;
 }
 
+.entry-header-top-row {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+.entry-header-badges {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.complete-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem 1rem;
+	border-radius: 8px;
+	border: 1px solid var(--color-border);
+	background: var(--color-card-bg);
+	color: var(--color-text);
+	font-size: 0.875rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.2s;
+	white-space: nowrap;
+	min-height: 36px;
+}
+
+.complete-badge:hover {
+	border-color: var(--color-primary);
+	background: var(--color-bg);
+}
+
+.complete-badge input[type="checkbox"] {
+	width: 16px;
+	height: 16px;
+	margin: 0;
+	cursor: pointer;
+	flex-shrink: 0;
+}
+
+.complete-badge:has(input:disabled) {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+.complete-badge input:disabled {
+	cursor: not-allowed;
+}
+
 /* Done checkbox button */
 .done-checkbox {
 	min-width: 36px;
@@ -605,6 +661,11 @@
 		margin-bottom: 0.5rem;
 	}
 
+	.editor-page-link {
+		margin-left: 0;
+		order: -2;
+	}
+
 	.editor-tabs {
 		margin-left: 0;
 		justify-content: center;
@@ -663,7 +724,7 @@
 	.compact-item .item-remove,
 	.compact-variant .item-remove {
 		min-width: 44px;
-		min-height: 44px;
+		min-height: 36px;
 		display: flex;
 		align-items: center;
 		justify-content: center;

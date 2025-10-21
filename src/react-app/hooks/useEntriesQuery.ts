@@ -67,16 +67,17 @@ interface EntriesListResponse {
 // Hook to fetch paginated entries list
 export function useEntriesList(filters: EntriesListFilters) {
 	const hasFilters = filters.q || filters.incomplete || filters.needsReview;
+	const useOffsetPagination = hasFilters || filters.sortBy === 'updated_at';
 
 	return useQuery({
 		queryKey: queryKeys.entries.list(filters),
 		queryFn: async (): Promise<EntriesListResponse> => {
-			// Use different endpoint based on whether we have filters
+			// Use different endpoint based on whether we have filters or sorting by updated_at
 			let url: string;
 			const params = new URLSearchParams();
 
-			if (hasFilters) {
-				// Use filtered search endpoint
+			if (useOffsetPagination) {
+				// Use offset-based pagination endpoint (for filters or date sorting)
 				url = '/api/entries';
 				params.set('page', filters.page.toString());
 				params.set('pageSize', (filters.pageSize || 50).toString());
@@ -87,7 +88,7 @@ export function useEntriesList(filters: EntriesListFilters) {
 				if (filters.incomplete) params.set('complete', 'false');
 				if (filters.needsReview) params.set('needsReview', 'true');
 			} else {
-				// Use dictionary page-based endpoint
+				// Use dictionary page-based endpoint (for alphabetical sorting)
 				url = `/api/entries/by-page/${filters.dictPage || filters.page}`;
 				params.set('sortBy', filters.sortBy || 'sort_key');
 				params.set('sortOrder', filters.sortOrder || 'asc');
@@ -173,7 +174,7 @@ export function useSubmitReview() {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: async (data: { entryId: number; status: 'approved' | 'needs_work' }) => {
+		mutationFn: async (data: { entryId: number | string; status: 'approved' | 'needs_work' }) => {
 			const response = await fetch(`/api/entries/${data.entryId}/reviews`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -187,6 +188,8 @@ export function useSubmitReview() {
 			return response.json();
 		},
 		onMutate: async ({ entryId, status }) => {
+			// Normalize entryId to number for list updates, but keep original type for detail cache key
+			const entryIdNum = typeof entryId === 'string' ? parseInt(entryId) : entryId;
 			// Cancel any outgoing refetches
 			await queryClient.cancelQueries({ queryKey: queryKeys.entries.lists() });
 			await queryClient.cancelQueries({ queryKey: queryKeys.entries.detail(entryId) });
@@ -209,12 +212,12 @@ export function useSubmitReview() {
 					return {
 						...old,
 						entries: old.entries.map((entry) => {
-							if (entry.id === entryId) {
+							if (entry.id === entryIdNum) {
 								return {
 									...entry,
 									my_review: {
 										id: 0, // Temporary ID
-										entry_id: entryId,
+										entry_id: entryIdNum,
 										user_id: 0, // Will be filled by server
 										status,
 										reviewed_at: new Date().toISOString(),
@@ -229,7 +232,7 @@ export function useSubmitReview() {
 				});
 			});
 
-			// Optimistically update detail cache
+			// Optimistically update detail cache (use original entryId to match cache key)
 			queryClient.setQueryData(
 				queryKeys.entries.detail(entryId),
 				(old: EntryWithReviews | undefined) => {
@@ -239,7 +242,7 @@ export function useSubmitReview() {
 						...old,
 						my_review: {
 							id: 0,
-							entry_id: entryId,
+							entry_id: entryIdNum,
 							user_id: 0,
 							status,
 							reviewed_at: new Date().toISOString(),

@@ -1,3 +1,5 @@
+import { ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight } from 'lucide-react';
+
 interface PaginationControlsProps {
 	hasFilters: boolean | string;  // Can be boolean or string from filters
 	entries: { id: number; [key: string]: unknown }[];
@@ -35,20 +37,22 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
 				<button
 					onClick={() => goToPage(minPage)}
 					disabled={dictPage === minPage}
-					className="btn-secondary btn-sm"
+					className="btn-secondary btn-sm btn-icon"
+					aria-label="First page"
 				>
-					« First
+					<ChevronsLeft size={18} />
 				</button>
 				<button
 					onClick={() => goToPage(dictPage - 1)}
 					disabled={dictPage === minPage}
-					className="btn-secondary btn-sm"
+					className="btn-secondary btn-sm btn-icon"
+					aria-label="Previous page"
 				>
-					‹ Prev
+					<ChevronLeft size={18} />
 				</button>
 				
 				<div className="page-selector">
-					<span className="page-info">Page</span>
+					<span className="page-info">Pg.</span>
 					<input
 						type="text"
 						value={pageInputValue}
@@ -79,22 +83,24 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
 						className="page-input"
 						placeholder="Go to page..."
 					/>
-					<span className="page-info">({minPage} - {maxPage})</span>
+					<span className="page-info">({minPage}-{maxPage})</span>
 				</div>
 
 				<button
 					onClick={() => goToPage(dictPage + 1)}
 					disabled={dictPage === maxPage}
-					className="btn-secondary btn-sm"
+					className="btn-secondary btn-sm btn-icon"
+					aria-label="Next page"
 				>
-					Next ›
+					<ChevronRight size={18} />
 				</button>
 				<button
 					onClick={() => goToPage(maxPage)}
 					disabled={dictPage === maxPage}
-					className="btn-secondary btn-sm"
+					className="btn-secondary btn-sm btn-icon"
+					aria-label="Last page"
 				>
-					Last »
+					<ChevronsRight size={18} />
 				</button>
 			</div>
 		</div>

@@ -64,8 +64,21 @@ export default function EntriesPage() {
 	// Use React Query to fetch entries
 	const { data, isLoading: loading, error: queryError } = useEntriesList(filters);
 	const entries = data?.entries || [];
-	const minPage = data?.minPage || 1;
-	const maxPage = data?.maxPage || 1;
+	
+	// Calculate pagination based on response type
+	let minPage = 1;
+	let maxPage = 1;
+	
+	if (data?.minPage && data?.maxPage) {
+		// Page-based pagination (alphabetical sorting)
+		minPage = data.minPage;
+		maxPage = data.maxPage;
+	} else if (data?.total && data?.pageSize) {
+		// Offset-based pagination (modified sorting or filters)
+		minPage = 1;
+		maxPage = Math.ceil(data.total / data.pageSize);
+	}
+	
 	const error = queryError ? (queryError as Error).message : '';
 	
 	// Use mutation for review submission
@@ -241,7 +254,12 @@ export default function EntriesPage() {
 					setPageInputValue('1');
 				}}
 				sortBy={sortBy}
-				onSortByChange={(value) => setSortBy(value)}
+				onSortByChange={(value) => {
+					setSortBy(value);
+					// Reset to page 1 when changing sort type (different pagination strategies)
+					setDictPage(1);
+					setPageInputValue('1');
+				}}
 				sortOrder={sortOrder}
 				onSortOrderChange={(value) => setSortOrder(value)}
 			/>

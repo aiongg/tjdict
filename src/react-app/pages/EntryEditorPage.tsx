@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { Check, X, MessageSquare } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { useImageViewer } from '../contexts/ImageViewerContext';
@@ -43,10 +44,9 @@ export default function EntryEditorPage() {
 	const [isComplete, setIsComplete] = useState(false);
 	const [activeTab, setActiveTab] = useState<'edit' | 'reviews'>('edit');
 	
-	// Extract data from query result
+	// Extract data from query result (keep reviews/comments as is for counts)
 	const reviews = fetchedEntry?.reviews || [];
 	const comments = fetchedEntry?.comments || [];
-	const myReview = fetchedEntry?.my_review || null;
 	const error = queryError ? (queryError as Error).message : '';
 	
 	// Image viewer state
@@ -109,7 +109,8 @@ export default function EntryEditorPage() {
 		if (!id || isNewEntry) return;
 
 		// Use the mutation with optimistic updates
-		await submitReviewMutation.mutateAsync({ entryId: parseInt(id), status });
+		// Important: pass id as string to match the cache key format used by useEntry
+		await submitReviewMutation.mutateAsync({ entryId: id, status });
 	};
 
 	// Helper to get/set nested values using JSON path
@@ -360,16 +361,22 @@ export default function EntryEditorPage() {
 				isNewEntry={isNewEntry}
 				activeTab={activeTab}
 				onTabChange={setActiveTab}
-				myReviewStatus={myReview?.status || null}
-				onReviewStatusChange={handleReviewStatusChange}
-				isSubmittingReview={submitReviewMutation.isPending}
 			/>
 
 			{!isNewEntry && (
 				<div className="editor-review-summary">
-					<span>{reviews.filter(r => r.status === 'approved').length} ✓</span>
-					<span>{reviews.filter(r => r.status === 'needs_work').length} ✗</span>
-					<span>{comments.length} 💬</span>
+					<span className="review-stat">
+						<Check size={16} className="icon-success" />
+						<span>{reviews.filter(r => r.status === 'approved').length}</span>
+					</span>
+					<span className="review-stat">
+						<X size={16} className="icon-danger" />
+						<span>{reviews.filter(r => r.status === 'needs_work').length}</span>
+					</span>
+					<span className="review-stat">
+						<MessageSquare size={16} className="icon-muted" />
+						<span>{comments.length}</span>
+					</span>
 				</div>
 			)}
 
@@ -382,6 +389,10 @@ export default function EntryEditorPage() {
 							onEntryDataChange={(updates) => setEntryData({ ...entryData, ...updates })}
 							onIsCompleteChange={setIsComplete}
 							callbacks={editorCallbacks}
+							isNewEntry={isNewEntry}
+							myReviewStatus={fetchedEntry?.my_review?.status || null}
+							onReviewStatusChange={handleReviewStatusChange}
+							isSubmittingReview={submitReviewMutation.isPending}
 						/>
 
 						{/* POS Definitions */}
