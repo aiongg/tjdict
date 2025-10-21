@@ -25,7 +25,7 @@ export function SubDefDisplay({ subDef, num, hasSingleDef }: SubDefDisplayProps)
 			{/* For multiple definitions, show flags before English */}
 			{!hasSingleDef && renderFlags()}
 			{subDef.cat && <span className="cat"> {subDef.cat}</span>}
-			{subDef.mw && <span className="mw"> {subDef.mw}:</span>}
+			{subDef.mw && <span className="mw"> {subDef.mw.join(', ')}:</span>}
 			{subDef.en && <span className="en"> {subDef.en}</span>}
 			{Array.isArray(subDef.alt) && subDef.alt.map((alt, i) => (
 				<span key={i} className="alt">; ≃ {alt}</span>
