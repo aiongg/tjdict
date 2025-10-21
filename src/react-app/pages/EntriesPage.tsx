@@ -7,313 +7,7 @@ import { useEntriesList, useSubmitReview } from '../hooks/useEntriesQuery';
 import { Navigation } from '../components/Navigation';
 import { PaginationControls } from '../components/PaginationControls';
 import { PageImageViewer } from '../components/PageImageViewer';
-import { ReviewBadge } from '../components/ReviewBadge';
-import { getCircledNumber } from '../utils/tools';
-import { Headword } from '../components/entries/Headword';
-
-interface TranslationVariant {
-	en: string;
-	mw?: string;
-	etym?: string;
-	dup?: boolean;
-	alt?: string[];
-	[key: string]: unknown;
-}
-
-interface PosDefinition {
-	pos?: string[];  // Array of strings: ["n"], ["v", "adj"], etc. - optional for incomplete entries
-	defs: SubDefinition[];
-}
-
-interface SubDefinition {
-	en?: string;  // Simple string at definition level
-	mw?: string;
-	cat?: string;
-	bound?: boolean;  // Bound morpheme flag
-	dup?: boolean;  // Reduplication flag
-	takes_a2?: boolean;  // Takes á tone flag
-	alt?: string[];
-	cf?: string[];
-	det?: string;
-	ex?: ExampleItem[];
-	drv?: DerivativeItem[];
-	idm?: IdiomItem[];
-	[key: string]: unknown;
-}
-
-interface ExampleItem {
-	tw: string;
-	en?: TranslationVariant[];  // Always array for a/b/c variants
-	mw?: string;
-	etym?: string;
-	alt?: string[];
-	[key: string]: unknown;
-}
-
-interface DerivativeItem {
-	tw: string;
-	en?: TranslationVariant[];  // Always array for a/b/c variants
-	mw?: string;
-	etym?: string;
-	alt?: string[];
-	ex?: ExampleItem[];
-	[key: string]: unknown;
-}
-
-interface IdiomItem {
-	tw: string;
-	en?: TranslationVariant[];  // Always array for a/b/c variants
-	mw?: string;
-	etym?: string;
-	alt?: string[];
-	ex?: ExampleItem[];
-	[key: string]: unknown;
-}
-
-interface EntryData {
-	head: string;
-	head_number?: number;
-	page?: number;
-	etym?: string;
-	defs: PosDefinition[];
-}
-
-interface Entry {
-	id: number;
-	head: string;
-	sort_key: string;
-	entry_data: string;
-	is_complete: number;
-	source_file: string | null;
-	created_at: string;
-	updated_at: string;
-	created_by: number | null;
-	updated_by: number | null;
-}
-
-interface EntryReview {
-	id: number;
-	entry_id: number;
-	user_id: number;
-	status: 'approved' | 'needs_work';
-	reviewed_at: string;
-	user_email: string;
-	user_nickname: string | null;
-}
-
-interface EntryComment {
-	id: number;
-	entry_id: number;
-	user_id: number;
-	comment: string;
-	created_at: string;
-	user_email: string;
-	user_nickname: string | null;
-}
-
-interface EntryWithReviews extends Entry {
-	reviews: EntryReview[];
-	all_reviews: EntryReview[];
-	comments: EntryComment[];
-	my_review?: EntryReview;
-}
-
-// Components for rendering dictionary entries
-const ExtraDisplay = ({ data, bullet }: { data: ExampleItem | DerivativeItem | IdiomItem; bullet: string }) => {
-	const hasEn = 'en' in data && data.en && Array.isArray(data.en);
-	const hasAlt = 'alt' in data && Array.isArray(data.alt);
-	const hasEx = 'ex' in data && Array.isArray((data as DerivativeItem | IdiomItem).ex);
-	
-	// Format translation variants (en is always TranslationVariant[])
-	const renderTranslations = () => {
-		if (!hasEn || !Array.isArray(data.en)) return null;
-		
-		const enArray = data.en;
-		const labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-		const showLabels = enArray.length > 1; // Only show labels if multiple variants
-		
-	return enArray.map((variant, idx) => {
-		const label = labels[idx] || `${idx + 1}`;
-		const parts: React.ReactNode[] = [];
-		
-		// Add label only if there are multiple variants (semibold)
-		if (showLabels) {
-			parts.push(<span key="label" className="variant-label">{label}. </span>);
-		}
-		
-		// Add measure word if present
-		if (variant.mw) {
-			parts.push(<span key="mw">({variant.mw}) </span>);
-		}
-		
-		// Add etymology if present
-		if (variant.etym) {
-			parts.push(<span key="etym">({variant.etym}) </span>);
-		}
-		
-		// Add translation
-		if (variant.en) {
-			parts.push(<span key="en">{variant.en}</span>);
-		}
-		
-		// Add alternatives if present
-		if (Array.isArray(variant.alt)) {
-			variant.alt.forEach((alt: string, altIdx) => {
-				parts.push(<span key={`alt-${altIdx}`}>; ≃ {alt}</span>);
-			});
-		}
-		
-		return (
-			<div key={idx} className="en">
-				{parts}
-			</div>
-		);
-	});
-};
-
-return (
-	<div className="ex">
-		<span className="ex-tw">{bullet} {data.tw}</span>
-		{renderTranslations()}
-		{hasAlt && data.alt ? data.alt.map((alt, i) => (
-			<span key={i} className="alt">; ≃ {alt}</span>
-		)) : null}
-			{hasEx && (data as DerivativeItem | IdiomItem).ex ? (data as DerivativeItem | IdiomItem).ex!.map((ex, i) => (
-				<ExtraDisplay key={i} data={ex} bullet="¶" />
-			)) : null}
-		</div>
-	);
-};
-
-// Display a single sub-definition variant
-const SubDefDisplay = ({ subDef, num, hasSingleDef }: { subDef: SubDefinition; num?: number; hasSingleDef?: boolean }) => {
-	// Render flag indicators
-	const renderFlags = () => {
-		const flags = [];
-		if (subDef.bound) flags.push(<span key="bound" className="flag-bound"> <b>B.</b></span>);
-		if (subDef.takes_a2) flags.push(<span key="takes_a2" className="flag-takes-a2"> <i>[á]</i></span>);
-		if (subDef.dup) flags.push(<span key="dup" className="flag-dup"> <i>[x]</i></span>);
-		return flags;
-	};
-
-	return (
-		<div className="subdef">
-			{num !== undefined && <span className="def-num">{getCircledNumber(num)}</span>}
-			{/* For single definition, show flags after pos (handled in PosDefDisplay) */}
-			{/* For multiple definitions, show flags before English */}
-			{!hasSingleDef && renderFlags()}
-			{subDef.cat && <span className="cat"> {subDef.cat}</span>}
-			{subDef.mw && <span className="mw"> {subDef.mw}:</span>}
-			{subDef.en && <span className="en"> {subDef.en}</span>}
-			{Array.isArray(subDef.alt) && subDef.alt.map((alt, i) => (
-				<span key={i} className="alt">; ≃ {alt}</span>
-			))}
-			{Array.isArray(subDef.cf) && subDef.cf.map((cf, i) => (
-				<span key={i} className="cf">; cf {cf}</span>
-			))}
-			{subDef.det && <span className="det">; ⇒ {subDef.det}</span>}
-			
-			{Array.isArray(subDef.ex) && subDef.ex.map((ex, i) => (
-				<ExtraDisplay key={`ex-${i}`} data={ex} bullet="¶" />
-			))}
-			{Array.isArray(subDef.drv) && subDef.drv.map((drv, i) => (
-				<ExtraDisplay key={`drv-${i}`} data={drv} bullet="◊" />
-			))}
-			{Array.isArray(subDef.idm) && subDef.idm.map((idm, i) => (
-				<ExtraDisplay key={`idm-${i}`} data={idm} bullet="∆" />
-			))}
-		</div>
-	);
-};
-
-// Display a POS group with its definitions
-const PosDefDisplay = ({ posDef }: { posDef: PosDefinition }) => {
-	const hasSingleDef = posDef.defs.length === 1;
-	
-	// Render POS badges (multiple badges for multiple pos values)
-	const renderPosBadges = () => {
-		if (!posDef.pos || posDef.pos.length === 0) {
-			return <span className="pos pos-missing">[no pos]</span>;
-		}
-		return posDef.pos.map((p, i) => (
-			<span key={i} className="pos pos-badge">{p}</span>
-		));
-	};
-
-	// Render flags for single definition (after pos)
-	const renderFlagsAfterPos = () => {
-		if (!hasSingleDef) return null;
-		const subDef = posDef.defs[0];
-		const flags = [];
-		if (subDef.bound) flags.push(<span key="bound" className="flag-bound"> <b>B.</b></span>);
-		if (subDef.takes_a2) flags.push(<span key="takes_a2" className="flag-takes-a2"> <i>[á]</i></span>);
-		if (subDef.dup) flags.push(<span key="dup" className="flag-dup"> <i>[x]</i></span>);
-		return flags;
-	};
-	
-	return (
-		<div className="pos-def">
-			{renderPosBadges()}
-			{hasSingleDef && renderFlagsAfterPos()}
-			{hasSingleDef ? (
-				<SubDefDisplay subDef={posDef.defs[0]} hasSingleDef={true} />
-			) : (
-				posDef.defs.map((subDef, i) => (
-					<SubDefDisplay key={i} subDef={subDef} num={i + 1} hasSingleDef={false} />
-				))
-			)}
-		</div>
-	);
-};
-
-const EntryDisplay = ({ entryData }: { entryData: EntryData }) => {
-	// Check if this is a simple det-only entry
-	// Conditions: 1 pos def, 1 sub def, only det field is populated (and optionally head_number/etym at entry level)
-	const isSimpleDetOnly = 
-		entryData.defs.length === 1 && 
-		entryData.defs[0].defs.length === 1 &&
-		entryData.defs[0].defs[0].det &&
-		!entryData.defs[0].defs[0].en &&
-		!entryData.defs[0].defs[0].mw &&
-		!entryData.defs[0].defs[0].cat &&
-		!entryData.defs[0].defs[0].bound &&
-		!entryData.defs[0].defs[0].dup &&
-		!entryData.defs[0].defs[0].takes_a2 &&
-		!entryData.defs[0].defs[0].alt &&
-		!entryData.defs[0].defs[0].cf &&
-		!entryData.defs[0].defs[0].ex &&
-		!entryData.defs[0].defs[0].drv &&
-		!entryData.defs[0].defs[0].idm;
-	
-	if (isSimpleDetOnly) {
-		return (
-			<div className="entry-display entry-display-simple">
-				<Headword 
-					head={entryData.head} 
-					headNumber={entryData.head_number}
-					etym={entryData.etym}
-				/>
-				<span className="det-simple"> ⇒ {entryData.defs[0].defs[0].det}</span>
-			</div>
-		);
-	}
-	
-	return (
-		<div className="entry-display">
-			<div className="entry-headword">
-				<Headword 
-					head={entryData.head} 
-					headNumber={entryData.head_number}
-					etym={entryData.etym}
-				/>
-			</div>
-			
-			{entryData.defs.map((posDef, i) => (
-				<PosDefDisplay key={i} posDef={posDef} />
-			))}
-		</div>
-	);
-};
+import { SearchFilters, EntryListItem } from '../components/entries';
 
 export default function EntriesPage() {
 	const { user } = useAuth();
@@ -340,8 +34,6 @@ export default function EntriesPage() {
 	const [searchInput, setSearchInput] = useState(getParam('q'));
 	const [showIncompleteOnly, setShowIncompleteOnly] = useState(getBoolParam('incomplete'));
 	const [showNeedingReview, setShowNeedingReview] = useState(getBoolParam('needsReview'));
-	const [headFilter, setHeadFilter] = useState(getParam('head'));
-	const [posFilter, setPosFilter] = useState(getParam('pos'));
 	const [sortBy, setSortBy] = useState<'sort_key' | 'updated_at'>(
 		(getParam('sort') as 'sort_key' | 'updated_at') || 'sort_key'
 	);
@@ -355,7 +47,7 @@ export default function EntriesPage() {
 	const [openReviewDropdown, setOpenReviewDropdown] = useState<number | null>(null);
 	
 	// Check if any filters are active
-	const hasFilters = searchQuery || showIncompleteOnly || showNeedingReview || headFilter || posFilter;
+	const hasFilters = searchQuery || showIncompleteOnly || showNeedingReview;
 	
 	// Build filter object for React Query
 	const filters = {
@@ -365,8 +57,6 @@ export default function EntriesPage() {
 		q: searchQuery || undefined,
 		incomplete: showIncompleteOnly || undefined,
 		needsReview: showNeedingReview || undefined,
-		head: headFilter || undefined,
-		pos: posFilter || undefined,
 		sortBy,
 		sortOrder,
 	};
@@ -384,7 +74,6 @@ export default function EntriesPage() {
 	// Image viewer state
 	const { isOpen: imageViewerOpen, currentPage: imageViewerPage, openViewer, closeViewer } = useImageViewer();
 	const isDesktop = useMediaQuery('(min-width: 1280px)');
-	const [showAdvanced, setShowAdvanced] = useState(getBoolParam('advanced'));
 	
 	// Sync state to URL whenever it changes
 	useEffect(() => {
@@ -395,15 +84,12 @@ export default function EntriesPage() {
 		if (searchQuery) params.set('q', searchQuery);
 		if (showIncompleteOnly) params.set('incomplete', 'true');
 		if (showNeedingReview) params.set('needsReview', 'true');
-		if (headFilter) params.set('head', headFilter);
-		if (posFilter) params.set('pos', posFilter);
 		if (sortBy !== 'sort_key') params.set('sort', sortBy);
 		if (sortOrder !== 'asc') params.set('order', sortOrder);
-		if (showAdvanced) params.set('advanced', 'true');
 		
 		// Update URL without causing navigation
 		setSearchParams(params, { replace: true });
-	}, [dictPage, searchQuery, showIncompleteOnly, showNeedingReview, headFilter, posFilter, sortBy, sortOrder, showAdvanced, setSearchParams]);
+	}, [dictPage, searchQuery, showIncompleteOnly, showNeedingReview, sortBy, sortOrder, setSearchParams]);
 	
 	// Save scroll position before navigating away
 	useEffect(() => {
@@ -510,19 +196,6 @@ export default function EntriesPage() {
 		closeViewer();
 	};
 
-	const getReviewSummary = (entry: EntryWithReviews): string => {
-		const approved = entry.reviews.filter(r => r.status === 'approved').length;
-		const needsWork = entry.reviews.filter(r => r.status === 'needs_work').length;
-		const commentCount = entry.comments.length;
-
-		const parts = [];
-		parts.push(`${approved} ✓`);
-		parts.push(`${needsWork} ✗`);
-		parts.push(`${commentCount} 💬`);
-
-		return parts.join(' • ');
-	};
-
 	const handleReviewStatusChange = async (entryId: number, status: 'approved' | 'needs_work') => {
 		// Use the mutation with optimistic updates
 		await submitReviewMutation.mutateAsync({ entryId, status });
@@ -552,108 +225,26 @@ export default function EntriesPage() {
 				)}
 			</div>
 
-			<div className="search-bar">
-				<input
-					type="text"
-					placeholder="Search entries..."
-					value={searchInput}
-					onChange={(e) => setSearchInput(e.target.value)}
-					className="search-input"
-				/>
-
-				<div className="search-filters">
-					<label className="checkbox-label">
-						<input
-							type="checkbox"
-							checked={showIncompleteOnly}
-							onChange={(e) => {
-								setShowIncompleteOnly(e.target.checked);
-								setDictPage(1);
-								setPageInputValue('1');
-							}}
-						/>
-						Incomplete entries only
-					</label>
-
-					<label className="checkbox-label">
-						<input
-							type="checkbox"
-							checked={showNeedingReview}
-							onChange={(e) => {
-								setShowNeedingReview(e.target.checked);
-								setDictPage(1);
-								setPageInputValue('1');
-							}}
-						/>
-						Needs review
-					</label>
-
-					<button
-						onClick={() => setShowAdvanced(!showAdvanced)}
-						className="btn-secondary btn-sm"
-					>
-						{showAdvanced ? 'Hide' : 'Show'} Advanced Filters
-					</button>
-				</div>
-
-				{showAdvanced && (
-					<div className="advanced-filters">
-						<div className="filter-row">
-							<div className="filter-group">
-								<label>Headword:</label>
-								<input
-									type="text"
-									placeholder="Filter by headword..."
-									value={headFilter}
-									onChange={(e) => {
-										setHeadFilter(e.target.value);
-										setDictPage(1);
-										setPageInputValue('1');
-									}}
-								/>
-							</div>
-
-							<div className="filter-group">
-								<label>Part of Speech:</label>
-								<input
-									type="text"
-									placeholder="e.g., n, v, adj"
-									value={posFilter}
-									onChange={(e) => {
-										setPosFilter(e.target.value);
-										setDictPage(1);
-										setPageInputValue('1');
-									}}
-								/>
-							</div>
-						</div>
-
-						<div className="filter-row">
-							<div className="filter-group">
-								<label>Sort By:</label>
-								<select
-									value={sortBy}
-									onChange={(e) => setSortBy(e.target.value as 'sort_key' | 'updated_at')}
-								>
-									<option value="sort_key">Alphabetical</option>
-									<option value="updated_at">Recently Updated</option>
-								</select>
-							</div>
-
-							<div className="filter-group">
-								<label>Order:</label>
-								<select
-									value={sortOrder}
-									onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}
-								>
-									<option value="asc">Ascending</option>
-									<option value="desc">Descending</option>
-								</select>
-							</div>
-						</div>
-					</div>
-				)}
-			</div>
+			<SearchFilters
+				searchInput={searchInput}
+				onSearchInputChange={(value) => setSearchInput(value)}
+				showIncompleteOnly={showIncompleteOnly}
+				onShowIncompleteOnlyChange={(checked) => {
+					setShowIncompleteOnly(checked);
+					setDictPage(1);
+					setPageInputValue('1');
+				}}
+				showNeedingReview={showNeedingReview}
+				onShowNeedingReviewChange={(checked) => {
+					setShowNeedingReview(checked);
+					setDictPage(1);
+					setPageInputValue('1');
+				}}
+				sortBy={sortBy}
+				onSortByChange={(value) => setSortBy(value)}
+				sortOrder={sortOrder}
+				onSortOrderChange={(value) => setSortOrder(value)}
+			/>
 
 			{/* Pagination at top */}
 			{!loading && !error && entries.length > 0 && (
@@ -680,51 +271,17 @@ export default function EntriesPage() {
 					</div>
 				) : (
 					<>
-						{entries.map((entry) => {
-							const entryData: EntryData = JSON.parse(entry.entry_data);
-							const isReviewDropdownOpen = openReviewDropdown === entry.id;
-							return (
-							<div
+						{entries.map((entry) => (
+							<EntryListItem
 								key={entry.id}
-								className={`entry-item ${isReviewDropdownOpen ? 'review-dropdown-open' : ''}`}
-								onClick={() => handleEntryClick(entry.id)}
-							>
-								{entryData.page && (
-									<span 
-										className="page-link"
-										onClick={(e) => {
-											e.stopPropagation();
-											handlePageClick(entryData.page);
-										}}
-									>
-										p. {entryData.page}
-									</span>
-								)}
-								<div className="entry-meta-badges">
-									{!entry.is_complete && (
-										<span className="badge badge-incomplete">Incomplete</span>
-									)}
-									<span className="entry-meta-text">
-										{getReviewSummary(entry)} • Updated: {new Date(entry.updated_at).toLocaleDateString()}
-									</span>
-								</div>
-								
-								<EntryDisplay entryData={entryData} />
-								
-								<div
-									className="entry-review-badge"
-									onClick={(e) => e.stopPropagation()}
-								>
-									<ReviewBadge
-										currentStatus={entry.my_review?.status || null}
-										onStatusChange={(status) => handleReviewStatusChange(entry.id, status)}
-										compact={true}
-										onDropdownOpenChange={(isOpen) => setOpenReviewDropdown(isOpen ? entry.id : null)}
-									/>
-								</div>
-							</div>
-						);
-						})}
+								entry={entry}
+								isReviewDropdownOpen={openReviewDropdown === entry.id}
+								onEntryClick={handleEntryClick}
+								onPageClick={handlePageClick}
+								onReviewStatusChange={handleReviewStatusChange}
+								onDropdownOpenChange={(isOpen) => setOpenReviewDropdown(isOpen ? entry.id : null)}
+							/>
+						))}
 					</>
 				)}
 			</div>

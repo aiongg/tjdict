@@ -6,14 +6,17 @@ import { useImageViewer } from '../contexts/ImageViewerContext';
 import { useEntry, useUpdateEntry, useSubmitReview } from '../hooks/useEntriesQuery';
 import { Navigation } from '../components/Navigation';
 import { ReviewPanel } from '../components/ReviewPanel.tsx';
-import { ReviewBadge } from '../components/ReviewBadge';
-import { PosDefinitionEditor } from '../components/editor/PosDefinitionEditor';
-import { FieldVisibilityMenu } from '../components/editor/FieldVisibilityMenu';
 import { PageImageViewer } from '../components/PageImageViewer';
-import type { EntryData } from '../components/editor/types';
-
-// Import types from shared editor types
-import type { PosDefinition, SubDefinition } from '../components/editor/types';
+import { 
+	PosDefinitionEditor,
+	EditorHeader,
+	EditorTabs,
+	EntryHeaderFields,
+	type EntryData,
+	type PosDefinition,
+	type SubDefinition
+} from '../components/editor';
+import { processEntryDataForSave } from '../utils/superscript';
 
 export default function EntryEditorPage() {
 	const { id } = useParams<{ id: string }>();
@@ -71,55 +74,6 @@ export default function EntryEditorPage() {
 
 	const handleCloseImageViewer = () => {
 		closeViewer();
-	};
-
-	// Convert numbers to superscript in a string
-	const convertNumbersToSuperscript = (str: string): string => {
-		const superscriptMap: { [key: string]: string } = {
-			'0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
-			'5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹'
-		};
-		return str.replace(/\d/g, (digit) => superscriptMap[digit] || digit);
-	};
-
-	// Recursively process entry data to convert numbers in cf and alt fields to superscript
-	const processEntryDataForSave = (data: EntryData): EntryData => {
-		const processed = JSON.parse(JSON.stringify(data)); // Deep clone
-
-		// Helper to process cf and alt arrays in any object
-		const processFields = (obj: unknown): void => {
-			if (!obj || typeof obj !== 'object') return;
-
-			const record = obj as Record<string, unknown>;
-
-			// Convert cf array
-			if (Array.isArray(record.cf)) {
-				record.cf = record.cf.map((item: unknown) => 
-					typeof item === 'string' ? convertNumbersToSuperscript(item) : item
-				);
-			}
-
-			// Convert alt array
-			if (Array.isArray(record.alt)) {
-				record.alt = record.alt.map((item: unknown) => 
-					typeof item === 'string' ? convertNumbersToSuperscript(item) : item
-				);
-			}
-
-			// Recursively process nested objects and arrays
-			for (const key in record) {
-				if (record[key] && typeof record[key] === 'object') {
-					if (Array.isArray(record[key])) {
-						(record[key] as unknown[]).forEach((item: unknown) => processFields(item));
-					} else {
-						processFields(record[key]);
-					}
-				}
-			}
-		};
-
-		processFields(processed);
-		return processed;
 	};
 
 	const handleSave = async () => {
@@ -382,38 +336,18 @@ export default function EntryEditorPage() {
 		<div className={imageViewerOpen && isDesktop ? 'with-image-viewer' : ''}>
 			<Navigation />
 			<div className="page-container">
-				<div className="editor-header">
-					<h1>{isNewEntry ? 'New Entry' : 'Edit Entry'}</h1>
-					<div className="editor-actions">
-						{entryData.page && (
-							<button 
-								onClick={() => handlePageClick(entryData.page)} 
-								className="btn-secondary"
-								title="View dictionary page"
-							>
-								📖 p. {entryData.page}
-							</button>
-						)}
-						<button 
-							onClick={() => {
-								const returnUrl = (location.state as { returnUrl?: string })?.returnUrl || '/entries';
-								navigate(returnUrl);
-							}} 
-							className="btn-secondary"
-						>
-							Cancel
-						</button>
-						{canEdit && (
-							<button 
-								onClick={handleSave} 
-								disabled={updateEntryMutation.isPending} 
-								className="btn-primary"
-							>
-								{updateEntryMutation.isPending ? 'Saving...' : 'Save'}
-							</button>
-						)}
-					</div>
-				</div>
+				<EditorHeader
+					isNewEntry={isNewEntry}
+					canEdit={canEdit}
+					pageNumber={entryData.page}
+					onPageClick={handlePageClick}
+					onCancel={() => {
+						const returnUrl = (location.state as { returnUrl?: string })?.returnUrl || '/entries';
+						navigate(returnUrl);
+					}}
+					onSave={handleSave}
+					isSaving={updateEntryMutation.isPending}
+				/>
 
 			{error && <div className="alert-error">{error}</div>}
 			{updateEntryMutation.isError && (
@@ -422,33 +356,14 @@ export default function EntryEditorPage() {
 				</div>
 			)}
 
-			<div className="editor-tabs-container">
-				<div className="editor-tabs">
-					<button
-						className={`tab-button ${activeTab === 'edit' ? 'active' : ''}`}
-						onClick={() => setActiveTab('edit')}
-					>
-						Edit
-					</button>
-					{!isNewEntry && (
-						<button
-							className={`tab-button ${activeTab === 'reviews' ? 'active' : ''}`}
-							onClick={() => setActiveTab('reviews')}
-						>
-							Reviews
-						</button>
-					)}
-				</div>
-				{!isNewEntry && (
-					<div className="editor-review-badge">
-						<ReviewBadge
-							currentStatus={myReview?.status || null}
-							onStatusChange={handleReviewStatusChange}
-							disabled={submitReviewMutation.isPending}
-						/>
-					</div>
-				)}
-			</div>
+			<EditorTabs
+				isNewEntry={isNewEntry}
+				activeTab={activeTab}
+				onTabChange={setActiveTab}
+				myReviewStatus={myReview?.status || null}
+				onReviewStatusChange={handleReviewStatusChange}
+				isSubmittingReview={submitReviewMutation.isPending}
+			/>
 
 			{!isNewEntry && (
 				<div className="editor-review-summary">
@@ -460,86 +375,14 @@ export default function EntryEditorPage() {
 
 				{activeTab === 'edit' ? (
 					<div className="compact-form">
-						{/* Compact Entry Header */}
-						<div className="entry-header-compact">
-							{/* Complete checkbox above everything */}
-							<label className="checkbox-field" style={{ marginBottom: '1rem' }}>
-								<input
-									type="checkbox"
-									checked={isComplete}
-									onChange={(e) => canEdit && setIsComplete(e.target.checked)}
-									disabled={!canEdit}
-								/>
-								<span>Mark complete</span>
-							</label>
-							
-							{/* Head field with menu */}
-							<div className="compact-header">
-								<div className="inline-material-field" style={{ flex: 1 }}>
-									<label htmlFor="field-head">head:</label>
-									<input
-										type="text"
-										value={entryData.head}
-										onChange={(e) => setEntryData({ ...entryData, head: e.target.value })}
-										disabled={!canEdit}
-										placeholder=" "
-										id="field-head"
-									/>
-								</div>
-								
-								<FieldVisibilityMenu
-									path="entry"
-									availableFields={getAvailableFields('entry')}
-									isFieldVisible={isFieldVisible}
-									onToggleField={toggleFieldVisibility}
-									canEdit={canEdit}
-								/>
-							</div>
-							
-							{/* Additional fields stacked vertically */}
-							{isFieldVisible('entry', 'head_number') && (
-								<div className="material-field">
-									<input
-										type="number"
-										value={entryData.head_number || ''}
-										onChange={(e) => setEntryData({ ...entryData, head_number: parseInt(e.target.value) || undefined })}
-										disabled={!canEdit}
-										placeholder=" "
-										id="field-head-number"
-									/>
-									<label htmlFor="field-head-number">num:</label>
-								</div>
-							)}
-
-							{isFieldVisible('entry', 'page') && (
-								<div className="material-field">
-									<input
-										type="number"
-										value={entryData.page || ''}
-										onChange={(e) => setEntryData({ ...entryData, page: parseInt(e.target.value) || undefined })}
-										disabled={!canEdit}
-										placeholder=" "
-										id="field-page"
-									/>
-									<label htmlFor="field-page">page:</label>
-								</div>
-							)}
-
-							{isFieldVisible('entry', 'etym') && (
-								<div className="material-field">
-									<input
-										type="text"
-										value={entryData.etym || ''}
-										onChange={(e) => setEntryData({ ...entryData, etym: e.target.value })}
-										disabled={!canEdit}
-										placeholder=" "
-										id="field-etym"
-									/>
-									<label htmlFor="field-etym">etym:</label>
-								</div>
-							)}
-						</div>
-
+						<EntryHeaderFields
+							entryData={entryData}
+							isComplete={isComplete}
+							canEdit={canEdit}
+							onEntryDataChange={(updates) => setEntryData({ ...entryData, ...updates })}
+							onIsCompleteChange={setIsComplete}
+							callbacks={editorCallbacks}
+						/>
 
 						{/* POS Definitions */}
 						{entryData.defs.map((posDef, posIndex) => (

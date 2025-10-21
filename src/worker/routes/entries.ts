@@ -13,6 +13,7 @@ import type {
 	CreateCommentRequest,
 	JWTPayload,
 } from "../types";
+import { parseSearchQuery } from "../utils/searchParser";
 
 type Env = {
 	prod_tjdict: D1Database;
@@ -140,23 +141,41 @@ entriesRouter.get("/", async (c) => {
 	const conditions: string[] = [];
 	const params: (string | number)[] = [];
 
-	// Full-text search
+	// Parse search query for key:value pairs
 	if (query.q) {
-		conditions.push("(head LIKE ? OR entry_data LIKE ?)");
-		const searchTerm = `%${query.q}%`;
-		params.push(searchTerm, searchTerm);
-	}
-
-	// Headword filter
-	if (query.head) {
-		conditions.push("head LIKE ?");
-		params.push(`%${query.head}%`);
-	}
-
-	// Part of speech filter (search in JSON)
-	if (query.pos) {
-		conditions.push("entry_data LIKE ?");
-		params.push(`%"pos":"${query.pos}"%`);
+		const parsedSearch = parseSearchQuery(query.q);
+		
+		// Headword search (default if no key specified, or explicit head:)
+		// Match at word boundaries: start of string, after hyphen, after space, after slash, after pipe
+		if (parsedSearch.head) {
+			conditions.push("(head LIKE ? OR head LIKE ? OR head LIKE ? OR head LIKE ? OR head LIKE ?)");
+			const term = parsedSearch.head;
+			params.push(
+				`${term}%`,      // Start of string
+				`%-${term}%`,    // After hyphen (syllable boundary)
+				`% ${term}%`,    // After space
+				`%/${term}%`,    // After slash (variant separator)
+				`%|${term}%`     // After pipe (variant separator)
+			);
+		}
+		
+		// English translation search
+		if (parsedSearch.en) {
+			conditions.push("entry_data LIKE ?");
+			params.push(`%"en":"${parsedSearch.en}%`);
+		}
+		
+		// Taiwanese text search (in examples, derivatives, idioms)
+		if (parsedSearch.tw) {
+			conditions.push("entry_data LIKE ?");
+			params.push(`%${parsedSearch.tw}%`);
+		}
+		
+		// Etymology search
+		if (parsedSearch.etym) {
+			conditions.push("entry_data LIKE ?");
+			params.push(`%"etym":"${parsedSearch.etym}%`);
+		}
 	}
 
 	// Completeness filter
@@ -329,6 +348,7 @@ entriesRouter.get("/:id", async (c) => {
 	const allReviewsList = allReviews as unknown as (EntryReviewWithUser & { rn: number })[];
 	
 	// Get latest review per user (rn = 1)
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const reviewsList = allReviewsList.filter(r => r.rn === 1).map(({ rn, ...review }) => review);
 	const myReview = reviewsList.find(r => r.user_id === payload.userId);
 

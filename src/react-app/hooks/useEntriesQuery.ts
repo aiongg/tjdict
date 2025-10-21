@@ -45,11 +45,9 @@ interface EntryWithReviews extends Entry {
 interface EntriesListFilters extends Record<string, unknown> {
 	page: number;
 	pageSize?: number;
-	q?: string;
+	q?: string;  // Search query - supports key:value syntax (head:, en:, tw:, etym:)
 	incomplete?: boolean;
 	needsReview?: boolean;
-	head?: string;
-	pos?: string;
 	sortBy?: 'sort_key' | 'updated_at';
 	sortOrder?: 'asc' | 'desc';
 	dictPage?: number; // For dictionary page-based navigation
@@ -68,7 +66,7 @@ interface EntriesListResponse {
 
 // Hook to fetch paginated entries list
 export function useEntriesList(filters: EntriesListFilters) {
-	const hasFilters = filters.q || filters.incomplete || filters.needsReview || filters.head || filters.pos;
+	const hasFilters = filters.q || filters.incomplete || filters.needsReview;
 
 	return useQuery({
 		queryKey: queryKeys.entries.list(filters),
@@ -88,8 +86,6 @@ export function useEntriesList(filters: EntriesListFilters) {
 				if (filters.q) params.set('q', filters.q);
 				if (filters.incomplete) params.set('complete', 'false');
 				if (filters.needsReview) params.set('needsReview', 'true');
-				if (filters.head) params.set('head', filters.head);
-				if (filters.pos) params.set('pos', filters.pos);
 			} else {
 				// Use dictionary page-based endpoint
 				url = `/api/entries/by-page/${filters.dictPage || filters.page}`;

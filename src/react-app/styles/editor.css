@@ -317,8 +317,6 @@
 	z-index: 9999;
 	min-width: 180px;
 	max-width: 250px;
-	/* Transform to align right edge of dropdown with button */
-	transform: translateX(calc(-100% + 32px));
 }
 
 .field-visibility-menu .menu-item {

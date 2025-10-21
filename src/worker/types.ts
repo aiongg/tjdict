@@ -227,14 +227,12 @@ export interface EntryCommentWithUser extends EntryComment {
 }
 
 export interface EntrySearchParams {
-	q?: string;
-	head?: string;
-	pos?: string;
+	q?: string;  // Search query - supports key:value syntax (head:, en:, tw:, etym:)
 	complete?: boolean;
 	needsReview?: boolean;
 	page?: number;
 	pageSize?: number;
-	sortBy?: 'head' | 'updated_at';
+	sortBy?: 'head' | 'updated_at' | 'sort_key';
 	sortOrder?: 'asc' | 'desc';
 }
 
